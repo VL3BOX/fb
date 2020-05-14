@@ -13,12 +13,13 @@ Vue.use(JX3BOX_UI);
 /**
  * 数据组件
  */
-// import router from "../router";
-// import store from "../store";
+import router from "./router";
+import store from "./store";
+
 
 import App from "./App.vue";
 new Vue({
-    // router,
-    // store,
+    router,
+    store,
     render: (h) => h(App),
 }).$mount("#app");

@@ -12,7 +12,7 @@
                     class="u-item"
                     :class="{active:isActive(subkey)}"
                 >
-                    <a :href="'/fb/?fb_name=' + item.name">{{ item.name }}</a>
+                    <a :href="url(group.name,item.name)">{{ item.name }}</a>
                 </li>
             </ul>
         </div>
@@ -20,28 +20,26 @@
 </template>
 
 <script>
-import getNav from "../service/getNav";
 export default {
     name: "Nav",
     data: function() {
         return {
-            map: {},
+            map: this.$store.state.map,
         };
     },
     computed: {
         
     },
     methods: {
+        url : function (zlp,fb){
+            return `/fb/?fb_zlp=${zlp}&fb_name=${fb}`
+        },
         isActive : function (subkey){
-            let params = new URLSearchParams(location.search);
-            let current = params.get('fb_name')
+            let current = this.$store.state.fb
             return current == subkey
-        }
+        },
     },
     mounted: function() {
-        getNav().then((res) => {
-            this.map = res.data;
-        });
     },
 };
 </script>

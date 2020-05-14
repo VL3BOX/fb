@@ -11,6 +11,7 @@
   "dependencies": {
     "@jx3box/jx3box-common": "^2.0.0",
     "@jx3box/jx3box-common-ui": "^0.2.2",
+    "@jx3box/jx3box-data": "0.0.4",
     "axios": "^0.19.2",
     "core-js": "^3.4.3",
     "element-ui": "^2.13.0",

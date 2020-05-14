@@ -35,7 +35,8 @@ export default {
             return `/fb/?fb_zlp=${zlp}&fb_name=${fb}`
         },
         isActive : function (subkey){
-            let current = this.$store.state.fb
+            let params = new URLSearchParams(location.search);
+            let current = params.get("fb_name")
             return current == subkey
         },
     },

@@ -42,8 +42,8 @@ export default {
     methods: {},
     created: function() {
         this.params = new URLSearchParams(location.search);
-        this.$store.state.zlp = this.params.get("fb_zlp");
-        this.$store.state.fb = this.params.get("fb_name");
+        this.$store.state.zlp = this.params.get("fb_zlp") || '世外蓬莱'
+        this.$store.state.fb = this.params.get("fb_name") || '范阳夜变'
         this.$store.state.pid = this.params.get("pid")
         this.$store.state.mode = this.params.get("pid") ? 'single' : 'list'
     },

@@ -1,5 +1,5 @@
 <template>
-    <div class="m-fb-map">
+    <div class="m-fb-map" >
         <img class="u-map" :src="mapimg" :alt="fb">
     </div>
 </template>

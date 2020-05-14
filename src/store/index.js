@@ -7,8 +7,8 @@ let store = {
     state: {
         map,
         mode : 'list',
-        fb : '范阳夜变',
-        zlp : '世外蓬莱',
+        fb : '',
+        zlp : '',
         pid : 0
     },
     mutations: {

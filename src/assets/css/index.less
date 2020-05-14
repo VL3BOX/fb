@@ -1,0 +1,50 @@
+@import './list_common.less';
+.m-fb-list {
+    ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .u-item {
+        border-bottom: 1px solid #e1e4e8;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+
+    // 标题
+    .u-icon {
+        .size(16px);
+        .y(-3px);
+        .mr(5px);
+    }
+
+    // 内容
+    .u-style {
+        i {
+            .size(16px);
+            .mr(5px);
+        }
+        .none;
+    }
+    .u-mode-list {
+        .mb(5px);
+    }
+    .u-boss-list {
+        b {
+            //.mr(5px);
+            &:after {
+                content: " ／ ";
+                color: #ccc;
+            }
+            &:last-child {
+                &:after {
+                    .none;
+                }
+            }
+        }
+        .isFocus {
+            background-color: #ff0;
+        }
+    }
+}

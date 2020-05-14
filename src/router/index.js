@@ -6,6 +6,7 @@ import JMap from "../views/Map.vue";
 import Npc from "../views/Npc.vue";
 import Skill from "../views/Skill.vue";
 import Story from "../views/Story.vue";
+import Cj from "../views/Cj.vue";
 
 Vue.use(VueRouter);
 
@@ -17,6 +18,7 @@ const routes = [
     { path: '/npc', component: Npc },
     { path: '/skill', component: Skill },
     { path: '/story', component: Story },
+    { path: '/cj', component: Cj },
 ]
 
 const router = new VueRouter({

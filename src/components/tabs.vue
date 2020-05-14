@@ -22,14 +22,6 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="副本掉落" name="drop">
-            <span slot="label">
-                <i class="el-icon-present"></i>
-                副本掉落
-                <span class="u-new">新</span>
-            </span>
-        </el-tab-pane>
-
         <el-tab-pane label="NPC数据" name="npc">
            <span slot="label">
                <i class="el-icon-key"></i>
@@ -45,8 +37,28 @@
                 <span class="u-secret">密</span>
             </span>
         </el-tab-pane>
-        <!-- TODO:接入2kog -->
-        <!-- <el-tab-pane label="团队活动" name="third">团队招募</el-tab-pane> -->
+
+        <el-tab-pane label="副本成就" name="cj">
+            <span slot="label">
+                <i class="el-icon-present"></i>
+                副本成就
+                <span class="u-pending">即将推出</span>
+            </span>
+        </el-tab-pane>
+        <el-tab-pane label="副本掉落" name="drop">
+            <span slot="label">
+                <i class="el-icon-present"></i>
+                副本掉落
+                <span class="u-pending">即将推出</span>
+            </span>
+        </el-tab-pane>
+        <el-tab-pane label="团队活动" name="raid">
+            <span slot="label">
+                <i class="el-icon-date"></i>
+                团队活动
+                <span class="u-pending">即将推出</span>
+            </span>
+        </el-tab-pane>
     </el-tabs>
 </template>
 

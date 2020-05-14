@@ -1,6 +1,6 @@
 <template>
-    <div class="m-fb-map" >
-        <img class="u-map" :src="mapimg" :alt="fb">
+    <div class="m-fb-map" v-loading="loading">
+        <img class="u-map" :src="mapimg" :alt="fb" ref="fb_map_img" @load="loaded">
     </div>
 </template>
 
@@ -10,7 +10,9 @@ export default {
     name: "JMap",
     props: [],
     data: function() {
-        return {};
+        return {
+            loading : true
+        };
     },
     computed: {
         zlp: function() {
@@ -26,8 +28,13 @@ export default {
             return __iconPath + 'map/map_' + this.mapid + '.jpg'
         }
     },
-    methods: {},
+    methods: {
+        loaded : function (){
+            this.loading = false            
+        }
+    },
     mounted: function() {
+
     },
 };
 </script>

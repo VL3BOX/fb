@@ -1,8 +1,8 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="频道名称" slug="slug" root="/slug" publishEnable="true">
-            <img slot="logo" svg-inline src="./assets/img/logo.svg" />
+        <Breadcrumb name="副本专栏" slug="fb" root="/fb" publishEnable="true">
+            <img slot="logo" svg-inline src="./assets/img/fb.svg" />
             <Info />
         </Breadcrumb>
         <LeftSidebar>

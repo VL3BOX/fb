@@ -1,18 +1,17 @@
 import axios from "axios";
-import {__node} from '@jx3box/jx3box-common/js/jx3box.json'
-const API = __node + 'npc/map/'
+import { __node } from "@jx3box/jx3box-common/js/jx3box.json";
+const API_MAP = __node + "npc/map/";
+const API_NAME = __node + "npc/name/";
 
-function getPosts(params) {
-    let query = {
-        type: "fb",
-    };
-    if (params) {
-        query = Object.assign(query, params);
-    }
-
-    return axios.get(API, {
-        params: query,
+function getMapNpc(fb, page = 1) {
+    return axios.get(API_MAP + fb, {
+        params: {
+            page,
+        },
     });
 }
+function getNpc(name) {
+    return axios.get(API_NAME + name);
+}
 
-export { getPosts };
+export { getMapNpc, getNpc };

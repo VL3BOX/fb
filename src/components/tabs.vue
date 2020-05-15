@@ -7,17 +7,10 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="副本背景" name="story">
+        <el-tab-pane label="副本成就" name="cj">
             <span slot="label">
-                <i class="el-icon-film"></i>
-                副本背景
-            </span>
-        </el-tab-pane>
-
-        <el-tab-pane label="副本地图" name="map">
-            <span slot="label">
-                <i class="el-icon-map-location"></i>
-                副本地图
+                <i class="el-icon-present"></i>
+                副本成就
                 <span class="u-new">新</span>
             </span>
         </el-tab-pane>
@@ -38,13 +31,22 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="副本成就" name="cj">
+        <el-tab-pane label="副本背景" name="story">
             <span slot="label">
-                <i class="el-icon-present"></i>
-                副本成就
-                <span class="u-pending">即将推出</span>
+                <i class="el-icon-film"></i>
+                副本背景
             </span>
         </el-tab-pane>
+
+        <el-tab-pane label="副本地图" name="map">
+            <span slot="label">
+                <i class="el-icon-map-location"></i>
+                副本地图
+                <span class="u-new">新</span>
+            </span>
+        </el-tab-pane>
+
+
         <el-tab-pane label="副本掉落" name="drop">
             <span slot="label">
                 <i class="el-icon-present"></i>
@@ -77,7 +79,9 @@ export default {
             this.$router.push({ path: this.view });
         },
     },
-    mounted: function() {},
+    mounted: function() {
+        this.view = this.$route.name
+    },
 };
 </script>
 

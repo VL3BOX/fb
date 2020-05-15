@@ -1,3 +1,4 @@
+import Vue from "vue";
 import Vuex from "vuex";
 import map from '@jx3box/jx3box-data/data/fb/fb_map.json'
 

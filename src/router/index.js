@@ -1,3 +1,4 @@
+import Vue from "vue";
 import VueRouter from "vue-router";
 
 import Index from "../views/Index.vue";
@@ -11,18 +12,18 @@ import Cj from "../views/Cj.vue";
 Vue.use(VueRouter);
 
 const routes = [
-    { path: '/', component: Index },
-    { path: '/index', component: Index },
-    { path: '/drop', component: Drop },
-    { path: '/map', component: JMap },
-    { path: '/npc', component: Npc },
-    { path: '/skill', component: Skill },
-    { path: '/story', component: Story },
-    { path: '/cj', component: Cj },
-]
+    { name: "index", path: "/", component: Index },
+    { name: "index", path: "/index", component: Index },
+    { name: "drop", path: "/drop", component: Drop },
+    { name: "map", path: "/map", component: JMap },
+    { name: "npc", path: "/npc", component: Npc },
+    { name: "skill", path: "/skill", component: Skill },
+    { name: "story", path: "/story", component: Story },
+    { name: "cj", path: "/cj", component: Cj },
+];
 
 const router = new VueRouter({
-    routes
+    routes,
 });
 
 export default router;

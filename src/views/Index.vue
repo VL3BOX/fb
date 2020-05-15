@@ -1,8 +1,12 @@
 <template>
     <div class="m-fb-index">
-        <div class="m-archive-list m-fb-list">
+        <div class="m-archive-list m-fb-list" v-if="data.length">
             <ul class="u-list">
                 <li class="u-item" v-for="(item, i) in data" :key="i">
+                    <a class="u-banner" :href="'/fb/?pid=' + item.post.ID"
+                        ><img :src="buildBanner(item.post.post_banner)"
+                    /></a>
+
                     <h2 class="u-post">
                         <img
                             class="u-icon"
@@ -54,9 +58,11 @@
                 </li>
             </ul>
         </div>
+        <el-alert v-else title="没有找到相关条目" type="info" center show-icon>
+        </el-alert>
         <el-button
             class="m-archive-more"
-            :class="{show:hasNextPage}"
+            :class="{ show: hasNextPage }"
             type="primary"
             :loading="loading"
             @click="appendPage(++page)"
@@ -77,6 +83,7 @@
 <script>
 import { getPosts } from "../service/getPost";
 import dateFormat from "../utils/dateFormat";
+import { __imgPath } from "@jx3box/jx3box-common/js/jx3box";
 export default {
     name: "Index",
     props: [],
@@ -85,15 +92,23 @@ export default {
             data: [],
             total: 0,
             page: 1,
-            pages : 1,
+            pages: 1,
             loading: false,
             subtype: "",
         };
     },
     computed: {
-        hasNextPage : function (){
-            return this.total > 1 && this.page < this.pages
-        }
+        hasNextPage: function() {
+            return this.total > 1 && this.page < this.pages;
+        },
+        defaultBanner: function() {
+            return (
+                __imgPath +
+                this.$store.state.map[this.$store.state.zlp]["dungeon"][
+                    this.$store.state.fb
+                ]["icon"]
+            );
+        },
     },
     methods: {
         changePage: function(i) {
@@ -103,21 +118,24 @@ export default {
             }).then((res) => {
                 this.data = res.data.data.list;
                 this.total = res.data.data.total;
-                this.pages = res.data.data.pages
+                this.pages = res.data.data.pages;
             });
         },
         appendPage: function(i) {
-            this.loading = true
+            this.loading = true;
             getPosts({
                 page: i,
                 subtype: this.subtype,
             }).then((res) => {
-                this.loading = false
+                this.loading = false;
 
                 this.data = this.data.concat(res.data.data.list);
                 this.total = res.data.data.total;
-                this.pages = res.data.data.pages
+                this.pages = res.data.data.pages;
             });
+        },
+        buildBanner: function(val) {
+            return val ? val : this.defaultBanner;
         },
     },
     filters: {

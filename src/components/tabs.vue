@@ -9,7 +9,7 @@
 
         <el-tab-pane label="副本成就" name="cj">
             <span slot="label">
-                <i class="el-icon-present"></i>
+                <i class="el-icon-trophy"></i>
                 副本成就
                 <span class="u-new">新</span>
             </span>

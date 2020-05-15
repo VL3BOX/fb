@@ -21,28 +21,61 @@
         // background-position: 0 0;
     }
 
-    .u-logo{
-        .pa;.rb(10px);
-        svg{.size(20px);.y(top);.mr(5px);}
-        .fz(14px,20px);.y(top);
-        .bold;
-        // font-weight:300;
-        font-style:normal;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        color:@bg-black;
-    }
-
     .u-icon{
         .fl;
         .mr(10px);
+    }
+
+    .u-isBoss{
+        .pa;.rt(10px,40px);
+        svg{
+            .size(20px);
+            .y(top);
+        }
+        font-style:normal;
+        .lh(20px);
+        .bold;
     }
 
     .u-id{
         .pa;.rt(10px);
         color:#aaa;
         color:#ce0000;
-        .bold;
+        // .bold;
+        background-color:@bg-black;
+        .r(3px);
+
+        .clip;
+        .u-idn{
+            background-color:#ce0000;
+            color:#fff;
+            .dbi;.y(top);
+            padding:2px 5px;
+            .h(20px);
+            .fl;
+        }
+
+        box-shadow: 0 0 2px rgba(0,0,0,.4);
     }
+
+    .u-logo{
+        // .pa;.rb(10px);
+        svg{.size(20px);.y(top);.mr(5px);fill:#fff;}
+        .fz(12px,20px);.y(top);
+        .mr(5px);
+        // .bold;
+        // font-weight:300;
+        font-style:normal;
+        font-weight: normal;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color:@bg-black;
+        color:#fff;
+        padding:2px 5px;
+        .h(20px);
+        .fl;
+        .dbi;
+    }
+
 
     em{.none;}
 
@@ -81,14 +114,18 @@
 
     .u-primary{
         margin-top:10px;
+        min-height: 23px;
         b{
             padding:2px 5px;
             .mr(10px);
             .y(top);
+            .h(20px);
+
         }
         div{
-            .mb(5px);
-            .h(18px);
+            line-height:20px;
+            .nobreak;
+            overflow-x:auto;
         }
 
         .u-range{
@@ -97,10 +134,13 @@
             .r(2px);
             .w(220px);
             .dbi;.y(top);
+            .h(19px);
+            margin:2px 0;
+            .pr;
 
             strong{
                 .h(100%);
-                .dbi;
+                .db;.pa;.lt(0);
                 font-weight:400;
                 text-indent:10px;
                 .r(2px);
@@ -123,8 +163,8 @@
         }
         .u-value{
             padding:0 5px;
-            color:#08A541;
-            color:#ce0000;
+            // color:#08A541;
+            // color:@bg-black;
             .bold;
         }
     }
@@ -144,6 +184,11 @@
 .m-npc-search{
     .mb(20px);
 }
+// @media screen and (max-width:@phone){
+//     .m-npc-list .u-logo{
+//         .none;
+//     }
+// }
 
 // 紫 #C82ACC
 // 绿 #08A541

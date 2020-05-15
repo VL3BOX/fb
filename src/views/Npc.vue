@@ -2,7 +2,7 @@
     <div class="m-fb-npc">
         <el-input
             class="m-npc-search"
-            placeholder="请输入NPC名称"
+            placeholder="请输入NPC名称或ID"
             v-model="search"
             @change="searchNpc"
         >
@@ -11,9 +11,15 @@
         </el-input>
         <ul class="m-npc-list" v-if="data.length" :loading="loading">
             <li v-for="(npc, i) in data" class="u-item u-raw" :key="i">
+                <i v-if="isBoss(npc.ID)" class="u-isBoss">
+                    <img src="../assets/img/boss_mini.png" />
+                </i>
                 <img class="u-icon" :src="icon" />
 
-                <span class="u-id">ID:{{ npc.ID }}</span>
+                <span class="u-id">
+                    <i class="u-logo"><img svg-inline src="../assets/img/logo.svg" />JX3BOX</i>
+                    <span class="u-idn">ID:{{ npc.ID }}</span>
+                </span>
                 <div class="u-title">
                     <span class="u-name">{{ npc.Name }}</span>
                     <span class="u-name-add">
@@ -194,9 +200,7 @@
                         >ScriptName: <strong>{{ npc.ScriptName }}</strong></span
                     >
                 </div>
-                <i class="u-logo"><img svg-inline src="../assets/img/logo.svg" />JX3BOX</i>
             </li>
-            <!-- <p v-if="nullflag.npc" class="u-null">未检索到相关条目</p> -->
         </ul>
         <el-alert v-else title="没有找到相关条目" type="info" center show-icon>
         </el-alert>
@@ -212,6 +216,7 @@
 </template>
 
 <script>
+import bossids from "@jx3box/jx3box-data/data/fb/fb_boss_ids.json";
 import { getMapNpc, getNpc } from "../service/getNpc";
 import { __iconPath } from "@jx3box/jx3box-common/js/jx3box";
 import User from "@jx3box/jx3box-common/js/user";
@@ -270,8 +275,13 @@ export default {
                 this.pages = 1;
             });
         },
+        isBoss : function (id){
+            return !!bossids.includes(id)
+        }
     },
-    filters: {},
+    filters: {
+        
+    },
     mounted: function() {
         this.appendPage(1);
         this.isSuper = User.getInfo().group > 8;

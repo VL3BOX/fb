@@ -1,5 +1,7 @@
 .m-archive-list {
     .u-list {
+        padding: 0;
+        margin: 0;
         list-style: none;
     }
 
@@ -7,41 +9,65 @@
         border-bottom: 1px solid @border-hr;
         padding-bottom: 20px;
         .mb(20px);
+        .clearfix;
+        .pr;
     }
+
+    // 海报
+    .u-banner{
+        .fl;
+        .mr(10px);
+        .w(180px);
+        .h(100px);
+        overflow: hidden;
+        .db;
+        .pr;
+        .z(1);
+        border:1px solid #eee;
+        padding:5px;
+        box-sizing: border-box;
+        img{
+            .size(100%);
+            filter: saturate(120%);
+            transition:0.06s all ease-in-out;
+        }
+        transition:0.06s border ease-in-out;
+        &:hover{
+            img{filter: saturate(140%) brightness(120%);}
+            border-color:@primary;
+        }
+    }
+
+    // 标题
     .u-post {
         margin: 0;
         padding: 0;
         .nobreak;
         .mb(5px);
-    }
-    .u-post .u-icon {
-        .size(16px);
-    }
-    .u-title {
+        .u-icon {
+            .size(16px);
+            .y(-3px);
+            .mr(5px);
+        }
+        .u-title {
+            &:hover {
+                box-shadow: 0 1px 0 @primary;
+            }
+        }
         .fz(16px, 2);
         font-weight: normal;
         .lh(2);
         font-weight: 400;
-        &:hover {
-            box-shadow: 0 1px 0 @primary;
-        }
     }
-    .u-rec {
-        .fz(12px);
-        padding: 1px 5px 2px 5px;
-        .ml(5px);
-        .r(2px);
-        background-color: #6f42c1;
-        color: #fff;
-        &:before {
-            .fz(14px);
-        }
-    }
+    
+    // 内容
     .u-content {
         .db;
         padding-left: 20px;
         .pr;
     }
+
+    // 内容·描述类
     .u-desc {
         .db;
         .fz(13px, 1.8);
@@ -50,6 +76,8 @@
         .mb(6px);
         padding: 0 2px;
     }
+
+    // 内容·meta列表
     .u-metalist {
         .nobreak;
         .db;
@@ -107,10 +135,12 @@
             .y(top);
         }
     }
-    .u-sub-meta {
+
+    // 底部
+    .u-misc {
         .db;
         .pa;
-        .rb(0);
+        .rb(10px);
         .x(right);
         .fz(12px, 20px);
         color: #565656;
@@ -125,11 +155,6 @@
             .y(-1px);
         }
     }
-
-    .u-sub-block {
-        min-height: 23px;
-    }
-
     .u-pipe {
         margin: 0 5px;
         color: #999;
@@ -137,35 +162,38 @@
 }
 @media screen and (max-width: @ipad) {
     .m-archive-list {
-        .u-sub-block * {
-            .fz(12px, 1.8);
+        
+        .u-banner {
+            .w(100px);
+            .h(55px);
+            padding:3px;
         }
-        .u-down,
-        .u-view {
+
+        .u-post {
+            white-space: normal;
+            word-break: break-all;
+            .break(2);
+            .fz(14px,22px);
+        }
+
+        .u-metalist,.u-down,.u-view{
             .none;
-        }
-        .u-sub-block {
-            .clearfix;
-        }
-        .u-sub-meta {
-            .ps;
-            .x(left);
         }
         .u-tag {
             .mb(8px);
         }
-    }
-}
-@media screen and (max-width: @ipad) {
-    .m-archive-list .u-post {
-        white-space: normal;
-        word-break: break-all;
-    }
-    .m-archive-list .u-rec {
-        .none;
+
+        .u-misc {
+            .ps;
+            .x(left);
+        }
     }
 }
 
+// 为空
+.m-archive-null{}
+
+// 加载更多
 .m-archive-more{
     .mb(10px);
     .w(100%);
@@ -173,4 +201,9 @@
 }
 .m-archive-more.show{
     .db;
+}
+
+// 分页
+.m-archive-pages{
+    overflow-x: auto;
 }

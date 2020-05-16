@@ -22,43 +22,46 @@
                     </h2>
 
                     <div class="u-content">
-                        <div class="u-sub-block">
-                            <div class="u-metalist u-boss-list">
-                                <strong>首领</strong>
-                                <em>
-                                    <b
-                                        v-for="(c, i) in item.post.post_meta
-                                            .fb_boss"
-                                        :key="i"
-                                    >
-                                        {{ c }}
-                                    </b>
-                                </em>
-                            </div>
+                        <div class="u-metalist u-boss-list">
+                            <strong>首领</strong>
+                            <em>
+                                <b
+                                    v-for="(c, i) in item.post.post_meta
+                                        .fb_boss"
+                                    :key="i"
+                                >
+                                    {{ c }}
+                                </b>
+                            </em>
                         </div>
 
-                        <div class="u-sub-block">
-                            <div class="u-metalist u-mode-list c-jx3fb-mode">
-                                <strong>模式</strong>
-                                <em>{{
-                                    item.post.post_meta.fb_level.toString()
-                                }}</em>
-                            </div>
+                        <div class="u-metalist u-mode-list c-jx3fb-mode">
+                            <strong>模式</strong>
+                            <em>{{
+                                item.post.post_meta.fb_level.toString()
+                            }}</em>
                         </div>
+                    </div>
 
-                        <div class="u-sub-meta">
-                            <span class="u-date">
-                                Updated on
-                                <time>{{
-                                    item.post.post_modified | dateFormat
-                                }}</time>
-                            </span>
-                        </div>
+                    <div class="u-misc">
+                        <span class="u-date">
+                            Updated on
+                            <time>{{
+                                item.post.post_modified | dateFormat
+                            }}</time>
+                        </span>
                     </div>
                 </li>
             </ul>
         </div>
-        <el-alert v-else title="没有找到相关条目" type="info" center show-icon>
+        <el-alert
+            v-else
+            class="m-archive-null"
+            title="没有找到相关条目"
+            type="info"
+            center
+            show-icon
+        >
         </el-alert>
         <el-button
             class="m-archive-more"
@@ -69,6 +72,7 @@
             >加载更多</el-button
         >
         <el-pagination
+            class="m-archive-pages"
             background
             :hide-on-single-page="true"
             @current-change="changePage"

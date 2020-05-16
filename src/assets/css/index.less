@@ -1,58 +1,6 @@
 @import './list_common.less';
 .m-fb-list {
-    ul {
-        padding: 0;
-        margin: 0;
-        list-style: none;
-    }
 
-    .u-item {
-        border-bottom: 1px solid #e1e4e8;
-        padding-bottom: 20px;
-        margin-bottom: 20px;
-        .clearfix;
-    }
-
-    // 海报
-    .u-banner{
-        .fl;
-        .mr(10px);
-        .w(180px);
-        .h(100px);
-        overflow: hidden;
-        .db;
-        .pr;
-        .z(1);
-        border:1px solid #eee;
-        padding:5px;
-        box-sizing: border-box;
-        img{
-            .size(100%);
-            filter: saturate(120%);
-            transition:0.06s all ease-in-out;
-        }
-        transition:0.06s border ease-in-out;
-        &:hover{
-            img{filter: saturate(140%) brightness(120%);}
-            border-color:@primary;
-        }
-    }
-
-    // 标题
-    .u-icon {
-        .size(16px);
-        .y(-3px);
-        .mr(5px);
-    }
-
-    // 内容
-    .u-style {
-        i {
-            .size(16px);
-            .mr(5px);
-        }
-        .none;
-    }
     .u-mode-list {
         .mb(5px);
     }

@@ -19,7 +19,7 @@ export default {
 
 <style lang="less">
 .m-info{
-    .nobreak;
+    white-space: nowrap;
     overflow-x:auto;
     .fz(13px);
 }

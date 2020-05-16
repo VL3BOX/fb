@@ -17,7 +17,12 @@
                 <img class="u-icon" :src="icon" />
 
                 <span class="u-id">
-                    <i class="u-logo"><img svg-inline src="../assets/img/logo.svg" />JX3BOX</i>
+                    <i class="u-logo"
+                        ><img
+                            svg-inline
+                            src="../assets/img/logo.svg"
+                        />JX3BOX</i
+                    >
                     <span class="u-idn">ID:{{ npc.ID }}</span>
                 </span>
                 <div class="u-title">
@@ -202,7 +207,14 @@
                 </div>
             </li>
         </ul>
-        <el-alert v-else title="没有找到相关条目" type="info" center show-icon>
+        <el-alert
+            v-else
+            class="m-archive-null"
+            title="没有找到相关条目"
+            type="info"
+            center
+            show-icon
+        >
         </el-alert>
         <el-button
             class="m-archive-more"
@@ -212,6 +224,16 @@
             @click="appendPage(++page)"
             >加载更多</el-button
         >
+        <el-pagination
+            class="m-archive-pages"
+            background
+            :hide-on-single-page="true"
+            @current-change="changePage"
+            :current-page="page"
+            layout="total, prev, pager, next, jumper"
+            :total="total"
+        >
+        </el-pagination>
     </div>
 </template>
 
@@ -232,8 +254,8 @@ export default {
             pages: 1,
             loading: false,
             isSuper: false,
-            search : '',
-            cache : []
+            search: "",
+            cache: [],
         };
     },
     computed: {
@@ -243,10 +265,7 @@ export default {
         icon: function() {
             return __iconPath + "icon/" + 1 + ".png";
         },
-    },
-    methods: {
-        appendPage: function(i) {
-            this.loading = true;
+        mapname : function (){
             let mapname = "";
             let dotIndex = this.$store.state.fb.indexOf("·");
             if (dotIndex >= 0) {
@@ -254,36 +273,47 @@ export default {
             } else {
                 mapname = this.$store.state.fb;
             }
-            getMapNpc(mapname).then((res) => {
+            return mapname
+        }
+    },
+    methods: {
+        changePage: function(i) {
+            getMapNpc(this.mapname,i).then((res) => {
+                this.data = this.cache = res.data.list;
+                this.total = res.data.total;
+                this.pages = res.data.pages;
+            });
+        },
+        appendPage: function(i) {
+            this.loading = true;
+            
+            getMapNpc(this.mapname,i).then((res) => {
                 this.loading = false;
-
                 this.data = this.cache = this.data.concat(res.data.list);
                 this.total = res.data.total;
                 this.pages = res.data.pages;
             });
         },
         searchNpc: function() {
-            if(!this.search){
-                this.data = this.cache
-                return 
+            if (!this.search) {
+                this.data = this.cache;
+                return;
             }
             getNpc(this.search).then((res) => {
                 this.loading = false;
 
-                this.data = res.data
+                this.data = res.data;
                 this.total = 1;
                 this.pages = 1;
             });
         },
-        isBoss : function (id){
-            return !!bossids.includes(id)
-        }
+        isBoss: function(id) {
+            return !!bossids.includes(id);
+        },
     },
-    filters: {
-        
-    },
+    filters: {},
     mounted: function() {
-        this.appendPage(1);
+        this.changePage(1);
         this.isSuper = User.getInfo().group > 8;
     },
 };

@@ -16,15 +16,7 @@
                 </i>
                 <img class="u-icon" src="../assets/img/iboss.png" />
 
-                <span class="u-id">
-                    <i class="u-logo"
-                        ><img
-                            svg-inline
-                            src="../assets/img/logo.svg"
-                        />JX3BOX</i
-                    >
-                    <span class="u-idn">ID:{{ npc.ID }}</span>
-                </span>
+                <Mark class="u-id" :value="'ID:' + npc.ID"/>
                 <div class="u-title">
                     <span class="u-name">{{ npc.Name }}</span>
                     <span class="u-name-add">

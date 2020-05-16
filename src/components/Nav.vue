@@ -2,7 +2,6 @@
     <nav class="m-fb-nav">
         <div class="m-nav-search" @click="stopPop">
             <el-input placeholder="搜索副本或首领名称" v-model="search" clearable>
-                <el-button slot="append" icon="el-icon-search"></el-button>
             </el-input>
         </div>
 

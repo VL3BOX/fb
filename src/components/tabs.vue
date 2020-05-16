@@ -4,6 +4,7 @@
             <span slot="label">
                 <i class="el-icon-collection"></i>
                 副本攻略
+                <span class="u-secret">开荒首发</span>
             </span>
         </el-tab-pane>
 
@@ -19,7 +20,7 @@
            <span slot="label">
                <i class="el-icon-key"></i>
                NPC数据
-               <span class="u-secret">密</span>
+               <span class="u-secret">重磅独家</span>
             </span>
         </el-tab-pane>
 
@@ -27,7 +28,7 @@
             <span slot="label">
                 <i class="el-icon-cpu"></i>
                 技能数据
-                <span class="u-secret">密</span>
+                <span class="u-secret">重磅独家</span>
             </span>
         </el-tab-pane>
 

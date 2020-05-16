@@ -10,11 +10,11 @@
             <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
         <ul class="m-npc-list" v-if="data.length" :loading="loading">
-            <li v-for="(npc, i) in data" class="u-item u-raw" :key="i">
+            <li v-for="(npc, i) in data" class="u-item" :key="i">
                 <i v-if="isBoss(npc.ID)" class="u-isBoss">
                     <img src="../assets/img/boss_mini.png" />
                 </i>
-                <img class="u-icon" :src="icon" />
+                <img class="u-icon" src="../assets/img/iboss.png" />
 
                 <span class="u-id">
                     <i class="u-logo"
@@ -262,9 +262,9 @@ export default {
         hasNextPage: function() {
             return this.total > 1 && this.page < this.pages;
         },
-        icon: function() {
-            return __iconPath + "icon/" + 1 + ".png";
-        },
+        // icon: function() {
+        //     return __iconPath + "icon/" + 1 + ".png";
+        // },
         mapname : function (){
             let mapname = "";
             let dotIndex = this.$store.state.fb.indexOf("·");

@@ -10,7 +10,8 @@ let store = {
         mode : 'list',
         fb : '',
         zlp : '',
-        pid : 0
+        pid : 0,
+        luaindex : {}
     },
     mutations: {
     },

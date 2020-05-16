@@ -1,21 +1,23 @@
 .m-fb-tabs{
     position: sticky;
-    .u-secret,.u-new{
+    .u-secret,.u-new,.u-pending{
         .fz(12px);
         .pr;top:-5px;
+        padding:0 4px;
+        .r(2px);
     }
     .u-secret{
-        color:#f00 !important;
+        background-color:#c00;
+        // color:#f00 !important;
+        color:#fff;
     }
     .u-new{
-        color:#49c10f !important;
+        background-color:#49c10f;
+        color:#fff;
     }
     .u-pending{
         background-color:#aaa;
         color:#fff;
-        .r(2px);
-        padding:1px 5px;
-        .fz(12px);
     }
     user-select: none;
 }

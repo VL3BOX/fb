@@ -13,7 +13,7 @@ Vue.use(VueRouter);
 
 const routes = [
     { name: "index", path: "/", component: Index },
-    { name: "index", path: "/index", component: Index },
+    { name: "list", path: "/index", component: Index },
     { name: "drop", path: "/drop", component: Drop },
     { name: "map", path: "/map", component: JMap },
     { name: "npc", path: "/npc", component: Npc },

@@ -26,6 +26,7 @@ import Extend from "@/components/Extend.vue";
 import list from "@/components/list.vue";
 import single from "@/components/single.vue";
 
+
 export default {
     name: "App",
     props: [],

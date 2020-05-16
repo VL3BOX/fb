@@ -33,7 +33,7 @@
         }
     }
     .u-list {
-        margin:0;
+        margin: 0;
         padding: 10px 0;
         user-select: none;
         // .none;
@@ -59,14 +59,33 @@
             background-color: #edf8fb;
             //color:@color-link;
         }
-        &.active{
+        &.active {
             .bold;
             background-color: #edf8fb;
             .r(2px);
         }
     }
 
-    .hidden{
+    .hidden {
         .none;
+    }
+}
+
+.m-nav-search {
+    .pr;
+    &:after {
+        content: "\e778";
+        font-family: element-icons !important;
+        speak: none;
+        font-style: normal;
+        font-weight: 400;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        vertical-align: baseline;
+        display: inline-block;
+        -webkit-font-smoothing: antialiased;
+        .pa;.rt(10px,12px);
+        color:#d1d3da;
     }
 }

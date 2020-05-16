@@ -12,8 +12,6 @@
                 <li v-for="(item,i) in info.detail.maps" :key="i">{{item.mode}}</li>
             </ul>
         </div>
-
-        <!-- TODO:相关应用，日志分析 -->
     </div>
 </template>
 

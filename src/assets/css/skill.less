@@ -70,7 +70,7 @@
     }
 
     .u-title{
-        .h(48px);
+        min-height:48px;
         .u-name{
             .fz(16px);
             color:#ECED03;
@@ -79,9 +79,8 @@
             .bold;
         }
         .u-damage{
-            white-space: nowrap;
-            overflow-x: auto;
             .mt(8px);
+            word-break: break-all;
 
             .u-label{
                 .mr(10px);
@@ -92,6 +91,7 @@
                 em{.none;}
                 b{.none;}
                 .mr(10px);
+                .mb(5px);
                 background-color:#eee;
                 strong{font-weight: normal;}
                 span{

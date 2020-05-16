@@ -36,17 +36,17 @@
                         <b class="u-level" v-if="npc.Level">{{ npc.Level }}</b>
                         <span v-if="npc.Title || npc.Level">&gt;</span>
                     </span>
-                </div>
-                <div class="u-base">
-                    <span class="u-atmap" v-if="npc.MapName"
-                        ><em>MapName</em>{{ npc.MapName }}</span
-                    >
-                    <span class="u-totation" v-if="npc._Notation"
-                        ><em>_Notation</em>{{ npc._Notation }}</span
-                    >
-                    <span class="u-intensity" v-if="npc.Intensity"
-                        >强度<em>Intensity</em>{{ npc.Intensity }}</span
-                    >
+                    <div class="u-base">
+                        <span class="u-atmap" v-if="npc.MapName"
+                            ><em>MapName</em>{{ npc.MapName }}</span
+                        >
+                        <span class="u-totation" v-if="npc._Notation"
+                            ><em>_Notation</em>{{ npc._Notation }}</span
+                        >
+                        <span class="u-intensity" v-if="npc.Intensity"
+                            >强度<em>Intensity</em>{{ npc.Intensity }}</span
+                        >
+                    </div>
                 </div>
                 <div class="u-primary">
                     <div class="u-life">
@@ -265,7 +265,7 @@ export default {
         // icon: function() {
         //     return __iconPath + "icon/" + 1 + ".png";
         // },
-        mapname : function (){
+        mapname: function() {
             let mapname = "";
             let dotIndex = this.$store.state.fb.indexOf("·");
             if (dotIndex >= 0) {
@@ -273,12 +273,12 @@ export default {
             } else {
                 mapname = this.$store.state.fb;
             }
-            return mapname
-        }
+            return mapname;
+        },
     },
     methods: {
         changePage: function(i) {
-            getMapNpc(this.mapname,i).then((res) => {
+            getMapNpc(this.mapname, i).then((res) => {
                 this.data = this.cache = res.data.list;
                 this.total = res.data.total;
                 this.pages = res.data.pages;
@@ -286,8 +286,8 @@ export default {
         },
         appendPage: function(i) {
             this.loading = true;
-            
-            getMapNpc(this.mapname,i).then((res) => {
+
+            getMapNpc(this.mapname, i).then((res) => {
                 this.loading = false;
                 this.data = this.cache = this.data.concat(res.data.list);
                 this.total = res.data.total;

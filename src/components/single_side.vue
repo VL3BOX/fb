@@ -1,6 +1,6 @@
 <template>
-    <div class="m-fb-extend">
-        
+    <div class="m-extend-single">
+        <Postauthor :author="author"/>
     </div>
 </template>
 
@@ -9,14 +9,23 @@ export default {
     name: "single_side",
     props: [],
     data: function() {
-        return {};
+        return {
+        };
     },
     computed: {
+        author : function (){
+            return this.$store.state.post.author
+        },
     },
-    methods: {},
+    methods: {
+        
+    },
+    filters : {
+    },
     mounted: function() {},
 };
 </script>
 
 <style lang="less">
+    // @import '../assets/css/author.less';
 </style>

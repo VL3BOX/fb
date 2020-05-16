@@ -11,7 +11,8 @@ let store = {
         fb : '',
         zlp : '',
         pid : 0,
-        luaindex : {}
+        luaindex : {},
+        post : {},
     },
     mutations: {
     },

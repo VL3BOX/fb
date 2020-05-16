@@ -12,7 +12,7 @@
             <span slot="label">
                 <i class="el-icon-trophy"></i>
                 副本成就
-                <span class="u-new">新</span>
+                <span class="u-new">新上线</span>
             </span>
         </el-tab-pane>
 
@@ -43,7 +43,7 @@
             <span slot="label">
                 <i class="el-icon-map-location"></i>
                 副本地图
-                <span class="u-new">新</span>
+                <span class="u-new">新上线</span>
             </span>
         </el-tab-pane>
 

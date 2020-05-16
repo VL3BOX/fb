@@ -24,7 +24,7 @@
 
         <ul class="m-skill-list" v-if="done" v-loading="loading">
             <li v-for="(skill, key) in data" class="u-item" :key="key">
-                <img class="u-icon" src="../assets/img/iboss.png" />
+                <img class="u-icon" src="../assets/img/iskill.png" />
                 <span class="u-id">
                     <i class="u-logo"
                         ><img
@@ -83,7 +83,7 @@
                 <el-collapse accordion class="u-call" v-if="skill.call.length">
                     <el-collapse-item>
                         <template slot="title">
-                            &raquo; 魔法属性
+                            ✿ 附加效果组
                         </template>
                         <div v-for="(g, i) in skill.call" :key="i">
                             <em>{{ g.call }}</em>

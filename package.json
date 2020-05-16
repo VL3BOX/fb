@@ -9,8 +9,10 @@
     "inspect": "vue inspect > output.js"
   },
   "dependencies": {
+    "@jx3box/jx3box-article-ui": "0.0.4",
+    "@jx3box/jx3box-comment-ui": "^1.2.0",
     "@jx3box/jx3box-common": "^4.1.0",
-    "@jx3box/jx3box-common-ui": "^0.4.0",
+    "@jx3box/jx3box-common-ui": "^0.7.1",
     "@jx3box/jx3box-data": "0.0.6",
     "axios": "^0.19.2",
     "core-js": "^3.4.3",

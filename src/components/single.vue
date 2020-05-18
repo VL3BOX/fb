@@ -60,7 +60,7 @@
         <div class="m-single-post">
             <el-divider content-position="left">JX3BOX</el-divider>
             <div class="m-single-content">
-                <Article :content="post.post_content" />
+                <Article :content="post.post_content" directorybox="#directory"/>
             </div>
         </div>
 
@@ -97,6 +97,7 @@
 <script>
 import { getPost } from "../service/getPost";
 import dateFormat from "../utils/dateFormat";
+import {__Links} from '@jx3box/jx3box-common/js/jx3box.json'
 export default {
     name: "single",
     props: [],
@@ -128,16 +129,17 @@ export default {
         if (this.$store.state.pid) {
             getPost(this.$store.state.pid)
                 .then((res) => {
-                    this.post = res.data.data.post;
-                    this.setting = res.data.data.post;
-                    this.meta = res.data.data.post.post_meta;
-                    this.author = res.data.data.author;
-                    this.$store.state.post = res.data.data;
+                    this.post = this.$store.state.post = res.data.data.post;
+                    this.meta = this.$store.state.meta = res.data.data.post.post_meta;
+                    this.setting = this.$store.state.setting = res.data.data.post;
+                    this.author = this.$store.state.author = res.data.data.author;
+                    this.$store.state.status = true
 
-                    this.$store.state.postloaded = true;
                     this.loading = false;
                 })
-                .then(() => {});
+                .catch((err) => {
+                    location.href = __Links.search
+                })
         }
     },
 };

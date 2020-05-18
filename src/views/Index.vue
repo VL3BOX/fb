@@ -38,7 +38,7 @@
                         <div class="u-metalist u-mode-list c-jx3fb-mode">
                             <strong>模式</strong>
                             <em>{{
-                                item.post.post_meta.fb_level.toString()
+                                item.post.post_meta.fb_level && item.post.post_meta.fb_level.toString()
                             }}</em>
                         </div>
                     </div>
@@ -147,7 +147,7 @@ export default {
             return dateFormat(new Date(val));
         },
     },
-    created: function() {
+    mounted: function() {
         let params = new URLSearchParams(location.search);
         this.subtype = params.get("fb_name");
         this.changePage(1);

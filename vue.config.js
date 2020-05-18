@@ -5,16 +5,16 @@ const Setting = require("./setting.json");
 
 module.exports = {
 
-    // devServer: {
-    //     proxy: {
-    //         "/api": {
-    //             target: process.env["DEV_SERVER"] == "true" ? "http://localhost:5160" : "https://server.jx3box.com",
-    //             onProxyReq: function (request) {
-    //                 request.setHeader("origin", "");
-    //             }
-    //         }
-    //     }
-    // },
+    devServer: {
+        proxy: {
+            "/api": {
+                target: process.env["DEV_SERVER"] == "true" ? "http://localhost:5160" : "https://server.jx3box.com",
+                onProxyReq: function (request) {
+                    request.setHeader("origin", "");
+                }
+            }
+        }
+    },
 
     //❤️ Multiple pages ~
     // pages:{
@@ -41,6 +41,7 @@ module.exports = {
 
         //BY github
         (process.env.STATIC_PATH === "github" && `${JX3BOX.__staticPath["github"]}${pkg.name}/`) || 
+        
         //BY jsdelivr
         (process.env.STATIC_PATH === "jsdelivr" && `${JX3BOX.__staticPath["jsdelivr"]}${pkg.name}@gh-pages/`) || 
 

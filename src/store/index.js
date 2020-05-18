@@ -6,13 +6,19 @@ Vue.use(Vuex);
 
 let store = {
     state: {
-        map,
         mode : 'list',
+        
+        map,
         fb : '',
         zlp : '',
-        pid : 0,
         luaindex : {},
+
+        pid : 0,
         post : {},
+        meta : {},
+        setting : {},
+        author : {},
+        status : false
     },
     mutations: {
     },

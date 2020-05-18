@@ -32,14 +32,6 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="击杀记录" name="rank">
-            <span slot="label">
-                <i class="el-icon-date"></i>
-                击杀排行
-                <span class="u-pending">击杀排行</span>
-            </span>
-        </el-tab-pane>
-
         <el-tab-pane label="副本背景" name="story">
             <span slot="label">
                 <i class="el-icon-film"></i>
@@ -60,6 +52,14 @@
             <span slot="label">
                 <i class="el-icon-present"></i>
                 副本掉落
+                <span class="u-pending">即将推出</span>
+            </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="击杀记录" name="rank">
+            <span slot="label">
+                <i class="el-icon-date"></i>
+                击杀排行
                 <span class="u-pending">即将推出</span>
             </span>
         </el-tab-pane>

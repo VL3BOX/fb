@@ -1,6 +1,7 @@
 <template>
-    <div class="m-extend-single">
-        <Postauthor :author="author"/>
+    <div class="m-extend-single" v-if="$store.state.status">
+        <Author :author="author"/>
+        <Authorposts :uid="uid"/>
     </div>
 </template>
 
@@ -14,8 +15,11 @@ export default {
     },
     computed: {
         author : function (){
-            return this.$store.state.post.author
+            return this.$store.state.author
         },
+        uid : function (){
+            return this.author.uid
+        }
     },
     methods: {
         

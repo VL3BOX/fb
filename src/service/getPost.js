@@ -1,9 +1,7 @@
 import axios from "axios";
 import {__server} from '@jx3box/jx3box-common/js/jx3box.json'
-// const API_LIST = __server + 'post/list'
-const API_LIST = 'http://localhost:5160/' + 'post/list'  //TODO:
-// const API_SINGLE = __server + 'post/find'  //TODO:
-const API_SINGLE = 'http://localhost:5160/' + 'post/find'  //TODO:
+const API_LIST = __server + 'post/list'
+const API_SINGLE = __server + 'post/find'
 
 function getPosts(params) {
     let query = {

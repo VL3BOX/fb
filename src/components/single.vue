@@ -14,16 +14,25 @@
                     <i class="u-icon-author2"
                         ><img svg-inline src="../assets/img/author.svg"
                     /></i>
-                    <a class="u-name" :href="authorLink">{{author.name}}</a>
+                    <a class="u-name" :href="authorLink">{{ author.name }}</a>
+                </div>
+
+                <div class="u-meta u-sub-block">
+                    <em class="u-label">首领</em>
+                    <span class="u-value u-boss-list">
+                        {{ meta.fb_boss.toString() }}
+                    </span>
+                </div>
+
+                <div class="u-meta u-sub-block">
+                    <em class="u-label">模式</em>
+                    <span class="u-value u-mode-list c-jx3fb-mode">
+                        {{ meta.fb_level.toString() }}
+                    </span>
                 </div>
 
                 <!-- 发布日期 -->
-                <span
-                    class="u-podate u-sub-block"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="发布日期"
-                >
+                <span class="u-podate u-sub-block" title="发布日期">
                     <i class="u-icon-podate"
                         ><img svg-inline src="../assets/img/podate.svg"
                     /></i>
@@ -31,69 +40,63 @@
                 </span>
 
                 <!-- 最后更新时间 -->
-                <span
-                    class="u-modate u-sub-block"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="最后更新"
-                >
+                <span class="u-modate u-sub-block" title="最后更新">
                     <i class="u-icon-modate"
                         ><img svg-inline src="../assets/img/modate.svg"
                     /></i>
                     <time>{{ post.post_modified | dateFormat }}</time>
                 </span>
-
-                <!-- 阅读次数 -->
-                <span class="u-views u-sub-block">
-                    <i class="u-icon-views"></i>
-                    <span></span>
-                </span>
             </div>
-
-            <div class="m-single-meta">
-            <li>
-                <em class="u-label">首领</em>
-                <div class="u-value u-boss-list">
-                    {{ meta.fb_boss.toString() }}
-                </div>
-            </li>
-            <li>
-                <em class="u-label">模式</em>
-                <div class="u-value u-mode-list c-jx3fb-mode">
-                    {{ meta.fb_level.toString() }}
-                </div>
-            </li>
-        </div>
         </header>
 
         <div class="m-single-prepend">
-            <!-- <el-divider content-position="left">作者摘要</el-divider> -->
             <div class="m-single-excerpt" v-if="post.post_excerpt">
+                <el-divider content-position="left">Excerpt</el-divider>
                 {{ post.post_excerpt }}
-                <Mark class="u-mark" value="作者摘要"/>                
+                <!-- <Mark class="u-mark" value="作者摘要"/>                 -->
             </div>
         </div>
 
         <div class="m-single-post">
+            <el-divider content-position="left">JX3BOX</el-divider>
             <div class="m-single-content">
-                <div class="c-article" v-html="post.post_content"></div>
+                <Article :content="post.post_content" />
             </div>
+        </div>
+
+        <div class="m-single-append">
+            <ins
+                class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-4388499329141185"
+                data-ad-slot="1787190081"
+                data-ad-format="auto"
+                data-full-width-responsive="true"
+            ></ins>
         </div>
 
         <div class="m-single-comment">
             <el-divider content-position="left">评论</el-divider>
-            <Comment :post-id="id"/>
+            <!-- TODO: -->
+            <!-- <Comment :post-id="id"/> -->
         </div>
+
+        <footer class="m-single-footer">
+            <ins
+                class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-4388499329141185"
+                data-ad-slot="1787190081"
+                data-ad-format="auto"
+                data-full-width-responsive="true"
+            ></ins>
+        </footer>
     </div>
 </template>
 
 <script>
 import { getPost } from "../service/getPost";
 import dateFormat from "../utils/dateFormat";
-
-
-// import '@jx3box/jx3box-article-ui/dist/css/article.css'
-
 export default {
     name: "single",
     props: [],
@@ -102,18 +105,18 @@ export default {
             post: {},
             setting: {},
             meta: {},
-            author : {},
+            author: {},
             loading: true,
-            url : location.href,
+            url: location.href,
         };
     },
     computed: {
-        authorLink : function (){
-            return '/author/?uid=' + this.author.uid
+        authorLink: function() {
+            return "/author/?uid=" + this.author.uid;
         },
-        id : function (){
-            return this.$store.state.pid
-        }
+        id: function() {
+            return this.$store.state.pid;
+        },
     },
     methods: {},
     filters: {
@@ -122,17 +125,19 @@ export default {
         },
     },
     mounted: function() {
-        if(this.$store.state.pid){
-            getPost(this.$store.state.pid).then((res) => {
-                this.post = res.data.data.post;
-                this.setting = res.data.data.post;
-                this.meta = res.data.data.post.post_meta;
-                this.author = res.data.data.author
-                this.$store.state.post = res.data.data
+        if (this.$store.state.pid) {
+            getPost(this.$store.state.pid)
+                .then((res) => {
+                    this.post = res.data.data.post;
+                    this.setting = res.data.data.post;
+                    this.meta = res.data.data.post.post_meta;
+                    this.author = res.data.data.author;
+                    this.$store.state.post = res.data.data;
 
-                this.$store.state.postloaded = true
-                this.loading = false;
-            });
+                    this.$store.state.postloaded = true;
+                    this.loading = false;
+                })
+                .then(() => {});
         }
     },
 };

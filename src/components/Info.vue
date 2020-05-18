@@ -1,6 +1,8 @@
 <template>
     <div class="m-info">
-        最新副本开荒攻略、副本成就攻略、NPC元数据、技能解包，你要的一切都在这里，骨灰PVE党的家园!
+        <a href="/fb/#/npc">🍭 最新NPC数据上线</a>
+        <a href="/fb/#/skill">🍬 最新技能解包上线</a>
+        <!-- <router-link to="/rank">⚽️ 五甲冲榜活动进行中</router-link> -->
     </div>
 </template>
 
@@ -18,9 +20,5 @@ export default {
 </script>
 
 <style lang="less">
-.m-info{
-    white-space: nowrap;
-    overflow-x:auto;
-    .fz(13px);
-}
+    @import '../assets/css/info.less';
 </style>

@@ -25,15 +25,8 @@
         <ul class="m-skill-list" v-if="done" v-loading="loading">
             <li v-for="(skill, key) in data" class="u-item" :key="key">
                 <img class="u-icon" src="../assets/img/iskill.png" />
-                <span class="u-id">
-                    <i class="u-logo"
-                        ><img
-                            svg-inline
-                            src="../assets/img/logo.svg"
-                        />JX3BOX</i
-                    >
-                    <!-- <span class="u-idn">ID:{{ skill.ID }}</span> -->
-                </span>
+
+                <Mark class="u-mark"/>
 
                 <div class="u-title">
                     <span class="u-name">{{ key }}</span>

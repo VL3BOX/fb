@@ -25,7 +25,7 @@ import Nav from "@/components/Nav.vue";
 import Extend from "@/components/Extend.vue";
 import list from "@/components/list.vue";
 import single from "@/components/single.vue";
-
+import getRewrite from './utils/getRewrite'
 
 export default {
     name: "App",
@@ -45,8 +45,8 @@ export default {
         this.params = new URLSearchParams(location.search);
         this.$store.state.zlp = this.params.get("fb_zlp") || '世外蓬莱'
         this.$store.state.fb = this.params.get("fb_name") || '范阳夜变'
-        this.$store.state.pid = this.params.get("pid")
-        this.$store.state.mode = this.params.get("pid") ? 'single' : 'list'
+        this.$store.state.pid = this.params.get("pid") || getRewrite('pid')
+        this.$store.state.mode = this.$store.state.pid ? 'single' : 'list'
     },
     components: {
         Info,

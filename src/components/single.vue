@@ -78,14 +78,7 @@
         </div>
 
         <div class="m-single-append">
-            <ins
-                class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-4388499329141185"
-                data-ad-slot="1787190081"
-                data-ad-format="auto"
-                data-full-width-responsive="true"
-            ></ins>
+            
         </div>
 
         <div class="m-single-comment">

@@ -232,7 +232,7 @@
 <script>
 import bossids from "@jx3box/jx3box-data/data/fb/fb_boss_ids.json";
 import { getMapNpc, getNpc } from "../service/getNpc";
-import { __iconPath } from "@jx3box/jx3box-common/js/jx3box";
+import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
 import User from "@jx3box/jx3box-common/js/user";
 const bossicon = [9482, 9461, 9462, 8591, 8592, 8593, 8594, 8595, 8596, 8597];
 export default {
@@ -255,7 +255,7 @@ export default {
             return this.total > 1 && this.page < this.pages;
         },
         // icon: function() {
-        //     return __iconPath + "icon/" + 1 + ".png";
+        //     return __ossMirror + "icon/" + 1 + ".png";
         // },
         mapname: function() {
             let mapname = "";

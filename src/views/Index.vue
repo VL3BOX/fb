@@ -87,7 +87,7 @@
 import lodash from 'lodash'
 import { getPosts } from "../service/getPost";
 import dateFormat from "../utils/dateFormat";
-import { __imgPath } from "@jx3box/jx3box-common/js/jx3box";
+import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
 export default {
     name: "Index",
     props: [],
@@ -107,7 +107,7 @@ export default {
         },
         defaultBanner: function() {
             return (
-                __imgPath +
+                __ossMirror +
                 this.$store.state.map[this.$store.state.zlp]["dungeon"][
                     this.$store.state.fb
                 ]["icon"]

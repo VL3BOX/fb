@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {__imgPath} from '@jx3box/jx3box-common/js/jx3box'
+import {__ossMirror} from '@jx3box/jx3box-common/js/jx3box'
 export default {
     name: "list_side",
     props: [],
@@ -42,7 +42,7 @@ export default {
             return this.$store.state.map[this.zlp]["dungeon"][this.fb];
         },
         img : function (){
-            return __imgPath + this.info.icon
+            return __ossMirror + this.info.icon
         },
         introduce : function (){
             return this.info.detail.introduce.replace(/\\n/g,'<br/>')

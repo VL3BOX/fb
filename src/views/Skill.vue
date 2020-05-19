@@ -104,7 +104,7 @@
 <script>
 import { getLuaIndex, getLua } from "../service/getSkill";
 import keymap from "../service/keymap.json";
-import { __iconPath } from "@jx3box/jx3box-common/js/jx3box";
+import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
 import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "Skill",

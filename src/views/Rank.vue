@@ -3,7 +3,7 @@
         <el-alert title="即将开启，敬请期待" type="warning" center show-icon>
         </el-alert>
 
-        <el-row :gutter="20" class="m-fb-rank-box">
+        <!-- <el-row :gutter="20" class="m-fb-rank-box">
             <el-col :span="6" class="m-fb-rank-group"
                 ><h5 class="u-title">周贽·25人英雄</h5>
                 <el-collapse v-model="activeName" accordion>
@@ -102,7 +102,7 @@
                     </el-collapse-item>
                 </el-collapse></el-col
             >
-        </el-row>
+        </el-row> -->
     </div>
 </template>
 

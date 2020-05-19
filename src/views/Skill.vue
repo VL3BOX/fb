@@ -1,5 +1,5 @@
 <template>
-    <div class="m-fb-skill">
+    <div class="m-fb-skill" v-loading="loading">
         <!-- BOSS切换 -->
         <div class="m-skill-index">
             <el-tabs v-model="focus" type="card" @tab-click="loadLua">
@@ -22,7 +22,7 @@
             <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input> -->
 
-        <ul class="m-skill-list" v-if="done" v-loading="loading">
+        <ul class="m-skill-list" v-if="!loading" >
             <li v-for="(skill, key) in data" class="u-item" :key="key">
                 <img class="u-icon" src="../assets/img/iskill.png" />
 
@@ -118,7 +118,6 @@ export default {
             cache: {},
             luaindex: {},
             data: {},
-            done: false,
             keymap,
         };
     },
@@ -142,9 +141,8 @@ export default {
         loadLua: function() {
             this.loading = true;
             getLua(this.fb, this.focus).then((res) => {
-                this.loading = false;
-                this.done = true;
                 this.data = res.data;
+                this.loading = false;
             });
         },
     },

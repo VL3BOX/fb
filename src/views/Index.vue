@@ -97,7 +97,7 @@ export default {
             total: 0,
             page: 1,
             pages: 1,
-            loading: false,
+            loading: true,
             subtype: "",
         };
     },
@@ -116,14 +116,16 @@ export default {
     },
     methods: {
         changePage: function(i) {
+            this.loading = true;
             getPosts({
                 page: i,
                 subtype: this.subtype,
             }).then((res) => {
+                window.scrollTo(0,0)
                 this.data = res.data.data.list;
                 this.total = res.data.data.total;
                 this.pages = res.data.data.pages;
-                window.scrollTo(0,0)
+                this.loading = false;
             });
         },
         appendPage: function(i) {
@@ -132,11 +134,10 @@ export default {
                 page: i,
                 subtype: this.subtype,
             }).then((res) => {
-                this.loading = false;
-
                 this.data = this.data.concat(res.data.data.list);
                 this.total = res.data.data.total;
                 this.pages = res.data.data.pages;
+                this.loading = false;
             });
         },
         buildBanner: function(val) {

@@ -3,47 +3,54 @@
         <el-tab-pane label="副本攻略" name="index">
             <span slot="label">
                 <i class="el-icon-collection"></i>
-                副本攻略
-                <span class="u-secret">开荒首发</span>
+                <b>副本攻略</b>
+                <em class="u-secret">开荒首发</em>
             </span>
         </el-tab-pane>
 
         <el-tab-pane label="副本成就" name="cj">
             <span slot="label">
                 <i class="el-icon-trophy"></i>
-                副本成就
-                <span class="u-new">新上线</span>
+                <b>副本成就</b>   
+                <em class="u-new">最新同步</em>
             </span>
         </el-tab-pane>
 
         <el-tab-pane label="NPC数据" name="npc">
            <span slot="label">
                <i class="el-icon-key"></i>
-               NPC数据
-               <span class="u-secret">重磅独家</span>
+               <b>NPC数据</b>
+               <em class="u-secret">重磅独家</em>
             </span>
         </el-tab-pane>
 
         <el-tab-pane label="技能数据" name="skill">
             <span slot="label">
                 <i class="el-icon-cpu"></i>
-                技能数据
-                <span class="u-secret">重磅独家</span>
+                <b>技能数据</b>
+                <em class="u-secret">重磅独家</em>
+            </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="全服排行" name="rank">
+            <span slot="label">
+                <i class="el-icon-date"></i>
+                <b>全服排行</b>
+                <em class="u-ready">即将开启</em>
             </span>
         </el-tab-pane>
 
         <el-tab-pane label="副本背景" name="story">
             <span slot="label">
                 <i class="el-icon-film"></i>
-                副本背景
+                <b>副本背景</b>
             </span>
         </el-tab-pane>
 
         <el-tab-pane label="副本地图" name="map">
             <span slot="label">
                 <i class="el-icon-map-location"></i>
-                副本地图
-                <span class="u-new">新上线</span>
+                <b>副本地图</b>
             </span>
         </el-tab-pane>
 
@@ -51,18 +58,11 @@
         <el-tab-pane label="副本掉落" name="drop">
             <span slot="label">
                 <i class="el-icon-present"></i>
-                副本掉落
-                <span class="u-pending">即将推出</span>
+                <b>副本掉落</b>
+                <em class="u-pending">即将推出</em>
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="击杀记录" name="rank">
-            <span slot="label">
-                <i class="el-icon-date"></i>
-                击杀排行
-                <span class="u-pending">即将推出</span>
-            </span>
-        </el-tab-pane>
     </el-tabs>
 </template>
 

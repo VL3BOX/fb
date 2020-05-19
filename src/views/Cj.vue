@@ -1,5 +1,5 @@
 <template>
-    <div class="m-fb-cj">
+    <div class="m-fb-cj" v-loading="loading">
         <div class="m-cj-list" v-if="data.length">
             <a
                 class="m-cj-item"
@@ -59,7 +59,7 @@ export default {
             total: 0,
             page: 1,
             pages: 1,
-            loading: false,
+            loading: true,
         };
     },
     computed: {
@@ -77,20 +77,22 @@ export default {
     },
     methods: {
         changePage: function(i) {
+            this.loading = true;
             getCJ(this.fb, i).then((res) => {
+                window.scrollTo(0,0)
                 this.data = res.data.data.achievements;
                 this.total = res.data.data.total;
                 this.pages = res.data.data.last_page;
-                window.scrollTo(0,0)
+                this.loading = false;
             });
         },
         appendPage: function(i) {
             this.loading = true;
             getCJ(this.fb, i).then((res) => {
-                this.loading = false;
                 this.data = this.data.concat(res.data.data.achievements);
                 this.total = res.data.data.total;
                 this.pages = res.data.data.last_page;
+                this.loading = false;
             });
         },
     },

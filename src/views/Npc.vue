@@ -1,5 +1,5 @@
 <template>
-    <div class="m-fb-npc">
+    <div class="m-fb-npc" v-loading="loading">
         <el-input
             class="m-npc-search"
             placeholder="请输入NPC名称或ID"
@@ -9,7 +9,7 @@
             <template slot="prepend">NPC</template>
             <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
-        <ul class="m-npc-list" v-if="data.length" :loading="loading">
+        <ul class="m-npc-list" v-if="data.length" >
             <li v-for="(npc, i) in data" class="u-item" :key="i">
                 <i v-if="isBoss(npc.ID)" class="u-isBoss">
                     <img src="../assets/img/boss_mini.png" />
@@ -244,7 +244,7 @@ export default {
             total: 0,
             page: 1,
             pages: 1,
-            loading: false,
+            loading: true,
             isSuper: false,
             search: "",
             cache: [],
@@ -270,21 +270,22 @@ export default {
     },
     methods: {
         changePage: function(i) {
+            this.loading = true;
             getMapNpc(this.mapname, i).then((res) => {
+                window.scrollTo(0,0)
                 this.data = this.cache = res.data.list;
                 this.total = res.data.total;
                 this.pages = res.data.pages;
-                window.scrollTo(0,0)
+                this.loading = false;
             });
         },
         appendPage: function(i) {
             this.loading = true;
-
             getMapNpc(this.mapname, i).then((res) => {
-                this.loading = false;
                 this.data = this.cache = this.data.concat(res.data.list);
                 this.total = res.data.total;
                 this.pages = res.data.pages;
+                this.loading = false;
             });
         },
         searchNpc: function() {
@@ -292,12 +293,12 @@ export default {
                 this.data = this.cache;
                 return;
             }
+            this.loading = true;
             getNpc(this.search).then((res) => {
-                this.loading = false;
-
                 this.data = res.data;
                 this.total = 1;
                 this.pages = 1;
+                this.loading = false;
             });
         },
         isBoss: function(id) {

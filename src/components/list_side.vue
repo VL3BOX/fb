@@ -12,6 +12,7 @@
                 <li v-for="(item,i) in info.detail.maps" :key="i">{{item.mode}}</li>
             </ul>
         </div>
+        <!-- TODO:排行榜 -->
         <!-- <ins 
             class="adsbygoogle"
             style="display:block;max-width:100%;overflow:hidden;"

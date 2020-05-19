@@ -46,6 +46,19 @@
                     /></i>
                     <time>{{ post.post_modified | dateFormat }}</time>
                 </span>
+
+                <!-- 编辑 -->
+                <a class="u-edit u-sub-block" :href="editLink" v-if="showEdit">
+                    <i class="u-icon-edit el-icon-edit-outline"></i>
+                    <span>编辑</span>
+                </a>
+
+            </div>
+
+            <div class="m-single-panel">
+                <!-- 收藏 -->
+                <el-button size="mini" type="primary" disabled><i class="el-icon-star-off"></i><span>收藏</span></el-button>
+                <el-button size="mini" type="primary" disabled><i class="el-icon-bell"></i><span>订阅</span></el-button>
             </div>
         </header>
 
@@ -77,8 +90,7 @@
 
         <div class="m-single-comment">
             <el-divider content-position="left">评论</el-divider>
-            <!-- TODO: -->
-            <!-- <Comment :post-id="id"/> -->
+            <Comment :post-id="id"/>
         </div>
 
         <footer class="m-single-footer">
@@ -98,6 +110,8 @@
 import { getPost } from "../service/getPost";
 import dateFormat from "../utils/dateFormat";
 import {__Links} from '@jx3box/jx3box-common/js/jx3box.json'
+import {authorLink,editLink} from '@jx3box/jx3box-common/js/utils.js'
+import User from '@jx3box/jx3box-common/js/user.js'
 export default {
     name: "single",
     props: [],
@@ -112,14 +126,22 @@ export default {
         };
     },
     computed: {
-        authorLink: function() {
-            return "/author/?uid=" + this.author.uid;
+        authorLink: function (){
+            return authorLink(this.author.uid)
+        },
+        editLink : function (){
+            return editLink(this.post.post_type,this.post.ID)
         },
         id: function() {
             return this.$store.state.pid;
         },
+        showEdit : function (){
+            return this.post.post_author == User.getInfo().uid || User.getInfo().group > 60
+        }
     },
-    methods: {},
+    methods: {
+        
+    },
     filters: {
         dateFormat: function(val) {
             return dateFormat(new Date(val));

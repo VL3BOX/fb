@@ -26,8 +26,7 @@
                             <strong>首领</strong>
                             <em>
                                 <b
-                                    v-for="(c, i) in item.post.post_meta
-                                        .fb_boss"
+                                    v-for="(c, i) in format(item.post,'post_meta.fb_boss')"
                                     :key="i"
                                 >
                                     {{ c }}
@@ -38,7 +37,7 @@
                         <div class="u-metalist u-mode-list c-jx3fb-mode">
                             <strong>模式</strong>
                             <em>{{
-                                item.post.post_meta.fb_level && item.post.post_meta.fb_level.toString()
+                                format(item.post,'post_meta.fb_level') + ''
                             }}</em>
                         </div>
                     </div>
@@ -85,6 +84,7 @@
 </template>
 
 <script>
+import lodash from 'lodash'
 import { getPosts } from "../service/getPost";
 import dateFormat from "../utils/dateFormat";
 import { __imgPath } from "@jx3box/jx3box-common/js/jx3box";
@@ -123,6 +123,7 @@ export default {
                 this.data = res.data.data.list;
                 this.total = res.data.data.total;
                 this.pages = res.data.data.pages;
+                window.scrollTo(0,0)
             });
         },
         appendPage: function(i) {
@@ -141,6 +142,14 @@ export default {
         buildBanner: function(val) {
             return val ? val : this.defaultBanner;
         },
+        format : function (parent,key){
+            let val = lodash.get(parent,key)
+            if(val.length){
+                return val
+            }else{
+                return []
+            }
+        }
     },
     filters: {
         dateFormat: function(val) {

@@ -274,6 +274,7 @@ export default {
                 this.data = this.cache = res.data.list;
                 this.total = res.data.total;
                 this.pages = res.data.pages;
+                window.scrollTo(0,0)
             });
         },
         appendPage: function(i) {

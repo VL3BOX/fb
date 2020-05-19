@@ -81,6 +81,7 @@ export default {
                 this.data = res.data.data.achievements;
                 this.total = res.data.data.total;
                 this.pages = res.data.data.last_page;
+                window.scrollTo(0,0)
             });
         },
         appendPage: function(i) {

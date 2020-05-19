@@ -20,14 +20,14 @@
                 <div class="u-meta u-sub-block">
                     <em class="u-label">首领</em>
                     <span class="u-value u-boss-list">
-                        {{ meta.fb_boss.toString() }}
+                        {{ format(meta,'fb_boss')}}
                     </span>
                 </div>
 
                 <div class="u-meta u-sub-block">
                     <em class="u-label">模式</em>
                     <span class="u-value u-mode-list c-jx3fb-mode">
-                        {{ meta.fb_level.toString() }}
+                        {{ format(meta,'fb_level') }}
                     </span>
                 </div>
 
@@ -57,8 +57,8 @@
 
             <div class="m-single-panel">
                 <!-- 收藏 -->
-                <el-button size="mini" type="primary" disabled><i class="el-icon-star-off"></i><span>收藏</span></el-button>
-                <el-button size="mini" type="primary" disabled><i class="el-icon-bell"></i><span>订阅</span></el-button>
+                <el-button size="mini" type="primary" disabled title="重构中.."><i class="el-icon-star-off"></i><span>收藏</span></el-button>
+                <el-button size="mini" type="primary" disabled title="即将推出.."><i class="el-icon-bell"></i><span>订阅</span></el-button>
             </div>
         </header>
 
@@ -107,6 +107,7 @@
 </template>
 
 <script>
+import lodash from 'lodash'
 import { getPost } from "../service/getPost";
 import dateFormat from "../utils/dateFormat";
 import {__Links} from '@jx3box/jx3box-common/js/jx3box.json'
@@ -140,7 +141,14 @@ export default {
         }
     },
     methods: {
-        
+        format : function (parent,key){
+            let val = lodash.get(parent,key)
+            if(Array.isArray(val)){
+                return val.toString()
+            }else{
+                return val
+            }
+        }
     },
     filters: {
         dateFormat: function(val) {

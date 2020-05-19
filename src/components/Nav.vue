@@ -1,7 +1,7 @@
 <template>
     <nav class="m-fb-nav">
-        <list_nav v-if="mode == 'list'"/>
         <single_nav v-if="mode == 'single'" />
+        <list_nav/>
     </nav>
 </template>
 

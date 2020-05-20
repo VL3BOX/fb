@@ -9,7 +9,7 @@
             <template slot="prepend">NPC</template>
             <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
-        <ul class="m-npc-list" v-if="data.length" >
+        <ul class="m-npc-list" v-if="data.length">
             <li v-for="(npc, i) in data" class="u-item" :key="i">
                 <i v-if="isBoss(npc.ID)" class="u-isBoss">
                     <img src="../assets/img/boss_mini.png" />
@@ -276,8 +276,9 @@ export default {
                 this.data = this.cache = res.data.list;
                 this.total = res.data.total;
                 this.pages = res.data.pages;
+            }).finally(() => {
                 this.loading = false;
-            });
+            })
         },
         appendPage: function(i) {
             this.loading = true;
@@ -285,8 +286,9 @@ export default {
                 this.data = this.cache = this.data.concat(res.data.list);
                 this.total = res.data.total;
                 this.pages = res.data.pages;
+            }).finally(() => {
                 this.loading = false;
-            });
+            })
         },
         searchNpc: function() {
             if (!this.search) {
@@ -298,8 +300,9 @@ export default {
                 this.data = res.data;
                 this.total = 1;
                 this.pages = 1;
+            }).finally(() => {
                 this.loading = false;
-            });
+            })
         },
         isBoss: function(id) {
             return !!bossids.includes(id);

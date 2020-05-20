@@ -22,11 +22,11 @@
             <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input> -->
 
-        <ul class="m-skill-list" v-if="!loading" >
+        <ul class="m-skill-list" v-if="!empty">
             <li v-for="(skill, key) in data" class="u-item" :key="key">
                 <img class="u-icon" src="../assets/img/iskill.png" />
 
-                <Mark class="u-mark"/>
+                <Mark class="u-mark" />
 
                 <div class="u-title">
                     <span class="u-name">{{ key }}</span>
@@ -57,7 +57,11 @@
                 </div>
 
                 <div class="u-props" v-if="skill.props.length">
-                    <div class="u-prop" v-for="(g, i) in skill.props" :key="i">
+                    <div
+                        class="u-prop"
+                        v-for="(g, i) in skill.props"
+                        :key="i"
+                    >
                         <b>{{
                             keymap[g.prop] ? keymap[g.prop].desc : g.prop
                         }}</b>
@@ -73,7 +77,11 @@
                     </div>
                 </div>
 
-                <el-collapse accordion class="u-call" v-if="skill.call.length">
+                <el-collapse
+                    accordion
+                    class="u-call"
+                    v-if="skill.call.length"
+                >
                     <el-collapse-item>
                         <template slot="title">
                             ✿ 附加效果组
@@ -119,6 +127,7 @@ export default {
             luaindex: {},
             data: {},
             keymap,
+            empty : false
         };
     },
     computed: {
@@ -133,17 +142,18 @@ export default {
         valueFilter: function(val) {
             return Array.isArray(val) ? val.join(" ") : val;
         },
-        propTips : function (key){
-            return keymap[key] ? keymap[key]['remark'] : key
-        }
+        propTips: function(key) {
+            return keymap[key] ? keymap[key]["remark"] : key;
+        },
     },
     methods: {
         loadLua: function() {
             this.loading = true;
             getLua(this.fb, this.focus).then((res) => {
                 this.data = res.data;
+            }).finally(() => {
                 this.loading = false;
-            });
+            })
         },
     },
     mounted: function() {
@@ -153,11 +163,16 @@ export default {
                 this.luaindex = this.$store.state.luaindex = res.data;
             })
             .then(() => {
-                this.focus = this.subnav[0];
+                if(Object.keys(this.luaindex).includes(this.fb)){
+                    this.focus = this.subnav[0];
+                    this.loadLua();
+                }else{
+                    this.loading = false
+                    this.empty = true
+                }
+            }).catch((err) => {
+                console.log(err)
             })
-            .then(() => {
-                this.loadLua();
-            });
     },
 };
 </script>

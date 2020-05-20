@@ -125,8 +125,9 @@ export default {
                 this.data = res.data.data.list;
                 this.total = res.data.data.total;
                 this.pages = res.data.data.pages;
+            }).finally(() => {
                 this.loading = false;
-            });
+            })
         },
         appendPage: function(i) {
             this.loading = true;
@@ -137,8 +138,9 @@ export default {
                 this.data = this.data.concat(res.data.data.list);
                 this.total = res.data.data.total;
                 this.pages = res.data.data.pages;
+            }).finally(() => {
                 this.loading = false;
-            });
+            })
         },
         buildBanner: function(val) {
             return val ? val : this.defaultBanner;

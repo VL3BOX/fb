@@ -88,8 +88,9 @@ export default {
                 this.data = res.data.data.achievements;
                 this.total = res.data.data.total;
                 this.pages = res.data.data.last_page;
+            }).finally(() => {
                 this.loading = false;
-            });
+            })
         },
         appendPage: function(i) {
             this.loading = true;
@@ -97,8 +98,9 @@ export default {
                 this.data = this.data.concat(res.data.data.achievements);
                 this.total = res.data.data.total;
                 this.pages = res.data.data.last_page;
+            }).finally(() => {
                 this.loading = false;
-            });
+            })
         },
     },
     mounted: function() {

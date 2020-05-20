@@ -7,7 +7,7 @@ function getLuaIndex() {
     return axios.get(API_INDEX);
 }
 function getLua(fb,boss) {
-    return axios.get(`${API_BOSS}${fb}/${boss}.json`);
+    return axios.get(`${API_BOSS}${fb}/${boss}.json?=` + Date.now());
 }
 
 export { getLuaIndex, getLua };

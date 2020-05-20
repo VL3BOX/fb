@@ -4,8 +4,9 @@
             <a
                 class="m-cj-item"
                 v-for="(item, i) in data"
-                :href="item.ID"
+                :href="item.ID | url"
                 :key="i"
+                target="_blank"
             >
                 <img class="u-icon" :src="item.IconID | icon" />
                 <span class="u-title">{{ item.Name }}</span>
@@ -49,7 +50,7 @@
 
 <script>
 import { getCJ } from "../service/getCJ";
-import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
+import { __ossMirror,__v2 } from "@jx3box/jx3box-common/js/jx3box";
 export default {
     name: "Cj",
     props: [],
@@ -74,6 +75,10 @@ export default {
         icon: function(id) {
             return __ossMirror + "icon/" + id + ".png";
         },
+        url : function (id){
+            // TODO:
+            return __v2 + 'cj/#/view/' + id
+        }
     },
     methods: {
         changePage: function(i) {

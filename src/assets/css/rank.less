@@ -1,18 +1,57 @@
 .m-fb-rank-group{
 
-    .el-collapse-item__header{
-        .pr;
-    }
 
     .u-title{
+        .x;
+        font-weight:300;
+        font-size:32px;
+    }
 
+    .u-list{
+        padding:0;
+        margin:0;
+
+        li{
+            list-style: none;
+            border-bottom:1px solid #ebeef5;
+            .fz(13px,48px);
+            .h(48px);
+            display: flex;
+            justify-content:space-between;
+        }
+    }
+
+    .u-order{
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        background-color:#eee;
+        .fz(16px);
+        .dbi;.y(top);
+        width:40px;
+        .x;
+        .mr(10px);
+
+        &.t1,&.t2,&.t3{
+            color:#fff;
+        }
+
+        &.t1{
+            background-color:#fc3c3c;
+        }
+
+        &.t2{
+            background-color:#fba524;
+        }
+
+        &.t3{
+            background-color:@primary;
+        }
     }
 
     .u-team{
         .fz(13px);
-        &:after{
-            content:"@"
-        }
+        // &:after{
+        //     content:"@"
+        // }
     }
 
     .u-server{
@@ -22,11 +61,21 @@
     .u-date{
         .fz(12px);
         color:#888;
-        .pa;.rt(30px,0);
+        // .pa;.rt(30px,0);
+        .ml(20px);
+    }
+
+    .u-important{
+        color:#f00;
+    }
+
+    .u-big{
+        font-size:16px;
     }
 
     .u-cost{
         .fz(12px);
         color:#888;
+        .fr;
     }
 }

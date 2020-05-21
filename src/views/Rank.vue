@@ -50,6 +50,7 @@
 // 25英雄 7525,7526,7527,7528,7529
 import { getDateRank, getSpeedRank } from "../service/getRank";
 import moment from "moment";
+// import mock from '../mock/rank.json'
 
 export default {
     name: "Rank",
@@ -91,13 +92,14 @@ export default {
             // 新请求
             getDateRank(this.list[i])
                 .then((res) => {
-                    this.rank[i] = res.data.data;
+                    this.rank.splice(i,1,res.data.data)
                 })
                 .catch((err) => {
                     console.log(err);
                 })
                 .finally(() => {
                     this.loading = false;
+                    // this.rank.splice(i,1,mock)
                 });
         },
         highlight: function(i) {

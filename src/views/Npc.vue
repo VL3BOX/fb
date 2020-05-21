@@ -291,17 +291,19 @@ export default {
                 }
                 judge = this.npcFilterCheckboxValue.includes(npcType)
                 
-                // 判断搜索
-                if (!this.search) {
-                    judge = judge && true
-                } else {
-                    judge = judge && npc.Name.includes(this.search.replace(/\ /g, ''))
-                }
-                
                 // 判断map
                 let thisMapId = mapids[npc.MapName]
                 if (thisMapId !== this.difficultyRadioValue) {
                     judge = false
+                }
+                
+                // 判断搜索
+                if (!this.search) {
+                    judge = judge && true
+                } else {
+                    let searchWord = this.search.replace(/\ /g, '')
+                    judge = judge && npc.Name && npc.Name.includes(searchWord) || npc.ID && npc.ID.toString() === searchWord
+                    // 特别的，如果是id搜索有匹配的话，无视用户的其他筛选选项
                 }
                 
                 return judge

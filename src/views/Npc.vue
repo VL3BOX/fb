@@ -228,6 +228,7 @@ import { getMapNpc, getNpc } from '../service/getNpc';
 import { __ossMirror } from '@jx3box/jx3box-common/js/jx3box';
 import User from '@jx3box/jx3box-common/js/user';
 import { axios } from '../service/axios/api.js';
+import { getDB } from '../service/getDB';
 const bossicon = [9482, 9461, 9462, 8591, 8592, 8593, 8594, 8595, 8596, 8597];
 export default {
     name: 'Npc',
@@ -421,7 +422,7 @@ export default {
         },
         getVersion() {
             this.loading = true;
-            axios('https://node.jx3box.com')
+            getDB()
                 .then(res => {
                     this.version = res.version;
                 })

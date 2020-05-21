@@ -24,7 +24,7 @@ export function getLocalForage(storeName, key, cb) {
     });
     localForage.getItem(key, (err, value) => {
         cb(value, err)
-    }) // 不知道为什么 源定义的err和value是这个顺序 但是我希望它反过来，所以上面下面反了一下
+    })
 }
 
 export function removeLocalForage(key, cb, cb2) {

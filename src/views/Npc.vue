@@ -17,7 +17,7 @@
             </el-checkbox-group>
         </div>
         <ul class="m-npc-list" v-if="data.length">
-            <li v-for="(npc, i) in data" class="u-item" :key="i">
+            <li v-for="(npc, i) in data" class="u-item" :key="npc+i">
                 <i v-if="isBoss(npc.ID)" class="u-isBoss"><img src="../assets/img/boss_mini.png" /></i>
                 <img class="u-icon" src="../assets/img/iboss.png" />
 
@@ -223,11 +223,11 @@
 
 <script>
 import bossids from '@jx3box/jx3box-data/data/fb/fb_boss_ids.json';
+import mapids from '@jx3box/jx3box-data/data/fb/fb_map_name2id.json';
 import { getMapNpc, getNpc } from '../service/getNpc';
 import { __ossMirror } from '@jx3box/jx3box-common/js/jx3box';
 import User from '@jx3box/jx3box-common/js/user';
 import { axios } from '../service/axios/api.js';
-import { mapList } from '../assets/js/mapList.js';
 const bossicon = [9482, 9461, 9462, 8591, 8592, 8593, 8594, 8595, 8596, 8597];
 export default {
     name: 'Npc',
@@ -244,6 +244,7 @@ export default {
             isSuper: false,
             search: '',
             cache: [],
+
             difficultyRadioValue: 0,
             difficultyRadios: [],
             npcFilterCheckboxValue: ['boss'],
@@ -298,7 +299,7 @@ export default {
                 }
                 
                 // 判断map
-                let thisMapId = mapList[npc.MapName]
+                let thisMapId = mapids[npc.MapName]
                 if (thisMapId !== this.difficultyRadioValue) {
                     judge = false
                 }

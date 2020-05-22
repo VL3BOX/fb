@@ -14,7 +14,7 @@ const API_MAP = __node + "npc/map/";
 const API_MAP_ALL_NPC = __node + "npc2/"
 const API_NAME = __node + "npc/";
 
-async function getMapNpc(fb, version = "20200521") {
+async function getMapNpc(fb, version = "20200522") {
     return await checkVersion(fb, version)
     // return axios.get(API_MAP + fb);
 }

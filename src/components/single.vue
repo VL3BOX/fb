@@ -57,7 +57,7 @@
 
             <div class="m-single-panel">
                 <!-- 收藏 -->
-                <el-button size="mini" type="primary" disabled title="重构中.."><i class="el-icon-star-off"></i><span>收藏</span></el-button>
+                <Fav />
                 <el-button size="mini" type="primary" disabled title="即将推出.."><i class="el-icon-bell"></i><span>订阅</span></el-button>
             </div>
         </header>
@@ -171,5 +171,3 @@ export default {
 <style lang="less">
 @import "../assets/css/single.less";
 </style>
-
-<!-- <Comment post-id="100"/> -->

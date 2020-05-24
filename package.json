@@ -10,6 +10,7 @@
     "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common-ui@latest @jx3box/jx3box-common"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.9.6",
     "@jx3box/jx3box-article-ui": "^0.1.1",
     "@jx3box/jx3box-comment-ui": "^1.2.1",
     "@jx3box/jx3box-common": "^4.3.2",

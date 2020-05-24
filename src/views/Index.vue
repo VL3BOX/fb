@@ -43,6 +43,8 @@
                     </div>
 
                     <div class="u-misc">
+                        <img class="u-author-avatar" :src="item.author.avatar | showAvatar" :alt="item.author.name">
+                        <a class="u-author-name" :href="item.author.uid | authorLink" target="_blank">{{item.author.name}}</a>
                         <span class="u-date">
                             Updated on
                             <time>{{
@@ -88,6 +90,7 @@ import lodash from 'lodash'
 import { getPosts } from "../service/getPost";
 import dateFormat from "../utils/dateFormat";
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
+import {showAvatar,authorLink} from '@jx3box/jx3box-common/js/utils'
 export default {
     name: "Index",
     props: [],
@@ -158,6 +161,12 @@ export default {
         dateFormat: function(val) {
             return dateFormat(new Date(val));
         },
+        showAvatar : function (val){
+            return showAvatar(val)
+        },
+        authorLink : function (val){
+            return authorLink(val)
+        }
     },
     mounted: function() {
         let params = new URLSearchParams(location.search);

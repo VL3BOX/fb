@@ -437,6 +437,7 @@ export default {
                             console.log(e);
                             this.$message.error(`[${e.code}]${e.msg}`);
                     }
+                    this.version = '0'
                 })
                 .then(() => {
                     this.getAllNpc();

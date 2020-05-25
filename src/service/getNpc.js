@@ -4,7 +4,8 @@ import {
 } from "@jx3box/jx3box-common/js/jx3box.json";
 import {
     getLocalForage,
-    setLocalForage
+    setLocalForage,
+    clearLocalForage
 } from './localForage.js';
 import {
     axios as myAxios
@@ -48,12 +49,25 @@ async function checkVersion(fb, version) {
                 if (value === version) {
                     result = await retrieveNpcFromLocal(fb)
                 } else {
-                    result = await getRemoteNpc(fb)
+                    await clearAllLocalData()
+                    result = await checkVersion(fb, version)
                 }
                 resolve(result)
             }
         })
 
+    })
+}
+
+async function clearAllLocalData() {
+    return new Promise((resolve, reject) => {
+        clearLocalForage(
+            'fbnpc',
+            () => {
+                resolve('success')
+            },
+            err => {}
+        )
     })
 }
 

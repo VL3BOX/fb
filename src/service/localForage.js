@@ -38,7 +38,10 @@ export function removeLocalForage(key, cb, cb2) {
         })
 }
 
-export function clearLocalForage(cb, cb2) {
+export function clearLocalForage(storeName, cb, cb2) {
+    localForage.config({
+        storeName: storeName
+    });
     localForage
         .clear()
         .then(function() {

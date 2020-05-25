@@ -1,6 +1,8 @@
 <template>
-    <div class="m-extend-single" v-if="$store.state.status">
-        <Author :author="author"/>
+    <div class="m-extend-single">
+        <div id="directory" class="m-fb-directory"></div>
+        <!-- v-if="$store.state.status" -->
+        <!-- <Author :author="author"/>
         <Authorposts :uid="uid"/>
         <ins 
             class="adsbygoogle"
@@ -9,7 +11,7 @@
             data-ad-slot="9773281887"
             data-ad-format="auto"
             data-full-width-responsive="true"
-        ></ins>
+        ></ins> -->
     </div>
 </template>
 

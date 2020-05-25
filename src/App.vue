@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="副本专栏" slug="fb" root="/fb" publishEnable="true">
+        <Breadcrumb name="副本专栏" slug="fb" root="/fb" :publishEnable="true" :adminEnable="true">
             <img slot="logo" svg-inline src="./assets/img/fb.svg" />
             <Info />
         </Breadcrumb>

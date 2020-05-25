@@ -4,10 +4,10 @@
             <ul class="u-list">
                 <li class="u-item" v-for="(item, i) in data" :key="i">
                     <a class="u-banner" :href="'/fb/?pid=' + item.post.ID"
-                        ><img :src="buildBanner(item.post.post_banner)"
+                        ><img :src="showBanner(item.post.post_banner)"
                     /></a>
 
-                    <h2 class="u-post">
+                    <h2 class="u-post" :class="{isSticky:item.post.sticky}">
                         <img
                             class="u-icon"
                             svg-inline
@@ -15,10 +15,14 @@
                         />
                         <a
                             class="u-title"
+                            :style="item.post.color | isHighlight"
                             :href="'/fb/?pid=' + item.post.ID"
                             target="_blank"
                             >{{ item.post.post_title }}</a
                         >
+                        <span class="u-marks" v-if="item.post.mark && item.post.mark.length">
+                            <i v-for="mark in item.post.mark" class="u-mark" :key="mark">{{mark | showMark}}</i>
+                        </span>
                     </h2>
 
                     <div class="u-content">
@@ -90,7 +94,7 @@ import lodash from 'lodash'
 import { getPosts } from "../service/getPost";
 import dateFormat from "../utils/dateFormat";
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
-import {showAvatar,authorLink} from '@jx3box/jx3box-common/js/utils'
+import {showAvatar,authorLink,showMinibanner} from '@jx3box/jx3box-common/js/utils'
 export default {
     name: "Index",
     props: [],
@@ -145,9 +149,6 @@ export default {
                 this.loading = false;
             })
         },
-        buildBanner: function(val) {
-            return val ? val : this.defaultBanner;
-        },
         format : function (parent,key){
             let val = lodash.get(parent,key)
             if(val.length){
@@ -155,6 +156,9 @@ export default {
             }else{
                 return []
             }
+        },
+        showBanner : function (val){
+            return val ? showMinibanner(val) : this.defaultBanner
         }
     },
     filters: {
@@ -166,7 +170,19 @@ export default {
         },
         authorLink : function (val){
             return authorLink(val)
-        }
+        },
+        isHighlight : function (val){
+            return val ? `color:${val};font-weight:600;` : ''
+        },
+        showMark : function (val){
+            const mark_map = {
+                newbie: "新手易用",
+                advanced: "进阶推荐",
+                recommended: "编辑精选",
+                geek: "骨灰必备",
+            }
+            return mark_map[val]
+        },
     },
     mounted: function() {
         let params = new URLSearchParams(location.search);

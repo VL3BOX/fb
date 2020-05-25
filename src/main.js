@@ -1,6 +1,6 @@
 // 第三方UI组件
 import Vue from "vue";
-Vue.config.productionTip = false;
+// Vue.config.productionTip = false;
 import ElementUI from "element-ui";
 Vue.use(ElementUI);
 

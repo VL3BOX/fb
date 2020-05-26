@@ -1,5 +1,12 @@
 <template>
     <div class="m-fb-rank-mini" v-if="rank.length">
+        <h3 class="c-sidebar-right-title">
+            <img
+                class="u-icon"
+                svg-inline
+                src="../assets/img/rank.svg"
+            />全服排行
+        </h3>
         <el-tabs v-model="focus" @tab-click="loadRank">
             <el-tab-pane
                 :label="name"
@@ -28,11 +35,11 @@
                 </ul>
             </div>
         </el-row>
-        <a
+        <!-- <a
             class="u-more el-button el-button--primary is-plain"
             href="/fb/#/rank"
             >&raquo; 查看更多</a
-        >
+        > -->
     </div>
 </template>
 
@@ -42,7 +49,7 @@ import moment from "moment";
 // import mock from '../mock/rank.json'
 
 export default {
-    name: "rankmini",
+    name: "minirank",
     props: [],
     data: function() {
         return {

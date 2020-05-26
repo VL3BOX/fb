@@ -3,7 +3,8 @@
         <RightSideMsg>
             <em>全服团长交流群</em> : <strong><a href="https://jq.qq.com/?_wv=1027&k=HZdXPmZe">785597424</a></strong>
         </RightSideMsg>
-        <div class="m-fb-info">
+        <minirank />
+        <!-- <div class="m-fb-info">
             <i class="u-pic"><img id="m-archive-fb-pic" :src="img"/></i>
             <h1 class="u-title" id="m-archive-fb-name">{{ info.name }}</h1>
             <p class="u-intro" id="m-archive-fb-intro" v-html="introduce"></p>
@@ -12,7 +13,7 @@
                     {{ item.mode }}
                 </li>
             </ul>
-        </div>
+        </div> -->
         <div class="m-fb-links">
             <h3 class="c-sidebar-right-title">
                 <img
@@ -40,6 +41,7 @@
 
 <script>
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
+import minirank from './minirank'
 export default {
     name: "list_side",
     props: [],
@@ -65,6 +67,9 @@ export default {
     },
     methods: {},
     mounted: function() {},
+    components : {
+        minirank
+    }
 };
 </script>
 

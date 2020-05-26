@@ -1,5 +1,8 @@
 <template>
     <div class="m-extend-list">
+        <RightSideMsg>
+            <em>全服团长交流群</em> : <strong><a href="https://jq.qq.com/?_wv=1027&k=HZdXPmZe">785597424</a></strong>
+        </RightSideMsg>
         <div class="m-fb-info">
             <i class="u-pic"><img id="m-archive-fb-pic" :src="img"/></i>
             <h1 class="u-title" id="m-archive-fb-name">{{ info.name }}</h1>

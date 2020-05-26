@@ -1,5 +1,6 @@
 import axios from "axios";
-const API = 'https://bkr.uploads.j3cx.com/api/fb-rank/achieve/'
+import {__api} from '@jx3box/jx3box-common/js/jx3box.json'
+const API = __api + 'api/fb-rank/achieve/'
 
 function getDateRank(id) {
     return axios.get(API + id, {

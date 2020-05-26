@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="副本专栏" slug="fb" root="/fb" :publishEnable="true" :adminEnable="true">
+        <Breadcrumb name="副本专栏" slug="fb" root="/fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="true">
             <img slot="logo" svg-inline src="./assets/img/fb.svg" />
             <Info />
         </Breadcrumb>
@@ -25,7 +25,7 @@ import Nav from "@/components/Nav.vue";
 import Extend from "@/components/Extend.vue";
 import list from "@/components/list.vue";
 import single from "@/components/single.vue";
-import getRewrite from './utils/getRewrite'
+const {getRewrite} = require('@jx3box/jx3box-common/js/utils');
 
 export default {
     name: "App",

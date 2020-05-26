@@ -15,14 +15,29 @@
             border-bottom:1px solid #ebeef5;
             .fz(13px,48px);
             .h(48px);
-            display: flex;
-            justify-content:space-between;
+            // display: flex;
+            // justify-content:space-between;
+            .clearfix;
         }
+    }
+
+    .u-subblock{
+        .fl;
+        .nobreak;
+    }
+
+    .u-th .u-subblock{
+        background:none;
+        .fz(13px,48px);
+        color:#555;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        // .x;
     }
 
     .u-order{
         font-family: Georgia, 'Times New Roman', Times, serif;
         background-color:#eee;
+        .w(40px);
         .fz(16px);
         .dbi;.y(top);
         width:40px;
@@ -51,17 +66,21 @@
         // &:after{
         //     content:"@"
         // }
+        .w(200px);
+        padding:0 40px;
     }
 
     .u-server{
         .fz(13px);
+        .w(100px);
+        padding:0 40px;
     }
 
     .u-date{
         .fz(12px);
         color:#888;
         // .pa;.rt(30px,0);
-        .ml(20px);
+        // .ml(20px);
     }
 
     .u-important{
@@ -76,6 +95,29 @@
         .fz(12px);
         color:#888;
         .fr;
+    }
+}
+
+@media screen and (max-width:@notebook){
+    .m-fb-rank-group .u-team{
+        .w(150px);
+    }
+}
+@media screen and (max-width:@ipad){
+    .m-fb-rank-group .u-team{
+        .w(100px);
+    }
+    .m-fb-rank-group .u-server{
+        .w(80px);
+    }
+}
+@media screen and (max-width:@phone){
+    .m-fb-rank-group{
+        overflow-x: auto;
+        width:100%;
+    }
+    .m-fb-rank-group .u-list{
+        min-width:660px;
     }
 }
 

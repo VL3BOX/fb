@@ -36,7 +36,7 @@
             <span slot="label">
                 <i class="el-icon-date"></i>
                 <b>全服排行</b>
-                <em class="u-ready">即将开启</em>
+                <em class="u-ready">正在进行</em>
             </span>
         </el-tab-pane>
 

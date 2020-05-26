@@ -10,7 +10,28 @@
                 </li>
             </ul>
         </div>
-        <Github_REPO REPO="fb" coder="8,15,2"></Github_REPO>
+        <div class="m-fb-links">
+            <h3 class="c-sidebar-right-title">
+                <img
+                    class="u-icon"
+                    svg-inline
+                    src="../assets/img/puzzle.svg"
+                />相关链接
+            </h3>
+            <div class="c-sidebar-right-list">
+                <a
+                    class="u-item"
+                    href="https://www.jx3box.com/discuz/13715/"
+                    target="_blank"
+                    >全服排行榜说明</a>
+                <a
+                    class="u-item"
+                    href="https://www.jx3box.com/app/jx3-query/"
+                    target="_blank"
+                    >技能Buff查询</a>
+            </div>
+        </div>
+        <!-- <Github_REPO REPO="fb" coder="8,15,2"></Github_REPO> -->
     </div>
 </template>
 
@@ -45,5 +66,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/fb_info.less";
+@import "../assets/css/list_side.less";
 </style>

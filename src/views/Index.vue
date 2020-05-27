@@ -3,7 +3,7 @@
         <div class="m-archive-list m-fb-list" v-if="data.length">
             <ul class="u-list">
                 <li class="u-item" v-for="(item, i) in data" :key="i">
-                    <a class="u-banner" :href="'/fb/?pid=' + item.post.ID"
+                    <a class="u-banner" :href="item.post.ID | postLink"
                         ><img :src="showBanner(item.post.post_banner)"
                     /></a>
 
@@ -16,7 +16,7 @@
                         <a
                             class="u-title"
                             :style="item.post.color | isHighlight"
-                            :href="'/fb/?pid=' + item.post.ID"
+                            :href="item.post.ID | postLink"
                             target="_blank"
                             >{{ item.post.post_title }}</a
                         >
@@ -170,6 +170,9 @@ export default {
         },
         authorLink : function (val){
             return authorLink(val)
+        },
+        postLink : function (val){
+            return './?pid=' + val
         },
         isHighlight : function (val){
             return val ? `color:${val};font-weight:600;` : ''

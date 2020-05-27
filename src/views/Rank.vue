@@ -45,7 +45,7 @@
                             >
                             <time class="u-subblock u-cost"
                                 >用时 : <b class="u-important u-big">{{
-                                    item.fightTime
+                                    item.fightTime / 1000
                                 }} </b
                                 >秒</time
                             >
@@ -98,7 +98,7 @@ export default {
     },
     filters: {
         format: function(val) {
-            return moment(val).format("YYYY-MM-DD HH:mm:ss");
+            return moment(val * 1000).format("YYYY-MM-DD HH:mm:ss");
         },
     },
     methods: {

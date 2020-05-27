@@ -43,9 +43,9 @@
                             >
                             <time class="u-subblock u-cost"
                                 >用时 : <b class="u-important u-big">{{
-                                    item.fightTime / 1000
+                                    item.fightTime | costFormat
                                 }} </b
-                                >秒</time
+                                ></time
                             >
                         </li>
                     </ul>
@@ -105,6 +105,10 @@ export default {
         format: function(val) {
             return moment(val * 1000).format("YYYY-MM-DD HH:mm:ss");
         },
+        costFormat : function (val){
+            let s = val / 1000
+            return ~~(s/60) + '分' + ~~(s%60) + '秒'
+        }
     },
     methods: {
         loadRank: function() {

@@ -1,5 +1,5 @@
 <template>
-    <div class="m-fb-rank-mini" v-if="rank.length">
+    <div class="m-fb-rank-mini" v-if="ready">
         <h3 class="c-sidebar-right-title">
             <img
                 class="u-icon"
@@ -7,34 +7,25 @@
                 src="../assets/img/rank.svg"
             />全服排行
         </h3>
-        <el-tabs v-model="focus" @tab-click="loadRank">
+        <el-tabs @tab-click="loadRank" v-model="active">
             <el-tab-pane
+                v-for="(cid, name) in nav"
                 :label="name"
-                :name="i + ''"
-                v-for="(name, i) in subnav"
                 :key="name"
+                :name="name"
             ></el-tab-pane>
         </el-tabs>
-        <el-row
-            :gutter="20"
-            class="m-fb-rank-box"
-            v-for="(group, i) in rank"
-            :key="i"
-        >
-            <div
-                class="m-fb-rank-group"
-                v-if="focus == i && group"
-                v-loading="loading"
-            >
+        <div class="m-fb-rank-box" v-for="(group, i) in rank" :key="i">
+            <div class="m-fb-rank-group" v-show="active == i">
                 <ul class="u-list">
-                    <li v-for="(item, i) in group" :key="i">
-                        <span class="u-order">{{ i + 1 }}</span>
+                    <li v-for="(item, j) in group" :key="j">
+                        <span class="u-order">{{ j + 1 }}</span>
                         <span class="u-team">{{ item.Role }}</span>
                         <span class="u-server">{{ item.Server }}</span>
                     </li>
                 </ul>
             </div>
-        </el-row>
+        </div>
         <!-- <a
             class="u-more el-button el-button--primary is-plain"
             href="/fb/#/rank"
@@ -44,7 +35,7 @@
 </template>
 
 <script>
-import { getDateRank, getMiniRank } from "../service/getRank";
+import { getMiniRank } from "../service/getRank";
 import moment from "moment";
 // import mock from '../mock/rank.json'
 
@@ -53,43 +44,47 @@ export default {
     props: [],
     data: function() {
         return {
-            focus: 0,
-            subnav: ["周贽", "厌夜", "迟驻", "白某", "安小逢"],
-            rank: [],
-            loading: false,
-            list: [7525, 7526, 7527, 7528, 7529],
+            active: "安小逢",
+            rank: {},
+            ready: false,
+            nav: {
+                安小逢: "7529",
+                周贽: "7525",
+                厌夜: "7526",
+                迟驻: "7527",
+                白某: "7528",
+            },
         };
     },
-    computed: {},
     methods: {
         loadRank: function() {
-            let i = ~~this.focus;
-
             // 状态设置
             this.loading = true;
 
             // 已请求
-            if (this.rank[i]) {
+            if (this.rank[this.active]) {
                 this.loading = false;
                 return;
             }
 
             // 新请求
-            getMiniRank(this.list[i])
+            let cid = this.nav[this.active];
+            return getMiniRank(cid)
                 .then((res) => {
-                    this.rank.splice(i, 1, res.data.data);
+                    this.$set(this.rank, this.active, res.data.data);
                 })
                 .catch((err) => {
                     console.log(err);
                 })
                 .finally(() => {
                     this.loading = false;
-                    // this.rank.splice(i,1,mock)
                 });
         },
     },
     mounted: function() {
-        this.loadRank();
+        this.loadRank().then(() => {
+            this.ready = true;
+        });
     },
     components: {},
 };

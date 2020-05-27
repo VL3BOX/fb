@@ -1,24 +1,24 @@
 <template>
-    <div class="m-fb-rank" v-if="rank.length">
+    <div class="m-fb-rank" v-if="ready">
+        
         <div class="m-fb-rank-tab">
             <el-tabs
                 type="card"
                 @tab-click="loadRank"
-                v-model="focus"
-                v-if="labels"
+                v-model="active"
             >
                 <el-tab-pane
-                    v-for="(boss, i) in labels"
-                    :label="boss"
-                    :key="i"
-                    :name="i + ''"
+                    v-for="(cid,name) in nav"
+                    :label="name"
+                    :key="name"
+                    :name="name"
                 ></el-tab-pane>
             </el-tabs>
         </div>
 
         <div class="m-fb-rank-box" :loading="loading">
             <h3 class="m-fb-rank-title">剑网3跨区服副本通关百强榜</h3>
-            <div class="m-fb-rank-list" v-for="(group, i) in rank" :key="i" v-show="focus == i">
+            <div class="m-fb-rank-list" v-for="(group, id) in rank" :key="id" v-show="active == id">
                 <div class="m-fb-rank-group">
                     <ul class="u-list">
                         <li class="u-th">
@@ -35,6 +35,7 @@
                             }}</span>
                             <span class="u-subblock u-team">{{ item.Role }}</span>
                             <span class="u-subblock u-server">{{ item.Server }}</span>
+                            <!-- <span class="u-subblock u-member">成员名单</span> -->
                             <time class="u-subblock u-date"
                                 >达成时间 : <b class="u-important">{{
                                     item.finishTime | format
@@ -67,7 +68,7 @@
 // 10人 7503,7504,7505,7506,7507
 // 25普通 7514,7515,7516,7517,7518
 // 25英雄 7525,7526,7527,7528,7529
-import { getDateRank, getMiniRank } from "../service/getRank";
+import { getDateRank } from "../service/getRank";
 import moment, { fn } from "moment";
 import rankmap from "../assets/js/rank.json";
 // import mock from '../mock/rank.json'
@@ -77,21 +78,28 @@ export default {
     props: [],
     data: function() {
         return {
-            focus: 0,
-            rank: [],
+            active: "",
+            rank: {},
             loading: false,
+            ready:false
         };
     },
     computed: {
         fb: function() {
             return this.$store.state.fb;
         },
-        labels: function() {
-            return rankmap[this.fb] && Object.keys(rankmap[this.fb]);
+        nav : function (){
+            return rankmap[this.fb]
         },
-        values: function() {
-            return rankmap[this.fb] && Object.values(rankmap[this.fb]);
+        labels : function (){
+            return Object.keys(this.nav)
         },
+        values : function (){
+            return Object.values(this.nav)
+        },
+        first : function (){
+            return this.labels[0]
+        }
     },
     filters: {
         format: function(val) {
@@ -100,28 +108,27 @@ export default {
     },
     methods: {
         loadRank: function() {
-            let i = ~~this.focus;
 
             // 状态设置
             this.loading = true;
 
             // 已请求
-            if (this.rank[i]) {
+            if (this.rank[this.active]) {
                 this.loading = false;
                 return;
             }
 
             // 新请求
-            getDateRank(this.values[i])
+            let cid = this.nav[this.active];
+            return getDateRank(cid)
                 .then((res) => {
-                    this.rank.splice(i, 1, res.data.data);
+                    this.$set(this.rank,this.active,res.data.data);
                 })
                 .catch((err) => {
                     console.log(err);
                 })
                 .finally(() => {
                     this.loading = false;
-                    // this.rank.splice(i,1,mock)
                 });
         },
         highlight: function(i) {
@@ -135,7 +142,12 @@ export default {
         },
     },
     mounted: function() {
-        if (this.labels) this.loadRank();
+        if (this.nav) {
+            this.active = this.first
+            this.loadRank().then(() => {
+                this.ready = true
+            })
+        }
     },
 };
 </script>

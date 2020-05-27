@@ -12,7 +12,7 @@
                 :label="name"
                 :name="i + ''"
                 v-for="(name, i) in subnav"
-                :key="i"
+                :key="name"
             ></el-tab-pane>
         </el-tabs>
         <el-row

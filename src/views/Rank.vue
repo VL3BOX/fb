@@ -17,12 +17,9 @@
         </div>
 
         <div class="m-fb-rank-box" :loading="loading">
-            <div class="m-fb-rank-list" v-for="(group, i) in rank" :key="i">
-                <div
-                    class="m-fb-rank-group"
-                    v-if="focus == i"
-                >
-                    <h3 class="u-title">剑网3跨区服副本通关百强榜</h3>
+            <h3 class="m-fb-rank-title">剑网3跨区服副本通关百强榜</h3>
+            <div class="m-fb-rank-list" v-for="(group, i) in rank" :key="i" v-show="focus == i">
+                <div class="m-fb-rank-group">
                     <ul class="u-list">
                         <li class="u-th">
                             <span class="u-subblock u-order">排名</span>

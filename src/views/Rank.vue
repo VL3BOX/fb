@@ -27,7 +27,7 @@
                             <span class="u-subblock u-server">服务器</span>
                             <!-- <span class="u-subblock u-member">成员名单</span> -->
                             <span class="u-subblock u-date">达成时间</span>
-                            <span class="u-subblock u-cost">耗费时间</span>
+                            <span class="u-subblock u-cost">击杀用时</span>
                         </li>
                         <li v-for="(item, i) in group" :key="i">
                             <span class="u-subblock u-order" :class="highlight(i)">{{

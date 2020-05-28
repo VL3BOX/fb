@@ -2,6 +2,7 @@
     .x;
     font-weight:300;
     font-size:32px;
+    .nobreak;
 }
 .m-fb-rank-group{
 
@@ -24,6 +25,12 @@
     .u-subblock{
         .fl;
         .nobreak;
+    }
+
+    .u-th{
+        position: sticky;
+        top:148px;
+        background-color:#fff;
     }
 
     .u-th .u-subblock{
@@ -96,6 +103,7 @@
         color:#888;
         .fr;
         .h(100%);
+        margin-left: 20px
     }
 }
 
@@ -118,7 +126,15 @@
         width:100%;
     }
     .m-fb-rank-group .u-list{
-        min-width:660px;
+        min-width:760px;
+    }
+    .m-fb-rank-group .u-th{
+        position: static;
+    }
+    .m-fb-rank-title{
+        margin:10px auto;
+        .break;
+        font-size:1.6rem;
     }
 }
 

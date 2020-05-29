@@ -40,7 +40,7 @@
             background
             :hide-on-single-page="true"
             @current-change="changePage"
-            :current-page="page"
+            :current-page.sync="page"
             layout="total, prev, pager, next, jumper"
             :total="total"
         >

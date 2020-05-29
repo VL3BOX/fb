@@ -161,7 +161,7 @@ export default {
                     this.loading = false;
                 })
                 .catch((err) => {
-                    location.href = __Links.search
+                    console.log(err)
                 })
         }
     },

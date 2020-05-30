@@ -7,7 +7,7 @@
                         ><img :src="showBanner(item.post.post_banner)"
                     /></a>
 
-                    <h2 class="u-post" :class="{isSticky:item.post.sticky}">
+                    <h2 class="u-post" :class="{ isSticky: item.post.sticky }">
                         <img
                             class="u-icon"
                             svg-inline
@@ -20,17 +20,34 @@
                             target="_blank"
                             >{{ item.post.post_title }}</a
                         >
-                        <span class="u-marks" v-if="item.post.mark && item.post.mark.length">
-                            <i v-for="mark in item.post.mark" class="u-mark" :key="mark">{{mark | showMark}}</i>
+                        <span
+                            class="u-marks"
+                            v-if="item.post.mark && item.post.mark.length"
+                        >
+                            <i
+                                v-for="mark in item.post.mark"
+                                class="u-mark"
+                                :key="mark"
+                                >{{ mark | showMark }}</i
+                            >
                         </span>
                     </h2>
 
                     <div class="u-content">
-                        <div class="u-metalist u-boss-list">
+                        <div
+                            class="u-metalist u-boss-list"
+                            v-if="
+                                item.post.post_meta &&
+                                    item.post.post_meta.fb_boss
+                            "
+                        >
                             <strong>首领</strong>
                             <em>
                                 <b
-                                    v-for="(c, i) in format(item.post,'post_meta.fb_boss')"
+                                    v-for="(c, i) in format(
+                                        item.post,
+                                        'post_meta.fb_boss'
+                                    )"
                                     :key="i"
                                 >
                                     {{ c }}
@@ -38,17 +55,32 @@
                             </em>
                         </div>
 
-                        <div class="u-metalist u-mode-list c-jx3fb-mode">
+                        <div
+                            class="u-metalist u-mode-list c-jx3fb-mode"
+                            v-if="
+                                item.post.post_meta &&
+                                    item.post.post_meta.fb_level
+                            "
+                        >
                             <strong>模式</strong>
                             <em>{{
-                                format(item.post,'post_meta.fb_level') + ''
+                                format(item.post, "post_meta.fb_level") + ""
                             }}</em>
                         </div>
                     </div>
 
                     <div class="u-misc">
-                        <img class="u-author-avatar" :src="item.author.avatar | showAvatar" :alt="item.author.name">
-                        <a class="u-author-name" :href="item.author.uid | authorLink" target="_blank">{{item.author.name}}</a>
+                        <img
+                            class="u-author-avatar"
+                            :src="item.author.avatar | showAvatar"
+                            :alt="item.author.name"
+                        />
+                        <a
+                            class="u-author-name"
+                            :href="item.author.uid | authorLink"
+                            target="_blank"
+                            >{{ item.author.name }}</a
+                        >
                         <span class="u-date">
                             Updated on
                             <time>{{
@@ -90,11 +122,15 @@
 </template>
 
 <script>
-import lodash from 'lodash'
+import lodash from "lodash";
 import { getPosts } from "../service/getPost";
 import dateFormat from "../utils/dateFormat";
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
-import {showAvatar,authorLink,showMinibanner} from '@jx3box/jx3box-common/js/utils'
+import {
+    showAvatar,
+    authorLink,
+    showMinibanner,
+} from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Index",
     props: [],
@@ -127,64 +163,68 @@ export default {
             getPosts({
                 page: i,
                 subtype: this.subtype,
-            }).then((res) => {
-                window.scrollTo(0,0)
-                this.data = res.data.data.list;
-                this.total = res.data.data.total;
-                this.pages = res.data.data.pages;
-            }).finally(() => {
-                this.loading = false;
             })
+                .then((res) => {
+                    window.scrollTo(0, 0);
+                    this.data = res.data.data.list;
+                    this.total = res.data.data.total;
+                    this.pages = res.data.data.pages;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         appendPage: function(i) {
             this.loading = true;
             getPosts({
                 page: i,
                 subtype: this.subtype,
-            }).then((res) => {
-                this.data = this.data.concat(res.data.data.list);
-                this.total = res.data.data.total;
-                this.pages = res.data.data.pages;
-            }).finally(() => {
-                this.loading = false;
             })
+                .then((res) => {
+                    this.data = this.data.concat(res.data.data.list);
+                    this.total = res.data.data.total;
+                    this.pages = res.data.data.pages;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
-        format : function (parent,key){
-            let val = lodash.get(parent,key)
-            if(val.length){
-                return val
-            }else{
-                return []
+        format: function(parent, key) {
+            let val = lodash.get(parent, key);
+            if (val && val.length) {
+                return val;
+            } else {
+                return [];
             }
         },
-        showBanner : function (val){
-            return val ? showMinibanner(val) : this.defaultBanner
-        }
+        showBanner: function(val) {
+            return val ? showMinibanner(val) : this.defaultBanner;
+        },
     },
     filters: {
         dateFormat: function(val) {
             return dateFormat(new Date(val));
         },
-        showAvatar : function (val){
-            return showAvatar(val)
+        showAvatar: function(val) {
+            return showAvatar(val);
         },
-        authorLink : function (val){
-            return authorLink(val)
+        authorLink: function(val) {
+            return authorLink(val);
         },
-        postLink : function (val){
-            return './?pid=' + val
+        postLink: function(val) {
+            return "./?pid=" + val;
         },
-        isHighlight : function (val){
-            return val ? `color:${val};font-weight:600;` : ''
+        isHighlight: function(val) {
+            return val ? `color:${val};font-weight:600;` : "";
         },
-        showMark : function (val){
+        showMark: function(val) {
             const mark_map = {
                 newbie: "新手易用",
                 advanced: "进阶推荐",
                 recommended: "编辑精选",
                 geek: "骨灰必备",
-            }
-            return mark_map[val]
+            };
+            return mark_map[val];
         },
     },
     mounted: function() {

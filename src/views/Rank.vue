@@ -94,7 +94,7 @@
                                 ></el-col
                             >
                             <el-col :span="4" class="u-subblock u-detail"
-                                ><span
+                                ><span class="u-detail-toggle"
                                     v-if="item.teamMembers"
                                     @click="view(item)"
                                     >点击展开

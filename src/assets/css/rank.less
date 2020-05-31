@@ -3,6 +3,22 @@
     font-weight:300;
     font-size:32px;
     .nobreak;
+    .mb(0);
+}
+.m-fb-rank-desc{
+    .x;
+    .mb(20px);
+    a:hover{
+        box-shadow:0 1px 0 @primary;
+    }
+}
+.m-fb-rank-box-full .m-fb-rank-list{
+    
+    overflow-x: auto;
+}
+.m-fb-rank-list{
+    // .pr;
+    min-width:1200px;
 }
 .m-fb-rank-group{
 
@@ -22,15 +38,23 @@
         }
     }
 
+    .el-row{
+        // display: flex;
+        border-bottom:1px solid #ebeef5;
+        .fz(13px,48px);
+        // .h(48px);
+    }
+
     .u-subblock{
-        .fl;
+        // .fl;
         .nobreak;
     }
 
     .u-th{
         position: sticky;
-        top:148px;
+        top:0;
         background-color:#fff;
+        .z(10);
     }
 
     .u-th .u-subblock{
@@ -46,7 +70,7 @@
         background-color:#eee;
         .w(40px);
         .fz(16px);
-        .dbi;.y(top);
+        // .dbi;.y(top);
         width:40px;
         .x;
         .mr(10px);
@@ -73,14 +97,15 @@
         // &:after{
         //     content:"@"
         // }
-        .w(200px);
+        // .w(200px);
         padding:0 40px;
     }
 
     .u-server{
         .fz(13px);
-        .w(100px);
+        // .w(100px);
         padding:0 40px;
+        
     }
 
     .u-date{
@@ -88,6 +113,7 @@
         color:#888;
         // .pa;.rt(30px,0);
         // .ml(20px);
+        flex:1;
     }
 
     .u-important{
@@ -101,9 +127,68 @@
     .u-cost{
         .fz(12px);
         color:#888;
-        .fr;
+        // .fr;
         .h(100%);
         margin-left: 20px
+    }
+
+    .u-detail{
+        // .fr;
+        .pointer;
+        color:#666;
+        user-select: none;
+        display: block;
+        height: 100%;
+    }
+
+    .u-members {
+        width: 100%;
+        float: none;
+        height: auto;
+        text-align: left;
+        clear: both;
+        .fz(12px,24px);
+        padding:10px 10px 0 10px;
+        background-color:@bg-light;
+        border:1px solid #eee;
+        border-bottom:none;
+
+        em{
+            .db;.fl;
+            img{.db;.size(24px);}
+            .mr(10px);
+        }
+        b{
+            font-weight: normal;
+            color:#666;
+        }
+        .clearfix;
+        .none;
+
+        &.on{
+            .db;
+        }
+    }
+
+    .u-member{
+        .fl;
+        .db;
+        .clearfix;
+        .w(200px);
+        .mb(10px);
+    }
+
+    .u-status {
+        
+    }
+    .u-verified{
+        color:#49c10f;
+        i{
+            .mr(5px);
+        }
+    }
+    .u-undefined{
+        color:#999;
     }
 }
 

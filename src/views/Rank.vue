@@ -1,14 +1,9 @@
 <template>
     <div class="m-fb-rank" v-if="ready">
-        
         <div class="m-fb-rank-tab">
-            <el-tabs
-                type="card"
-                @tab-click="loadRank"
-                v-model="active"
-            >
+            <el-tabs type="card" @tab-click="loadRank" v-model="active">
                 <el-tab-pane
-                    v-for="(cid,name) in nav"
+                    v-for="(cid, name) in nav"
                     :label="name"
                     :key="name"
                     :name="name"
@@ -16,39 +11,118 @@
             </el-tabs>
         </div>
 
-        <div class="m-fb-rank-box" :loading="loading">
+        <div class="m-fb-rank-box m-fb-rank-box-full" :loading="loading">
             <h3 class="m-fb-rank-title">剑网3跨区服副本通关百强榜</h3>
-            <div class="m-fb-rank-list" v-for="(group, id) in rank" :key="id" v-show="active == id">
+            <p class="m-fb-rank-desc">
+                联合推栏表彰活动·<a
+                    href="https://www.jx3box.com/discuz/13715/"
+                    target="_blank"
+                    >活动规则与举报</a
+                >
+            </p>
+            <div
+                class="m-fb-rank-list"
+                v-for="(group, id) in rank"
+                :key="id"
+                v-show="active == id"
+            >
                 <div class="m-fb-rank-group">
-                    <ul class="u-list">
-                        <li class="u-th">
-                            <span class="u-subblock u-order">排名</span>
-                            <span class="u-subblock u-team">队长</span>
-                            <span class="u-subblock u-server">服务器</span>
-                            <!-- <span class="u-subblock u-member">成员名单</span> -->
-                            <span class="u-subblock u-date">达成时间</span>
-                            <span class="u-subblock u-cost">击杀用时</span>
-                        </li>
-                        <li v-for="(item, i) in group" :key="i">
-                            <span class="u-subblock u-order" :class="highlight(i)">{{
-                                i + 1
-                            }}</span>
-                            <span class="u-subblock u-team">{{ item.Role }}</span>
-                            <span class="u-subblock u-server">{{ item.Server }}</span>
-                            <!-- <span class="u-subblock u-member">成员名单</span> -->
-                            <time class="u-subblock u-date"
-                                >达成时间 : <b class="u-important">{{
-                                    item.finishTime | format
-                                }}</b></time
+                    <div class="u-list">
+                        <el-row class="u-th">
+                            <el-col :span="2" class="u-subblock u-order"
+                                >排名</el-col
                             >
-                            <time class="u-subblock u-cost"
-                                >用时 : <b class="u-important u-big">{{
-                                    item.fightTime | costFormat
-                                }} </b
-                                ></time
+                            <el-col :span="4" class="u-subblock u-team"
+                                >队长</el-col
                             >
-                        </li>
-                    </ul>
+                            <el-col :span="4" class="u-subblock u-server"
+                                ><el-select
+                                    v-model="server"
+                                    filterable
+                                    placeholder="服务器"
+                                    size="small"
+                                    @change="serverFilter"
+                                >
+                                    <el-option
+                                        v-for="item in servers"
+                                        :key="item"
+                                        :label="item"
+                                        :value="item"
+                                    >
+                                    </el-option> </el-select
+                            ></el-col>
+                            <el-col :span="4" class="u-subblock u-date"
+                                >达成时间</el-col
+                            >
+                            <el-col :span="4" class="u-subblock u-cost"
+                                >击杀用时</el-col
+                            >
+                            <el-col :span="4" class="u-subblock u-detail"
+                                >成员名单</el-col
+                            >
+                            <el-col :span="2" class="u-subblock u-status"
+                                >状态</el-col
+                            >
+                        </el-row>
+                        <el-row v-for="(item, i) in group" :key="i" v-show="item.visible">
+                            <el-col
+                                :span="2"
+                                class="u-subblock u-order"
+                                :class="highlight(i)"
+                                >{{ i + 1 }}</el-col
+                            >
+                            <el-col :span="4" class="u-subblock u-team">{{
+                                item.Role
+                            }}</el-col>
+                            <el-col :span="4" class="u-subblock u-server">{{
+                                item.Server
+                            }}</el-col>
+                            <el-col :span="4" class="u-subblock u-date"
+                                ><time
+                                    >达成时间 :
+                                    <b class="u-important">{{
+                                        item.finishTime | format
+                                    }}</b></time
+                                ></el-col
+                            >
+                            <el-col :span="4" class="u-subblock u-cost"
+                                ><time
+                                    >用时 :
+                                    <b class="u-important u-big"
+                                        >{{ item.fightTime | costFormat }}
+                                    </b></time
+                                ></el-col
+                            >
+                            <el-col :span="4" class="u-subblock u-detail"
+                                ><span
+                                    v-if="item.teamMembers"
+                                    @click="view(item)"
+                                    >点击展开
+                                    <i
+                                        :class="
+                                            item.active
+                                                ? 'el-icon-arrow-down'
+                                                : 'el-icon-arrow-right'
+                                        "
+                                    ></i></span
+                                ><span v-else>无团员数据</span></el-col
+                            >
+                            <el-col :span="2" class="u-subblock u-status">
+                                <span class="u-verified" v-if="item.teamname"
+                                    ><i class="el-icon-success"></i
+                                    >{{ item.teamname }}</span
+                                >
+                                <span class="u-undefined" v-else>公示期</span>
+                            </el-col>
+                            <el-col
+                                :span="24"
+                                class="u-members"
+                                :class="{ on: item.active }"
+                                v-html="showMembers(item.teamMembers)"
+                                v-if="item.teamMembers"
+                            ></el-col>
+                        </el-row>
+                    </div>
                 </div>
             </div>
         </div>
@@ -72,6 +146,9 @@ import { getDateRank } from "../service/getRank";
 import moment, { fn } from "moment";
 import rankmap from "../assets/js/rank.json";
 // import mock from '../mock/rank.json'
+import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box.json";
+import servers from '@jx3box/jx3box-data/data/server/server_list.json'
+servers.unshift('全部')
 
 export default {
     name: "Rank",
@@ -81,40 +158,42 @@ export default {
             active: "",
             rank: {},
             loading: false,
-            ready:false
+            ready: false,
+            server:'',
+            servers :servers 
         };
     },
     computed: {
         fb: function() {
             return this.$store.state.fb;
         },
-        nav : function (){
-            return rankmap[this.fb]
+        nav: function() {
+            return rankmap[this.fb];
         },
-        labels : function (){
-            return Object.keys(this.nav)
+        labels: function() {
+            return Object.keys(this.nav);
         },
-        values : function (){
-            return Object.values(this.nav)
+        values: function() {
+            return Object.values(this.nav);
         },
-        first : function (){
-            return this.labels[0]
-        }
+        first: function() {
+            return this.labels[0];
+        },
     },
     filters: {
         format: function(val) {
             return moment(val * 1000).format("YYYY-MM-DD HH:mm:ss");
         },
-        costFormat : function (val){
-            let s = val / 1000
-            return ~~(s/60) + '分' + ~~(s%60) + '秒'
-        }
+        costFormat: function(val) {
+            let s = val / 1000;
+            return ~~(s / 60) + "分" + ~~(s % 60) + "秒";
+        },
     },
     methods: {
         loadRank: function() {
-
             // 状态设置
             this.loading = true;
+            this.server = ''
 
             // 已请求
             if (this.rank[this.active]) {
@@ -126,7 +205,12 @@ export default {
             let cid = this.nav[this.active];
             return getDateRank(cid)
                 .then((res) => {
-                    this.$set(this.rank,this.active,res.data.data);
+                    let data = res.data.data
+                    data.forEach((item) => {
+                        item.active = false
+                        item.visible = true
+                    })
+                    this.$set(this.rank, this.active, res.data.data);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -144,13 +228,46 @@ export default {
                 return "t3";
             }
         },
+        showMembers: function(val) {
+            let member_arr = val.split(";");
+            let members = [];
+            member_arr.forEach((member) => {
+                let g = member.split(",");
+                members.push(
+                    `<span class="u-member"><em><img src="${__ossMirror}image/xf/${g[1]}.png"></em><b>${g[0]}</b></span>`
+                );
+            });
+            return members.join("");
+        },
+        view(item) {
+            this.$set(item, "active", !item.active);
+        },
+        serverFilter(){
+            if(!this.rank[this.active]) return
+
+            let currentList = this.rank[this.active]
+
+            if(this.server && this.server!='全部'){
+                currentList.forEach((item) => {
+                    if(item.Server == this.server){
+                        item.visible = true
+                    }else{
+                        item.visible = false
+                    }
+                })
+            }else if(this.server=='全部'){
+                currentList.forEach((item) => {
+                    item.visible = true
+                })
+            }
+        }
     },
     mounted: function() {
         if (this.nav) {
-            this.active = this.first
+            this.active = this.first;
             this.loadRank().then(() => {
-                this.ready = true
-            })
+                this.ready = true;
+            });
         }
     },
 };

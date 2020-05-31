@@ -1,5 +1,15 @@
 <template>
     <div class="m-fb-rank" v-if="ready">
+
+        <h3 class="m-fb-rank-title">剑网3跨区服副本通关百强榜</h3>
+        <p class="m-fb-rank-desc">
+            联合推栏表彰活动·<a
+                href="https://www.jx3box.com/discuz/13715/"
+                target="_blank"
+                >活动规则与举报</a
+            >
+        </p>
+
         <div class="m-fb-rank-tab">
             <el-tabs type="card" @tab-click="loadRank" v-model="active">
                 <el-tab-pane
@@ -12,14 +22,6 @@
         </div>
 
         <div class="m-fb-rank-box m-fb-rank-box-full" :loading="loading">
-            <h3 class="m-fb-rank-title">剑网3跨区服副本通关百强榜</h3>
-            <p class="m-fb-rank-desc">
-                联合推栏表彰活动·<a
-                    href="https://www.jx3box.com/discuz/13715/"
-                    target="_blank"
-                    >活动规则与举报</a
-                >
-            </p>
             <div
                 class="m-fb-rank-list"
                 v-for="(group, id) in rank"

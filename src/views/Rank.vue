@@ -64,7 +64,11 @@
                                 >状态</el-col
                             >
                         </el-row>
-                        <el-row v-for="(item, i) in group" :key="i" v-show="item.visible">
+                        <el-row
+                            v-for="(item, i) in group"
+                            :key="i"
+                            v-show="item.visible"
+                        >
                             <el-col
                                 :span="2"
                                 class="u-subblock u-order"
@@ -72,7 +76,7 @@
                                 >{{ i + 1 }}</el-col
                             >
                             <el-col :span="4" class="u-subblock u-team">{{
-                                item.Role
+                                item.leader
                             }}</el-col>
                             <el-col :span="4" class="u-subblock u-server">{{
                                 item.Server
@@ -94,7 +98,8 @@
                                 ></el-col
                             >
                             <el-col :span="4" class="u-subblock u-detail"
-                                ><span class="u-detail-toggle"
+                                ><span
+                                    class="u-detail-toggle"
                                     v-if="item.teamMembers"
                                     @click="view(item)"
                                     >点击展开
@@ -147,8 +152,8 @@ import moment, { fn } from "moment";
 import rankmap from "../assets/js/rank.json";
 // import mock from '../mock/rank.json'
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box.json";
-import servers from '@jx3box/jx3box-data/data/server/server_list.json'
-servers.unshift('全部')
+import servers from "@jx3box/jx3box-data/data/server/server_list.json";
+servers.unshift("全部");
 
 export default {
     name: "Rank",
@@ -159,8 +164,8 @@ export default {
             rank: {},
             loading: false,
             ready: false,
-            server:'',
-            servers :servers 
+            server: "",
+            servers: servers,
         };
     },
     computed: {
@@ -193,7 +198,7 @@ export default {
         loadRank: function() {
             // 状态设置
             this.loading = true;
-            this.server = ''
+            this.server = "";
 
             // 已请求
             if (this.rank[this.active]) {
@@ -205,11 +210,11 @@ export default {
             let cid = this.nav[this.active];
             return getDateRank(cid)
                 .then((res) => {
-                    let data = res.data.data
+                    let data = res.data.data;
                     data.forEach((item) => {
-                        item.active = false
-                        item.visible = true
-                    })
+                        item.active = false;
+                        item.visible = true;
+                    });
                     this.$set(this.rank, this.active, res.data.data);
                 })
                 .catch((err) => {
@@ -242,25 +247,25 @@ export default {
         view(item) {
             this.$set(item, "active", !item.active);
         },
-        serverFilter(){
-            if(!this.rank[this.active]) return
+        serverFilter() {
+            if (!this.rank[this.active]) return;
 
-            let currentList = this.rank[this.active]
+            let currentList = this.rank[this.active];
 
-            if(this.server && this.server!='全部'){
+            if (this.server && this.server != "全部") {
                 currentList.forEach((item) => {
-                    if(item.Server == this.server){
-                        item.visible = true
-                    }else{
-                        item.visible = false
+                    if (item.Server == this.server) {
+                        item.visible = true;
+                    } else {
+                        item.visible = false;
                     }
-                })
-            }else if(this.server=='全部'){
+                });
+            } else if (this.server == "全部") {
                 currentList.forEach((item) => {
-                    item.visible = true
-                })
+                    item.visible = true;
+                });
             }
-        }
+        },
     },
     mounted: function() {
         if (this.nav) {

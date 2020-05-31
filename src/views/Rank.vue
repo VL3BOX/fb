@@ -76,7 +76,7 @@
                                 >{{ i + 1 }}</el-col
                             >
                             <el-col :span="4" class="u-subblock u-team">{{
-                                item.leader
+                                item.leader || item.Role
                             }}</el-col>
                             <el-col :span="4" class="u-subblock u-server">{{
                                 item.Server

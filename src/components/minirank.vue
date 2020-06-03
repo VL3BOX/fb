@@ -20,17 +20,17 @@
                 <ul class="u-list">
                     <li v-for="(item, j) in group" :key="j">
                         <span class="u-order">{{ j + 1 }}</span>
-                        <span class="u-team">{{ item.Role }}</span>
+                        <span class="u-team">{{ item.leader || item.Role }}</span>
                         <span class="u-server">{{ item.Server }}</span>
                     </li>
                 </ul>
             </div>
         </div>
-        <!-- <a
-            class="u-more el-button el-button--primary is-plain"
+        <a
+            class="u-more el-button el-button--default is-plain el-button--mini"
             href="/fb/#/rank"
             >&raquo; 查看更多</a
-        > -->
+        >
     </div>
 </template>
 

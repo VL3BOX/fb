@@ -1,10 +1,9 @@
 <template>
     <div class="m-extend-single">
+        <Author v-if="$store.state.status" :author="author"/>
         <div id="directory" class="m-fb-directory"></div>
-        <!-- v-if="$store.state.status" -->
-        <!-- <Author :author="author"/>
-        <Authorposts :uid="uid"/>
-        <ins 
+        <!-- <Authorposts :uid="uid"/> -->
+        <!-- <ins 
             class="adsbygoogle"
             style="display:block;max-width:100%;overflow:hidden;"
             data-ad-client="ca-pub-4388499329141185"
@@ -41,5 +40,5 @@ export default {
 </script>
 
 <style lang="less">
-    // @import '../assets/css/author.less';
+    @import '../assets/css/single_side.less';
 </style>

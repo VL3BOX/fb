@@ -54,7 +54,6 @@
             </span>
         </el-tab-pane>
 
-
         <el-tab-pane label="副本掉落" name="drop">
             <span slot="label">
                 <i class="el-icon-present"></i>
@@ -78,7 +77,7 @@ export default {
     computed: {},
     methods: {
         changeView: function() {
-            this.$router.push({ path: this.view });
+            this.$router.push({ name: this.view });
         },
     },
     mounted: function() {

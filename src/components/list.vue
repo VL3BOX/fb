@@ -1,12 +1,10 @@
 <template>
     <div class="m-fb">
-        <tabs />
         <router-view />
     </div>
 </template>
 
 <script>
-import tabs from "./tabs";
 export default {
     name: "list",
     props: [],
@@ -19,7 +17,7 @@ export default {
     },
     mounted: function() {},
     components: {
-        tabs,
+        
     },
 };
 </script>

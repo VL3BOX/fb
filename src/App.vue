@@ -10,7 +10,8 @@
             :adminEnable="true"
         >
             <img slot="logo" svg-inline src="./assets/img/fb.svg" />
-            <tabs />
+            <!-- <tabs /> -->
+            <Info />
         </Breadcrumb>
         <LeftSidebar>
             <Nav />
@@ -29,8 +30,8 @@
 </template>
 
 <script>
-import tabs from "@/components/tabs";
-// import Info from "@/components/Info.vue";
+// import tabs from "@/components/tabs";
+import Info from "@/components/Info.vue";
 import Nav from "@/components/Nav.vue";
 import Extend from "@/components/Extend.vue";
 import list from "@/components/list.vue";
@@ -59,12 +60,12 @@ export default {
         this.$store.state.mode = this.$store.state.pid ? "single" : "list";
     },
     components: {
-        // Info,
+        Info,
         Nav,
         Extend,
         list,
         single,
-        tabs,
+        // tabs,
     },
 };
 </script>

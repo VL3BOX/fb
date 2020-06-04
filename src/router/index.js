@@ -1,14 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Index from "../views/Index.vue";
-import Drop from "../views/Drop.vue";
-import JMap from "../views/Map.vue";
-import Npc from "../views/Npc.vue";
-import Skill from "../views/Skill.vue";
-import Story from "../views/Story.vue";
-import Cj from "../views/Cj.vue";
-import Rank from "../views/Rank.vue";
+const Index = () => import('../views/Index.vue')
+const Drop = () => import('../views/Drop.vue')
+const JMap = () => import('../views/Map.vue')
+const Npc = () => import('../views/Npc.vue')
+const Skill = () => import('../views/Skill.vue')
+const Story = () => import('../views/Story.vue')
+const Cj = () => import('../views/Cj.vue')
+const Rank = () => import('../views/Rank.vue')
 
 Vue.use(VueRouter);
 

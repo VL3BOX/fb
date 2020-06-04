@@ -89,3 +89,7 @@ export default {
     components: {},
 };
 </script>
+
+<style lang="less">
+@import "../assets/css/rank.less";
+</style>

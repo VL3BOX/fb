@@ -33,6 +33,16 @@
                     href="https://www.jx3box.com/app/jx3-query/"
                     target="_blank"
                     >技能Buff查询</a>
+                <!-- <a
+                    class="u-item"
+                    href="https://www.jx3box.com/app/jx3-query/"
+                    target="_blank"
+                    >战斗日志分析</a> -->
+                <!-- <a
+                    class="u-item"
+                    href="https://www.jx3box.com/app/jx3-query/"
+                    target="_blank"
+                    >团队管理平台</a> -->
             </div>
         </div>
         <!-- <Github_REPO REPO="fb" coder="8,15,2"></Github_REPO> -->

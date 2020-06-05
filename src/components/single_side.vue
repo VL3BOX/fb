@@ -1,6 +1,6 @@
 <template>
     <div class="m-extend-single">
-        <Author v-if="$store.state.status" :author="author"/>
+        <!-- <Author v-if="$store.state.status" :author="author"/> -->
         <div id="directory" class="m-fb-directory"></div>
         <!-- <Authorposts :uid="uid"/> -->
         <!-- <ins 

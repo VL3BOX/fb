@@ -1,12 +1,12 @@
 <template>
     <nav class="m-fb-nav">
-        <!-- <single_nav v-if="mode == 'single'" /> -->
+        <single_nav v-if="mode == 'single'" />
         <list_nav />
     </nav>
 </template>
 
 <script>
-// import single_nav from './single_nav'
+import single_nav from './single_nav'
 import list_nav from './list_nav'
 export default {
     name: "Nav",
@@ -25,7 +25,7 @@ export default {
     },
     mounted: function() {},
     components: {
-        // single_nav,
+        single_nav,
         list_nav
     },
 };

@@ -3,7 +3,10 @@
         <div class="m-archive-list m-fb-list" v-if="data.length">
             <ul class="u-list">
                 <li class="u-item" v-for="(item, i) in data" :key="i">
-                    <a class="u-banner" :href="item.post.ID | postLink"
+                    <a
+                        class="u-banner"
+                        :href="item.post.ID | postLink"
+                        :target="target"
                         ><img :src="showBanner(item.post.post_banner)"
                     /></a>
 
@@ -17,7 +20,7 @@
                             class="u-title"
                             :style="item.post.color | isHighlight"
                             :href="item.post.ID | postLink"
-                            target="_blank"
+                            :target="target"
                             >{{ item.post.post_title }}</a
                         >
                         <span
@@ -130,6 +133,7 @@ import {
     showAvatar,
     authorLink,
     showMinibanner,
+    buildTarget,
 } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Index",
@@ -156,17 +160,25 @@ export default {
                 ]["icon"]
             );
         },
+        target: function() {
+            return buildTarget();
+        },
     },
     methods: {
-        changePage: function(i) {
-            this.loading = true;
-            getPosts({
+        loadPosts: function(i = 1, append = false) {
+            let query = {
                 page: i,
                 subtype: this.subtype,
-            })
+            };
+            this.loading = true;
+            getPosts(query, this)
                 .then((res) => {
-                    window.scrollTo(0, 0);
-                    this.data = res.data.data.list;
+                    if (append) {
+                        this.data = this.data.concat(res.data.data.list);
+                    } else {
+                        window.scrollTo(0, 0);
+                        this.data = res.data.data.list;
+                    }
                     this.total = res.data.data.total;
                     this.pages = res.data.data.pages;
                 })
@@ -174,20 +186,11 @@ export default {
                     this.loading = false;
                 });
         },
+        changePage: function(i) {
+            this.loadPosts(i);
+        },
         appendPage: function(i) {
-            this.loading = true;
-            getPosts({
-                page: i,
-                subtype: this.subtype,
-            })
-                .then((res) => {
-                    this.data = this.data.concat(res.data.data.list);
-                    this.total = res.data.data.total;
-                    this.pages = res.data.data.pages;
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+            this.loadPosts(i, true);
         },
         format: function(parent, key) {
             let val = lodash.get(parent, key);
@@ -230,7 +233,7 @@ export default {
     mounted: function() {
         let params = new URLSearchParams(location.search);
         this.subtype = params.get("fb_name");
-        this.changePage(1);
+        this.loadPosts(1);
     },
 };
 </script>

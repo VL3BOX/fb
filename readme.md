@@ -1,2 +1,6 @@
 # 副本栏目
-rewrite  `rewrite ^/fb/(\d+)    /fb/?pid=$1 last;`
+
+# Todo
+
+1. 战斗分析
+2. 团队OA

@@ -9,6 +9,9 @@
                 >活动规则与举报</a
             >
         </p>
+        <div class="m-fb-rank-tip el-alert el-alert--warning is-light">
+            工作室成绩将不予显示，官方认定代打成绩将不予显示，超过1周未认领的团队成绩将不予显示，认领请加团长QQ群:<a href="https://jq.qq.com/?_wv=1027&k=NoEyYq75">785597424</a>
+        </div>
 
         <div class="m-fb-rank-tab">
             <el-tabs type="card" @tab-click="loadRank" v-model="active">

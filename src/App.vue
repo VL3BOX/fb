@@ -1,5 +1,8 @@
 <template>
-    <div id="app" :class="{ 'p-list': mode == 'list', 'p-single': mode == 'single' }">
+    <div
+        id="app"
+        :class="{ 'p-list': mode == 'list', 'p-single': mode == 'single' }"
+    >
         <Header></Header>
         <Breadcrumb
             name="副本专栏"
@@ -10,16 +13,16 @@
             :adminEnable="true"
         >
             <img slot="logo" svg-inline src="./assets/img/fb.svg" />
-            <!-- <tabs /> -->
             <Info />
         </Breadcrumb>
         <LeftSidebar>
             <Nav />
         </LeftSidebar>
-        <Main
-            :withoutRight="false"
-        >
-            <list v-if="mode == 'list'" />
+        <Main :withoutRight="false">
+            <div class="m-fb" v-if="mode == 'list'"
+                ><tabs />
+                <router-view />
+            </div>
             <single v-if="mode == 'single'" />
             <RightSidebar>
                 <Extend />
@@ -30,11 +33,11 @@
 </template>
 
 <script>
-// import tabs from "@/components/tabs";
+import tabs from "@/components/tabs";
 import Info from "@/components/Info.vue";
 import Nav from "@/components/Nav.vue";
 import Extend from "@/components/Extend.vue";
-import list from "@/components/list.vue";
+// import list from "@/components/list.vue";
 import single from "@/components/single.vue";
 const { getRewrite } = require("@jx3box/jx3box-common/js/utils");
 
@@ -63,9 +66,12 @@ export default {
         Info,
         Nav,
         Extend,
-        list,
         single,
-        // tabs,
+        tabs,
     },
 };
 </script>
+
+<style lang="less">
+@import "./assets/css/layout.less";
+</style>

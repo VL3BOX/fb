@@ -227,7 +227,7 @@ const order_map = {
     downs : '下载最多'
 }
 export default {
-    name: "List",
+    name: "list",
     props: [],
     data: function() {
         return {

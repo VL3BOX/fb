@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import List from '@/components/List.vue'
+import list from '@/components/list.vue'
 export default {
     name: "Index",
     props: [],
@@ -26,7 +26,7 @@ export default {
         
     },
     components: {
-        List
+        list
     }
 };
 </script>

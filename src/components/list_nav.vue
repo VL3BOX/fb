@@ -24,7 +24,7 @@
                         hidden: isHide(subkey),
                     }"
                 >
-                    <a :href="url(group.name, item.name)">{{ item.name }}</a>
+                    <a class="u-link" :href="url(group.name, item.name)">{{ item.name }}</a>
                 </li>
             </ul>
         </div>
@@ -64,7 +64,7 @@ export default {
     },
     methods: {
         url: function(zlp, fb) {
-            return `/fb/?fb_zlp=${zlp}&fb_name=${fb}`;
+            return `/fb/?fb_zlp=${zlp}&fb_name=${fb}#/` + this.$route.name;
         },
         isActive: function(subkey) {
             let params = new URLSearchParams(location.search);

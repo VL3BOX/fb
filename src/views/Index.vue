@@ -1,6 +1,6 @@
 <template>
     <div class="m-fb-index">
-        <List />
+        <list />
     </div>
 </template>
 

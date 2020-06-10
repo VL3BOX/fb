@@ -1,6 +1,5 @@
 <template>
     <div class="m-single-box m-fb-single" :loading="loading">
-
         <header class="m-single-header">
             <div class="m-single-title">
                 <!-- 标题 -->
@@ -21,14 +20,14 @@
                 <div class="u-meta u-sub-block">
                     <em class="u-label">首领</em>
                     <span class="u-value u-boss-list">
-                        {{ format(meta,'fb_boss')}}
+                        {{ format(meta, "fb_boss") }}
                     </span>
                 </div>
 
                 <div class="u-meta u-sub-block">
                     <em class="u-label">模式</em>
                     <span class="u-value u-mode-list c-jx3fb-mode">
-                        {{ format(meta,'fb_level') }}
+                        {{ format(meta, "fb_level") }}
                     </span>
                 </div>
 
@@ -53,13 +52,18 @@
                     <i class="u-icon-edit el-icon-edit-outline"></i>
                     <span>编辑</span>
                 </a>
-
             </div>
 
             <div class="m-single-panel">
                 <!-- 收藏 -->
                 <Fav />
-                <el-button size="mini" type="primary" disabled title="即将推出.."><i class="el-icon-bell"></i><span>订阅</span></el-button>
+                <el-button
+                    size="mini"
+                    type="primary"
+                    disabled
+                    title="即将推出.."
+                    ><i class="el-icon-bell"></i><span>订阅</span></el-button
+                >
             </div>
         </header>
 
@@ -74,17 +78,18 @@
         <div class="m-single-post">
             <el-divider content-position="left">JX3BOX</el-divider>
             <div class="m-single-content">
-                <Article :content="post.post_content" directorybox="#directory"/>
+                <Article
+                    :content="post.post_content"
+                    directorybox="#directory"
+                />
             </div>
         </div>
 
-        <div class="m-single-append">
-            
-        </div>
+        <div class="m-single-append"></div>
 
         <div class="m-single-comment">
             <el-divider content-position="left">评论</el-divider>
-            <Comment :post-id="id"/>
+            <Comment :post-id="id" />
         </div>
 
         <footer class="m-single-footer">
@@ -101,12 +106,12 @@
 </template>
 
 <script>
-import lodash from 'lodash'
+import lodash from "lodash";
 import { getPost } from "../service/getPost";
 import dateFormat from "../utils/dateFormat";
-import {__Links} from '@jx3box/jx3box-common/js/jx3box.json'
-import {authorLink,editLink} from '@jx3box/jx3box-common/js/utils.js'
-import User from '@jx3box/jx3box-common/js/user.js'
+import { __Links } from "@jx3box/jx3box-common/js/jx3box.json";
+import { authorLink, editLink } from "@jx3box/jx3box-common/js/utils.js";
+import User from "@jx3box/jx3box-common/js/user.js";
 export default {
     name: "single",
     props: [],
@@ -116,33 +121,36 @@ export default {
             setting: {},
             meta: {},
             author: {},
-            loading: true,
+            loading: false,
             url: location.href,
         };
     },
     computed: {
-        authorLink: function (){
-            return authorLink(this.author.uid)
+        authorLink: function() {
+            return authorLink(this.author.uid);
         },
-        editLink : function (){
-            return editLink(this.post.post_type,this.post.ID)
+        editLink: function() {
+            return editLink(this.post.post_type, this.post.ID);
         },
         id: function() {
             return this.$store.state.pid;
         },
-        showEdit : function (){
-            return this.post.post_author == User.getInfo().uid || User.getInfo().group > 60
-        }
+        showEdit: function() {
+            return (
+                this.post.post_author == User.getInfo().uid ||
+                User.getInfo().group > 60
+            );
+        },
     },
     methods: {
-        format : function (parent,key){
-            let val = lodash.get(parent,key)
-            if(Array.isArray(val)){
-                return val.toString()
-            }else{
-                return val
+        format: function(parent, key) {
+            let val = lodash.get(parent, key);
+            if (Array.isArray(val)) {
+                return val.toString();
+            } else {
+                return val;
             }
-        }
+        },
     },
     filters: {
         dateFormat: function(val) {
@@ -151,19 +159,24 @@ export default {
     },
     created: function() {
         if (this.id) {
+            this.loading = true;
             getPost(this.id)
                 .then((res) => {
                     this.post = this.$store.state.post = res.data.data.post;
-                    this.meta = this.$store.state.meta = res.data.data.post.post_meta;
-                    this.setting = this.$store.state.setting = res.data.data.post;
-                    this.author = this.$store.state.author = res.data.data.author;
-                    this.$store.state.status = true
-
-                    this.loading = false;
+                    this.meta = this.$store.state.meta =
+                        res.data.data.post.post_meta;
+                    this.setting = this.$store.state.setting =
+                        res.data.data.post;
+                    this.author = this.$store.state.author =
+                        res.data.data.author;
+                    this.$store.state.status = true;
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.log(err);
                 })
+                .finally(() => {
+                    this.loading = false;
+                });
         }
     },
 };

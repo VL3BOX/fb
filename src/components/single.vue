@@ -171,9 +171,6 @@ export default {
                         res.data.data.author;
                     this.$store.state.status = true;
                 })
-                .catch((err) => {
-                    console.log(err);
-                })
                 .finally(() => {
                     this.loading = false;
                 });

@@ -19,11 +19,11 @@
             <Nav />
         </LeftSidebar>
         <Main :withoutRight="false">
-            <div class="m-fb" v-if="mode == 'list'"
-                ><tabs />
+            <single v-if="mode == 'single'" />
+            <div class="m-fb" v-else>
+                <tabs />
                 <router-view />
             </div>
-            <single v-if="mode == 'single'" />
             <RightSidebar>
                 <Extend />
             </RightSidebar>
@@ -33,11 +33,10 @@
 </template>
 
 <script>
-import tabs from "@/components/tabs";
 import Info from "@/components/Info.vue";
 import Nav from "@/components/Nav.vue";
 import Extend from "@/components/Extend.vue";
-// import list from "@/components/list.vue";
+import tabs from "@/components/tabs";
 import single from "@/components/single.vue";
 const { getRewrite } = require("@jx3box/jx3box-common/js/utils");
 
@@ -55,12 +54,12 @@ export default {
         },
     },
     methods: {},
-    created: function() {
+    beforeCreate: function() {
         this.params = new URLSearchParams(location.search);
-        this.$store.state.zlp = this.params.get("fb_zlp") || "世外蓬莱";
-        this.$store.state.fb = this.params.get("fb_name") || "范阳夜变";
         this.$store.state.pid = this.params.get("pid") || getRewrite("pid");
         this.$store.state.mode = this.$store.state.pid ? "single" : "list";
+        this.$store.state.zlp = this.params.get("fb_zlp") || "世外蓬莱";
+        this.$store.state.fb = this.params.get("fb_name") || "范阳夜变";
     },
     components: {
         Info,

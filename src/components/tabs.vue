@@ -74,14 +74,16 @@ export default {
             view: "index",
         };
     },
+    watch : {
+        $route : function (_route){
+            this.view = _route.name
+        }
+    },
     computed: {},
     methods: {
         changeView: function() {
             this.$router.push({ name: this.view });
         },
-    },
-    mounted: function() {
-        this.view = this.$route.name
     },
 };
 </script>

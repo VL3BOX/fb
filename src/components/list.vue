@@ -366,7 +366,7 @@ export default {
             return mark_map[val];
         },
     },
-    mounted: function() {
+    created: function() {
         let params = new URLSearchParams(location.search);
         this.subtype = params.get("fb_name");
         this.loadPosts(1);

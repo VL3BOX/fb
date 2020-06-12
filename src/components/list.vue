@@ -80,12 +80,12 @@
         <div class="m-archive-list m-fb-list" v-if="data.length">
             <ul class="u-list">
                 <li class="u-item" v-for="(item, i) in data" :key="i">
-                    <a
+                    <!-- <a
                         class="u-banner"
                         :href="item.post.ID | postLink"
                         :target="target"
                         ><img :src="showBanner(item.post.post_banner)"
-                    /></a>
+                    /></a> -->
 
                     <h2 class="u-post" :class="{ isSticky: item.post.sticky }">
                         <img
@@ -150,17 +150,19 @@
                     </div>
 
                     <div class="u-misc">
-                        <img
-                            class="u-author-avatar"
-                            :src="item.author.avatar | showAvatar"
-                            :alt="item.author.name"
-                        />
-                        <a
-                            class="u-author-name"
-                            :href="item.author.uid | authorLink"
-                            target="_blank"
-                            >{{ item.author.name }}</a
-                        >
+                        <span class="u-author">
+                            <img
+                                class="u-author-avatar"
+                                :src="item.author.avatar | showAvatar"
+                                :alt="item.author.name"
+                            />
+                            <a
+                                class="u-author-name"
+                                :href="item.author.uid | authorLink"
+                                target="_blank"
+                                >{{ item.author.name }}</a
+                            >
+                        </span>
                         <span class="u-date">
                             Updated on
                             <time>{{
@@ -220,12 +222,12 @@ const mark_map = {
     geek: "骨灰必备",
 };
 const order_map = {
-    update : '最后更新',
-    podate : '最早发布',
-    favs : '收藏最多',
-    likes : '点赞最多',
-    downs : '下载最多'
-}
+    update: "最后更新",
+    podate: "最早发布",
+    favs: "收藏最多",
+    likes: "点赞最多",
+    downs: "下载最多",
+};
 export default {
     name: "list",
     props: [],
@@ -244,7 +246,7 @@ export default {
             mark: "", //筛选模式
 
             filter_visible: false,
-            order_visible : false
+            order_visible: false,
         };
     },
     computed: {
@@ -267,8 +269,8 @@ export default {
         currentMark: function() {
             return mark_map[this.mark];
         },
-        currentOrder : function (){
-            return order_map[this.order]
+        currentOrder: function() {
+            return order_map[this.order];
         },
         hasNextPage: function() {
             return this.total > 1 && this.page < this.pages;
@@ -329,11 +331,10 @@ export default {
         showFilter: function() {
             this.filter_visible = !this.filter_visible;
         },
-        showOrder : function (){
+        showOrder: function() {
             this.order_visible = !this.order_visible;
         },
 
-        
         showBanner: function(val) {
             return val ? showMinibanner(val) : this.defaultBanner;
         },
@@ -371,9 +372,7 @@ export default {
         this.subtype = params.get("fb_name");
         this.loadPosts(1);
     },
-    components: {
-        
-    },
+    components: {},
 };
 </script>
 

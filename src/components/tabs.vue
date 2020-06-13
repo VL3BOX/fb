@@ -10,7 +10,7 @@
 
         <el-tab-pane label="副本成就" name="cj">
             <span slot="label">
-                <i class="el-icon-trophy"></i>
+                <i class="el-icon-collection-tag"></i>
                 <b>副本成就</b>   
                 <em class="u-new">最新同步</em>
             </span>
@@ -34,7 +34,7 @@
 
         <el-tab-pane label="全服排行" name="rank">
             <span slot="label">
-                <i class="el-icon-date"></i>
+                <i class="el-icon-trophy"></i>
                 <b>全服排行</b>
                 <em class="u-ready">正在进行</em>
             </span>

@@ -11,7 +11,7 @@
 
         <div class="m-nav-group" v-for="(group, key) in map" :key="key">
             <h2 class="u-category active">
-                <span class="u-title">{{ key }}</span>
+                <span class="u-title">🍄 {{ key }}</span>
                 <em class="u-level">({{ group.level }})</em>
             </h2>
             <ul class="u-list">
@@ -64,7 +64,7 @@ export default {
     },
     methods: {
         url: function(zlp, fb) {
-            return `/fb/?fb_zlp=${zlp}&fb_name=${fb}#/` + this.$route.name;
+            return `/fb/?fb_zlp=${zlp}&fb_name=${fb}`;
         },
         isActive: function(subkey) {
             let params = new URLSearchParams(location.search);

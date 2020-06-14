@@ -18,15 +18,23 @@
                 v-html="item.summary.replace(/\\n/g, '<br/>')"
             ></p>
         </div>
+
+        <el-divider content-position="left">副本地图</el-divider>
+        <div class="m-fb-map" v-loading="loading">
+            <img class="u-map" :src="mapimg" :alt="fb" ref="fb_map_img" @load="loaded">
+        </div>
     </div>
 </template>
 
 <script>
+import {__ossMirror} from '@jx3box/jx3box-common/js/jx3box'
 export default {
     name: "Story",
     props: [],
     data: function() {
-        return {};
+        return {
+            loading : true
+        };
     },
     computed: {
         zlp: function() {
@@ -46,8 +54,18 @@ export default {
         boss: function() {
             return this.info.boss_infos;
         },
+        mapid : function (){
+            return this.$store.state.map[this.zlp]["dungeon"][this.fb]['detail']['map_id']
+        },
+        mapimg : function (){
+            return __ossMirror + 'pic/map/map_' + this.mapid + '.jpg'
+        }
     },
-    methods: {},
+    methods: {
+        loaded : function (){
+            this.loading = false            
+        }
+    },
     mounted: function() {},
 };
 </script>

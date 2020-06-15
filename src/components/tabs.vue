@@ -48,18 +48,18 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="背景故事" name="story">
-            <span slot="label">
-                <i class="el-icon-film"></i>
-                <b>背景故事</b>
-            </span>
-        </el-tab-pane>
-
         <el-tab-pane label="副本掉落" name="drop">
             <span slot="label">
                 <i class="el-icon-present"></i>
                 <b>副本掉落</b>
                 <em class="u-pending">即将推出</em>
+            </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="背景故事" name="story">
+            <span slot="label">
+                <i class="el-icon-film"></i>
+                <b>背景故事</b>
             </span>
         </el-tab-pane>
 

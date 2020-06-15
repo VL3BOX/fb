@@ -9,6 +9,7 @@ const Skill = () => import('../views/Skill.vue')
 const Story = () => import('../views/Story.vue')
 const Cj = () => import('../views/Cj.vue')
 const Rank = () => import('../views/Rank.vue')
+const Team = () => import('../views/Team.vue')
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,7 @@ const routes = [
     { name: "story", path: "/story", component: Story },
     { name: "cj", path: "/cj", component: Cj },
     { name: "rank", path: "/rank", component: Rank },
+    { name: "team", path: "/team", component: Team },
 ];
 
 const router = new VueRouter({

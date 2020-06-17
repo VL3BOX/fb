@@ -7,16 +7,10 @@ module.exports = {
     devServer: {
         proxy: {
             "/api": {
-                target: "https://api.jx3box.com",
+                target: "https://next.jx3box.com",
                 onProxyReq: function(request) {
                     request.setHeader("origin", "");
                 },
-            },
-            "/server": {
-                target:
-                    process.env["DEV_SERVER"] == "true"
-                        ? "http://localhost:5160"
-                        : "https://server.jx3box.com",
             },
         },
     },

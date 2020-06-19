@@ -279,9 +279,8 @@ export default {
             return buildTarget();
         },
         publish_url: function(val) {
-            return publishLink("house");
+            return publishLink("fb");
         },
-
         defaultBanner: function() {
             return (
                 __ossMirror +

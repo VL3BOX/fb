@@ -1,12 +1,10 @@
 <template>
     <div class="m-info">
         <div class="m-info-notice">
-            <a class="u-item" href="/fb/#/npc">🍭 最新NPC数据上线</a>
+            <!-- <a class="u-item" href="/fb/#/npc">🍭 最新NPC数据上线</a>
             <a class="u-item" href="/fb/#/skill">🍬 最新技能解包上线</a>
-            <a class="u-item" href="/fb/#/cj">🍸 同步最新成就条目</a>
-            <a class="u-item" href="/fb/#/rank"
-                >⚽️ 全服五甲冲榜活动正在进行中</a
-            >
+            <a class="u-item" href="/fb/#/cj">🍸 同步最新成就条目</a> -->
+            <a class="u-item" href="/fb/#/rank">⚽️ 安小逢百强榜已结榜</a>
         </div>
 
         <div class="m-info-router">

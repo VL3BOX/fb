@@ -36,23 +36,23 @@
             <span slot="label">
                 <i class="el-icon-trophy"></i>
                 <b>全服排行</b>
-                <em class="u-ready">正在进行</em>
+                <em class="u-ready">已结榜</em>
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="团队活动" name="team">
+        <!-- <el-tab-pane label="团队活动" name="team">
             <span slot="label">
                 <i class="el-icon-connection"></i>
                 <b>团队活动</b>
                 <em class="u-pending">即将推出</em>
             </span>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <el-tab-pane label="副本掉落" name="drop">
             <span slot="label">
                 <i class="el-icon-present"></i>
                 <b>副本掉落</b>
-                <em class="u-pending">即将推出</em>
+                <em class="u-ready">即将推出</em>
             </span>
         </el-tab-pane>
 

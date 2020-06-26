@@ -25,14 +25,14 @@
             <div class="c-sidebar-right-list">
                 <a
                     class="u-item"
-                    href="https://www.jx3box.com/discuz/13715/"
+                    href="/tool/?pid=13715"
                     target="_blank"
                     >全服排行榜说明</a>
-                <a
+                <!-- <a
                     class="u-item"
                     href="https://www.jx3box.com/app/jx3-query/"
                     target="_blank"
-                    >技能Buff查询</a>
+                    >技能Buff查询</a> -->
                 <!-- <a
                     class="u-item"
                     href="https://www.jx3box.com/app/jx3-query/"

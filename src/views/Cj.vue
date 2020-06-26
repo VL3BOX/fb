@@ -50,7 +50,7 @@
 
 <script>
 import { getCJ } from "../service/getCJ";
-import { __ossMirror,__v2 } from "@jx3box/jx3box-common/js/jx3box";
+import { __ossMirror,__iconPath } from "@jx3box/jx3box-common/js/jx3box";
 export default {
     name: "Cj",
     props: [],
@@ -73,11 +73,10 @@ export default {
     },
     filters: {
         icon: function(id) {
-            return __ossMirror + "icon/" + id + ".png";
+            return __iconPath + "icon/" + id + ".png";
         },
         url : function (id){
-            // TODO:
-            return __v2 + 'cj/#/view/' + id
+            return '/cj/#/view/' + id
         }
     },
     methods: {

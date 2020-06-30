@@ -28,11 +28,11 @@
                     href="/tool/?pid=13715"
                     target="_blank"
                     >全服排行榜说明</a>
-                <!-- <a
+                <a
                     class="u-item"
-                    href="https://www.jx3box.com/app/jx3-query/"
+                    href="/app/database"
                     target="_blank"
-                    >技能Buff查询</a> -->
+                    >剑三数据库</a>
                 <!-- <a
                     class="u-item"
                     href="https://www.jx3box.com/app/jx3-query/"

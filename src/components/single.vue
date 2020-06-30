@@ -47,6 +47,12 @@
                     <time>{{ post.post_modified | dateFormat }}</time>
                 </span>
 
+                <!-- 查看次数 -->
+                <span class="u-views u-sub-block">
+                    <i class="el-icon-view"></i>
+                    {{setting.views}}
+                </span>
+
                 <!-- 编辑 -->
                 <a class="u-edit u-sub-block" :href="editLink" v-if="showEdit">
                     <i class="u-icon-edit el-icon-edit-outline"></i>
@@ -112,6 +118,8 @@ import dateFormat from "../utils/dateFormat";
 import { __Links } from "@jx3box/jx3box-common/js/jx3box.json";
 import { authorLink, editLink } from "@jx3box/jx3box-common/js/utils.js";
 import User from "@jx3box/jx3box-common/js/user.js";
+import { getStat,postStat } from "../service/stat.js";
+
 export default {
     name: "single",
     props: [],
@@ -165,8 +173,8 @@ export default {
                     this.post = this.$store.state.post = res.data.data.post;
                     this.meta = this.$store.state.meta =
                         res.data.data.post.post_meta;
-                    this.setting = this.$store.state.setting =
-                        res.data.data.post;
+                    // this.setting = this.$store.state.setting =
+                    //     res.data.data.post;
                     this.author = this.$store.state.author =
                         res.data.data.author;
                     this.$store.state.status = true;
@@ -174,6 +182,11 @@ export default {
                 .finally(() => {
                     this.loading = false;
                 });
+
+            getStat(this.id).then((data) => {
+                if(data) this.setting = this.$store.state.setting = data;
+            })
+            postStat(this.id)
         }
     },
 };

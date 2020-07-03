@@ -160,17 +160,22 @@ export default {
     },
     methods: {
         loadBossList: function() {
+            this.loading = true
             return getBossid(this.mapid).then((data) => {
                 this.bosslist = data;
                 this.bossid = data[0]["BossIndex"];
-            });
+            }).finally(() => {
+                this.loading = false
+            })
         },
         loadDropList: function(id) {
             this.bossid = id;
+            this.loading = true
             return getDrop(this.bossid).then((data) => {
                 this.droplist = data && data.data;
-                console.log(this.droplist);
-            });
+            }).finally(() => {
+                this.loading = false
+            })
         },
         dropType: function(val) {
             return dropmap[val];
@@ -186,16 +191,10 @@ export default {
             this.data = drop;
         },
         loadData: function() {
-            this.loading = true;
             this.loadBossList()
                 .then(() => {
-                    this.loadDropList(this.bossid).finally(() => {
-                        this.loading = false;
-                    });
+                    this.loadDropList(this.bossid)
                 })
-                // .finally(() => {
-                //     this.loading = false;
-                // });
         },
     },
     created: function() {

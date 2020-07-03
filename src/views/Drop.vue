@@ -16,7 +16,8 @@
                         :key="j"
                         @click="loadDropList(item.BossIndex)"
                     >
-                        <img :src="bossavatar(j)" />
+                        <!-- <img :src="bossavatar(j)" /> -->
+                        <img class="u-boss-avatar" svg-inline src="../assets/img/skull.svg" />
                         {{ item.BOSS }}
                     </div>
                 </div>

@@ -18,6 +18,9 @@
                 .bold;
                 color:@primary;
                 background-color:#e6f0fb;
+                svg{
+                    fill:@primary;
+                }
             }
             &:hover{
                 background-color:#e6f0fb;
@@ -38,6 +41,11 @@
             color:@primary;
             background-color:#e6f0fb;
             .mr(20px);
+        }
+        .u-boss-avatar{
+            .size(18px);
+            .y(-3px);
+            padding-left:8px;
         }
     }
     .u-droplist{
@@ -85,6 +93,13 @@
                 .nobreak;
                 .db;
                 .fz(13px,1.8);
+            }
+
+            &:hover{
+                .u-item-name{
+                    .bold;
+                    color:@pink;
+                }
             }
         }
     }

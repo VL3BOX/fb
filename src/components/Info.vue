@@ -1,10 +1,11 @@
 <template>
     <div class="m-info">
         <div class="m-info-notice">
-            <!-- <a class="u-item" href="/fb/#/npc">🍭 最新NPC数据上线</a>
-            <a class="u-item" href="/fb/#/skill">🍬 最新技能解包上线</a>
-            <a class="u-item" href="/fb/#/cj">🍸 同步最新成就条目</a> -->
-            <a class="u-item" href="/fb/#/rank">⚽️ 安小逢百强榜已结榜</a>
+            <router-link class="u-item" to="/gem">🍬 瑰石列表应用上线</router-link>
+            <router-link class="u-item" to="/drop">🍸 副本掉落应用上线</router-link>
+            <!-- <a class="u-item" href="/fb/#/skill">🍬 最新技能解包上线</a> -->
+            <!-- <a class="u-item" href="/fb/#/cj">🍸 同步最新成就条目</a> -->
+            <!-- <a class="u-item" href="/fb/#/rank">⚽️ 安小逢百强榜已结榜</a> -->
         </div>
 
         <div class="m-info-router">

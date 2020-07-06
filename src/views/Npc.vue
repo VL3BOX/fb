@@ -215,6 +215,7 @@
             :hide-on-single-page="true"
             @current-change="changePage"
             :current-page.sync="page"
+            :page-size.sync="perpage"
             layout="total, prev, pager, next, jumper"
             :total="total"
         ></el-pagination>

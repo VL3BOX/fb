@@ -41,6 +41,7 @@
             :hide-on-single-page="true"
             @current-change="changePage"
             :current-page.sync="page"
+            :page-size.sync="per"
             layout="total, prev, pager, next, jumper"
             :total="total"
         >
@@ -61,6 +62,7 @@ export default {
             page: 1,
             pages: 1,
             loading: true,
+            per : 10
         };
     },
     computed: {
@@ -80,26 +82,28 @@ export default {
         }
     },
     methods: {
-        changePage: function(i) {
+        loadPosts: function(i = 1, append = false) {
             this.loading = true;
-            getCJ(this.fb, i).then((res) => {
-                window.scrollTo(0,0)
-                this.data = res.data.data.achievements;
-                this.total = res.data.data.total;
-                this.pages = res.data.data.last_page;
-            }).finally(() => {
-                this.loading = false;
-            })
+            getCJ(this.fb, i)
+                .then((res) => {
+                    if (append) {
+                        this.data = this.data.concat(res.data.data.achievements);
+                    } else {
+                        window.scrollTo(0, 0);
+                        this.data = res.data.data.achievements;
+                    }
+                    this.total = res.data.data.total;
+                    this.pages = res.data.data.last_page;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
+        changePage: function(i) {
+            this.loadPosts(i);
         },
         appendPage: function(i) {
-            this.loading = true;
-            getCJ(this.fb, i).then((res) => {
-                this.data = this.data.concat(res.data.data.achievements);
-                this.total = res.data.data.total;
-                this.pages = res.data.data.last_page;
-            }).finally(() => {
-                this.loading = false;
-            })
+            this.loadPosts(i, true);
         },
     },
     mounted: function() {

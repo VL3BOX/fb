@@ -14,9 +14,9 @@
             <router-link to="/cj"><i class="el-icon-collection-tag"></i></router-link>
             <router-link to="/npc"><i class="el-icon-key"></i></router-link>
             <router-link to="/skill"><i class="el-icon-cpu"></i></router-link>
-            <router-link to="/story"><i class="el-icon-film"></i></router-link>
-            <!-- <router-link to="/map"><i class="el-icon-map-location"></i></router-link> -->
             <router-link to="/drop"><i class="el-icon-present"></i></router-link>
+            <router-link to="/gem"><i class="el-icon-house"></i></router-link>
+            <router-link to="/story"><i class="el-icon-film"></i></router-link>
         </div>
     </div>
 </template>

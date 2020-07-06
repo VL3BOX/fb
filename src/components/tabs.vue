@@ -58,7 +58,7 @@
 
         <el-tab-pane label="瑰石列表" name="gem">
             <span slot="label">
-                <img class="u-icon" svg-inline src="../assets/img/gem2.svg" />
+                <i class="el-icon-house"></i>
                 <b>瑰石列表</b>
                 <em class="u-new">全新上线</em>
             </span>

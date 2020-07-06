@@ -5,7 +5,7 @@ const API = __helperUrl + "api/item/prediction";
 function getGemlist(fb, page = 1) {
     return axios.get(API, {
         params: {
-            keyword: fb,
+            dungeon: fb,
             page: page,
         },
         headers: {
@@ -14,9 +14,8 @@ function getGemlist(fb, page = 1) {
     });
 }
 
-const search = __helperUrl + "api/item/search";
 function searchItem(kw, page = 1) {
-    return axios.get(search, {
+    return axios.get(API, {
         params: {
             keyword: kw,
             page: page,

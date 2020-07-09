@@ -60,17 +60,6 @@
                 </a>
             </div>
 
-            <div class="m-single-panel">
-                <!-- 收藏 -->
-                <Fav />
-                <el-button
-                    size="mini"
-                    type="primary"
-                    disabled
-                    title="即将推出.."
-                    ><i class="el-icon-bell"></i><span>订阅</span></el-button
-                >
-            </div>
         </header>
 
         <div class="m-single-prepend">
@@ -91,7 +80,17 @@
             </div>
         </div>
 
-        <div class="m-single-append"></div>
+        <div class="m-single-append">
+            <!-- 操作 -->
+            <div class="m-single-panel" v-if="!loading">
+                <div class="u-minigroup">
+                    <Print class="u-fn" :title="title"/>
+                    <QRcode class="u-fn" />
+                    <Sharing class="u-fn" :title="title"/>
+                </div>
+                <Fav />
+            </div>
+        </div>
 
         <div class="m-single-comment">
             <el-divider content-position="left">评论</el-divider>
@@ -119,7 +118,7 @@ import { __Links } from "@jx3box/jx3box-common/js/jx3box.json";
 import { authorLink, editLink } from "@jx3box/jx3box-common/js/utils.js";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { getStat,postStat } from "../service/stat.js";
-
+import Article from '@jx3box/jx3box-editor/src/Article.vue'
 export default {
     name: "single",
     props: [],
@@ -189,6 +188,9 @@ export default {
             postStat(this.id)
         }
     },
+    components : {
+        Article
+    }
 };
 </script>
 

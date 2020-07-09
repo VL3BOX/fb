@@ -3,9 +3,7 @@
         <header class="m-single-header">
             <div class="m-single-title">
                 <!-- 标题 -->
-                <a class="u-title u-sub-block" :href="url">{{
-                    post.post_title
-                }}</a>
+                <a class="u-title u-sub-block" :href="url">{{ title }}</a>
             </div>
 
             <div class="m-single-info">
@@ -50,7 +48,7 @@
                 <!-- 查看次数 -->
                 <span class="u-views u-sub-block">
                     <i class="el-icon-view"></i>
-                    {{setting.views}}
+                    {{ setting.views }}
                 </span>
 
                 <!-- 编辑 -->
@@ -59,7 +57,6 @@
                     <span>编辑</span>
                 </a>
             </div>
-
         </header>
 
         <div class="m-single-prepend">
@@ -84,9 +81,9 @@
             <!-- 操作 -->
             <div class="m-single-panel" v-if="!loading">
                 <div class="u-minigroup">
-                    <Print class="u-fn" :title="title"/>
+                    <Print class="u-fn" :title="title" />
                     <QRcode class="u-fn" />
-                    <Sharing class="u-fn" :title="title"/>
+                    <Sharing class="u-fn" :title="title" />
                 </div>
                 <Fav />
             </div>
@@ -117,8 +114,8 @@ import dateFormat from "../utils/dateFormat";
 import { __Links } from "@jx3box/jx3box-common/js/jx3box.json";
 import { authorLink, editLink } from "@jx3box/jx3box-common/js/utils.js";
 import User from "@jx3box/jx3box-common/js/user.js";
-import { getStat,postStat } from "../service/stat.js";
-import Article from '@jx3box/jx3box-editor/src/Article.vue'
+import { getStat, postStat } from "../service/stat.js";
+import Article from "@jx3box/jx3box-editor/src/Article.vue";
 export default {
     name: "single",
     props: [],
@@ -148,8 +145,8 @@ export default {
                 User.getInfo().group > 60
             );
         },
-        title : function (){
-            return _.get(this.post,'post_title') || '无标题' 
+        title: function() {
+            return _.get(this.post, "post_title") || "无标题";
         },
     },
     methods: {
@@ -170,7 +167,7 @@ export default {
     created: function() {
         if (this.id) {
             this.loading = true;
-            getPost(this.id,this)
+            getPost(this.id, this)
                 .then((res) => {
                     this.post = this.$store.state.post = res.data.data.post;
                     this.meta = this.$store.state.meta =
@@ -186,14 +183,14 @@ export default {
                 });
 
             getStat(this.id).then((data) => {
-                if(data) this.setting = this.$store.state.setting = data;
-            })
-            postStat(this.id)
+                if (data) this.setting = this.$store.state.setting = data;
+            });
+            postStat(this.id);
         }
     },
-    components : {
-        Article
-    }
+    components: {
+        Article,
+    },
 };
 </script>
 

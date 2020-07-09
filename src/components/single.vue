@@ -148,6 +148,9 @@ export default {
                 User.getInfo().group > 60
             );
         },
+        title : function (){
+            return _.get(this.post,'post_title') || '无标题' 
+        },
     },
     methods: {
         format: function(parent, key) {

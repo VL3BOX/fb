@@ -3,7 +3,7 @@
         <header class="m-single-header">
             <div class="m-single-title">
                 <!-- 标题 -->
-                <a class="u-title u-sub-block" :href="url">{{ title }}</a>
+                <a class="u-title u-sub-block" :href="url"><i v-if="isOriginal" class="u-original">原创</i> {{ title }}</a>
             </div>
 
             <div class="m-single-info">
@@ -130,6 +130,9 @@ export default {
         };
     },
     computed: {
+        isOriginal:function (){
+            return !!~~_.get(this.post, "original")
+        },
         authorLink: function() {
             return authorLink(this.author.uid);
         },

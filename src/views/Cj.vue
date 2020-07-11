@@ -51,7 +51,7 @@
 
 <script>
 import { getCJ } from "../service/getCJ";
-import { __ossMirror,__iconPath } from "@jx3box/jx3box-common/js/jx3box";
+import { __ossMirror,__iconPath,__ossRoot } from "@jx3box/jx3box-common/js/jx3box";
 export default {
     name: "Cj",
     props: [],

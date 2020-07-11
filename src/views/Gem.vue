@@ -66,7 +66,7 @@
 
 <script>
 import { getGemlist, searchItem } from "../service/getGem";
-import { __ossMirror, __iconPath } from "@jx3box/jx3box-common/js/jx3box";
+import { __ossMirror, __iconPath,__ossRoot } from "@jx3box/jx3box-common/js/jx3box";
 export default {
     name: "Gem",
     props: [],

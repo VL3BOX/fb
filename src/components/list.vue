@@ -1,210 +1,148 @@
 <template>
     <div class="m-archive">
-        <!-- 排序 -->
-        <div class="m-archive-order">
-            <a
-                :href="publish_url"
-                class="u-publish el-button el-button--primary el-button--small"
-                >+ 发布副本攻略</a
-            >
-            <div class="u-filter" :class="{ on: filter_visible }">
-                <span class="u-label" @click="showFilter">
-                    <span class="u-current-filter"
-                        >筛选 : {{ currentMark || "全部" }}</span
+        <listbox
+            :data="data"
+            :total="total"
+            :pages="pages"
+            :per="per"
+            :page="page"
+            @appendPage="appendPage"
+            @changePage="changePage"
+        >
+            <template slot="filter">
+                <a
+                    :href="publish_url"
+                    class="u-publish el-button el-button--primary el-button--small"
+                    >+ 发布副本攻略</a
+                >
+                <!-- 语言过滤 -->
+                <markBy @filter="filter"></markBy>
+                <!-- 排序过滤 -->
+                <orderBy @filter="filter"></orderBy>
+            </template>
+            <!-- 搜索 -->
+            <div class="m-archive-search" slot="search-after">
+                <el-input
+                    placeholder="请输入关键词"
+                    v-model="search"
+                    class="input-with-select"
+                    @change="loadPosts"
+                >
+                    <el-select
+                        v-model="searchType"
+                        slot="prepend"
+                        placeholder="请选择"
+                        @change="loadPosts"
                     >
-                    <span class="u-toggle">
-                        <i class="el-icon-arrow-down"></i>
-                        <i class="el-icon-arrow-up"></i>
-                    </span>
-                </span>
-                <span class="u-options">
-                    <span
-                        class="u-mode u-all"
-                        :class="{ on: mark == '' }"
-                        @click="filterMark('')"
-                        ><i class="el-icon-s-operation"></i> 全部</span
-                    >
-                    <span
-                        class="u-mode u-newbie"
-                        :class="{ on: mark == 'newbie' }"
-                        @click="filterMark('newbie')"
-                        ><i class="el-icon-user"></i> 新手易用</span
-                    >
-                    <span
-                        class="u-mode u-advanced"
-                        :class="{ on: mark == 'advanced' }"
-                        @click="filterMark('advanced')"
-                        ><i class="el-icon-data-line"></i> 进阶推荐</span
-                    >
-                    <span
-                        class="u-mode u-recommended"
-                        :class="{ on: mark == 'recommended' }"
-                        @click="filterMark('recommended')"
-                        ><i class="el-icon-star-off"></i> 编辑精选</span
-                    >
-                    <span
-                        class="u-mode u-geek"
-                        :class="{ on: mark == 'geek' }"
-                        plain
-                        @click="filterMark('geek')"
-                        ><i class="el-icon-medal-1"></i> 骨灰必备</span
-                    >
-                </span>
+                        <el-option label="标题" value="title"></el-option>
+                        <el-option label="作者" value="authorname"></el-option>
+                    </el-select>
+                    <el-button slot="append" icon="el-icon-search"></el-button>
+                </el-input>
             </div>
-            <div class="u-modes" :class="{ on: order_visible }">
-                <span class="u-label" @click="showOrder">
-                    <span class="u-current-order"
-                        >排序 : {{ currentOrder || "最后更新" }}</span
-                    >
-                    <span class="u-toggle">
-                        <i class="el-icon-arrow-down"></i>
-                        <i class="el-icon-arrow-up"></i>
-                    </span>
-                </span>
-                <span class="u-options">
-                    <span
-                        class="u-mode u-update"
-                        :class="{ on: order == 'update' }"
-                        @click="reorder('update')"
-                        ><i class="el-icon-refresh"></i> 最后更新</span
-                    >
-                    <span
-                        class="u-mode u-podate"
-                        :class="{ on: order == 'podate' }"
-                        @click="reorder('podate')"
-                        ><i class="el-icon-sort"></i> 最早发布</span
-                    >
-                </span>
-            </div>
-        </div>
-        <div class="m-archive-list m-fb-list" v-if="data.length">
-            <ul class="u-list">
-                <li class="u-item" v-for="(item, i) in data" :key="i">
-                    <!-- <a
-                        class="u-banner"
-                        :href="item.post.ID | postLink"
-                        :target="target"
-                        ><img :src="showBanner(item.post.post_banner)"
-                    /></a> -->
-
-                    <h2 class="u-post" :class="{ isSticky: item.post.sticky }">
-                        <img
-                            class="u-icon"
-                            svg-inline
-                            src="../assets/img/post.svg"
-                        />
-                        <a
-                            class="u-title"
-                            :style="item.post.color | isHighlight"
+            <div class="m-archive-list m-fb-list" v-if="data.length">
+                <ul class="u-list">
+                    <li class="u-item" v-for="(item, i) in data" :key="i">
+                        <!-- <a
+                            class="u-banner"
                             :href="item.post.ID | postLink"
                             :target="target"
-                            >{{ item.post.post_title || '无标题' }}</a
-                        >
-                        <span
-                            class="u-marks"
-                            v-if="item.post.mark && item.post.mark.length"
-                        >
-                            <i
-                                v-for="mark in item.post.mark"
-                                class="u-mark"
-                                :key="mark"
-                                >{{ mark | showMark }}</i
-                            >
-                        </span>
-                    </h2>
+                            ><img :src="showBanner(item.post.post_banner)"
+                        /></a> -->
 
-                    <div class="u-content">
-                        <div
-                            class="u-metalist u-boss-list"
-                            v-if="
-                                item.post.post_meta &&
-                                    item.post.post_meta.fb_boss
-                            "
-                        >
-                            <strong>首领</strong>
-                            <em>
-                                <b
-                                    v-for="(c, i) in format(
-                                        item.post,
-                                        'post_meta.fb_boss'
-                                    )"
-                                    :key="i"
-                                >
-                                    {{ c }}
-                                </b>
-                            </em>
-                        </div>
-
-                        <div
-                            class="u-metalist u-mode-list c-jx3fb-mode"
-                            v-if="
-                                item.post.post_meta &&
-                                    item.post.post_meta.fb_level
-                            "
-                        >
-                            <strong>模式</strong>
-                            <em>{{
-                                format(item.post, "post_meta.fb_level") + ""
-                            }}</em>
-                        </div>
-                    </div>
-
-                    <div class="u-misc">
-                        <span class="u-author">
+                        <h2 class="u-post" :class="{ isSticky: item.post.sticky }">
                             <img
-                                class="u-author-avatar"
-                                :src="item.author.avatar | showAvatar"
-                                :alt="item.author.name"
+                                class="u-icon"
+                                svg-inline
+                                src="../assets/img/post.svg"
                             />
                             <a
-                                class="u-author-name"
-                                :href="item.author.uid | authorLink"
-                                target="_blank"
-                                >{{ item.author.name }}</a
+                                class="u-title"
+                                :style="item.post.color | isHighlight"
+                                :href="item.post.ID | postLink"
+                                :target="target"
+                                >{{ item.post.post_title || '无标题' }}</a
                             >
-                        </span>
-                        <span class="u-date">
-                            Updated on
-                            <time>{{
-                                item.post.post_modified | dateFormat
-                            }}</time>
-                        </span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <el-alert
-            v-else
-            class="m-archive-null"
-            title="没有找到相关条目"
-            type="info"
-            center
-            show-icon
-        >
-        </el-alert>
-        <el-button
-            class="m-archive-more"
-            :class="{ show: hasNextPage }"
-            type="primary"
-            :loading="loading"
-            @click="appendPage(++page)"
-            >加载更多</el-button
-        >
-        <el-pagination
-            class="m-archive-pages"
-            background
-            :hide-on-single-page="true"
-            @current-change="changePage"
-            :current-page.sync="page"
-            :page-size.sync="per"
-            layout="total, prev, pager, next, jumper"
-            :total="total"
-        >
-        </el-pagination>
+                            <span
+                                class="u-marks"
+                                v-if="item.post.mark && item.post.mark.length"
+                            >
+                                <i
+                                    v-for="mark in item.post.mark"
+                                    class="u-mark"
+                                    :key="mark"
+                                    >{{ mark | showMark }}</i
+                                >
+                            </span>
+                        </h2>
+
+                        <div class="u-content">
+                            <div
+                                class="u-metalist u-boss-list"
+                                v-if="
+                                    item.post.post_meta &&
+                                        item.post.post_meta.fb_boss
+                                "
+                            >
+                                <strong>首领</strong>
+                                <em>
+                                    <b
+                                        v-for="(c, i) in format(
+                                            item.post,
+                                            'post_meta.fb_boss'
+                                        )"
+                                        :key="i"
+                                    >
+                                        {{ c }}
+                                    </b>
+                                </em>
+                            </div>
+
+                            <div
+                                class="u-metalist u-mode-list c-jx3fb-mode"
+                                v-if="
+                                    item.post.post_meta &&
+                                        item.post.post_meta.fb_level
+                                "
+                            >
+                                <strong>模式</strong>
+                                <em>{{
+                                    format(item.post, "post_meta.fb_level") + ""
+                                }}</em>
+                            </div>
+                        </div>
+
+                        <div class="u-misc">
+                            <span class="u-author">
+                                <img
+                                    class="u-author-avatar"
+                                    :src="item.author.avatar | showAvatar"
+                                    :alt="item.author.name"
+                                />
+                                <a
+                                    class="u-author-name"
+                                    :href="item.author.uid | authorLink"
+                                    target="_blank"
+                                    >{{ item.author.name }}</a
+                                >
+                            </span>
+                            <span class="u-date">
+                                Updated on
+                                <time>{{
+                                    item.post.post_modified | dateFormat
+                                }}</time>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </listbox>
     </div>
 </template>
 
 <script>
+import listbox from "@jx3box/jx3box-page/src/cms-list.vue";
+import { cms as mark_map } from "@jx3box/jx3box-common/js/mark.json";
 import lodash from "lodash";
 import { getPosts } from "../service/getPost";
 import dateFormat from "../utils/dateFormat";
@@ -216,19 +154,6 @@ import {
     publishLink,
     buildTarget,
 } from "@jx3box/jx3box-common/js/utils";
-const mark_map = {
-    newbie: "新手易用",
-    advanced: "进阶推荐",
-    recommended: "编辑精选",
-    geek: "骨灰必备",
-};
-const order_map = {
-    update: "最后更新",
-    podate: "最早发布",
-    favs: "收藏最多",
-    likes: "点赞最多",
-    downs: "下载最多",
-};
 export default {
     name: "list",
     props: [],
@@ -236,18 +161,19 @@ export default {
         return {
             loading: false, //加载状态
 
-            subtype: "",
-
             data: [], //数据列表
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
             per: 15, //每页条目
+
             order: "", //排序模式
             mark: "", //筛选模式
 
-            filter_visible: false,
-            order_visible: false,
+            search: "",
+            searchType: "title",
+
+            subtype: "",
         };
     },
     computed: {
@@ -266,15 +192,6 @@ export default {
                 params.mark = this.mark;
             }
             return params;
-        },
-        currentMark: function() {
-            return mark_map[this.mark];
-        },
-        currentOrder: function() {
-            return order_map[this.order];
-        },
-        hasNextPage: function() {
-            return this.total > 1 && this.page < this.pages;
         },
         target: function() {
             return buildTarget();
@@ -318,23 +235,10 @@ export default {
         appendPage: function(i) {
             this.loadPosts(i, true);
         },
-        filterMark: function(val) {
-            this.mark = val;
-            this.filter_visible = false;
+        filter : function (o){
+            this[o['type']] = o['val']
             this.loadPosts();
         },
-        reorder: function(val) {
-            this.order = val;
-            this.order_visible = false;
-            this.loadPosts();
-        },
-        showFilter: function() {
-            this.filter_visible = !this.filter_visible;
-        },
-        showOrder: function() {
-            this.order_visible = !this.order_visible;
-        },
-
         showBanner: function(val) {
             return val ? showMinibanner(val) : this.defaultBanner;
         },
@@ -372,7 +276,9 @@ export default {
         this.subtype = params.get("fb_name");
         this.loadPosts(1);
     },
-    components: {},
+    components: {
+        listbox,
+    },
 };
 </script>
 

@@ -15,7 +15,7 @@
                     class="u-publish el-button el-button--primary el-button--small"
                     >+ 发布副本攻略</a
                 >
-                <!-- 语言过滤 -->
+                <!-- 角标过滤 -->
                 <markBy @filter="filter"></markBy>
                 <!-- 排序过滤 -->
                 <orderBy @filter="filter"></orderBy>

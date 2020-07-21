@@ -1,5 +1,5 @@
 <template>
-    <div class="m-archive">
+    <div class="m-archive" v-loading="loading">
         <listbox
             :data="data"
             :total="total"

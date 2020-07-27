@@ -20,8 +20,8 @@
             >
                 <img class="u-icon" :src="item.IconID | icon" />
                 <span class="u-title">{{ item.Name }}</span>
-                <span class="u-desc">{{ item._desc }}</span
-                ><span class="u-drops">
+                <span class="u-desc" v-html="item.DescHtml"></span>
+                <!-- <span class="u-drops">
                     <span
                         class="u-drop"
                         v-for="(drop, i) in item._drops"
@@ -29,7 +29,7 @@
                     >
                         {{ drop }}
                     </span>
-                </span>
+                </span> -->
                 <span class="u-id">UUID:{{item.UiID}}</span>
             </a>
         </div>
@@ -130,10 +130,11 @@ export default {
                         } else {
                             data = res.data.data.data;
                         }
-                        for (let item of data) {
-                            item._desc = this.getDesc(item.Desc);
-                            item._drops = this.getDrops(item.Desc);
-                        }
+                        // console.log(data)
+                        // for (let item of data) {
+                        //     item._desc = this.getDesc(item.Desc);
+                        //     item._drops = this.getDrops(item.Desc);
+                        // }
                         this.data = data;
 
                         this.total = res.data.data.total;

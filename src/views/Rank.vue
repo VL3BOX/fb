@@ -2,9 +2,7 @@
     <div class="m-fb-rank" v-loading="loading">
         <h3 class="m-fb-rank-title">剑网3跨区服副本通关百强榜</h3>
         <p class="m-fb-rank-desc">
-            联合推栏表彰活动·<a
-                href="/tool/?pid=13715"
-                target="_blank"
+            联合推栏表彰活动·<a href="/tool/?pid=13715" target="_blank"
                 >活动规则与举报</a
             >
         </p>
@@ -165,7 +163,7 @@ import { getDateRank } from "../service/getRank";
 import moment, { fn } from "moment";
 import rankmap from "../assets/js/rank.json";
 // import mock from '../mock/rank.json'
-import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __ossMirror, __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 servers.unshift("全部");
 
@@ -256,7 +254,7 @@ export default {
             member_arr.forEach((member) => {
                 let g = member.split(",");
                 members.push(
-                    `<span class="u-member"><em><img src="${__ossMirror}image/xf/${g[1]}.png"></em><b>${g[0]}</b></span>`
+                    `<span class="u-member"><em><img src="${__imgPath}image/xf/${g[1]}.png"></em><b>${g[0]}</b></span>`
                 );
             });
             return members.join("");

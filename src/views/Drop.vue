@@ -182,7 +182,7 @@ export default {
             return dropmap[val];
         },
         bossavatar: function(i) {
-            return __ossMirror + "icon/" + iconids[i] + ".png";
+            return __iconPath + "icon/" + iconids[i] + ".png";
         },
         fillDroplist: function(list) {
             if (list) list["all"] = [];

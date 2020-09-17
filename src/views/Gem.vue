@@ -91,7 +91,7 @@ export default {
     },
     filters: {
         icon: function(id) {
-            return __ossMirror + "icon/" + id + ".png";
+            return __iconPath + "icon/" + id + ".png";
         },
     },
     methods: {

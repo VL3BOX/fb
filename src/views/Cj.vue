@@ -75,7 +75,7 @@ export default {
     },
     filters: {
         icon: function(id) {
-            return __ossMirror + "icon/" + id + ".png";
+            return __iconPath + "icon/" + id + ".png";
         },
         url : function (id){
             return '/cj/#/view/' + id

@@ -224,7 +224,7 @@
 
 <script>
 import bossids from '@jx3box/jx3box-data/data/fb/fb_boss_ids.json';
-import mapids from '@jx3box/jx3box-data/data/fb/fb_map_name2id.json';
+import mapids from '@jx3box/jx3box-data/data/common/mapids.json';
 import { getMapNpc, getNpc } from '../service/getNpc';
 import { __ossMirror } from '@jx3box/jx3box-common/js/jx3box';
 import User from '@jx3box/jx3box-common/js/user';

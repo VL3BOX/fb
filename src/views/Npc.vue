@@ -366,20 +366,24 @@ export default {
                         this.loading = false;
                     });
             } else {
+                // console.log(this.mapid)
+
                 // 获取boss表中索引
                 let indexs = [];
                 getBossList(this.mapid).then((res) => {
                     res.data.forEach((item) => {
                         indexs.push(...item.Index.split("、"));
                     });
+                    // console.log(indexs)
 
                     // 通过info表中索引查id
                     let ids = [];
                     getBossIds(indexs.join(",")).then((res) => {
                         res.data.forEach((item) => {
-                            ids.push(item.NpcID);
+                            item.NpcID && ids.push(item.NpcID);
                             this.bossids = ids;
                         });
+                        // console.log(ids)
 
                         getNpcList({
                             per: this.per,

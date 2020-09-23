@@ -58,8 +58,8 @@ export default {
         this.params = new URLSearchParams(location.search);
         this.$store.state.pid = this.params.get("pid") || getRewrite("pid");
         this.$store.state.mode = this.$store.state.pid ? "single" : "list";
-        this.$store.state.zlp = this.params.get("fb_zlp") || "世外蓬莱";
-        this.$store.state.fb = this.params.get("fb_name") || "范阳夜变";
+        this.$store.state.zlp = this.params.get("fb_zlp") || this.$store.state.default_zlp;
+        this.$store.state.fb = this.params.get("fb_name") || this.$store.state.default_fb;
     },
     components: {
         Info,

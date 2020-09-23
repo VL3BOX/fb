@@ -43,12 +43,12 @@
             <div class="m-archive-list m-fb-list" v-if="data.length">
                 <ul class="u-list">
                     <li class="u-item" v-for="(item, i) in data" :key="i">
-                        <!-- <a
+                        <a
                             class="u-banner"
                             :href="item.post.ID | postLink"
                             :target="target"
-                            ><img :src="showBanner(item.post.post_banner)"
-                        /></a> -->
+                            ><img :src="showBanner(item)"
+                        /></a>
 
                         <h2 class="u-post" :class="{ isSticky: item.post.sticky }">
                             <img
@@ -143,10 +143,10 @@
 <script>
 import listbox from "@jx3box/jx3box-page/src/cms-list.vue";
 import { cms as mark_map } from "@jx3box/jx3box-common/js/mark.json";
-import lodash from "lodash";
+import _ from "lodash";
 import { getPosts } from "../service/getPost";
 import dateFormat from "../utils/dateFormat";
-import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
+import { __ossMirror,__imgPath } from "@jx3box/jx3box-common/js/jx3box";
 import {
     showAvatar,
     authorLink,
@@ -199,14 +199,6 @@ export default {
         publish_url: function(val) {
             return publishLink("fb");
         },
-        defaultBanner: function() {
-            return (
-                __ossMirror +
-                this.$store.state.map[this.$store.state.zlp]["dungeon"][
-                    this.$store.state.fb
-                ]["icon"]
-            );
-        },
     },
     methods: {
         loadPosts: function(i = 1, append = false) {
@@ -239,11 +231,22 @@ export default {
             this[o['type']] = o['val']
             this.loadPosts();
         },
-        showBanner: function(val) {
-            return val ? showMinibanner(val) : this.defaultBanner;
+        showBanner: function(item) {
+            let banner = item.post.post_banner
+            return banner ? showMinibanner(banner) : this.showDefaultBanner(item);
+        },
+        showDefaultBanner : function (item){
+            let zlp = _.get(item,'post.post_meta.fb_zlp') || this.$store.state.default_zlp
+            let fb = _.get(item,'post.post_subtype') || this.$store.state.default_fb
+            let img = _.get(this.$store,`state.map.${zlp}.dungeon.${fb}.icon`)
+            if(img){
+                return __imgPath + img 
+            }else{
+                return __imgPath + 'image/fb_map_thumbnail/null.png'
+            }
         },
         format: function(parent, key) {
-            let val = lodash.get(parent, key);
+            let val = _.get(parent, key);
             if (val && val.length) {
                 return val;
             } else {
@@ -255,12 +258,8 @@ export default {
         dateFormat: function(val) {
             return dateFormat(new Date(val));
         },
-        showAvatar: function(val) {
-            return showAvatar(val);
-        },
-        authorLink: function(val) {
-            return authorLink(val);
-        },
+        showAvatar,
+        authorLink,
         postLink: function(val) {
             return "./?pid=" + val;
         },

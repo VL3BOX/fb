@@ -1,6 +1,6 @@
 <template>
     <div class="m-fb-list-nav">
-        <div class="m-nav-search" @click="stopPop">
+        <div class="m-nav-search" @click.stop>
             <el-input
                 placeholder="搜索副本或首领名称"
                 v-model="search"
@@ -10,7 +10,7 @@
         </div>
 
         <div class="m-nav-group" v-for="(group, key) in map" :key="key">
-            <h2 class="u-category active">
+            <h2 class="u-category active" v-show="!search">
                 <span class="u-title">🍄 {{ key }}</span>
                 <em class="u-level">({{ group.level }})</em>
             </h2>
@@ -24,7 +24,9 @@
                         hidden: isHide(subkey),
                     }"
                 >
-                    <a class="u-link" :href="url(group.name, item.name)">{{ item.name }}</a>
+                    <a class="u-link" :href="url(group.name, item.name)">{{
+                        item.name
+                    }}</a>
                 </li>
             </ul>
         </div>
@@ -39,6 +41,7 @@ export default {
         return {
             search: "",
             map: this.$store.state.map,
+            searchBelong: [],
         };
     },
     computed: {
@@ -51,12 +54,13 @@ export default {
 
                     // 副本单元信息
                     let __ = [];
+                    __.push(group);
                     __.push(fbname);
-                    for (let boss of fb.detail.boss_infos) {
-                        __.push(boss.name);
+                    for (let boss of fb.boss) {
+                        __.push(boss);
                     }
 
-                    search_map[fbname] = __
+                    search_map[fbname] = __;
                 }
             }
             return search_map;
@@ -64,7 +68,7 @@ export default {
     },
     methods: {
         url: function(zlp, fb) {
-            return `/fb/?fb_zlp=${zlp}&fb_name=${fb}` + '#' + this.$route.path;
+            return `/fb/?fb_zlp=${zlp}&fb_name=${fb}` + "#" + this.$route.path;
         },
         isActive: function(subkey) {
             let params = new URLSearchParams(location.search);
@@ -73,19 +77,16 @@ export default {
         },
         isHide: function(subkey) {
             if (!this.search) return;
-            if(this.searchMap[subkey].includes(this.search)){
-                return false
-            }else{
-                for(let key of this.searchMap[subkey]){
-                    if(key.includes(this.search)){
-                        return false
+            if (this.searchMap[subkey].includes(this.search)) {
+                return false;
+            } else {
+                for (let key of this.searchMap[subkey]) {
+                    if (key.includes(this.search)) {
+                        return false;
                     }
                 }
             }
-            return true
-        },
-        stopPop: function(e) {
-            e.stopPropagation();
+            return true;
         },
     },
     mounted: function() {},

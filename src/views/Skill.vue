@@ -16,7 +16,6 @@
             class="m-skill-search"
             placeholder="请输入技能名称"
             v-model="search"
-            @change="searchSkill"
         >
             <template slot="prepend">技能名称</template>
             <el-button slot="append" icon="el-icon-search"></el-button>
@@ -124,7 +123,7 @@ export default {
             focus: "",
             search: "",
             loading: true,
-            isSuper: false,
+            isSuperAuthor: User.isSuperAuthor(),
             cache: {},
             luaindex: {},
             data: {},
@@ -161,7 +160,6 @@ export default {
         },
     },
     mounted: function() {
-        this.isSuper = User.getInfo().group > 8;
         getLuaIndex()
             .then((res) => {
                 this.luaindex = this.$store.state.luaindex = res.data;

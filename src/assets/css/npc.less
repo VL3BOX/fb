@@ -182,6 +182,17 @@
 
 .m-npc-search {
     .mb(20px);
+    position: sticky;
+    top:162px;
+    .z(100);
+
+    .el-switch__label{
+        color:#555 !important;
+    }
+    .is-checked .el-switch__label{
+        color:@color-link !important;
+        .bold;
+    }
 }
 @media screen and (max-width: @phone) {
     .m-npc-list {
@@ -206,6 +217,19 @@
         .el-checkbox {
             .mr(10px);
         }
+    }
+}
+
+.m-archive-null{
+    .el-alert__icon.is-big{
+        .fz(18px);
+        .y;
+    }
+    p{
+        margin:0 !important;
+    }
+    a:hover{
+        box-shadow:0 1px 0 @color-link;
     }
 }
 

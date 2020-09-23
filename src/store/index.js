@@ -12,13 +12,16 @@ let store = {
         fb : '',
         zlp : '',
         luaindex : {},
+        default_zlp : '奉天证道',
+        default_fb : '达摩洞',
 
         pid : 0,
         post : {},
         meta : {},
         setting : {},
         author : {},
-        status : false
+        status : false,
+
     },
     mutations: {
     },

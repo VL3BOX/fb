@@ -1,24 +1,40 @@
 <template>
     <div class="m-fb-npc" v-loading="loading">
-        <el-input class="m-npc-search" placeholder="请输入NPC名称或ID" v-model="search" @change="searchNpc">
+        <el-input
+            class="m-npc-search"
+            placeholder="请输入NPC名称或ID"
+            v-model="search"
+            @change="loadData"
+            :disabled="onlyboss"
+        >
             <template slot="prepend">
                 NPC
             </template>
-            <el-button slot="append" icon="el-icon-search"></el-button>
+            <el-switch
+                class="u-switch u-onlyboss"
+                slot="append"
+                v-model="onlyboss"
+                active-color="#13ce66"
+                inactive-text="只看首领"
+                @change="loadData"
+            >
+            </el-switch>
         </el-input>
-        <div class="m-filter-group">
-            <el-radio-group v-model="difficultyRadioValue" size="medium">
-                <el-radio-button v-for="difficulty of difficultyRadios" :key="difficulty.name" :label="difficulty.id">{{ difficulty.name }}</el-radio-button>
+        <div class="m-filter-group" v-if="onlyboss">
+            <el-radio-group v-model="mapid" size="medium">
+                <el-radio-button
+                    v-for="item in maps"
+                    :key="item.map_id"
+                    :label="item.map_id"
+                    >{{ item.mode }}</el-radio-button
+                >
             </el-radio-group>
-            <el-checkbox-group v-model="npcFilterCheckboxValue" size="small">
-                <el-checkbox label="boss" border>首领</el-checkbox>
-                <el-checkbox label="minion" border>小怪</el-checkbox>
-                <el-checkbox label="hiddennpc" border>其他NPC</el-checkbox>
-            </el-checkbox-group>
         </div>
         <ul class="m-npc-list" v-if="data.length">
-            <li v-for="(npc, i) in data" class="u-item" :key="npc+i">
-                <i v-if="isBoss(npc.ID)" class="u-isBoss"><img src="../assets/img/boss_mini.png" /></i>
+            <li v-for="(npc, i) in data" class="u-item" :key="npc + i">
+                <i v-if="isBoss(npc.ID)" class="u-isBoss"
+                    ><img src="../assets/img/boss_mini.png"
+                /></i>
                 <img class="u-icon" src="../assets/img/iboss.png" />
 
                 <Mark class="u-id" :value="'ID:' + npc.ID" />
@@ -26,7 +42,9 @@
                     <span class="u-name">{{ npc.Name }}</span>
                     <span class="u-name-add">
                         <span v-if="npc.Title || npc.Level">&lt;</span>
-                        <span class="u-nick" v-if="npc.Title">{{ npc.Title }}</span>
+                        <span class="u-nick" v-if="npc.Title">{{
+                            npc.Title
+                        }}</span>
                         <span v-if="npc.Title && npc.Level">·</span>
                         <b class="u-level" v-if="npc.Level">{{ npc.Level }}</b>
                         <span v-if="npc.Title || npc.Level">&gt;</span>
@@ -54,7 +72,7 @@
                         <i class="u-range">
                             <strong
                                 :style="{
-                                    width: (npc.MaxLife * 100) / 99999999 + '%'
+                                    width: (npc.MaxLife * 100) / 99999999 + '%',
                                 }"
                             >
                                 {{ npc.MaxLife }}
@@ -67,7 +85,7 @@
                         <i class="u-range">
                             <strong
                                 :style="{
-                                    width: (npc.MaxMana * 100) / 99999999 + '%'
+                                    width: (npc.MaxMana * 100) / 99999999 + '%',
                                 }"
                             >
                                 {{ npc.MaxMana }}
@@ -100,27 +118,37 @@
                         <span class="u-sitem">
                             外功防御
                             <em>PhysicsShieldBase</em>
-                            <span class="u-value">{{ npc.PhysicsShieldBase }}</span>
+                            <span class="u-value">{{
+                                npc.PhysicsShieldBase
+                            }}</span>
                         </span>
                         <span class="u-sitem">
                             混元防御
                             <em>NeutralMagicDefence</em>
-                            <span class="u-value">{{ npc.NeutralMagicDefence }}</span>
+                            <span class="u-value">{{
+                                npc.NeutralMagicDefence
+                            }}</span>
                         </span>
                         <span class="u-sitem">
                             阳性防御
                             <em>SolarMagicDefence</em>
-                            <span class="u-value">{{ npc.SolarMagicDefence }}</span>
+                            <span class="u-value">{{
+                                npc.SolarMagicDefence
+                            }}</span>
                         </span>
                         <span class="u-sitem">
                             阴性防御
                             <em>LunarMagicDefence</em>
-                            <span class="u-value">{{ npc.LunarMagicDefence }}</span>
+                            <span class="u-value">{{
+                                npc.LunarMagicDefence
+                            }}</span>
                         </span>
                         <span class="u-sitem">
                             毒性防御
                             <em>PoisonMagicDefence</em>
-                            <span class="u-value">{{ npc.PoisonMagicDefence }}</span>
+                            <span class="u-value">{{
+                                npc.PoisonMagicDefence
+                            }}</span>
                         </span>
                     </div>
                     <div class="u-critical">
@@ -129,27 +157,37 @@
                         <span class="u-sitem">
                             外功会心
                             <em>PhysicsCriticalStrike</em>
-                            <span class="u-value">{{ npc.PhysicsCriticalStrike }}</span>
+                            <span class="u-value">{{
+                                npc.PhysicsCriticalStrike
+                            }}</span>
                         </span>
                         <span class="u-sitem">
                             混元会心
                             <em>NeutralCriticalStrike</em>
-                            <span class="u-value">{{ npc.NeutralCriticalStrike }}</span>
+                            <span class="u-value">{{
+                                npc.NeutralCriticalStrike
+                            }}</span>
                         </span>
                         <span class="u-sitem">
                             阳性会心
                             <em>SolarCriticalStrike</em>
-                            <span class="u-value">{{ npc.SolarCriticalStrike }}</span>
+                            <span class="u-value">{{
+                                npc.SolarCriticalStrike
+                            }}</span>
                         </span>
                         <span class="u-sitem">
                             阴性会心
                             <em>LunarCriticalStrike</em>
-                            <span class="u-value">{{ npc.LunarCriticalStrike }}</span>
+                            <span class="u-value">{{
+                                npc.LunarCriticalStrike
+                            }}</span>
                         </span>
                         <span class="u-sitem">
                             毒性会心
                             <em>PoisonCriticalStrike</em>
-                            <span class="u-value">{{ npc.PoisonCriticalStrike }}</span>
+                            <span class="u-value">{{
+                                npc.PoisonCriticalStrike
+                            }}</span>
                         </span>
                     </div>
                     <div class="u-attack">
@@ -158,12 +196,16 @@
                         <span class="u-sitem">
                             外功命中
                             <em>PhysicsAttackHit</em>
-                            <span class="u-value">{{ npc.PhysicsAttackHit }}</span>
+                            <span class="u-value">{{
+                                npc.PhysicsAttackHit
+                            }}</span>
                         </span>
                         <span class="u-sitem">
                             混元命中
                             <em>NeutralMagicHit</em>
-                            <span class="u-value">{{ npc.NeutralMagicHit }}</span>
+                            <span class="u-value">{{
+                                npc.NeutralMagicHit
+                            }}</span>
                         </span>
                         <span class="u-sitem">
                             阳性命中
@@ -178,11 +220,13 @@
                         <span class="u-sitem">
                             毒性命中
                             <em>PoisonMagicHit</em>
-                            <span class="u-value">{{ npc.PoisonMagicHit }}</span>
+                            <span class="u-value">{{
+                                npc.PoisonMagicHit
+                            }}</span>
                         </span>
                     </div>
                 </div>
-                <div class="u-misc" v-if="isSuper">
+                <div class="u-misc" v-if="isSuperAuthor">
                     <span class="u-remark">
                         CanSeeLifeBar:
                         <strong>{{ npc.CanSeeLifeBar }}</strong>
@@ -200,288 +244,187 @@
                         ImmunityMask:
                         <strong>{{ npc.ImmunityMask }}</strong>
                     </span>
-                    <span class="u-remark">
+                    <span class="u-remark" v-if="isSuperAuthor">
                         ScriptName:
                         <strong>{{ npc.ScriptName }}</strong>
                     </span>
                 </div>
             </li>
         </ul>
-        <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon></el-alert>
-        <el-button class="m-archive-more" :class="{ show: hasNextPage }" type="primary" :loading="loading" @click="appendPage(++page)">加载更多</el-button>
-        <el-pagination
-            class="m-archive-pages"
-            background
-            :hide-on-single-page="true"
-            @current-change="changePage"
-            :current-page.sync="page"
-            :page-size.sync="perpage"
-            layout="total, prev, pager, next, jumper"
-            :total="total"
-        ></el-pagination>
+        <el-alert v-else class="m-archive-null" type="info" center show-icon
+            >该副本没有找到相关条目，全图搜索请前往<a
+                href="/app/database"
+                target="_blank"
+                >剑三数据库</a
+            >应用</el-alert
+        >
+        <template v-if="!onlyboss">
+            <el-button
+                class="m-archive-more"
+                :class="{ show: hasNextPage }"
+                type="primary"
+                :loading="loading"
+                @click="appendPage(++page)"
+                >加载更多</el-button
+            >
+            <el-pagination
+                class="m-archive-pages"
+                background
+                :hide-on-single-page="true"
+                @current-change="changePage"
+                :current-page.sync="page"
+                :page-size.sync="per"
+                layout="total, prev, pager, next, jumper"
+                :total="total"
+            ></el-pagination>
+        </template>
     </div>
 </template>
 
 <script>
-import bossids from '@jx3box/jx3box-data/data/fb/fb_boss_ids.json';
-import mapids from '@jx3box/jx3box-data/data/common/mapids.json';
-import { getMapNpc, getNpc } from '../service/getNpc';
-import { __ossMirror } from '@jx3box/jx3box-common/js/jx3box';
-import User from '@jx3box/jx3box-common/js/user';
-import { axios } from '../service/axios/api.js';
-import { getDB } from '../service/getDB';
-const bossicon = [9482, 9461, 9462, 8591, 8592, 8593, 8594, 8595, 8596, 8597];
+import bossids from "@jx3box/jx3box-data/data/fb/fb_boss_ids.json";
+import mapids from "@jx3box/jx3box-data/data/common/mapids.json";
+import {
+    getNpcList,
+    getMapNpc,
+    getBossList,
+    getBossIds,
+} from "../service/getNpc";
+import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
+import User from "@jx3box/jx3box-common/js/user";
+import { axios } from "../service/axios/api.js";
+import { getDB } from "../service/getDB";
 export default {
-    name: 'Npc',
+    name: "Npc",
     props: [],
     data: function() {
         return {
-            perpage: 10,
-            data: [],
-            // total: 0,
-            page: 0,
-            gotoOrAppend: 'goto',
-            // pages: 1,
             loading: true,
-            isSuper: false,
-            search: '',
-            cache: [],
+            data: [],
 
-            difficultyRadioValue: 0,
-            difficultyRadios: [],
-            npcFilterCheckboxValue: ['boss'],
-            allNPC: [],
-            dataAlreadyChanged: false
+            per: 10,
+            total: 0,
+            page: 0,
+            pages: 1,
+
+            search: "",
+            onlyboss: true,
+            mapid: "",
+            bossids: [],
+            isSuperAuthor: User.isSuperAuthor(),
         };
     },
     computed: {
         hasNextPage: function() {
             return this.total > 1 && this.page < this.pages;
         },
-        // icon: function() {
-        //     return __ossMirror + "icon/" + 1 + ".png";
-        // },
-        mapname: function() {
-            let mapname = '';
-            let dotIndex = this.$store.state.fb.indexOf('·');
-            if (dotIndex >= 0) {
-                mapname = this.$store.state.fb.slice(dotIndex + 1);
-            } else {
-                mapname = this.$store.state.fb;
-            }
-            return mapname;
-        },
         zlp: function() {
-            return this.$store.state.zlp
+            return this.$store.state.zlp;
         },
         fb: function() {
-            return this.$store.state.fb
+            return this.$store.state.fb;
         },
-        info: function() {
-            return this.$store.state.map[this.zlp]["dungeon"][this.fb];
+        maps: function() {
+            return this.$store.state.map[this.zlp]["dungeon"][this.fb]["maps"];
         },
-        tmpData() {
-            let tmp = this.allNPC.filter((npc) => {
-                let judge = false
-                let npcType = ''
-                if (bossids.includes(npc.ID)) {
-                    npcType = 'boss'
-                } else if (npc.Name === null || npc.Sense === null) {
-                    npcType = 'hiddennpc'
+        bosslist: function() {
+            return this.$store.state.map[this.zlp]["dungeon"][this.fb]["boss"];
+        },
+        params: function() {
+            let params = {
+                per: this.per,
+            };
+            if (this.search) {
+                if (isNaN(this.search)) {
+                    params.Name = this.search;
                 } else {
-                    npcType = 'minion'
+                    params.ID = this.search;
                 }
-                judge = this.npcFilterCheckboxValue.includes(npcType)
-                
-                // 判断map
-                let thisMapId = mapids[npc.MapName]
-                if (thisMapId !== this.difficultyRadioValue) {
-                    judge = false
-                }
-                
-                // 判断搜索
-                if (!this.search) {
-                    judge = judge && true
-                } else {
-                    let searchWord = this.search.replace(/\ /g, '')
-                    judge = judge && npc.Name && npc.Name.includes(searchWord) || npc.ID && npc.ID.toString() === searchWord
-                    // 特别的，如果是id搜索有匹配的话，无视用户的其他筛选选项
-                }
-                
-                return judge
-            })
-            let mapped = tmp.map(function(el, i) {
-                return { index: i, sense: el.Sense, name: el.Name, isBoss: bossids.includes(el.ID) };
-            })
-            mapped.sort((a,b) => {
-                if (a.isBoss) {
-                    if (b.isBoss) {
-                        if (a.sense === b.sense) {
-                            return +(a.name > b.name) || +(a.name === b.name) - 1;
-                        } else {
-                            return -(+(a.sense > b.sense) || +(a.sense === b.sense) - 1);
-                        }
-                    } else {
-                        return -1
-                    }
-                } else {
-                    if (b.isBoss) {
-                        return 1
-                    }
-                }
-                if (a.sense === null || a.name === null) {
-                    if (b.sense === null || b.name === null) {
-                        return +(a.name > b.name) || +(a.name === b.name) - 1;
-                    } else {
-                        return 1
-                    }
-                } else if (b.sense === null || b.name === null) {
-                    return -1
-                } else {
-                    if (a.sense === b.sense) {
-                        return +(a.name > b.name) || +(a.name === b.name) - 1;
-                    } else {
-                        return -(+(a.sense > b.sense) || +(a.sense === b.sense) - 1);
-                    }
-                }
-            })
-            return mapped.map(function(el){
-                return tmp[el.index];
-            });
-        },
-        total() {
-            return this.tmpData.length
-        },
-        pages() {
-            return Math.ceil(this.total/this.perpage)
-        },
-        someDataChanged() {
-            return +(!this.page || !this.pages || !this.total || !this.tmpData || !this.difficultyRadioValue)+Math.random()
-        }
-    },
-    watch: {
-        someDataChanged: function (newPage, oldPage) {
-            let start = (this.page-1) * this.perpage
-            let end = start + 10
-            let newData = this.tmpData.slice(start, end)
-            if (this.gotoOrAppend === 'goto') {
-                this.data = newData
-            } else {
-                this.data = this.data.concat(newData)
-                this.gotoOrAppend = 'goto'
             }
-        }
+            return params;
+        },
     },
     methods: {
+        loadData: function(i = 1, append = false) {
+            this.loading = true;
+            if (!this.onlyboss) {
+                let params = Object.assign(this.params, {
+                    page: i,
+                });
+                getMapNpc(this.fb, params)
+                    .then((res) => {
+                        if (append) {
+                            this.data = this.data.concat(res.data.list);
+                        } else {
+                            window.scrollTo(0, 0);
+                            this.data = res.data.list;
+                        }
+                        this.total = res.data.total;
+                        this.pages = res.data.pages;
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
+            } else {
+                // 获取boss表中索引
+                let indexs = [];
+                getBossList(this.mapid).then((res) => {
+                    res.data.forEach((item) => {
+                        indexs.push(...item.Index.split("、"));
+                    });
+
+                    // 通过info表中索引查id
+                    let ids = [];
+                    getBossIds(indexs.join(",")).then((res) => {
+                        res.data.forEach((item) => {
+                            ids.push(item.NpcID);
+                            this.bossids = ids;
+                        });
+
+                        getNpcList({
+                            per: this.per,
+                            page: i,
+                            ID: this.bossids.join(","),
+                        })
+                            .then((res) => {
+                                if (append) {
+                                    this.data = this.data.concat(res.data.list);
+                                } else {
+                                    window.scrollTo(0, 0);
+                                    this.data = res.data.list;
+                                }
+                                this.total = res.data.total;
+                                this.pages = res.data.pages;
+                            })
+                            .finally(() => {
+                                this.loading = false;
+                            });
+                    });
+                });
+            }
+        },
         changePage: function(i) {
-            this.gotoOrAppend = 'goto'
-            window.scrollTo(0, 0);
-            // this.loading = true;
-            // getMapNpc(this.mapname)
-            //     .then(res => {
-            //         console.log(res);
-            //         window.scrollTo(0, 0);
-            //         // this.data = this.cache = res.data.list;
-            //         // this.total = res.data.total;
-            //         // this.pages = res.data.pages;
-            //     })
-            //     .finally(() => {
-            //         this.loading = false;
-            //     });
+            this.loadData(i);
         },
         appendPage: function(i) {
-            this.gotoOrAppend = 'append'
-            // this.loading = true;
-            // getMapNpc(this.mapname)
-            //     .then(res => {
-            //         // this.data = this.cache = this.data.concat(res.data.list);
-            //         // this.total = res.data.total;
-            //         // this.pages = res.data.pages;
-            //     })
-            //     .finally(() => {
-            //         this.loading = false;
-            //     });
-        },
-        searchNpc: function() {
-            // if (!this.search) {
-            //     // this.data = this.cache;
-            //     return;
-            // }
-            // this.loading = true;
-            // getNpc(this.search)
-            //     .then(res => {
-            //         // this.data = res.data;
-            //         this.total = 1;
-            //         this.pages = 1;
-            //     })
-            //     .finally(() => {
-            //         this.loading = false;
-            //     });
+            this.loadData(i, true);
         },
         isBoss: function(id) {
             return !!bossids.includes(id);
         },
-        getVersion() {
-            this.loading = true;
-            getDB()
-                .then(res => {
-                    this.version = res.version;
-                })
-                .catch(e => {
-                    switch (e.code) {
-                        case -1:
-                            // 网络异常
-                            this.$message.error(e.msg);
-                            break;
-                        default:
-                            // 服务器错误
-                            console.log(e);
-                            this.$message.error(`[${e.code}]${e.msg}`);
-                    }
-                    this.version = '0'
-                })
-                .then(() => {
-                    this.getAllNpc();
-                });
-        },
-        async getAllNpc() {
-            this.allNPC = await getMapNpc(this.mapname, this.version);
-            this.page = 1
-            this.loading = false;
-            let start = (this.page-1) * this.perpage
-            let end = start + 10
-            let newData = this.tmpData.slice(start, end)
-            this.data = newData
-            // .then(res => {
-            //     console.log(res);
-            //     window.scrollTo(0, 0);
-            //     this.data = this.cache = res.data.list;
-            //     this.total = res.data.total;
-            //     this.pages = res.data.pages;
-            // })
-            // .finally(() => {
-            //     this.loading = false;
-            // });
-        },
-        setDifficultyRadios() {
-            let tmp = []
-            this.info.maps.forEach((map) => {
-                tmp.push({id: map.map_id, name: map.mode})
-            })
-            this.difficultyRadios = tmp
-            this.difficultyRadioValue = tmp[0].id
-        },
     },
-    filters: {},
+    watch: {
+        mapid : function (){
+            this.loadData()
+        }
+    },
     mounted: function() {
-        this.getVersion();
-        this.setDifficultyRadios()
-        // this.changePage(1);
-        this.isSuper = User.getInfo().group > 8;
-    }
+        this.mapid = this.maps.slice(-1)[0]["map_id"];
+        this.loadData();
+    },
 };
 </script>
 
 <style lang="less">
-@import '../assets/css/npc.less';
+@import "../assets/css/npc.less";
 </style>

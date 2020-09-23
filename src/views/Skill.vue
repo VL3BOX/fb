@@ -22,80 +22,75 @@
         </el-input>
 
         <ul class="m-skill-list" v-if="!empty">
-            <li v-for="(skill, key) in data" class="u-item" :key="key">
-                <div v-show="!search || key.includes(search)">
-                    <img class="u-icon" src="../assets/img/iskill.png" />
+            <li
+                v-for="(skill, key) in data"
+                class="u-item"
+                :key="key"
+                v-show="!search || key.includes(search)"
+            >
+                <img class="u-icon" src="../assets/img/iskill.png" />
 
-                    <Mark class="u-mark" />
+                <Mark class="u-mark" />
 
-                    <div class="u-title">
-                        <span class="u-name">{{ key }}</span>
-                        <div class="u-damage" v-if="skill.tSkillData.length">
-                            <span class="u-label">伤害值 : </span>
-                            <span
-                                class="u-data-group"
-                                v-for="(g, i) in skill.tSkillData"
-                                :key="i"
-                            >
-                                <span>
-                                    <em>nDamageBase</em>
-                                    <b>{{ keymap.nDamageBase.desc }}</b>
-                                    <strong>{{ g.nDamageBase }}</strong>
-                                </span>
-                                <!-- <span>
+                <div class="u-title">
+                    <span class="u-name">{{ key }}</span>
+                    <div class="u-damage" v-if="skill.tSkillData.length">
+                        <span class="u-label">伤害值 : </span>
+                        <span
+                            class="u-data-group"
+                            v-for="(g, i) in skill.tSkillData"
+                            :key="i"
+                        >
+                            <span>
+                                <em>nDamageBase</em>
+                                <b>{{ keymap.nDamageBase.desc }}</b>
+                                <strong>{{ g.nDamageBase }}</strong>
+                            </span>
+                            <!-- <span>
                                 <em>nDamageRand</em>
                                 <b>{{ keymap.nDamageRand.desc }}</b>
                                 <strong>{{ g.nDamageRand }}</strong>
                             </span> -->
-                                <!-- <span>
+                            <!-- <span>
                                 <em>nCostMana</em>
                                 <b>{{ keymap.nCostMana.desc }}</b>
                                 <strong>{{ g.nCostMana }}</strong>
                             </span> -->
-                            </span>
-                        </div>
+                        </span>
                     </div>
+                </div>
 
-                    <div class="u-props" v-if="skill.props.length">
-                        <div
-                            class="u-prop"
-                            v-for="(g, i) in skill.props"
-                            :key="i"
+                <div class="u-props" v-if="skill.props.length">
+                    <div class="u-prop" v-for="(g, i) in skill.props" :key="i">
+                        <b>{{
+                            keymap[g.prop] ? keymap[g.prop].desc : g.prop
+                        }}</b>
+                        <em>{{ g.prop }}</em>
+                        <el-tooltip
+                            effect="dark"
+                            :content="g.prop | propTips"
+                            placement="right"
+                            ><strong>{{
+                                g.value | valueFilter
+                            }}</strong></el-tooltip
                         >
-                            <b>{{
-                                keymap[g.prop] ? keymap[g.prop].desc : g.prop
-                            }}</b>
-                            <em>{{ g.prop }}</em>
-                            <el-tooltip
-                                effect="dark"
-                                :content="g.prop | propTips"
-                                placement="right"
-                                ><strong>{{
-                                    g.value | valueFilter
-                                }}</strong></el-tooltip
-                            >
-                        </div>
                     </div>
+                </div>
 
-                    <el-collapse
-                        accordion
-                        class="u-call"
-                        v-if="skill.call.length"
-                    >
-                        <el-collapse-item>
-                            <template slot="title">
-                                ✿ 附加效果组
-                            </template>
-                            <div v-for="(g, i) in skill.call" :key="i">
-                                <em>{{ g.call }}</em>
-                                <!-- <b>{{
+                <el-collapse accordion class="u-call" v-if="skill.call.length">
+                    <el-collapse-item>
+                        <template slot="title">
+                            ✿ 附加效果组
+                        </template>
+                        <div v-for="(g, i) in skill.call" :key="i">
+                            <em>{{ g.call }}</em>
+                            <!-- <b>{{
                                 keymap[g.call] ? keymap[g.call].desc : g.call
                             }}</b> -->
-                                <strong>{{ g.args }}</strong>
-                            </div>
-                        </el-collapse-item>
-                    </el-collapse>
-                </div>
+                            <strong>{{ g.args }}</strong>
+                        </div>
+                    </el-collapse-item>
+                </el-collapse>
             </li>
         </ul>
         <el-alert

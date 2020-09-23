@@ -92,9 +92,7 @@
                                             'post_meta.fb_boss'
                                         )"
                                         :key="i"
-                                    >
-                                        {{ c }}
-                                    </b>
+                                    >{{ c }}</b>
                                 </em>
                             </div>
 
@@ -250,7 +248,7 @@ export default {
             if (val && val.length) {
                 return val;
             } else {
-                return [];
+                return ['全部'];
             }
         },
     },

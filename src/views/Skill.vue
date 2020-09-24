@@ -30,10 +30,21 @@
             >
                 <img class="u-icon" src="../assets/img/iskill.png" />
 
-                <Mark class="u-mark" />
+                <Mark
+                    class="u-mark"
+                    :value="skill.origin_id || 0"
+                    v-clipboard:copy="skill.origin_id"
+                    v-clipboard:success="onCopy"
+                    v-clipboard:error="onError"
+                />
 
                 <div class="u-title">
-                    <span class="u-name">{{ key }}</span>
+                    <span class="u-name"
+                        >{{ key }}
+                        <em v-if="skill.origin_name"
+                            >关联技能:{{ skill.origin_name || "无" }}</em
+                        ></span
+                    >
                     <div class="u-damage" v-if="skill.tSkillData.length">
                         <span class="u-label">伤害值 : </span>
                         <span
@@ -152,6 +163,19 @@ export default {
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        onCopy: function(val) {
+            this.$notify({
+                title: "复制成功",
+                message: "复制内容 : " + val.text,
+                type: "success",
+            });
+        },
+        onError: function() {
+            this.$notify.error({
+                title: "复制失败",
+                message: "请手动复制",
+            });
         },
     },
     mounted: function() {

@@ -37,7 +37,13 @@
                 /></i>
                 <img class="u-icon" src="../assets/img/iboss.png" />
 
-                <Mark class="u-id" :value="'ID:' + npc.ID" />
+                <Mark
+                    class="u-mark u-id"
+                    :value="npc.ID"
+                    v-clipboard:copy="npc.ID"
+                    v-clipboard:success="onCopy"
+                    v-clipboard:error="onError"
+                />
                 <div class="u-title">
                     <span class="u-name">{{ npc.Name }}</span>
                     <span class="u-name-add">
@@ -416,11 +422,24 @@ export default {
         isBoss: function(id) {
             return !!bossids.includes(id);
         },
+        onCopy: function(val) {
+            this.$notify({
+                title: "复制成功",
+                message: "复制内容 : " + val.text,
+                type: "success",
+            });
+        },
+        onError: function() {
+            this.$notify.error({
+                title: "复制失败",
+                message: "请手动复制",
+            });
+        },
     },
     watch: {
-        mapid : function (){
-            this.loadData()
-        }
+        mapid: function() {
+            this.loadData();
+        },
     },
     mounted: function() {
         this.mapid = this.maps.slice(-1)[0]["map_id"];

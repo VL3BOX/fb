@@ -54,3 +54,88 @@
         .none;
     }
 }
+
+.c-sidebar-right-msg{
+    .mb(15px);
+}
+.c-sidebar-right-title{
+    .fz(14px);
+    font-weight:normal;
+
+    .u-more{
+        .fz(12px);
+        color:#aaa;
+        .fr;
+        &:hover{
+            color:@color-link;
+        }
+    }
+}
+
+.m-rank-list{
+    margin:10px 15px;
+    .u-icon{
+        .size(24px);
+        .y;
+        .mr(3px);
+    }
+    ul{
+        padding:0 10px;
+        margin:0;
+        list-style:none;
+    }
+    li{
+        .fz(13px,32px);
+    }
+    li a{
+        &:before{
+            content: "»";
+            margin-right: 5px;
+            color: #555;
+        }
+        &:hover{
+            color:@pink;
+        }
+    }
+}
+
+.m-team-recruit{
+    margin:10px 15px;
+    .u-icon{
+        .size(17px);
+        .y;
+        .ml(3px);
+        .mr(7px);
+    }
+    ul{
+        padding:0 10px;
+        margin:0;
+        list-style:none;
+    }
+    li{
+        .mb(5px);
+    }
+    a{
+        .db;
+        &:hover{
+            color:@pink;
+        }
+        padding:1px 0;
+        .fz(13px,2);
+    }
+    img{
+        .size(24px);
+        .r(2px);
+        .fl;
+        .mr(10px);
+    }
+    .u-server{
+        color:#aaa;
+        .fr;
+        .fz(12px);
+    }
+    .u-flag{
+        .mr(5px);
+        color:#aaa;
+    }
+}

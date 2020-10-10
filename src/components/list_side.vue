@@ -1,9 +1,13 @@
 <template>
     <div class="m-extend-list">
         <RightSideMsg>
-            <em>全服团长交流群</em> : <strong><a href="https://jq.qq.com/?_wv=1027&k=HZdXPmZe">785597424</a></strong>
+            <em>全服团长交流群</em> :
+            <strong
+                ><a href="https://jq.qq.com/?_wv=1027&k=HZdXPmZe"
+                    >785597424</a
+                ></strong
+            >
         </RightSideMsg>
-        <minirank />
         <!-- <div class="m-fb-info">
             <i class="u-pic"><img id="m-archive-fb-pic" :src="img"/></i>
             <h1 class="u-title" id="m-archive-fb-name">{{ info.name }}</h1>
@@ -14,49 +18,58 @@
                 </li>
             </ul>
         </div> -->
-        <div class="m-fb-links">
+        <div class="m-rank-list">
+            <h3 class="c-sidebar-right-title">
+                <img
+                    class="u-icon"
+                    svg-inline
+                    src="../assets/img/rank.svg"
+                />秘境百强
+                <a class="u-more" href="/rank" target="_blank">查看更多 &raquo;</a>
+            </h3>
+            <ul>
+                <li v-for="(item,i) in events" :key="i">
+                    <a :href="item.ID | eventLink">{{item.name}}</a>
+                </li>
+                <li><a href="https://www.jx3box.com/fb/?fb_zlp=%E4%B8%96%E5%A4%96%E8%93%AC%E8%8E%B1&fb_name=%E8%8C%83%E9%98%B3%E5%A4%9C%E5%8F%98#/rank" target="_blank">世外蓬莱·安小逢百强榜</a></li>
+            </ul>
+        </div>
+        <div class="m-team-recruit">
             <h3 class="c-sidebar-right-title">
                 <img
                     class="u-icon"
                     svg-inline
                     src="../assets/img/puzzle.svg"
-                />相关链接
+                />团队招募
+                <a class="u-more" href="/team" target="_blank">查看更多 &raquo;</a>
             </h3>
-            <div class="c-sidebar-right-list">
-                <a
-                    class="u-item"
-                    href="/tool/?pid=13715"
-                    target="_blank"
-                    >全服排行榜说明</a>
-                <a
-                    class="u-item"
-                    href="/app/database"
-                    target="_blank"
-                    >剑三数据库</a>
-                <!-- <a
-                    class="u-item"
-                    href="https://www.jx3box.com/app/jx3-query/"
-                    target="_blank"
-                    >战斗日志分析</a> -->
-                <!-- <a
-                    class="u-item"
-                    href="https://www.jx3box.com/app/jx3-query/"
-                    target="_blank"
-                    >团队管理平台</a> -->
-            </div>
+            <ul>
+                <li v-for="(item,i) in teams" :key="i">
+                    <a :href="item.ID | teamLink">
+                        <i class="u-flag el-icon-s-flag"></i>
+                        <!-- <img :src="item.logo | showLogo"> -->
+                        <span class="u-name">{{item.name}}</span>
+                        <span class="u-server">{{item.server}}</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-        <!-- <Github_REPO REPO="fb" coder="8,15,2"></Github_REPO> -->
     </div>
 </template>
 
 <script>
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
-import minirank from './minirank'
+// import minirank from './minirank'
+import { getEvents, getTeams } from "@/service/next.js";
+import {showAvatar} from '@jx3box/jx3box-common/js/utils.js'
 export default {
     name: "list_side",
     props: [],
     data: function() {
-        return {};
+        return {
+            teams : [],
+            events : []
+        };
     },
     computed: {
         zlp: function() {
@@ -76,10 +89,28 @@ export default {
         },
     },
     methods: {},
-    mounted: function() {},
-    components : {
-        minirank
-    }
+    mounted: function() {
+        getEvents().then((res) => {
+            this.events = res.data.data.list
+        })
+        getTeams().then((res) => {
+            this.teams = res.data.data.list
+        })
+    },
+    filters : {
+        showLogo : function (val){
+            return showAvatar(val)
+        },
+        eventLink : function (val){
+            return '/rank/race.html#/' + val
+        },
+        teamLink : function (val){
+            return '/team/#/org/view/' + val
+        }
+    },
+    components: {
+        // minirank
+    },
 };
 </script>
 

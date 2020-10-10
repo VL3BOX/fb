@@ -32,13 +32,13 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="全服排行" name="rank">
+        <!-- <el-tab-pane label="全服排行" name="rank">
             <span slot="label">
                 <i class="el-icon-trophy"></i>
                 <b>全服排行</b>
                 <em class="u-ready">已结榜</em>
             </span>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <el-tab-pane label="副本掉落" name="drop">
             <span slot="label">

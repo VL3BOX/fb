@@ -18,6 +18,9 @@
                 </li>
             </ul>
         </div> -->
+        <div class="m-rank-ing">
+            <a href="https://www.jx3box.com/rank/race.html#/1" target="_blank"><img src="https://oss.jx3box.com/upload/post/2020/10/12/6750991.png"></a>
+        </div>
         <div class="m-rank-list">
             <h3 class="c-sidebar-right-title">
                 <img

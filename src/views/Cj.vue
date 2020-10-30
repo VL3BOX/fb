@@ -1,6 +1,6 @@
 <template>
     <div class="m-fb-cj" v-loading="loading">
-        <div class="m-cj-list" v-if="data.length">
+        <div class="m-cj-list" v-if="data">
             <a
                 class="m-cj-item"
                 v-for="(item, i) in data"
@@ -27,14 +27,6 @@
             show-icon
         >
         </el-alert>
-        <el-button
-            class="m-archive-more"
-            :class="{ show: hasNextPage }"
-            type="primary"
-            :loading="loading"
-            @click="appendPage(++page)"
-            >加载更多</el-button
-        >
         <el-pagination
             class="m-archive-pages"
             background
@@ -57,7 +49,7 @@ export default {
     props: [],
     data: function() {
         return {
-            data: [],
+            data: '',
             total: 0,
             page: 1,
             pages: 1,

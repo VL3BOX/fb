@@ -18,9 +18,14 @@
                 </li>
             </ul>
         </div> -->
-        <div class="m-rank-ing">
+        <!-- <div class="m-rank-ing">
             <a href="https://www.jx3box.com/rank/race.html#/1" target="_blank"><img src="https://oss.jx3box.com/upload/post/2020/10/12/6750991.png"></a>
-        </div>
+        </div> -->
+        <a href="/team" class="m-team-app" target="_blank">
+            <img class="u-icon" svg-inline src="../assets/img/team_on.svg" />
+            <b>团队管理平台</b>
+            <span>在线排表 自动金团记录</span>
+        </a>
         <div class="m-rank-list">
             <h3 class="c-sidebar-right-title">
                 <img
@@ -34,14 +39,8 @@
                 <li v-for="(item,i) in events" :key="i">
                     <a :href="item.ID | eventLink">{{item.name}}</a>
                 </li>
-                <li><a href="https://www.jx3box.com/fb/?fb_zlp=%E4%B8%96%E5%A4%96%E8%93%AC%E8%8E%B1&fb_name=%E8%8C%83%E9%98%B3%E5%A4%9C%E5%8F%98#/rank" target="_blank">世外蓬莱·安小逢百强榜</a></li>
             </ul>
         </div>
-        <a href="/team" class="m-team-app" target="_blank">
-            <img class="u-icon" svg-inline src="../assets/img/team_on.svg" />
-            <b>团队管理平台</b>
-            <span>在线排表 自动金团记录</span>
-        </a>
         <div class="m-team-recruit">
             <h3 class="c-sidebar-right-title">
                 <img

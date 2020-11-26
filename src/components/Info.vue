@@ -10,7 +10,7 @@
 
         <div class="m-info-router">
             <router-link to="/"><i class="el-icon-collection"></i></router-link>
-            <router-link to="/rank"><i class="el-icon-trophy"></i></router-link>
+            <!-- <router-link to="/rank"><i class="el-icon-trophy"></i></router-link> -->
             <router-link to="/cj"><i class="el-icon-collection-tag"></i></router-link>
             <router-link to="/npc"><i class="el-icon-key"></i></router-link>
             <router-link to="/skill"><i class="el-icon-cpu"></i></router-link>

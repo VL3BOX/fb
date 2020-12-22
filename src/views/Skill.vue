@@ -26,11 +26,12 @@
                 v-for="(skill, key) in data"
                 class="u-item"
                 :key="key"
-                v-show="!search || key.includes(search)"
+                v-show="skill.show"
             >
                 <img class="u-icon" src="../assets/img/iskill.png" />
 
                 <Mark
+                    v-if="skill.origin_id"
                     class="u-mark"
                     :value="skill.origin_id || 0"
                     v-clipboard:copy="skill.origin_id"
@@ -43,7 +44,9 @@
                         >{{ key }}
                         <em v-if="skill.origin_name"
                             >关联技能:{{ skill.origin_name || "无" }}</em
-                        ></span
+                        >
+                        <em v-if="skill.isPenetration">(穿透)</em>
+                        </span
                     >
                     <div class="u-damage" v-if="skill.tSkillData.length">
                         <span class="u-label">伤害值 : </span>
@@ -159,6 +162,9 @@ export default {
             getLua(this.fb, this.focus)
                 .then((res) => {
                     this.data = res.data;
+                    for(let key in this.data){
+                        this.data[key]['show'] = true
+                    }
                 })
                 .finally(() => {
                     this.loading = false;
@@ -177,6 +183,23 @@ export default {
                 message: "请手动复制",
             });
         },
+    },
+    watch : {
+        search : function (val){
+            if(!val){
+                for(let key in this.data){
+                    this.data[key]['show'] = true
+                }
+            }else{
+                for(let key in this.data){
+                    if(key.includes(val) || (!!this.data[key]['origin_id'] ? String(this.data[key]['origin_id']).includes(val) : false) || (!!this.data[key]['origin_name'] ? this.data[key]['origin_name'].includes(val) : false)){
+                        this.data[key]['show'] = true
+                    }else{
+                        this.data[key]['show'] = false
+                    }
+                }
+            }
+        }
     },
     mounted: function() {
         getLuaIndex()

@@ -18,29 +18,25 @@
                 </li>
             </ul>
         </div> -->
-        <!-- <div class="m-rank-ing">
-            <a href="https://www.jx3box.com/rank/race.html#/1" target="_blank"><img src="https://oss.jx3box.com/upload/post/2020/10/12/6750991.png"></a>
-        </div> -->
+        <el-carousel
+            class="m-rank-ing"
+            v-if="data && data.length"
+            trigger="click"
+            height="140px"
+            indicator-position="none"
+            :interval="6000"
+        >
+            <el-carousel-item v-for="(item, i) in data" :key="i">
+                <a :href="item.link" rel="noopener noreferrer" target="_blank"
+                    ><img :src="item.img"
+                /></a>
+            </el-carousel-item>
+        </el-carousel>
         <a href="/team" class="m-team-app" target="_blank">
             <img class="u-icon" svg-inline src="../assets/img/team_on.svg" />
             <b>团队管理平台</b>
             <span>在线排表 自动金团记录</span>
         </a>
-        <div class="m-rank-list">
-            <h3 class="c-sidebar-right-title">
-                <img
-                    class="u-icon"
-                    svg-inline
-                    src="../assets/img/rank.svg"
-                />秘境百强
-                <a class="u-more" href="/rank" target="_blank">查看更多 &raquo;</a>
-            </h3>
-            <ul>
-                <li v-for="(item,i) in events" :key="i">
-                    <a :href="item.ID | eventLink">{{item.name}}</a>
-                </li>
-            </ul>
-        </div>
         <div class="m-team-recruit">
             <h3 class="c-sidebar-right-title">
                 <img
@@ -68,14 +64,16 @@
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
 // import minirank from './minirank'
 import { getEvents, getTeams } from "@/service/next.js";
-import {showAvatar} from '@jx3box/jx3box-common/js/utils.js'
+import {showAvatar,resolveImagePath} from '@jx3box/jx3box-common/js/utils.js'
+import { getNews } from "../service/sidebar";
 export default {
     name: "list_side",
     props: [],
     data: function() {
         return {
             teams : [],
-            events : []
+            events : [],
+            data : []
         };
     },
     computed: {
@@ -97,10 +95,17 @@ export default {
     },
     methods: {},
     mounted: function() {
-        getEvents().then((res) => {
-            this.events = res.data.data.list
-        })
+        // getEvents().then((res) => {
+        //     this.events = res.data.data.list
+        // })
+        getNews("activity").then((data) => {
+            data.forEach((item) => {
+                item.img = resolveImagePath(item.img)
+            })
+            this.data = data;
+        });
         getTeams().then((res) => {
+            
             this.teams = res.data.data.list
         })
     },

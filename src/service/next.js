@@ -10,7 +10,8 @@ function getTeams() {
     return $next.get("team/public", {
         params: {
             recruit: 1, //有招募的
-            pageSize : 10
+            pageSize : 10,
+            tag : '可教学'
         },
     });
 }

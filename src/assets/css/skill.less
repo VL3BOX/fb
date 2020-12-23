@@ -38,13 +38,26 @@
         min-height:48px;
         .u-name{
             .fz(16px);
-            color:@primary;
+            // color:@primary;
+            color:@color;
             margin-right:5px;
             .bold;
             em{
-                color:#888;
+                color:#c00;
                 .fz(13px);
                 font-style: normal;
+                .ml(3px);
+            }
+            i{
+                .fz(15px);
+                .y;
+                .mr(3px);
+            }
+            a{
+                .fz(12px);
+                &:hover{
+                    color:@pink;
+                }
             }
         }
         .u-damage{

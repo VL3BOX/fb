@@ -42,12 +42,12 @@
                 <div class="u-title">
                     <span class="u-name"
                         >{{ key }}
-                        <em v-if="skill.origin_name"
-                            >关联技能:{{ skill.origin_name || "无" }}</em
+                        <a v-if="skill.origin_name" :href="skill.origin_id | getDBlink" target="_blank"
+                            ><i class="el-icon-connection"></i
+                            >{{ skill.origin_name || "未知" }}</a
                         >
                         <em v-if="skill.isPenetration">(穿透)</em>
-                        </span
-                    >
+                    </span>
                     <div class="u-damage" v-if="skill.tSkillData.length">
                         <span class="u-label">伤害值 : </span>
                         <span
@@ -155,6 +155,9 @@ export default {
         propTips: function(key) {
             return keymap[key] ? keymap[key]["remark"] : key;
         },
+        getDBlink : function (val){
+            return '/app/database/?type=skill&query=' + val
+        }
     },
     methods: {
         loadLua: function() {
@@ -162,8 +165,8 @@ export default {
             getLua(this.fb, this.focus)
                 .then((res) => {
                     this.data = res.data;
-                    for(let key in this.data){
-                        this.data[key]['show'] = true
+                    for (let key in this.data) {
+                        this.data[key]["show"] = true;
                     }
                 })
                 .finally(() => {
@@ -184,22 +187,30 @@ export default {
             });
         },
     },
-    watch : {
-        search : function (val){
-            if(!val){
-                for(let key in this.data){
-                    this.data[key]['show'] = true
+    watch: {
+        search: function(val) {
+            if (!val) {
+                for (let key in this.data) {
+                    this.data[key]["show"] = true;
                 }
-            }else{
-                for(let key in this.data){
-                    if(key.includes(val) || (!!this.data[key]['origin_id'] ? String(this.data[key]['origin_id']).includes(val) : false) || (!!this.data[key]['origin_name'] ? this.data[key]['origin_name'].includes(val) : false)){
-                        this.data[key]['show'] = true
-                    }else{
-                        this.data[key]['show'] = false
+            } else {
+                for (let key in this.data) {
+                    if (
+                        key.includes(val) ||
+                        (!!this.data[key]["origin_id"]
+                            ? String(this.data[key]["origin_id"]).includes(val)
+                            : false) ||
+                        (!!this.data[key]["origin_name"]
+                            ? this.data[key]["origin_name"].includes(val)
+                            : false)
+                    ) {
+                        this.data[key]["show"] = true;
+                    } else {
+                        this.data[key]["show"] = false;
                     }
                 }
             }
-        }
+        },
     },
     mounted: function() {
         getLuaIndex()

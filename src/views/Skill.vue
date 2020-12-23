@@ -145,7 +145,14 @@ export default {
             return this.$store.state.fb;
         },
         subnav: function() {
-            return this.luaindex[this.fb];
+            let list = this.luaindex[this.fb]
+            let _list = []
+            list.forEach((item) => {
+                if(item){
+                    _list.push(item)
+                }
+            })
+            return _list;
         },
     },
     filters: {

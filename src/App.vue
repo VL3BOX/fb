@@ -38,7 +38,8 @@ import Nav from "@/components/Nav.vue";
 import Extend from "@/components/Extend.vue";
 import tabs from "@/components/tabs";
 import single from "@/components/single.vue";
-const { getRewrite } = require("@jx3box/jx3box-common/js/utils");
+import {getPID,getAppID,getQuery,getAppType} from '@jx3box/jx3box-common/js/utils'
+import {__Root} from '@jx3box/jx3box-common/js/jx3box.json'
 
 export default {
     name: "App",
@@ -55,9 +56,22 @@ export default {
     },
     methods: {},
     beforeCreate: function() {
+        let id = getAppID()
+        let pid = getPID()
+
+        // 旧单页链接跳转
+        if(!id && pid){
+            let type = getAppType()
+            let test = __Root + type + '/' + pid
+            location.href = __Root + type + '/' + pid
+        }
+
+        // 处理模式 & 文章ID
+        this.$store.state.mode = id ? 'single' : 'list'
+        this.$store.state.pid = id
+
+        // 捕获subtype
         this.params = new URLSearchParams(location.search);
-        this.$store.state.pid = this.params.get("pid") || getRewrite("pid");
-        this.$store.state.mode = this.$store.state.pid ? "single" : "list";
         this.$store.state.zlp = this.params.get("fb_zlp") || this.$store.state.default_zlp;
         this.$store.state.fb = this.params.get("fb_name") || this.$store.state.default_fb;
     },

@@ -12,7 +12,7 @@
 <script>
 import singlebox from "@jx3box/jx3box-page/src/cms-single";
 import { getPost } from "../service/getPost.js";
-import { getStat, postStat } from "../service/stat.js";
+import { getStat, postStat } from "@jx3box/jx3box-common/js/stat";
 import _ from 'lodash'
 export default {
     name: "single",
@@ -54,10 +54,10 @@ export default {
                     this.loading = false;
                 });
 
-            getStat(this.id).then((data) => {
-                if (data) this.stat = this.$store.state.stat = data;
+            getStat('fb',this.id).then((res) => {
+                if (data) this.stat = this.$store.state.stat = res.data;
             });
-            postStat(this.id);
+            postStat('fb',this.id);
         }
     },
     components: {

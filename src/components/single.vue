@@ -55,7 +55,7 @@ export default {
                 });
 
             getStat('fb',this.id).then((res) => {
-                if (data) this.stat = this.$store.state.stat = res.data;
+                this.stat = this.$store.state.stat = res.data;
             });
             postStat('fb',this.id);
         }

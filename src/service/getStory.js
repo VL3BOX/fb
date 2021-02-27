@@ -7,7 +7,9 @@ function getInfo(fb) {
         params : {
             OtherName : fb
         }
-    });
+    }).catch((err) => {
+        console.log(err)
+    })
 }
 
 function getBoss(mapid){
@@ -15,7 +17,9 @@ function getBoss(mapid){
         params : {
             MapID : mapid
         }
-    });
+    }).catch((err) => {
+        console.log(err)
+    })
 }
 
 export { getInfo,getBoss };

@@ -49,12 +49,14 @@ export default {
     props: [],
     data: function() {
         return {
+            loading: false,
+
             data: '',
             total: 0,
             page: 1,
             pages: 1,
-            loading: true,
-            per : 10
+            per : 15,
+            appendMode : false
         };
     },
     computed: {
@@ -64,6 +66,13 @@ export default {
         fb: function() {
             return this.$store.state.fb;
         },
+        params : function (){
+            return {
+                dungeon_name : this.fb,
+                page : this.page,
+                limit : this.per
+            }
+        }
     },
     filters: {
         icon: function(id) {
@@ -74,16 +83,11 @@ export default {
         }
     },
     methods: {
-        loadPosts: function(i = 1, append = false) {
+        loadPosts: function(append = false) {
             this.loading = true;
-            getCJ(this.fb, i)
+            getCJ(this.params)
                 .then((res) => {
-                    if (append) {
-                        this.data = this.data.concat(res.data.data.achievements);
-                    } else {
-                        window.scrollTo(0, 0);
-                        this.data = res.data.data.achievements;
-                    }
+                    this.data = res.data.data.achievements;
                     this.total = res.data.data.total;
                     this.pages = res.data.data.last_page;
                 })
@@ -91,15 +95,20 @@ export default {
                     this.loading = false;
                 });
         },
-        changePage: function(i) {
-            this.loadPosts(i);
-        },
-        appendPage: function(i) {
-            this.loadPosts(i, true);
+        changePage: function() {
+            window.scrollTo(0, 0);
         },
     },
-    mounted: function() {
-        this.changePage(1);
+    watch : {
+        params : {
+            deep : true,
+            handler : function (){
+                this.loadPosts()
+            }
+        }
+    },
+    created: function() {
+        this.loadPosts();
     },
 };
 </script>

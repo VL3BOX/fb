@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { getGemlist, searchItem } from "../service/getGem";
+import { getGemList } from "../service/getGem";
 import { __ossMirror, __iconPath,__ossRoot } from "@jx3box/jx3box-common/js/jx3box";
 export default {
     name: "Gem",
@@ -77,8 +77,9 @@ export default {
             page: 1,
             pages: 1,
             per: 15,
-            loading: true,
+            loading: false,
             search: "",
+            appendMode : false
         };
     },
     computed: {
@@ -88,6 +89,13 @@ export default {
         fb: function() {
             return this.$store.state.fb;
         },
+        params : function (){
+            return {
+                dungeon: this.fb,
+                page: this.page,
+                keyword: this.search,
+            }
+        }
     },
     filters: {
         icon: function(id) {
@@ -95,68 +103,36 @@ export default {
         },
     },
     methods: {
-        loadPosts: function(i = 1, append = false) {
+        loadPosts: function() {
             this.loading = true;
-            if (this.search) {
-                searchItem(this.search, i)
-                    .then((res) => {
-                        let data = [];
-                        if (append) {
-                            data = this.data.concat(res.data.data.data);
-                        } else {
-                            data = res.data.data.data;
-                        }
-                        this.data = data;
+            getGemList(this.params)
+                .then((res) => {
+                    let data = [];
+                    if (this.appendMode) {
+                        data = this.data.concat(res.data.data.data);
+                    } else {
+                        data = res.data.data.data;
+                    }
+                    // console.log(data)
+                    // for (let item of data) {
+                    //     item._desc = this.getDesc(item.Desc);
+                    //     item._drops = this.getDrops(item.Desc);
+                    // }
+                    this.data = data;
 
-                        this.total = res.data.data.total;
-                        this.pages = res.data.data.last_page;
-
-                        if (!append) {
-                            window.scrollTo(0, 0);
-                        }
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    })
-                    .finally(() => {
-                        this.loading = false;
-                    });
-            } else {
-                getGemlist(this.fb, i)
-                    .then((res) => {
-                        let data = [];
-                        if (append) {
-                            data = this.data.concat(res.data.data.data);
-                        } else {
-                            data = res.data.data.data;
-                        }
-                        // console.log(data)
-                        // for (let item of data) {
-                        //     item._desc = this.getDesc(item.Desc);
-                        //     item._drops = this.getDrops(item.Desc);
-                        // }
-                        this.data = data;
-
-                        this.total = res.data.data.total;
-                        this.pages = res.data.data.last_page;
-
-                        if (!append) {
-                            window.scrollTo(0, 0);
-                        }
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    })
-                    .finally(() => {
-                        this.loading = false;
-                    });
-            }
+                    this.total = res.data.data.total;
+                    this.pages = res.data.data.last_page;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
-        changePage: function(i = 1) {
-            this.loadPosts(i);
+        changePage: function() {
+            window.scrollTo(0, 0);
+            this.appendMode = false
         },
         appendPage: function(i) {
-            this.loadPosts(i, true);
+            this.appendMode = true
         },
         getDesc: function(str) {
             const RE = /使用(.*?)装备。/;
@@ -169,8 +145,16 @@ export default {
             return result;
         },
     },
+    watch : {
+        params : {
+            deep : true,
+            handler : function (){
+                this.loadPosts()
+            }
+        }
+    },
     created: function() {
-        this.changePage();
+        this.loadPosts()
     },
 };
 </script>

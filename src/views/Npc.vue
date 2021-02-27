@@ -232,7 +232,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="u-misc" v-if="isSuperAuthor">
+                <div class="u-misc" v-if="hasRight">
                     <span class="u-remark">
                         CanSeeLifeBar:
                         <strong>{{ npc.CanSeeLifeBar }}</strong>
@@ -250,10 +250,17 @@
                         ImmunityMask:
                         <strong>{{ npc.ImmunityMask }}</strong>
                     </span>
-                    <span class="u-remark" v-if="isSuperAuthor">
+                    <span class="u-remark">
                         ScriptName:
                         <strong>{{ npc.ScriptName }}</strong>
                     </span>
+                </div>
+                <div class="u-misc-tip" v-else>
+                    <i class="el-icon-lock"></i> 更多词条仅<a
+                        href="/vip/premium?from=database_npc"
+                        target="_blank"
+                        >高级版会员</a
+                    >可见
                 </div>
             </li>
         </ul>
@@ -317,7 +324,8 @@ export default {
             onlyboss: true,
             mapid: "",
             bossids: [],
-            isSuperAuthor: User.isSuperAuthor(),
+
+            hasRight: true, //TODO:
         };
     },
     computed: {
@@ -444,6 +452,10 @@ export default {
     mounted: function() {
         this.mapid = this.maps.slice(-1)[0]["map_id"];
         this.loadData();
+        // TODO:
+        // User.isLogin() && User.isVIP().then((data) => {
+        //     this.hasRight = data;
+        // });
     },
 };
 </script>

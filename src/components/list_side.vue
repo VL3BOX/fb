@@ -1,5 +1,5 @@
 <template>
-    <div class="m-extend-list">
+    <div class="m-extend-box">
         <RightSideMsg>
             <em>全服团长交流群</em> :
             <strong
@@ -8,7 +8,8 @@
                 ></strong
             >
         </RightSideMsg>
-        <!-- <div class="m-fb-info">
+        <div class="m-extend-list">
+            <!-- <div class="m-fb-info">
             <i class="u-pic"><img id="m-archive-fb-pic" :src="img"/></i>
             <h1 class="u-title" id="m-archive-fb-name">{{ info.name }}</h1>
             <p class="u-intro" id="m-archive-fb-intro" v-html="introduce"></p>
@@ -18,44 +19,54 @@
                 </li>
             </ul>
         </div> -->
-        <el-carousel
-            class="m-rank-ing"
-            v-if="data && data.length"
-            trigger="click"
-            height="140px"
-            indicator-position="none"
-            :interval="6000"
-        >
-            <el-carousel-item v-for="(item, i) in data" :key="i">
-                <a :href="item.link" rel="noopener noreferrer" target="_blank"
-                    ><img :src="item.img"
-                /></a>
-            </el-carousel-item>
-        </el-carousel>
-        <a href="/team" class="m-team-app" target="_blank">
-            <img class="u-icon" svg-inline src="../assets/img/team_on.svg" />
-            <b>团队管理平台</b>
-            <span>在线排表 自动金团记录</span>
-        </a>
-        <div class="m-team-recruit">
-            <h3 class="c-sidebar-right-title">
+            <el-carousel
+                class="m-rank-ing"
+                v-if="data && data.length"
+                trigger="click"
+                height="140px"
+                indicator-position="none"
+                :interval="6000"
+            >
+                <el-carousel-item v-for="(item, i) in data" :key="i">
+                    <a
+                        :href="item.link"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        ><img :src="item.img"
+                    /></a>
+                </el-carousel-item>
+            </el-carousel>
+            <a href="/team" class="m-team-app" target="_blank">
                 <img
                     class="u-icon"
                     svg-inline
-                    src="../assets/img/puzzle.svg"
-                />团队招募
-                <a class="u-more" href="/team" target="_blank">查看更多 &raquo;</a>
-            </h3>
-            <ul>
-                <li v-for="(item,i) in teams" :key="i">
-                    <a :href="item.ID | teamLink">
-                        <i class="u-flag el-icon-s-flag"></i>
-                        <!-- <img :src="item.logo | showLogo"> -->
-                        <span class="u-name">{{item.name}}</span>
-                        <span class="u-server">{{item.server}}</span>
-                    </a>
-                </li>
-            </ul>
+                    src="../assets/img/team_on.svg"
+                />
+                <b>团队管理平台</b>
+                <span>在线排表 自动金团记录</span>
+            </a>
+            <div class="m-team-recruit">
+                <h3 class="c-sidebar-right-title">
+                    <img
+                        class="u-icon"
+                        svg-inline
+                        src="../assets/img/puzzle.svg"
+                    />团队招募
+                    <a class="u-more" href="/team" target="_blank"
+                        >查看更多 &raquo;</a
+                    >
+                </h3>
+                <ul>
+                    <li v-for="(item, i) in teams" :key="i">
+                        <a :href="item.ID | teamLink">
+                            <i class="u-flag el-icon-s-flag"></i>
+                            <!-- <img :src="item.logo | showLogo"> -->
+                            <span class="u-name">{{ item.name }}</span>
+                            <span class="u-server">{{ item.server }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -64,16 +75,19 @@
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
 // import minirank from './minirank'
 import { getEvents, getTeams } from "@/service/next.js";
-import {showAvatar,resolveImagePath} from '@jx3box/jx3box-common/js/utils.js'
+import {
+    showAvatar,
+    resolveImagePath,
+} from "@jx3box/jx3box-common/js/utils.js";
 import { getNews } from "../service/sidebar";
 export default {
     name: "list_side",
     props: [],
     data: function() {
         return {
-            teams : [],
-            events : [],
-            data : []
+            teams: [],
+            events: [],
+            data: [],
         };
     },
     computed: {
@@ -100,25 +114,24 @@ export default {
         // })
         getNews("activity").then((data) => {
             data.forEach((item) => {
-                item.img = resolveImagePath(item.img)
-            })
+                item.img = resolveImagePath(item.img);
+            });
             this.data = data;
         });
         getTeams().then((res) => {
-            
-            this.teams = res.data.data.list
-        })
+            this.teams = res.data.data.list;
+        });
     },
-    filters : {
-        showLogo : function (val){
-            return showAvatar(val)
+    filters: {
+        showLogo: function(val) {
+            return showAvatar(val);
         },
-        eventLink : function (val){
-            return '/rank/race.html#/' + val
+        eventLink: function(val) {
+            return "/rank/race.html#/" + val;
         },
-        teamLink : function (val){
-            return '/team/#/org/view/' + val
-        }
+        teamLink: function(val) {
+            return "/team/#/org/view/" + val;
+        },
     },
     components: {
         // minirank

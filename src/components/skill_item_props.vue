@@ -141,7 +141,7 @@ export default {
             if (Array.isArray(val) && val.includes("PERCENT_BASE")) {
                 _val = val[0];
             }
-            return _val ? _val * 100 + "%" : "不可";
+            return _val ? (_val / 1024)*100 + "%" : "不可";
         },
         formatAngle: function(val) {
             return parseInt((val * 360) / 256) + "°";

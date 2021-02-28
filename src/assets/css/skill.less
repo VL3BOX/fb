@@ -68,6 +68,16 @@
                 .mr(10px);
             }
 
+            em{
+                background-color:#eee;
+                font-style: normal;
+                .r(3px);
+                padding:2px 5px;
+                color:#999;
+                .mr(5px);
+                .fz(12px);
+            }
+
             .u-data-group{
                 .fz(12px);
                 em{.none;}
@@ -117,10 +127,18 @@
         }
     }
 
-    .u-call{
+    .u-call-box{
         .mt(5px);
-        em{.mr(10px);}
-        b{.none;}
+        b,em{.mr(5px);}
+    }
+
+    .u-call{
+        border-bottom:1px dashed #ddd;
+
+        .u-call-arg{
+            .fz(12px);
+            em{font-style: normal;}
+        }
     }
 
     .el-collapse-item__header,.el-collapse-item__wrap{background:none;}

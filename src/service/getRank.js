@@ -1,7 +1,6 @@
 import axios from "axios";
 import { __next } from "@jx3box/jx3box-common/js/jx3box.json";
-// const API = '/api/fb/rank/'
-const API = __next + "api/fb/rank/"; //TODO:
+const API = __next + "api/fb/rank/"; 
 
 function getDateRank(id) {
     let limit = 100

@@ -325,7 +325,7 @@ export default {
             mapid: "",
             bossids: [],
 
-            hasRight: true, //TODO:
+            hasRight: false,
         };
     },
     computed: {
@@ -452,10 +452,9 @@ export default {
     mounted: function() {
         this.mapid = this.maps.slice(-1)[0]["map_id"];
         this.loadData();
-        // TODO:
-        // User.isLogin() && User.isVIP().then((data) => {
-        //     this.hasRight = data;
-        // });
+        User.isLogin() && User.isVIP().then((data) => {
+            this.hasRight = data;
+        });
     },
 };
 </script>

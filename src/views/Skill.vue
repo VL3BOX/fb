@@ -66,7 +66,7 @@ export default {
             luaindex: {},
             data: {},
             empty: false,
-            hasRight: true, //TODO:
+            hasRight: false,
         };
     },
     computed: {
@@ -143,10 +143,9 @@ export default {
                 console.log(err);
             });
 
-        // TODO:
-        // User.isLogin() && User.isVIP().then((data) => {
-        //     this.hasRight = data;
-        // });
+        User.isLogin() && User.isVIP().then((data) => {
+            this.hasRight = data;
+        });
     },
     components: {
         "skill-item": skill_item,

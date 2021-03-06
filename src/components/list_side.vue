@@ -78,6 +78,7 @@ import { getEvents, getTeams } from "@/service/next.js";
 import {
     showAvatar,
     resolveImagePath,
+    getLink
 } from "@jx3box/jx3box-common/js/utils.js";
 import { getNews } from "../service/sidebar";
 export default {
@@ -127,10 +128,10 @@ export default {
             return showAvatar(val);
         },
         eventLink: function(val) {
-            return "/rank/race.html#/" + val;
+            return "/rank/race/" + val;
         },
         teamLink: function(val) {
-            return "/team/#/org/view/" + val;
+            return getLink('org',val)
         },
     },
     components: {

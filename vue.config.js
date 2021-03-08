@@ -6,6 +6,24 @@ const Setting = require("./setting.json");
 module.exports = {
     devServer: {
         proxy: {
+            "/api/vip": {
+                "target": "https://pay.jx3box.com",
+                "onProxyReq": function (request) {
+                    request.setHeader("origin", "");
+                }
+            },
+            "/api/summary": {
+                "target": "https://next.jx3box.com",
+                "onProxyReq": function (request) {
+                    request.setHeader("origin", "");
+                }
+            },
+            "/api/comment": {
+                "target": "https://next.jx3box.com",
+                "onProxyReq": function (request) {
+                    request.setHeader("origin", "");
+                }
+            },
             "/api": {
                 target: "https://next.jx3box.com",
                 onProxyReq: function(request) {

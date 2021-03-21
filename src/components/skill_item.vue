@@ -112,7 +112,7 @@
                 <i class="el-icon-lock"></i> 更多词条仅<a
                     href="/vip/premium?from=database_npc"
                     target="_blank"
-                    >高级版会员</a
+                    >高级/专业版会员</a
                 >可见
             </div>
         </template>

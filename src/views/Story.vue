@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
+import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
 import { getInfo, getBoss } from "@/service/getStory.js";
 export default {
     name: "Story",

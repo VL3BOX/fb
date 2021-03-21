@@ -163,7 +163,7 @@ import { getDateRank } from "../service/getRank";
 import moment, { fn } from "moment";
 import rankmap from "../assets/js/rank.json";
 // import mock from '../mock/rank.json'
-import { __ossMirror, __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __ossMirror, __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 servers.unshift("全部");
 

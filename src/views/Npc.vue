@@ -259,7 +259,7 @@
                     <i class="el-icon-lock"></i> 更多词条仅<a
                         href="/vip/premium?from=database_npc"
                         target="_blank"
-                        >高级版会员</a
+                        >高级/专业版会员</a
                     >可见
                 </div>
             </li>
@@ -303,7 +303,7 @@ import {
     getBossList,
     getBossIds,
 } from "../service/getNpc";
-import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
+import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
 import User from "@jx3box/jx3box-common/js/user";
 import { axios } from "../service/axios/api.js";
 import { getDB } from "../service/getDB";

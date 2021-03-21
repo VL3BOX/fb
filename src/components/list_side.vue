@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
+import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
 // import minirank from './minirank'
 import { getEvents, getTeams } from "@/service/next.js";
 import {

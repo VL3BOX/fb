@@ -1,5 +1,5 @@
 import axios from "axios";
-import { __ossMirror,__luaPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __ossMirror,__luaPath } from "@jx3box/jx3box-common/data/jx3box.json";
 
 function getLuaIndex() {
     // return axios.get(__ossMirror + "lua/index.json?v=" + Date.now());

@@ -1,5 +1,5 @@
 import { axios } from "@jx3box/jx3box-common/js/axios";
-import { __server } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __server } from "@jx3box/jx3box-common/data/jx3box.json";
 
 function getNews(type, limit = 5) {
     return axios

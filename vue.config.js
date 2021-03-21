@@ -24,13 +24,13 @@ module.exports = {
                     request.setHeader("origin", "");
                 }
             },
-            "/api": {
-                target: "https://next.jx3box.com",
+            "/api/team": {
+                target: "https://team.api.jx3box.com",
                 onProxyReq: function(request) {
                     request.setHeader("origin", "");
                 },
             },
-            "/team": {
+            "/api": {
                 target: "https://next.jx3box.com",
                 onProxyReq: function(request) {
                     request.setHeader("origin", "");

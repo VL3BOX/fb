@@ -1,13 +1,14 @@
-import { $next } from "@jx3box/jx3box-common/js/axios";
+import axios from 'axios'
+const __team = 'https://team.api.jx3box.com/'
 
 function getEvents() {
-    return $next.get("team/rank/events", {
+    return axios.get(__team + "api/team/rank/events", {
         // params: params,
     });
 }
 
 function getTeams() {
-    return $next.get("team/public", {
+    return axios.get(__team + "api/team/public", {
         params: {
             recruit: 1, //有招募的
             pageSize : 10,

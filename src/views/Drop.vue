@@ -126,7 +126,7 @@
 <script>
 import { getDrop, getMapid, getBossid } from "../service/getDrop";
 import dropmap from "../assets/js/drop.json";
-import { __iconPath,__ossRoot } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __iconPath,__ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import drop_item from "../components/drop_item";
 import _ from "lodash";
 const iconids = [4835, 8848, 10452, 10451, 2589, 2646, 2647, 2648];

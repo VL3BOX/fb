@@ -13,7 +13,7 @@ let store = {
         zlp : '',
         luaindex : {},
         default_zlp : '奉天证道',
-        default_fb : '达摩洞',
+        default_fb : '白帝江关',
 
         pid : 0,
         post : {},

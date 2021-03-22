@@ -1,10 +1,12 @@
 <template>
     <div class="m-fb-index">
+        <slider />
         <list />
     </div>
 </template>
 
 <script>
+import slider from '@/components/slider.vue'
 import list from '@/components/list.vue'
 export default {
     name: "Index",
@@ -26,7 +28,8 @@ export default {
         
     },
     components: {
-        list
+        list,
+        slider
     }
 };
 </script>

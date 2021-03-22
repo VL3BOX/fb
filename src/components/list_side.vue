@@ -9,33 +9,6 @@
             >
         </RightSideMsg>
         <div class="m-extend-list">
-            <!-- <div class="m-fb-info">
-            <i class="u-pic"><img id="m-archive-fb-pic" :src="img"/></i>
-            <h1 class="u-title" id="m-archive-fb-name">{{ info.name }}</h1>
-            <p class="u-intro" id="m-archive-fb-intro" v-html="introduce"></p>
-            <ul class="u-mode" id="m-archive-fb-mode">
-                <li v-for="(item, i) in info.detail.maps" :key="i">
-                    {{ item.mode }}
-                </li>
-            </ul>
-        </div> -->
-            <el-carousel
-                class="m-rank-ing"
-                v-if="data && data.length"
-                trigger="click"
-                height="140px"
-                indicator-position="none"
-                :interval="6000"
-            >
-                <el-carousel-item v-for="(item, i) in data" :key="i">
-                    <a
-                        :href="item.link"
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        ><img :src="item.img"
-                    /></a>
-                </el-carousel-item>
-            </el-carousel>
             <a href="/team" class="m-team-app" target="_blank">
                 <img
                     class="u-icon"
@@ -45,51 +18,25 @@
                 <b>团队管理平台</b>
                 <span>在线排表 自动金团记录</span>
             </a>
-            <div class="m-team-recruit">
-                <h3 class="c-sidebar-right-title">
-                    <img
-                        class="u-icon"
-                        svg-inline
-                        src="../assets/img/puzzle.svg"
-                    />团队招募
-                    <a class="u-more" href="/team" target="_blank"
-                        >查看更多 &raquo;</a
-                    >
-                </h3>
-                <ul>
-                    <li v-for="(item, i) in teams" :key="i">
-                        <a :href="item.ID | teamLink">
-                            <i class="u-flag el-icon-s-flag"></i>
-                            <!-- <img :src="item.logo | showLogo"> -->
-                            <span class="u-name">{{ item.name }}</span>
-                            <span class="u-server">{{ item.server }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+        </div>
+        <div class="m-extend-qlink">
+            <a href="/rank" target="_blank"><i class="el-icon-trophy"></i> <span>全服排行</span><i class="el-icon-arrow-right"></i></a>
+            <router-link to="/npc"><i class="el-icon-key"></i> <span>首领数据</span><i class="el-icon-arrow-right"></i></router-link>
+            <router-link to="/skill"><i class="el-icon-cpu"></i> <span>技能数据</span><i class="el-icon-arrow-right"></i></router-link>
+            <router-link to="/drop"><i class="el-icon-present"></i> <span>掉落数据</span><i class="el-icon-arrow-right"></i></router-link>
+            <router-link to="/gem"><i class="el-icon-cherry"></i> <span>瑰石数据</span><i class="el-icon-arrow-right"></i></router-link>
         </div>
     </div>
 </template>
 
 <script>
 import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
-// import minirank from './minirank'
-import { getEvents, getTeams } from "@/service/next.js";
-import {
-    showAvatar,
-    resolveImagePath,
-    getLink
-} from "@jx3box/jx3box-common/js/utils.js";
-import { getNews } from "../service/sidebar";
+import { resolveImagePath } from "@jx3box/jx3box-common/js/utils.js";
 export default {
     name: "list_side",
     props: [],
     data: function() {
-        return {
-            teams: [],
-            events: [],
-            data: [],
-        };
+        return {};
     },
     computed: {
         zlp: function() {
@@ -109,34 +56,8 @@ export default {
         },
     },
     methods: {},
-    mounted: function() {
-        // getEvents().then((res) => {
-        //     this.events = res.data.data.list
-        // })
-        getNews("activity").then((data) => {
-            data.forEach((item) => {
-                item.img = resolveImagePath(item.img);
-            });
-            this.data = data;
-        });
-        getTeams().then((res) => {
-            this.teams = res.data.data.list;
-        });
-    },
-    filters: {
-        showLogo: function(val) {
-            return showAvatar(val);
-        },
-        eventLink: function(val) {
-            return "/rank/race/" + val;
-        },
-        teamLink: function(val) {
-            return getLink('org',val)
-        },
-    },
-    components: {
-        // minirank
-    },
+    mounted: function() {},
+    components: {},
 };
 </script>
 

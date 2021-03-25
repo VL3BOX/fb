@@ -451,7 +451,6 @@ export default {
     },
     mounted: function() {
         this.mapid = this.maps.slice(-1)[0]["map_id"];
-        this.loadData();
         User.isLogin() && User.isVIP().then((data) => {
             this.hasRight = data;
         });

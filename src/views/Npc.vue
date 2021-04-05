@@ -332,11 +332,11 @@ export default {
         hasNextPage: function() {
             return this.total > 1 && this.page < this.pages;
         },
-        zlp: function() {
-            return this.$store.state.zlp;
-        },
         fb: function() {
-            return this.$store.state.fb;
+            return this.$route.query.fb_name || this.$store.state.default_fb;
+        },
+        zlp: function() {
+            return this.$route.query.fb_zlp || this.$store.state.default_zlp;
         },
         maps: function() {
             return this.$store.state.map[this.zlp]["dungeon"][this.fb]["maps"];

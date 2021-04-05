@@ -1,6 +1,6 @@
 import axios from "axios";
 import { __node } from "@jx3box/jx3box-common/data/jx3box.json";
-const API = __node ;
+const API = __node;
 // const API = "http://localhost:3001/";
 
 function getDrop(bossindex) {
@@ -33,7 +33,7 @@ function getBossid(mapid) {
     return axios
         .get(API + "fb/boss", {
             params: {
-                MapID : mapid
+                MapID: mapid,
             },
         })
         .then((res) => {

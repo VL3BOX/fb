@@ -12,10 +12,10 @@
                     ><img :src="item.img"
                 /></a>
             </el-carousel-item>
-        </el-carousel> -->
-        <a :href="slider.link" rel="noopener noreferrer" target="_blank"
-            ><img :src="slider.img"
-        /></a>
+        </el-carousel>-->
+        <a :href="slider.link" rel="noopener noreferrer" target="_blank">
+            <img :src="slider.img" />
+        </a>
     </div>
 </template>
 
@@ -25,18 +25,18 @@ import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "",
     props: [],
-    data: function() {
+    data: function () {
         return {
             data: [],
         };
     },
     computed: {
-        slider : function (){
-            return this.data && this.data.length && this.data[0]
-        }
+        slider: function () {
+            return this.data && this.data.length && this.data[0];
+        },
     },
     methods: {},
-    mounted: function() {
+    mounted: function () {
         getNews("team").then((data) => {
             data.forEach((item) => {
                 item.img = resolveImagePath(item.img);

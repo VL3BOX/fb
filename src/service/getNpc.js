@@ -14,20 +14,20 @@ function getNpcList(params) {
     });
 }
 
-function getBossList(mapid){
-    return axios.get(__node + 'fb/boss',{
-        params : {
-            MapID : mapid
-        }
-    })
+function getBossList(mapid) {
+    return axios.get(__node + "fb/boss", {
+        params: {
+            MapID: mapid,
+        },
+    });
 }
 
-function getBossIds(indexs){
-    return axios.get(__node + 'fb/npc',{
-        params : {
-            Index : indexs
-        }
-    })
+function getBossIds(indexs) {
+    return axios.get(__node + "fb/npc", {
+        params: {
+            Index: indexs,
+        },
+    });
 }
 
-export { getNpcList, getMapNpc,getBossList,getBossIds };
+export { getNpcList, getMapNpc, getBossList, getBossIds };

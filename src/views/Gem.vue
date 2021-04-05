@@ -87,7 +87,10 @@ export default {
             return this.total > 1 && this.page < this.pages;
         },
         fb: function() {
-            return this.$store.state.fb;
+            return this.$route.query.fb_name || this.$store.state.default_fb;
+        },
+        zlp: function() {
+            return this.$route.query.fb_zlp || this.$store.state.default_zlp;
         },
         params : function (){
             return {

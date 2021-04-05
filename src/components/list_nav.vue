@@ -1,16 +1,11 @@
 <template>
-    <div class="m-fb-list-nav">
+    <div class="m-fb-nav m-fb-list-nav">
         <div class="m-nav-search" @click.stop>
-            <el-input
-                placeholder="搜索副本或首领名称"
-                v-model="search"
-                clearable
-            >
-            </el-input>
+            <el-input placeholder="搜索副本或首领名称" v-model="search" clearable></el-input>
         </div>
 
         <div class="m-nav-group" v-for="(group, key) in map" :key="key">
-            <h2 class="u-category active" v-show="!search">
+            <h2 class="u-category active" v-show="!search && group.client.includes(client)">
                 <span class="u-title">🍄 {{ key }}</span>
                 <em class="u-level">({{ group.level }})</em>
             </h2>
@@ -23,10 +18,12 @@
                         active: isActive(subkey),
                         hidden: isHide(subkey),
                     }"
+                    v-show="item.client.includes(client)"
                 >
-                    <a class="u-link" :href="url(group.name, item.name)">{{
-                        item.name
-                    }}</a>
+                    <router-link
+                        class="u-link"
+                        :to="{query : {fb_zlp : group.name,fb_name: item.name}}"
+                    >{{item.name}}</router-link>
                 </li>
             </ul>
         </div>
@@ -37,7 +34,7 @@
 export default {
     name: "list",
     props: [],
-    data: function() {
+    data: function () {
         return {
             search: "",
             map: this.$store.state.map,
@@ -45,7 +42,7 @@ export default {
         };
     },
     computed: {
-        searchMap: function() {
+        searchMap: function () {
             let search_map = {};
             for (let group in this.map) {
                 let fbs = this.map[group]["dungeon"];
@@ -65,17 +62,21 @@ export default {
             }
             return search_map;
         },
+        client : function (){
+            return this.$store.state.client
+        }
     },
     methods: {
-        url: function(zlp, fb) {
+        url: function (zlp, fb) {
             return `/fb/?fb_zlp=${zlp}&fb_name=${fb}` + "#" + this.$route.path;
         },
-        isActive: function(subkey) {
-            let params = new URLSearchParams(location.search);
-            let current = params.get("fb_name");
+        isActive: function (subkey) {
+            // let params = new URLSearchParams(location.search);
+            // let current = params.get("fb_name");
+            let current = this.$route.query.fb_name
             return current == subkey;
         },
-        isHide: function(subkey) {
+        isHide: function (subkey) {
             if (!this.search) return;
             if (this.searchMap[subkey].includes(this.search)) {
                 return false;
@@ -89,7 +90,7 @@ export default {
             return true;
         },
     },
-    mounted: function() {},
+    mounted: function () {},
 };
 </script>
 

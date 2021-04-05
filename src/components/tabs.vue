@@ -11,16 +11,16 @@
         <el-tab-pane label="副本成就" name="cj">
             <span slot="label">
                 <i class="el-icon-trophy"></i>
-                <b>副本成就</b>   
+                <b>副本成就</b>
                 <em class="u-new">最新同步</em>
             </span>
         </el-tab-pane>
 
         <el-tab-pane label="NPC数据" name="npc">
-           <span slot="label">
-               <i class="el-icon-key"></i>
-               <b>NPC数据</b>
-               <em class="u-secret">重磅独家</em>
+            <span slot="label">
+                <i class="el-icon-key"></i>
+                <b>NPC数据</b>
+                <em class="u-secret">重磅独家</em>
             </span>
         </el-tab-pane>
 
@@ -38,7 +38,7 @@
                 <b>全服排行</b>
                 <em class="u-ready">已结榜</em>
             </span>
-        </el-tab-pane> -->
+        </el-tab-pane>-->
 
         <el-tab-pane label="副本掉落" name="drop">
             <span slot="label">
@@ -62,7 +62,6 @@
                 <b>背景故事</b>
             </span>
         </el-tab-pane>
-
     </el-tabs>
 </template>
 
@@ -70,20 +69,29 @@
 export default {
     name: "tabs",
     props: [],
-    data: function() {
+    data: function () {
         return {
             view: "index",
         };
     },
-    watch : {
-        $route : function (_route){
-            this.view = _route.name
-        }
+    watch: {
+        $route: {
+            immediate: true,
+            handler: function (_route) {
+                this.view = _route.name;
+            },
+        },
     },
     computed: {},
     methods: {
-        changeView: function() {
-            this.$router.push({ name: this.view });
+        changeView: function () {
+            this.$router.push({
+                name: this.view,
+                query: {
+                    fb_name: this.$route.query.fb_name,
+                    fb_zlp: this.$route.query.fb_zlp,
+                },
+            });
         },
     },
 };

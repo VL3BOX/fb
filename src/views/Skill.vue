@@ -63,28 +63,29 @@ export default {
     },
     methods: {
         loadLua: function () {
-            if (Object.keys(this.luaindex).includes(this.fb)) {
-                this.focus = this.subnav[0];
-                this.empty = false;
-                this.loading = true;
-                getLua(this.fb, this.focus)
-                    .then((res) => {
-                        this.data = res.data;
-                        for (let key in this.data) {
-                            this.data[key]["show"] = true;
-                        }
-                    })
-                    .finally(() => {
-                        this.loading = false;
-                    });
-            } else {
-                this.empty = true;
-            }
+            this.loading = true;
+            getLua(this.fb, this.focus)
+                .then((res) => {
+                    this.data = res.data;
+                    for (let key in this.data) {
+                        this.data[key]["show"] = true;
+                    }
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         loadLuaIndex: function () {
             getLuaIndex()
                 .then((res) => {
                     this.luaindex = this.$store.state.luaindex = res.data;
+                    if (Object.keys(this.luaindex).includes(this.fb)) {
+                        this.focus = this.subnav[0];
+                        this.empty = false;
+                        this.loadLua();
+                    } else {
+                        this.empty = true;
+                    }
                 })
                 .catch((err) => {
                     console.log(err);
@@ -116,7 +117,13 @@ export default {
             }
         },
         fb: function () {
-            this.loadLua();
+            if (Object.keys(this.luaindex).includes(this.fb)) {
+                this.focus = this.subnav[0];
+                this.empty = false;
+                this.loadLua();
+            } else {
+                this.empty = true;
+            }
         },
     },
     mounted: function () {

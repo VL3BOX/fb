@@ -465,6 +465,9 @@ export default {
                 this.loadData();
             },
         },
+        mapid : function (){
+            this.loadData();
+        }
     },
     mounted: function () {
         User.isLogin() &&

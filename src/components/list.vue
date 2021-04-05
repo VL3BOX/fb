@@ -37,9 +37,9 @@
             </template>
             <div class="m-archive-list m-fb-list" v-if="data.length">
                 <ul class="u-list">
-                    <li class="u-item" v-for="(item, i) in data" :key="i">
+                    <li class="u-item" v-for="(item) in data" :key="item.ID">
                         <a class="u-banner" :href="item.ID | postLink" :target="target">
-                            <img :src="showBanner(item)" />
+                            <img :src="showBanner(item)"/>
                         </a>
 
                         <h2 class="u-post" :class="{ isSticky: item.sticky }">
@@ -71,7 +71,7 @@
                                 <em>
                                     <b
                                         v-for="(c, i) in format(
-                                            item.post,
+                                            item,
                                             'post_meta.fb_boss'
                                         )"
                                         :key="i"
@@ -89,7 +89,7 @@
                                 <strong>模式</strong>
                                 <em>
                                     {{
-                                    format(item.post, "post_meta.fb_level") + ""
+                                    format(item, "post_meta.fb_level") + ""
                                     }}
                                 </em>
                             </div>
@@ -157,7 +157,7 @@ export default {
             client: this.$store.state.client, //版本选择
 
             search: "",
-            subtype : ''
+            subtype: "",
         };
     },
     computed: {
@@ -205,8 +205,9 @@ export default {
                     this.pages = res.data.data.pages;
                 })
                 .finally(() => {
-                    this.appendMode = false
+                    this.appendMode = false;
                     this.loading = false;
+                    this.$forceUpdate()
                 });
         },
         changePage: function (i) {
@@ -228,11 +229,11 @@ export default {
         },
         showDefaultBanner: function (item) {
             let zlp =
-                _.get(item, "post.post_meta.fb_zlp") ||
-                _.get(item, "post.zlp") ||
+                _.get(item, "post_meta.fb_zlp") ||
+                _.get(item, "zlp") ||
                 this.$store.state.default_zlp;
             let fb =
-                _.get(item, "post.post_subtype") ||
+                _.get(item, "post_subtype") ||
                 this.$store.state.default_fb;
             let img = _.get(this.$store, `state.map.${zlp}.dungeon.${fb}.icon`);
             if (img) {
@@ -267,14 +268,14 @@ export default {
         },
     },
     watch: {
-        '$route.query.fb_name' : function (val){
-            this.subtype = val
+        "$route.query.fb_name": function (val) {
+            this.subtype = val;
         },
-        subtype : function (){
-            this.search = ''  
+        subtype: function () {
+            this.search = "";
         },
-        search : function (){
-            this.subtype = ''  
+        search: function () {
+            this.subtype = "";
         },
         resetParams: function () {
             this.page = 1;

@@ -157,12 +157,10 @@ export default {
             client: this.$store.state.client, //版本选择
 
             search: "",
+            subtype : ''
         };
     },
     computed: {
-        subtype: function () {
-            return this.$route.query.fb_name;
-        },
         resetParams: function () {
             return [this.subtype, this.search, this.mark, this.client];
         },
@@ -269,8 +267,14 @@ export default {
         },
     },
     watch: {
+        '$route.query.fb_name' : function (val){
+            this.subtype = val
+        },
         subtype : function (){
             this.search = ''  
+        },
+        search : function (){
+            this.subtype = ''  
         },
         resetParams: function () {
             this.page = 1;

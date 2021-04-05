@@ -7,9 +7,7 @@
             @change="loadData"
             :disabled="onlyboss"
         >
-            <template slot="prepend">
-                NPC
-            </template>
+            <template slot="prepend">NPC</template>
             <el-switch
                 class="u-switch u-onlyboss"
                 slot="append"
@@ -17,8 +15,7 @@
                 active-color="#13ce66"
                 inactive-text="只看首领"
                 @change="loadData"
-            >
-            </el-switch>
+            ></el-switch>
         </el-input>
         <div class="m-filter-group" v-if="onlyboss">
             <el-radio-group v-model="mapid" size="medium">
@@ -26,15 +23,14 @@
                     v-for="item in maps"
                     :key="item.map_id"
                     :label="item.map_id"
-                    >{{ item.mode }}</el-radio-button
-                >
+                >{{ item.mode }}</el-radio-button>
             </el-radio-group>
         </div>
         <ul class="m-npc-list" v-if="data.length">
             <li v-for="(npc, i) in data" class="u-item" :key="npc + i">
-                <i v-if="isBoss(npc.ID)" class="u-isBoss"
-                    ><img src="../assets/img/boss_mini.png"
-                /></i>
+                <i v-if="isBoss(npc.ID)" class="u-isBoss">
+                    <img src="../assets/img/boss_mini.png" />
+                </i>
                 <img class="u-icon" src="../assets/img/iboss.png" />
 
                 <Mark
@@ -48,9 +44,11 @@
                     <span class="u-name">{{ npc.Name }}</span>
                     <span class="u-name-add">
                         <span v-if="npc.Title || npc.Level">&lt;</span>
-                        <span class="u-nick" v-if="npc.Title">{{
+                        <span class="u-nick" v-if="npc.Title">
+                            {{
                             npc.Title
-                        }}</span>
+                            }}
+                        </span>
                         <span v-if="npc.Title && npc.Level">·</span>
                         <b class="u-level" v-if="npc.Level">{{ npc.Level }}</b>
                         <span v-if="npc.Title || npc.Level">&gt;</span>
@@ -80,9 +78,7 @@
                                 :style="{
                                     width: (npc.MaxLife * 100) / 99999999 + '%',
                                 }"
-                            >
-                                {{ npc.MaxLife }}
-                            </strong>
+                            >{{ npc.MaxLife }}</strong>
                         </i>
                     </div>
                     <div class="u-mana">
@@ -93,9 +89,7 @@
                                 :style="{
                                     width: (npc.MaxMana * 100) / 99999999 + '%',
                                 }"
-                            >
-                                {{ npc.MaxMana }}
-                            </strong>
+                            >{{ npc.MaxMana }}</strong>
                         </i>
                     </div>
                     <div class="u-speed" v-if="npc.RunSpeed || npc.WalkSpeed">
@@ -124,37 +118,47 @@
                         <span class="u-sitem">
                             外功防御
                             <em>PhysicsShieldBase</em>
-                            <span class="u-value">{{
+                            <span class="u-value">
+                                {{
                                 npc.PhysicsShieldBase
-                            }}</span>
+                                }}
+                            </span>
                         </span>
                         <span class="u-sitem">
                             混元防御
                             <em>NeutralMagicDefence</em>
-                            <span class="u-value">{{
+                            <span class="u-value">
+                                {{
                                 npc.NeutralMagicDefence
-                            }}</span>
+                                }}
+                            </span>
                         </span>
                         <span class="u-sitem">
                             阳性防御
                             <em>SolarMagicDefence</em>
-                            <span class="u-value">{{
+                            <span class="u-value">
+                                {{
                                 npc.SolarMagicDefence
-                            }}</span>
+                                }}
+                            </span>
                         </span>
                         <span class="u-sitem">
                             阴性防御
                             <em>LunarMagicDefence</em>
-                            <span class="u-value">{{
+                            <span class="u-value">
+                                {{
                                 npc.LunarMagicDefence
-                            }}</span>
+                                }}
+                            </span>
                         </span>
                         <span class="u-sitem">
                             毒性防御
                             <em>PoisonMagicDefence</em>
-                            <span class="u-value">{{
+                            <span class="u-value">
+                                {{
                                 npc.PoisonMagicDefence
-                            }}</span>
+                                }}
+                            </span>
                         </span>
                     </div>
                     <div class="u-critical">
@@ -163,37 +167,47 @@
                         <span class="u-sitem">
                             外功会心
                             <em>PhysicsCriticalStrike</em>
-                            <span class="u-value">{{
+                            <span class="u-value">
+                                {{
                                 npc.PhysicsCriticalStrike
-                            }}</span>
+                                }}
+                            </span>
                         </span>
                         <span class="u-sitem">
                             混元会心
                             <em>NeutralCriticalStrike</em>
-                            <span class="u-value">{{
+                            <span class="u-value">
+                                {{
                                 npc.NeutralCriticalStrike
-                            }}</span>
+                                }}
+                            </span>
                         </span>
                         <span class="u-sitem">
                             阳性会心
                             <em>SolarCriticalStrike</em>
-                            <span class="u-value">{{
+                            <span class="u-value">
+                                {{
                                 npc.SolarCriticalStrike
-                            }}</span>
+                                }}
+                            </span>
                         </span>
                         <span class="u-sitem">
                             阴性会心
                             <em>LunarCriticalStrike</em>
-                            <span class="u-value">{{
+                            <span class="u-value">
+                                {{
                                 npc.LunarCriticalStrike
-                            }}</span>
+                                }}
+                            </span>
                         </span>
                         <span class="u-sitem">
                             毒性会心
                             <em>PoisonCriticalStrike</em>
-                            <span class="u-value">{{
+                            <span class="u-value">
+                                {{
                                 npc.PoisonCriticalStrike
-                            }}</span>
+                                }}
+                            </span>
                         </span>
                     </div>
                     <div class="u-attack">
@@ -202,16 +216,20 @@
                         <span class="u-sitem">
                             外功命中
                             <em>PhysicsAttackHit</em>
-                            <span class="u-value">{{
+                            <span class="u-value">
+                                {{
                                 npc.PhysicsAttackHit
-                            }}</span>
+                                }}
+                            </span>
                         </span>
                         <span class="u-sitem">
                             混元命中
                             <em>NeutralMagicHit</em>
-                            <span class="u-value">{{
+                            <span class="u-value">
+                                {{
                                 npc.NeutralMagicHit
-                            }}</span>
+                                }}
+                            </span>
                         </span>
                         <span class="u-sitem">
                             阳性命中
@@ -226,9 +244,11 @@
                         <span class="u-sitem">
                             毒性命中
                             <em>PoisonMagicHit</em>
-                            <span class="u-value">{{
+                            <span class="u-value">
+                                {{
                                 npc.PoisonMagicHit
-                            }}</span>
+                                }}
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -256,21 +276,15 @@
                     </span>
                 </div>
                 <div class="u-misc-tip" v-else>
-                    <i class="el-icon-lock"></i> 更多词条仅<a
-                        href="/vip/premium?from=database_npc"
-                        target="_blank"
-                        >高级/专业版会员</a
-                    >可见
+                    <i class="el-icon-lock"></i> 更多词条仅
+                    <a href="/vip/premium?from=database_npc" target="_blank">高级/专业版会员</a>可见
                 </div>
             </li>
         </ul>
-        <el-alert v-else class="m-archive-null" type="info" center show-icon
-            >该副本没有找到相关条目，全图搜索请前往<a
-                href="/app/database"
-                target="_blank"
-                >剑三数据库</a
-            >应用</el-alert
-        >
+        <el-alert v-else class="m-archive-null" type="info" center show-icon>
+            该副本没有找到相关条目，全图搜索请前往
+            <a href="/app/database" target="_blank">剑三数据库</a>应用
+        </el-alert>
         <template v-if="!onlyboss">
             <el-button
                 class="m-archive-more"
@@ -278,8 +292,7 @@
                 type="primary"
                 :loading="loading"
                 @click="appendPage(++page)"
-                >加载更多</el-button
-            >
+            >加载更多</el-button>
             <el-pagination
                 class="m-archive-pages"
                 background
@@ -310,7 +323,7 @@ import { getDB } from "../service/getDB";
 export default {
     name: "Npc",
     props: [],
-    data: function() {
+    data: function () {
         return {
             loading: true,
             data: [],
@@ -329,22 +342,22 @@ export default {
         };
     },
     computed: {
-        hasNextPage: function() {
+        hasNextPage: function () {
             return this.total > 1 && this.page < this.pages;
         },
-        fb: function() {
+        fb: function () {
             return this.$route.query.fb_name || this.$store.state.default_fb;
         },
-        zlp: function() {
+        zlp: function () {
             return this.$route.query.fb_zlp || this.$store.state.default_zlp;
         },
-        maps: function() {
+        maps: function () {
             return this.$store.state.map[this.zlp]["dungeon"][this.fb]["maps"];
         },
-        bosslist: function() {
+        bosslist: function () {
             return this.$store.state.map[this.zlp]["dungeon"][this.fb]["boss"];
         },
-        params: function() {
+        params: function () {
             let params = {
                 per: this.per,
             };
@@ -359,7 +372,7 @@ export default {
         },
     },
     methods: {
-        loadData: function(i = 1, append = false) {
+        loadData: function (i = 1, append = false) {
             this.loading = true;
             if (!this.onlyboss) {
                 let params = Object.assign(this.params, {
@@ -421,23 +434,23 @@ export default {
                 });
             }
         },
-        changePage: function(i) {
+        changePage: function (i) {
             this.loadData(i);
         },
-        appendPage: function(i) {
+        appendPage: function (i) {
             this.loadData(i, true);
         },
-        isBoss: function(id) {
+        isBoss: function (id) {
             return !!bossids.includes(id);
         },
-        onCopy: function(val) {
+        onCopy: function (val) {
             this.$notify({
                 title: "复制成功",
                 message: "复制内容 : " + val.text,
                 type: "success",
             });
         },
-        onError: function() {
+        onError: function () {
             this.$notify.error({
                 title: "复制失败",
                 message: "请手动复制",
@@ -445,15 +458,19 @@ export default {
         },
     },
     watch: {
-        mapid: function() {
-            this.loadData();
+        fb: {
+            immediate: true,
+            handler: function () {
+                this.mapid = this.maps.slice(-1)[0]["map_id"];
+                this.loadData();
+            },
         },
     },
-    mounted: function() {
-        this.mapid = this.maps.slice(-1)[0]["map_id"];
-        User.isLogin() && User.isVIP().then((data) => {
-            this.hasRight = data;
-        });
+    mounted: function () {
+        User.isLogin() &&
+            User.isVIP().then((data) => {
+                this.hasRight = data;
+            });
     },
 };
 </script>

@@ -38,11 +38,7 @@
                         </el-tabs>
                     </div>
                     <div class="u-drops">
-                        <div
-                            class="u-drop"
-                            v-for="(group, groupname) in droplist"
-                            :key="groupname"
-                        >
+                        <div class="u-drop" v-for="(group, groupname) in droplist" :key="groupname">
                             <div
                                 v-show="
                                     activeType == 'all' ||
@@ -50,10 +46,7 @@
                                 "
                             >
                                 <template v-if="groupname !== 'maps'">
-                                    <div
-                                        class="u-drop-wrapper"
-                                        v-if="group && group.length"
-                                    >
+                                    <div class="u-drop-wrapper" v-if="group && group.length">
                                         <div
                                             class="u-item"
                                             v-for="(drop, dropindex) in group"
@@ -90,14 +83,13 @@
                                                                     .FileName
                                                             "
                                                         />
-                                                        <img
-                                                            v-else
-                                                            src="../assets/img/null.png"
-                                                        />
+                                                        <img v-else src="../assets/img/null.png" />
                                                     </i>
-                                                    <span class="u-item-name">{{
+                                                    <span class="u-item-name">
+                                                        {{
                                                         drop.Name
-                                                    }}</span>
+                                                        }}
+                                                    </span>
                                                 </div>
                                             </el-popover>
                                         </div>
@@ -111,8 +103,7 @@
                                         title="没有相关条目"
                                         type="info"
                                         show-icon
-                                    >
-                                    </el-alert>
+                                    ></el-alert>
                                 </template>
                             </div>
                         </div>
@@ -126,7 +117,7 @@
 <script>
 import { getDrop, getMapid, getBossid } from "../service/getDrop";
 import dropmap from "../assets/js/drop.json";
-import { __iconPath,__ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import drop_item from "../components/drop_item";
 import _ from "lodash";
 const iconids = [4835, 8848, 10452, 10451, 2589, 2646, 2647, 2648];
@@ -134,7 +125,7 @@ const iconids = [4835, 8848, 10452, 10451, 2589, 2646, 2647, 2648];
 export default {
     name: "Drop",
     props: [],
-    data: function() {
+    data: function () {
         return {
             mapid: "",
             bossid: "",
@@ -146,13 +137,13 @@ export default {
         };
     },
     computed: {
-        fb: function() {
+        fb: function () {
             return this.$route.query.fb_name || this.$store.state.default_fb;
         },
-        zlp: function() {
+        zlp: function () {
             return this.$route.query.fb_zlp || this.$store.state.default_zlp;
         },
-        maplist: function() {
+        maplist: function () {
             return (
                 this.$store.state.map &&
                 this.$store.state.map[this.zlp]["dungeon"][this.fb]["maps"]
@@ -160,47 +151,50 @@ export default {
         },
     },
     methods: {
-        loadBossList: function() {
-            this.loading = true
+        loadBossList: function () {
             return getBossid(this.mapid).then((data) => {
                 this.bosslist = data;
                 this.bossid = data[0]["BossIndex"];
-            }).finally(() => {
-                this.loading = false
-            })
+            });
         },
-        loadDropList: function(id) {
+        loadDropList: function (id) {
             this.bossid = id;
-            this.loading = true
-            return getDrop(this.bossid).then((data) => {
-                this.droplist = data && data.data;
-            }).finally(() => {
-                this.loading = false
-            })
+            this.loading = true;
+            return getDrop(this.bossid)
+                .then((data) => {
+                    this.droplist = data && data.data;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
-        dropType: function(val) {
+        dropType: function (val) {
             return dropmap[val];
         },
-        bossavatar: function(i) {
+        bossavatar: function (i) {
             return __iconPath + "icon/" + iconids[i] + ".png";
         },
-        fillDroplist: function(list) {
+        fillDroplist: function (list) {
             if (list) list["all"] = [];
             return list;
         },
-        showDrop: function(drop) {
+        showDrop: function (drop) {
             this.data = drop;
         },
-        loadData: function() {
-            this.loadBossList()
-                .then(() => {
-                    this.loadDropList(this.bossid)
-                })
+        loadData: function () {
+            this.loadBossList().then(() => {
+                this.loadDropList(this.bossid);
+            });
         },
     },
-    created: function() {
-        this.mapid = this.maplist && this.maplist[0]["map_id"];
-        this.loadData();
+    watch: {
+        fb: {
+            immediate: true,
+            handler: function () {
+                this.mapid = this.maplist && this.maplist[0]["map_id"];
+                this.loadData();
+            },
+        },
     },
     components: {
         drop_item,

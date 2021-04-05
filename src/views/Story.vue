@@ -1,5 +1,5 @@
 <template>
-    <div class="m-fb-story">
+    <div class="m-fb-story" v-loading="loading">
         <el-divider content-position="left">故事背景</el-divider>
         <p class="u-fb" v-html="introduction"></p>
 
@@ -41,7 +41,7 @@ export default {
     props: [],
     data: function() {
         return {
-            loading: true,
+            loading: false,
             introduction: "",
             mapid: "",
             bosslist: [],
@@ -60,6 +60,7 @@ export default {
     },
     methods: {
         loadData: function() {
+            this.loading = true
             getInfo(this.fb).then((res) => {
                 let data = res.data ? res.data[0] : "";
 
@@ -95,11 +96,18 @@ export default {
                         }
                     });
                 }
-            });
+            }).finally(() => {
+                this.loading = false
+            })
         },
         loaded: function() {
             this.loading = false;
         },
+    },
+    watch : {
+        fb : function (){
+            this.loadData()
+        }
     },
     filters: {},
     mounted: function() {

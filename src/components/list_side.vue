@@ -40,6 +40,11 @@
                 <span>瑰石数据</span>
                 <i class="el-icon-arrow-right"></i>
             </router-link>
+            <router-link to="/story">
+                <i class="el-icon-film"></i>
+                <span>背景故事</span>
+                <i class="el-icon-arrow-right"></i>
+            </router-link>
         </div>
     </div>
 </template>

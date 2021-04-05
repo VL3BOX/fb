@@ -47,6 +47,7 @@ export default {
                 .then((res) => {
                     this.post = this.$store.state.post = res.data.data;
                     this.$store.state.user_id = this.post.post_author;
+                    document.title = this.post.post_title
                 })
                 .finally(() => {
                     this.loading = false;

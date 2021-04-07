@@ -2,11 +2,7 @@
     <div class="m-fb-skill-format" v-if="data">
         <div class="u-prop" v-for="(g, i) in data" :key="i">
             <template v-if="!ignore_props.includes(g.prop)">
-                <b class="u-prop-name">
-                    {{
-                    keymap[g.prop] ? keymap[g.prop].desc : g.prop
-                    }}
-                </b>
+                <b class="u-prop-name">{{keymap[g.prop] ? keymap[g.prop].desc : g.prop}}</b>
                 <em class="u-prop-key">{{ g.prop }}</em>
                 <el-tooltip effect="dark" :content="g.prop | propTips" placement="right">
                     <strong class="u-prop-value">
@@ -19,11 +15,7 @@
                             <span class="u-tip">{{ nHeight | tipHeight }}</span>
                         </template>
                         <template v-else-if="g.prop == 'nCastHeight'">
-                            <template v-if="g.value">
-                                {{
-                                g.value | valueFilter
-                                }}
-                            </template>
+                            <template v-if="g.value">{{g.value | valueFilter}}</template>
                             <template v-else>{{ nHeight }}</template>
                         </template>
 
@@ -126,13 +118,13 @@ export default {
             if (Array.isArray(val) && val.includes("PERCENT_BASE")) {
                 _val = val[0];
             }
-            return _val ? (_val / 1024) * 100 + "%" : "不可";
+            return _val ? ((_val * 1024) / 1024) * 100 + "%" : "不可";
         },
         formatAngle: function (val) {
             return parseInt((val * 360) / 256) + "°";
         },
         formatPercent: function (val) {
-            return (val * 1024 / 1024) * 100 + "%";
+            return ((val * 1024) / 1024) * 100 + "%";
         },
         propTips: function (key) {
             return keymap[key]

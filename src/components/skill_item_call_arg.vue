@@ -1,10 +1,11 @@
 <template>
     <span class="u-call-arg">
         <template v-if="arg.type == 'MemberExpression'">
-            <em
-                >{{ arg.base.name }}<b>{{ arg.indexer }}</b
-                >{{ arg.identifier.name }}</em
-            >
+            <em>
+                {{ arg.base.name }}
+                <b>{{ arg.indexer }}</b>
+                {{ arg.identifier.name }}
+            </em>
         </template>
         <template v-else-if="arg.type == 'NumericLiteral'">
             <em>{{ arg.value }}</em>
@@ -16,17 +17,18 @@
             <em>{{ arg.raw }}</em>
         </template>
         <template v-else-if="arg.type == 'BinaryExpression'">
-            <em
-                >{{ arg.left.raw || arg.left.name
-                }}<b class="u-call-op">{{ arg.operator }}</b
-                >{{ arg.right.raw || arg.right.name }}</em
-            >
+            <em>
+                {{ arg.left.raw || arg.left.name
+                }}
+                <b class="u-call-op">{{ arg.operator }}</b>
+                {{ arg.right.raw || arg.right.name }}
+            </em>
         </template>
         <template v-else-if="arg.type == 'UnaryExpression'">
-            <em
-                ><b>{{ arg.operator }}</b
-                >{{ arg.argument.raw || arg.argument.name }}</em
-            >
+            <em>
+                <b>{{ arg.operator }}</b>
+                {{ arg.argument.raw || arg.argument.name }}
+            </em>
         </template>
         <span v-else class="u-call-op">{{ arg }}</span>
     </span>
@@ -36,12 +38,12 @@
 export default {
     name: "arg",
     props: ["arg"],
-    data: function() {
+    data: function () {
         return {};
     },
     computed: {},
     methods: {},
-    mounted: function() {},
+    mounted: function () {},
     components: {},
 };
 </script>

@@ -8,18 +8,18 @@
 </template>
 
 <script>
-import unit from '@/components/skill_item_call_arg.vue'
+import unit from "@/components/skill_item_call_arg.vue";
 export default {
     name: "args",
-    props: ['args'],
-    data: function() {
+    props: ["args"],
+    data: function () {
         return {};
     },
     computed: {},
     methods: {},
-    mounted: function() {},
+    mounted: function () {},
     components: {
-        unit
+        unit,
     },
 };
 </script>

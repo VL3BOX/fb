@@ -7,10 +7,10 @@
         <span>(</span>
         <span class="u-call-arg" v-for="(arg, i) in call.args" :key="i">
             <template v-if="arg.type == 'CallExpression'">
-                <em
-                    ><span class="u-fn">{{ arg.base.name }}</span
-                    >(<args :args="arg.arguments" />)</em
-                >
+                <em>
+                    <span class="u-fn">{{ arg.base.name }}</span>(
+                    <args :args="arg.arguments" />)
+                </em>
             </template>
             <arg :arg="arg" v-else />
             <em v-if="i < call.args.length - 1" class="u-call-op">,</em>
@@ -25,16 +25,16 @@ import arg from "@/components/skill_item_call_arg.vue";
 export default {
     name: "skill_item_call",
     props: ["data"],
-    data: function() {
+    data: function () {
         return {};
     },
     computed: {
-        call: function() {
+        call: function () {
             return this.data;
         },
     },
     methods: {},
-    mounted: function() {},
+    mounted: function () {},
     components: {
         args,
         arg,

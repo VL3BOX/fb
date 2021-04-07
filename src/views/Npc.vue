@@ -39,6 +39,7 @@
                     v-clipboard:copy="npc.ID"
                     v-clipboard:success="onCopy"
                     v-clipboard:error="onError"
+                    :key="npc.ID"
                 />
                 <div class="u-title">
                     <span class="u-name">{{ npc.Name }}</span>

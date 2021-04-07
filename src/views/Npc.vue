@@ -399,7 +399,7 @@ export default {
                 let indexs = [];
                 getBossList(this.mapid).then((res) => {
                     res.data.forEach((item) => {
-                        indexs.push(...item.Index.split("、"));
+                        item.Index && indexs.push(...item.Index.split("、"));
                     });
                     // console.log(indexs)
 

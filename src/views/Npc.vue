@@ -42,14 +42,13 @@
                     :key="npc.ID"
                 />
                 <div class="u-title">
-                    <span class="u-name">{{ npc.Name }}</span>
+                    <a class="u-name" :href="npc.ID | getNpcLink" target="_blank">
+                        <i class="el-icon-link"></i>
+                        {{ npc.Name }}
+                    </a>
                     <span class="u-name-add">
                         <span v-if="npc.Title || npc.Level">&lt;</span>
-                        <span class="u-nick" v-if="npc.Title">
-                            {{
-                            npc.Title
-                            }}
-                        </span>
+                        <span class="u-nick" v-if="npc.Title">{{npc.Title}}</span>
                         <span v-if="npc.Title && npc.Level">·</span>
                         <b class="u-level" v-if="npc.Level">{{ npc.Level }}</b>
                         <span v-if="npc.Title || npc.Level">&gt;</span>
@@ -59,10 +58,10 @@
                             <em>MapName</em>
                             {{ npc.MapName }}
                         </span>
-                        <span class="u-totation" v-if="npc._Notation">
+                        <!-- <span class="u-totation" v-if="npc._Notation">
                             <em>_Notation</em>
                             {{ npc._Notation }}
-                        </span>
+                        </span>-->
                         <span class="u-intensity" v-if="npc.Intensity">
                             强度
                             <em>Intensity</em>
@@ -113,53 +112,38 @@
                         <em>Dodge</em>
                         {{ npc.Dodge }}
                     </div>
+                    <div class="u-dodge" v-if="npc.Parry">
+                        <b>招架</b>
+                        <em>Parry</em>
+                        {{ npc.ParryValue }}
+                    </div>
                     <div class="u-shield">
                         <b>防御</b>
                         <em>Shield</em>
                         <span class="u-sitem">
                             外功防御
                             <em>PhysicsShieldBase</em>
-                            <span class="u-value">
-                                {{
-                                npc.PhysicsShieldBase
-                                }}
-                            </span>
+                            <span class="u-value">{{~~npc.PhysicsShieldBase}}</span>
                         </span>
                         <span class="u-sitem">
                             混元防御
                             <em>NeutralMagicDefence</em>
-                            <span class="u-value">
-                                {{
-                                npc.NeutralMagicDefence
-                                }}
-                            </span>
+                            <span class="u-value">{{ ~~npc.NeutralMagicDefence}}</span>
                         </span>
                         <span class="u-sitem">
                             阳性防御
                             <em>SolarMagicDefence</em>
-                            <span class="u-value">
-                                {{
-                                npc.SolarMagicDefence
-                                }}
-                            </span>
+                            <span class="u-value">{{ ~~npc.SolarMagicDefence}}</span>
                         </span>
                         <span class="u-sitem">
                             阴性防御
                             <em>LunarMagicDefence</em>
-                            <span class="u-value">
-                                {{
-                                npc.LunarMagicDefence
-                                }}
-                            </span>
+                            <span class="u-value">{{ ~~npc.LunarMagicDefence}}</span>
                         </span>
                         <span class="u-sitem">
                             毒性防御
                             <em>PoisonMagicDefence</em>
-                            <span class="u-value">
-                                {{
-                                npc.PoisonMagicDefence
-                                }}
-                            </span>
+                            <span class="u-value">{{~~npc.PoisonMagicDefence}}</span>
                         </span>
                     </div>
                     <div class="u-critical">
@@ -168,47 +152,27 @@
                         <span class="u-sitem">
                             外功会心
                             <em>PhysicsCriticalStrike</em>
-                            <span class="u-value">
-                                {{
-                                npc.PhysicsCriticalStrike
-                                }}
-                            </span>
+                            <span class="u-value">{{~~npc.PhysicsCriticalStrike}}</span>
                         </span>
                         <span class="u-sitem">
                             混元会心
                             <em>NeutralCriticalStrike</em>
-                            <span class="u-value">
-                                {{
-                                npc.NeutralCriticalStrike
-                                }}
-                            </span>
+                            <span class="u-value">{{~~npc.NeutralCriticalStrike}}</span>
                         </span>
                         <span class="u-sitem">
                             阳性会心
                             <em>SolarCriticalStrike</em>
-                            <span class="u-value">
-                                {{
-                                npc.SolarCriticalStrike
-                                }}
-                            </span>
+                            <span class="u-value">{{~~npc.SolarCriticalStrike}}</span>
                         </span>
                         <span class="u-sitem">
                             阴性会心
                             <em>LunarCriticalStrike</em>
-                            <span class="u-value">
-                                {{
-                                npc.LunarCriticalStrike
-                                }}
-                            </span>
+                            <span class="u-value">{{~~npc.LunarCriticalStrike}}</span>
                         </span>
                         <span class="u-sitem">
                             毒性会心
                             <em>PoisonCriticalStrike</em>
-                            <span class="u-value">
-                                {{
-                                npc.PoisonCriticalStrike
-                                }}
-                            </span>
+                            <span class="u-value">{{~~npc.PoisonCriticalStrike}}</span>
                         </span>
                     </div>
                     <div class="u-attack">
@@ -217,43 +181,31 @@
                         <span class="u-sitem">
                             外功命中
                             <em>PhysicsAttackHit</em>
-                            <span class="u-value">
-                                {{
-                                npc.PhysicsAttackHit
-                                }}
-                            </span>
+                            <span class="u-value">{{~~npc.PhysicsAttackHit}}</span>
                         </span>
                         <span class="u-sitem">
                             混元命中
                             <em>NeutralMagicHit</em>
-                            <span class="u-value">
-                                {{
-                                npc.NeutralMagicHit
-                                }}
-                            </span>
+                            <span class="u-value">{{~~npc.NeutralMagicHit}}</span>
                         </span>
                         <span class="u-sitem">
                             阳性命中
                             <em>SolarMagicHit</em>
-                            <span class="u-value">{{ npc.SolarMagicHit }}</span>
+                            <span class="u-value">{{ ~~npc.SolarMagicHit }}</span>
                         </span>
                         <span class="u-sitem">
                             阴性命中
                             <em>LunarMagicHit</em>
-                            <span class="u-value">{{ npc.LunarMagicHit }}</span>
+                            <span class="u-value">{{ ~~npc.LunarMagicHit }}</span>
                         </span>
                         <span class="u-sitem">
                             毒性命中
                             <em>PoisonMagicHit</em>
-                            <span class="u-value">
-                                {{
-                                npc.PoisonMagicHit
-                                }}
-                            </span>
+                            <span class="u-value">{{~~npc.PoisonMagicHit}}</span>
                         </span>
                     </div>
                 </div>
-                <div class="u-misc" v-if="hasRight">
+                <!-- <div class="u-misc" v-if="hasRight">
                     <span class="u-remark">
                         CanSeeLifeBar:
                         <strong>{{ npc.CanSeeLifeBar }}</strong>
@@ -279,6 +231,11 @@
                 <div class="u-misc-tip" v-else>
                     <i class="el-icon-lock"></i> 更多词条仅
                     <a href="/vip/premium?from=database_npc" target="_blank">高级/专业版会员</a>可见
+                </div>-->
+                <div class="u-misc-tip">
+                    <a :href="npc.ID | getNpcLink" target="_blank">
+                        <i class="el-icon-link"></i> 查看更多词条
+                    </a>
                 </div>
             </li>
         </ul>
@@ -321,6 +278,7 @@ import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
 import User from "@jx3box/jx3box-common/js/user";
 import { axios } from "../service/axios/api.js";
 import { getDB } from "../service/getDB";
+import { getLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Npc",
     props: [],
@@ -466,15 +424,20 @@ export default {
                 this.loadData();
             },
         },
-        mapid : function (){
+        mapid: function () {
             this.loadData();
-        }
+        },
     },
     mounted: function () {
         User.isLogin() &&
             User.isVIP().then((data) => {
                 this.hasRight = data;
             });
+    },
+    filters: {
+        getNpcLink: function (val) {
+            return getLink("npc", val);
+        },
     },
 };
 </script>

@@ -94,7 +94,7 @@
         </div>
 
         <!-- 其他调用 -->
-        <template v-if="AdvancedMode">
+        <!-- <template v-if="AdvancedMode">
             <el-collapse accordion class="u-call-box" v-if="skill.call.length">
                 <el-collapse-item>
                     <template slot="title">
@@ -105,7 +105,7 @@
                     </div>
                 </el-collapse-item>
             </el-collapse>
-        </template>
+        </template> -->
 
         <template v-if="!AdvancedMode">
             <div class="u-private">
@@ -168,7 +168,7 @@ export default {
     mounted: function() {},
     components: {
         "skill-item-props": skill_item_props,
-        "skill-item-call": skill_item_call,
+        // "skill-item-call": skill_item_call,
     },
 };
 </script>

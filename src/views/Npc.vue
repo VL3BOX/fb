@@ -1,5 +1,5 @@
 <template>
-    <div class="m-fb-npc" v-loading="loading">
+    <div class="m-fb-npc" v-loading="loading" v-if="isAdmin">
         <el-input
             class="m-npc-search"
             placeholder="请输入NPC名称或ID"
@@ -298,6 +298,7 @@ export default {
             bossids: [],
 
             hasRight: false,
+            isAdmin : User.isAdmin()
         };
     },
     computed: {

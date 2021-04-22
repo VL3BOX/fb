@@ -1,5 +1,5 @@
 <template>
-    <div class="m-fb-skill" v-loading="loading">
+    <div class="m-fb-skill" v-loading="loading" v-if="isAdmin">
         <!-- BOSS切换 -->
         <div class="m-skill-index">
             <el-tabs v-model="focus" type="card" @tab-click="loadLua" v-if="subnav">
@@ -40,6 +40,7 @@ export default {
             data: {},
             empty: false,
             hasRight: false,
+            isAdmin : User.isAdmin()
         };
     },
     computed: {

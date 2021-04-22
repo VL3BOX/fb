@@ -16,7 +16,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="NPC数据" name="npc">
+        <!-- <el-tab-pane label="NPC数据" name="npc">
             <span slot="label">
                 <i class="el-icon-key"></i>
                 <b>NPC数据</b>
@@ -30,7 +30,7 @@
                 <b>技能数据</b>
                 <em class="u-secret">重磅独家</em>
             </span>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <!-- <el-tab-pane label="全服排行" name="rank">
             <span slot="label">

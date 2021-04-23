@@ -20,7 +20,7 @@
                 <span>全服排行</span>
                 <i class="el-icon-arrow-right"></i>
             </a>
-            <!-- <router-link to="/npc">
+            <router-link to="/npc">
                 <i class="el-icon-key"></i>
                 <span>首领数据</span>
                 <i class="el-icon-arrow-right"></i>
@@ -29,7 +29,7 @@
                 <i class="el-icon-cpu"></i>
                 <span>技能数据</span>
                 <i class="el-icon-arrow-right"></i>
-            </router-link> -->
+            </router-link>
             <router-link to="/drop">
                 <i class="el-icon-present"></i>
                 <span>掉落数据</span>

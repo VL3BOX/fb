@@ -8,4 +8,12 @@ function getCollection($collection_id, params = {}) {
     });
 }
 
-export { getCollection };
+function getMenuGroup(name) {
+    return $helper({ mute: true }).get(`/api/menu_group/${name}`);
+}
+
+function getBread(key) {
+    return $helper({ mute: true }).get(`/api/breadcrumb/${key}`);
+}
+
+export { getCollection, getMenuGroup, getBread };

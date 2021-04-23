@@ -17,18 +17,14 @@
 
         <div class="u-title">
             <!-- 名字 -->
-            <span class="u-name"
-                >{{ name }}
-
+            <span class="u-name">
+                {{ name }}
                 <!-- 原始技能 -->
                 <template v-if="AdvancedMode">
-                    <a
-                        v-if="skill.origin_name"
-                        :href="skill.origin_id | getDBlink"
-                        target="_blank"
-                        ><i class="el-icon-connection"></i
-                        >{{ skill.origin_name || "未知" }}</a
-                    >
+                    <a v-if="skill.origin_name" :href="skill.origin_id | getDBlink" target="_blank">
+                        <i class="el-icon-connection"></i>
+                        {{ skill.origin_name || "未知" }}
+                    </a>
 
                     <!-- 技能特性 -->
                     <em v-if="skill.isPenetration">(穿透)</em>
@@ -39,24 +35,23 @@
             <!-- 伤害 -->
             <template v-if="AdvancedMode">
                 <div class="u-damage" v-if="skill.tSkillData.length">
-                    <span class="u-label">伤害值 <em>nDamageBase</em></span>
-                    <span
-                        class="u-data-group"
-                        v-for="(g, i) in skill.tSkillData"
-                        :key="i"
-                    >
+                    <span class="u-label">
+                        伤害值
+                        <!-- <em>nDamageBase</em> -->
+                    </span>
+                    <span class="u-data-group" v-for="(g, i) in skill.tSkillData" :key="i">
                         <el-tooltip class="item" effect="dark" placement="top">
                             <div slot="content">
                                 <span>
                                     <span>{{ keymap.nDamageRand.desc }}</span>
                                     <span>(nDamageRand)</span>
-                                    <strong> {{ g.nDamageRand }}</strong>
+                                    <strong>{{ g.nDamageRand }}</strong>
                                 </span>
-                                <br>
+                                <br />
                                 <span>
                                     <span>{{ keymap.nCostMana.desc }}</span>
                                     <span>(nCostMana)</span>
-                                    <strong> {{ g.nCostMana }}</strong>
+                                    <strong>{{ g.nCostMana }}</strong>
                                 </span>
                             </div>
                             <span>
@@ -81,14 +76,13 @@
                 <div class="u-prop" v-for="(g, i) in skill.props" :key="i">
                     <b>{{ keymap[g.prop] ? keymap[g.prop].desc : g.prop }}</b>
                     <em>{{ g.prop }}</em>
-                    <el-tooltip
-                        effect="dark"
-                        :content="g.prop | propTips"
-                        placement="right"
-                        ><strong>{{
+                    <el-tooltip effect="dark" :content="g.prop | propTips" placement="right">
+                        <strong>
+                            {{
                             g.value | valueFilter
-                        }}</strong></el-tooltip
-                    >
+                            }}
+                        </strong>
+                    </el-tooltip>
                 </div>
             </template>
         </div>
@@ -105,15 +99,12 @@
                     </div>
                 </el-collapse-item>
             </el-collapse>
-        </template> -->
+        </template>-->
 
         <template v-if="!AdvancedMode">
             <div class="u-private">
-                <i class="el-icon-lock"></i> 更多词条仅<a
-                    href="/vip/premium?from=database_npc"
-                    target="_blank"
-                    >高级/专业版会员</a
-                >可见
+                <i class="el-icon-lock"></i> 更多词条仅
+                <a href="/vip/premium?from=database_npc" target="_blank">高级/专业版会员</a>可见
             </div>
         </template>
     </div>
@@ -126,28 +117,28 @@ import skill_item_call from "@/components/skill_item_call.vue";
 export default {
     name: "skill_item",
     props: ["hasRight", "data", "name"],
-    data: function() {
+    data: function () {
         return {
             keymap,
         };
     },
     computed: {
-        AdvancedMode: function() {
+        AdvancedMode: function () {
             return this.hasRight;
         },
-        skill: function() {
+        skill: function () {
             return this.data;
         },
     },
     methods: {
-        onCopy: function(val) {
+        onCopy: function (val) {
             this.$notify({
                 title: "复制成功",
                 message: "复制内容 : " + val.text,
                 type: "success",
             });
         },
-        onError: function() {
+        onError: function () {
             this.$notify.error({
                 title: "复制失败",
                 message: "请手动复制",
@@ -155,17 +146,17 @@ export default {
         },
     },
     filters: {
-        valueFilter: function(val) {
+        valueFilter: function (val) {
             return Array.isArray(val) ? val.join(" ") : val;
         },
-        propTips: function(key) {
+        propTips: function (key) {
             return keymap[key] ? keymap[key]["remark"] : key;
         },
-        getDBlink: function(val) {
+        getDBlink: function (val) {
             return "/app/database/?type=skill&query=" + val;
         },
     },
-    mounted: function() {},
+    mounted: function () {},
     components: {
         "skill-item-props": skill_item_props,
         // "skill-item-call": skill_item_call,

@@ -32,7 +32,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="机制说明" name="attr">
+        <el-tab-pane label="特殊机制" name="attr">
             <span slot="label">
                 <i class="el-icon-help"></i>
                 <b>特殊机制</b>

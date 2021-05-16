@@ -101,12 +101,12 @@
             </el-collapse>
         </template>-->
 
-        <template v-if="!AdvancedMode">
+        <!-- <template v-if="!AdvancedMode">
             <div class="u-private">
                 <i class="el-icon-lock"></i> 更多词条仅
                 <a href="/vip/premium?from=database_npc" target="_blank">高级/专业版会员</a>可见
             </div>
-        </template>
+        </template> -->
     </div>
 </template>
 
@@ -124,7 +124,8 @@ export default {
     },
     computed: {
         AdvancedMode: function () {
-            return this.hasRight;
+            return true;
+            // return this.hasRight;
         },
         skill: function () {
             return this.data;

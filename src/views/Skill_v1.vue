@@ -34,13 +34,14 @@ export default {
             focus: "",
             search: "",
             loading: false,
-            isSuperAuthor: User.isSuperAuthor(),
+            isSuperAuthor: true,//User.isSuperAuthor(),
             cache: {},
             luaindex: {},
             data: {},
             empty: false,
             hasRight: false,
-            isAdmin : User.isAdmin()
+            // isAdmin : User.isAdmin(),
+            isAdmin : true
         };
     },
     computed: {

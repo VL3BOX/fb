@@ -16,7 +16,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="NPC数据" name="npc">
+        <el-tab-pane label="NPC数据" name="npc" v-if="isAdmin">
             <span slot="label">
                 <i class="el-icon-key"></i>
                 <b>NPC数据</b>
@@ -24,11 +24,19 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="技能数据" name="skill">
+        <el-tab-pane label="技能数据" name="skill" v-if="isAdmin">
             <span slot="label">
                 <i class="el-icon-cpu"></i>
                 <b>技能数据</b>
                 <em class="u-secret">重磅独家</em>
+            </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="机制说明" name="attr">
+            <span slot="label">
+                <i class="el-icon-help"></i>
+                <b>特殊机制</b>
+                <em class="u-new">全新上线</em>
             </span>
         </el-tab-pane>
 
@@ -66,12 +74,14 @@
 </template>
 
 <script>
+import User from '@jx3box/jx3box-common/js/user'
 export default {
     name: "tabs",
     props: [],
     data: function () {
         return {
             view: "index",
+            isAdmin : User.isAdmin()
         };
     },
     watch: {

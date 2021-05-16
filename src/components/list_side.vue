@@ -30,6 +30,11 @@
                 <span>技能数据</span>
                 <i class="el-icon-arrow-right"></i>
             </router-link>
+            <router-link to="/attr">
+                <i class="el-icon-help"></i>
+                <span>特殊机制</span>
+                <i class="el-icon-arrow-right"></i>
+            </router-link>
             <router-link to="/drop">
                 <i class="el-icon-present"></i>
                 <span>掉落数据</span>

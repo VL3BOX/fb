@@ -18,7 +18,8 @@ export default {
     },
     data: function () {
         return {
-            isAdmin : User.isAdmin()
+            isAdmin : User.isAdmin(),
+            // isAdmin : true
         };
     },
     computed: {},

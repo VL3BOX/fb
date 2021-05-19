@@ -1,12 +1,14 @@
 <template>
     <div class="m-fb-attr" v-loading="loading">
         <el-divider content-position="left">穿透</el-divider>
+        <div class="u-desc">穿透属性会将通用减伤效果降低100%，无视格挡伤害类效果。依旧可以受到属性减伤、小部分伤害吸收盾、内外功防御以及免死效果影响。</div>
         <ul class="u-content">
             <li v-for="(item,i) in chuantou" :key="i">
                 <a :href="item.link" target="_blank"><img :src="item.icon | iconLink">{{item.label}}</a>
             </li>
         </ul>
         <el-divider content-position="left">穿刺</el-divider>
+        <div class="u-desc">穿刺伤害会在伤害作用玩家之前主要删除/无视无敌类型的技能，但是依旧可以受到通用减伤、属性减伤、部分分担伤害、伤害吸收盾、内外功防御以及免死效果影响。</div>
         <ul class="u-content">
             <li v-for="(item,i) in chuanci" :key="i">
                 <a :href="item.link" target="_blank"><img :src="item.icon | iconLink">{{item.label}}</a>
@@ -55,6 +57,6 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style scoped lang="less">
 @import "../assets/css/attr.less";
 </style>

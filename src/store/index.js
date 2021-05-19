@@ -15,8 +15,8 @@ let store = {
         post: "",
         // list
         map,
-        fb: "",
-        zlp: "",
+        fb: "奉天证道",
+        zlp: "白帝江关",
         luaindex: {},
         default_zlp: "奉天证道",
         default_fb: "白帝江关",

@@ -70,6 +70,13 @@
                 <b>背景故事</b>
             </span>
         </el-tab-pane>
+
+        <el-tab-pane label="地图大全" name="map">
+            <span slot="label">
+                <i class="el-icon-map-location"></i>
+                <b>地图大全</b>
+            </span>
+        </el-tab-pane>
     </el-tabs>
 </template>
 

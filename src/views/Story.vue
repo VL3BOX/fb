@@ -55,7 +55,7 @@ export default {
             return this.$route.query.fb_zlp || this.$store.state.default_zlp;
         },
         mapimg: function() {
-            return __ossMirror + "pic/map/map_" + this.mapid + ".jpg";
+            return __ossMirror + "pic/map/map_" + this.mapid + "_0.png";
         },
     },
     methods: {

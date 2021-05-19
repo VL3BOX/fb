@@ -12,7 +12,7 @@
             <span slot="label">
                 <i class="el-icon-trophy"></i>
                 <b>副本成就</b>
-                <em class="u-new">最新同步</em>
+                <!-- <em class="u-new">最新同步</em> -->
             </span>
         </el-tab-pane>
 
@@ -20,7 +20,7 @@
             <span slot="label">
                 <i class="el-icon-key"></i>
                 <b>NPC数据</b>
-                <em class="u-secret">重磅独家</em>
+                <!-- <em class="u-secret">重磅独家</em> -->
             </span>
         </el-tab-pane>
 
@@ -28,7 +28,7 @@
             <span slot="label">
                 <i class="el-icon-cpu"></i>
                 <b>技能数据</b>
-                <em class="u-secret">重磅独家</em>
+                <!-- <em class="u-secret">重磅独家</em> -->
             </span>
         </el-tab-pane>
 
@@ -52,7 +52,7 @@
             <span slot="label">
                 <i class="el-icon-present"></i>
                 <b>副本掉落</b>
-                <em class="u-new">全新上线</em>
+                <em class="u-new">最新同步</em>
             </span>
         </el-tab-pane>
 
@@ -60,7 +60,6 @@
             <span slot="label">
                 <i class="el-icon-cherry"></i>
                 <b>瑰石列表</b>
-                <em class="u-new">全新上线</em>
             </span>
         </el-tab-pane>
 

@@ -52,7 +52,7 @@
             <span slot="label">
                 <i class="el-icon-present"></i>
                 <b>副本掉落</b>
-                <em class="u-new">最新同步</em>
+                <!-- <em class="u-new">最新同步</em> -->
             </span>
         </el-tab-pane>
 

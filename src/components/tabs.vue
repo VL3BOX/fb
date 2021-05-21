@@ -16,7 +16,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="NPC数据" name="npc" v-if="isAdmin">
+        <el-tab-pane label="NPC数据" name="npc">
             <span slot="label">
                 <i class="el-icon-key"></i>
                 <b>NPC数据</b>
@@ -24,7 +24,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="技能数据" name="skill" v-if="isAdmin">
+        <el-tab-pane label="技能数据" name="skill">
             <span slot="label">
                 <i class="el-icon-cpu"></i>
                 <b>技能数据</b>

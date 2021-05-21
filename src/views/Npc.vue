@@ -1,7 +1,8 @@
 <template>
     <div class="v-npc">
-        <v1 v-if="isAdmin"></v1>
-        <v2 v-else></v2>
+        <v1></v1>
+        <!-- <v1 v-if="isAdmin"></v1> -->
+        <!-- <v2 v-else></v2> -->
     </div>
 </template>
 
@@ -14,7 +15,7 @@ export default {
     props: [],
     components: {
         v1,
-        v2
+        // v2
     },
     data: function () {
         return {

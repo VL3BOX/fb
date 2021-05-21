@@ -124,7 +124,7 @@
                                 class="u-value"
                             >{{showDefence(~~npc.PhysicsShieldBase || ~~npc.NeutralMagicDefence,npc.Level)}}</span>
                         </span>
-                        <template>
+                        <template v-if="isAdmin">
                             <span class="u-sitem">
                                 外功防御
                                 <em>PhysicsShieldBase</em>
@@ -157,8 +157,9 @@
                         <em>Critical</em>
                         <span class="u-sitem">
                             <span class="u-value">{{showCritical(~~npc.PhysicsCriticalStrike)}}</span>
+                            <span>（T御劲需求）</span>
                         </span>
-                        <template>
+                        <template v-if="isAdmin">
                             <span class="u-sitem">
                                 外功会心
                                 <em>PhysicsCriticalStrike</em>
@@ -186,13 +187,14 @@
                             </span>
                         </template>
                     </div>
-                    <div class="u-attack">
+                    <!-- TODO:怀旧服需转换命中率 -->
+                    <div class="u-attack" v-if="isAdmin">
                         <b>命中</b>
                         <em>Attack</em>
                         <span class="u-sitem">
                             <span class="u-value">{{~~npc.PhysicsAttackHit}}</span>
                         </span>
-                        <template>
+                        <template v-if="isAdmin">
                             <span class="u-sitem">
                                 外功命中
                                 <em>PhysicsAttackHit</em>

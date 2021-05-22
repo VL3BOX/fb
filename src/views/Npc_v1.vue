@@ -122,9 +122,14 @@
                         <span class="u-sitem">
                             <span
                                 class="u-value"
-                            >{{showDefence(~~npc.PhysicsShieldBase || ~~npc.NeutralMagicDefence,npc.Level)}}</span>
+                            >外攻{{showDefence(~~npc.PhysicsShieldBase,~~npc.Level)}}</span>
                         </span>
-                        <template v-if="isAdmin">
+                        <span class="u-sitem">
+                            <span
+                                class="u-value"
+                            >内攻{{showDefence(~~npc.NeutralMagicDefence || ~~npc.SolarMagicDefence || ~~npc.LunarMagicDefence || ~~npc.PoisonMagicDefence,npc.Level)}}</span>
+                        </span>
+                        <!-- <template v-if="isAdmin">
                             <span class="u-sitem">
                                 外功防御
                                 <em>PhysicsShieldBase</em>
@@ -150,16 +155,23 @@
                                 <em>PoisonMagicDefence</em>
                                 <span class="u-value">{{~~npc.PoisonMagicDefence}}</span>
                             </span>
-                        </template>
+                        </template> -->
                     </div>
                     <div class="u-critical">
                         <b>会心</b>
                         <em>Critical</em>
                         <span class="u-sitem">
-                            <span class="u-value">{{showCritical(~~npc.PhysicsCriticalStrike)}}</span>
-                            <span>（T御劲需求）</span>
+                            <span
+                                class="u-value"
+                            >外攻{{showCritical(~~npc.PhysicsCriticalStrike,~~npc.Level)}}</span>
                         </span>
-                        <template v-if="isAdmin">
+                        <span class="u-sitem">
+                            <span
+                                class="u-value"
+                            >内攻{{showCritical(~~npc.NeutralCriticalStrike || ~~npc.NeutralCriticalStrike || ~~npc.SolarCriticalStrike || ~~npc.LunarCriticalStrike,~~npc.Level)}}</span>
+                        </span>
+                        <span class="u-sitem">（即T御劲需求，具体以BOSS主要攻击类型为主）</span>
+                        <!-- <template v-if="isAdmin">
                             <span class="u-sitem">
                                 外功会心
                                 <em>PhysicsCriticalStrike</em>
@@ -185,10 +197,10 @@
                                 <em>PoisonCriticalStrike</em>
                                 <span class="u-value">{{~~npc.PoisonCriticalStrike}}</span>
                             </span>
-                        </template>
+                        </template> -->
                     </div>
                     <!-- TODO:怀旧服需转换命中率 -->
-                    <div class="u-attack" v-if="isAdmin">
+                    <!-- <div class="u-attack" v-if="isAdmin">
                         <b>命中</b>
                         <em>Attack</em>
                         <span class="u-sitem">
@@ -221,7 +233,7 @@
                                 <span class="u-value">{{~~npc.PoisonMagicHit}}</span>
                             </span>
                         </template>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- <div class="u-misc" v-if="hasRight">
                     <span class="u-remark">
@@ -317,6 +329,21 @@ export default {
 
             hasRight: false,
             isAdmin: User.isAdmin(),
+
+            critical_coefficient: {
+                "110": 35737.5,
+                "111": 37691.15,
+                "112": 39644.8,
+                "113": 41598.45,
+                "114": 43552.1,
+            },
+            defence_coefficient: {
+                "110": 19091.25,
+                "111": 20134.905,
+                "112": 21178.56,
+                "113": 22222.215,
+                "114": 23265.87,
+            },
         };
     },
     computed: {
@@ -438,15 +465,32 @@ export default {
             // 等级 lv 防御shield 防御系数shieldx5.091【赛季维护】 属性因子y205 等级常数lvn18800
             // =FLOOR((shield/(shield+(shieldx*(y*lv-lvn)))*1024),1)/1024
             // =shield/(shield+(shieldx*(y*lv-lvn))))
-            return (
-                parseInt((val / (val + 5.091 * (205 * level - 18800))) * 100) +
-                "%"
-            );
+            // return (
+            //     parseInt((val / (val + 5.091 * (205 * level - 18800))) * 100) +
+            //     "%"
+            // );
+            if (level) {
+                return (
+                    ((val / this.defence_coefficient[level]) * 100).toFixed(2) +
+                    "%"
+                );
+            } else {
+                return val;
+            }
         },
-        showCritical: function (val) {
+        showCritical: function (val, level) {
             // 会心CriticalStrike 全局常数x3750【等级维护】会心CriticalStrikex
             // =ROUND(CriticalStrike/x/CriticalStrikex,3)
-            return ((val / 3750 / 9.53) * 100).toFixed(2) + "%";
+            // return ((val / 3750 / 9.53) * 100).toFixed(2) + "%";
+            if (level) {
+                return (
+                    ((val / this.critical_coefficient[level]) * 100).toFixed(
+                        2
+                    ) + "%"
+                );
+            } else {
+                return val;
+            }
         },
         showBigInt: function (val) {
             let _val = val / 100000000;

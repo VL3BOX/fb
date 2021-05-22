@@ -35,4 +35,18 @@
         .fz(14px);
         margin-bottom: 10px;
     }
+
+    span{
+        color:#999;
+        .fz(12px);
+        .ml(5px);
+        &:before{
+            content:'[';
+            .mr(2px);
+        }
+        &:after{
+            content:']';
+            .ml(2px);
+        }
+    }
 }

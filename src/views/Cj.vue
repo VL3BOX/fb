@@ -8,7 +8,7 @@
                 :key="i"
                 target="_blank"
             >
-                <img class="u-icon" :src="item.IconID | icon" />
+                <img class="u-icon" :src="item.IconID | iconLink" />
                 <span class="u-title">{{ item.Name }}</span>
                 <span class="u-desc"
                     >{{ item.BossName }} · {{ item.ShortDesc }}</span
@@ -44,6 +44,7 @@
 <script>
 import { getCJ } from "../service/getCJ";
 import { __ossMirror,__iconPath,__ossRoot } from "@jx3box/jx3box-common/data/jx3box";
+import {iconLink} from '@jx3box/jx3box-common/js/utils'
 export default {
     name: "Cj",
     props: [],
@@ -75,9 +76,7 @@ export default {
         }
     },
     filters: {
-        icon: function(id) {
-            return __iconPath + "icon/" + id + ".png";
-        },
+        iconLink,
         url : function (id){
             return '/cj/#/view/' + id
         }

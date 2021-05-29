@@ -14,6 +14,7 @@
             <router-link to="/cj"><i class="el-icon-trophy"></i></router-link>
             <router-link to="/npc"><i class="el-icon-key"></i></router-link>
             <router-link to="/skill"><i class="el-icon-cpu"></i></router-link>
+            <router-link to="/attr"><i class="el-icon-help"></i></router-link>
             <router-link to="/drop"><i class="el-icon-present"></i></router-link>
             <router-link to="/gem"><i class="el-icon-cherry"></i></router-link>
             <router-link to="/story"><i class="el-icon-film"></i></router-link>

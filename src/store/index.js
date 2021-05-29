@@ -21,7 +21,11 @@ let store = {
         default_zlp: "奉天证道",
         default_fb: "白帝江关",
     },
-    mutations: {},
+    mutations: {
+        switchClient: function(state, val) {
+            state.client = val || "std";
+        },
+    },
     getters: {},
     actions: {},
     modules: {},

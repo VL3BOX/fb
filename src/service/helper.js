@@ -16,4 +16,29 @@ function getBread(key) {
     return $helper({ mute: true }).get(`/api/breadcrumb/${key}`);
 }
 
-export { getCollection, getMenuGroup, getBread };
+function getSkillGroup(key) {
+    return $helper().get(`/api/skill_group/${key}`);
+}
+
+function getSkillGroups(keys) {
+    return $helper().get(`/api/skill_groups`, {
+        params: {
+            keys,
+        },
+    });
+}
+
+function getMenuGroups(params) {
+    return $helper({ mute: true }).get(`/api/menu_groups`, {
+        params: params,
+    });
+}
+
+export {
+    getCollection,
+    getMenuGroup,
+    getBread,
+    getSkillGroup,
+    getMenuGroups,
+    getSkillGroups,
+};

@@ -26,7 +26,7 @@
 
 <script>
 import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
-import { getMenuGroups } from "@/service/getAttr.js";
+import { getSkillGroups } from "@/service/helper.js";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Attr",
@@ -45,13 +45,11 @@ export default {
     methods: {
         loadData: function () {
             this.loading = true;
-            getMenuGroups({
-                names: ["chuantou", "chuanci","guanti"],
-            })
+            getSkillGroups('chuantou,chuanci,guanti')
                 .then((res) => {
                     let data = res.data.data.data;
                     for (let key in data) {
-                        this[key] = data[key]["menus"];
+                        this[key] = data[key]["items"];
                     }
                 })
                 .finally(() => {

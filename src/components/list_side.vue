@@ -13,7 +13,7 @@
                 <b>团队管理平台</b>
                 <span>在线排表 自动金团记录</span>
             </a>
-            <a href="/rank" class="m-team-app" target="_blank">
+            <a href="/rank" class="m-team-app m-team-rank" target="_blank">
                 <img class="u-icon" svg-inline src="../assets/img/rank.svg" />
                 <b>秘境百强榜</b>
                 <span>全服五甲 赢千元大奖</span>

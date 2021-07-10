@@ -149,7 +149,7 @@
     padding: 10px;
     border-radius: 3px;
     // background-color: #fff;
-    // background-color: #f2f6fc;
+    background-color: #f1faff;
     &:hover {
         // background-color: #f2f6fc;
         background-color: #fff;
@@ -187,11 +187,6 @@
     }
     .mb(10px);
 }
-@media screen and (max-width: @phone) {
-    .m-extend-list {
-        .none;
-    }
-}
 
 .m-extend-qlink {
     a {
@@ -221,8 +216,13 @@
     }
     margin:0 15px;
 }
+@media screen and (max-width:@phone){
+    .m-extend-qlink{
+        .none;
+    }
+}
 
 .m-team-rank{
-    background:none;
+    background:#fffce4;
     border-color:#fba524;
 }

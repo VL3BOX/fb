@@ -30,7 +30,7 @@
                 <span>首领数据</span>
                 <i class="el-icon-arrow-right"></i>
             </router-link>
-            <router-link to="/skill">
+            <router-link to="/skill" v-if="isAdmin">
                 <i class="el-icon-cpu"></i>
                 <span>技能数据</span>
                 <i class="el-icon-arrow-right"></i>
@@ -67,11 +67,14 @@
 <script>
 import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
 import { resolveImagePath } from "@jx3box/jx3box-common/js/utils.js";
+import User from '@jx3box/jx3box-common/js/user'
 export default {
     name: "list_side",
     props: [],
     data: function () {
-        return {};
+        return {
+            isAdmin : User.isAdmin()
+        };
     },
     computed: {
         zlp: function () {

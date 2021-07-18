@@ -18,14 +18,18 @@ export default {
     },
     data: function () {
         return {
-            isAdmin : User.isAdmin(),
-            // isAdmin : true
+            // isAdmin : User.isAdmin(),
+            isAdmin : false
         };
     },
     computed: {},
     methods: {},
     filters: {},
-    created: function () {},
+    created: function () {
+        User.isPRO().then((data) => {
+            this.isAdmin = data
+        })
+    },
     mounted: function () {},
 };
 </script>

@@ -18,8 +18,8 @@ let store = {
         fb: "奉天证道",
         zlp: "白帝江关",
         luaindex: {},
-        default_zlp: "奉天证道",
-        default_fb: "白帝江关",
+        default_zlp: location.href.includes("origin") ? "风起稻香" : "奉天证道",
+        default_fb: location.href.includes("origin") ? "战宝迦兰" : "白帝江关",
     },
     mutations: {
         switchClient: function(state, val) {

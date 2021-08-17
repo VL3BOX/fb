@@ -6,6 +6,7 @@
                 {{ post_subtype }}
             </span>
         </div>
+        <Thx class="m-thx" slot="single-append" :postId="id" postType="fb" :userId="author_id" :adminBoxcoinEnable="true" :userBoxcoinEnable="true"/>
     </singlebox>
 </template>
 
@@ -32,6 +33,9 @@ export default {
         post_subtype: function() {
             return _.get(this.post, "post_subtype") || '未知';
         },
+        author_id : function (){
+            return this.post?.post_author || 0
+        }
     },
     methods: {
     },

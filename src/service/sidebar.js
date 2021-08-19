@@ -6,7 +6,7 @@ function getNews(type, limit = 1) {
             params: {
                 type,
                 limit,
-                status:1
+                status: 1,
             },
         })
         .then((res) => {

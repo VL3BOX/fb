@@ -67,11 +67,15 @@ export default {
         fb: function() {
             return this.$route.query.fb_name || this.$store.state.default_fb;
         },
+        client : function (){
+            return this.$store.state.client || 'std'
+        },
         params : function (){
             return {
                 dungeon_name : this.fb,
                 page : this.page,
-                limit : this.per
+                limit : this.per,
+                client : this.client
             }
         }
     },

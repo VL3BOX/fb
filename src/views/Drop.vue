@@ -143,6 +143,9 @@ export default {
         zlp: function () {
             return this.$route.query.fb_zlp || this.$store.state.default_zlp;
         },
+        client : function (){
+            return this.$store.state.client || 'std'
+        },
         maplist: function () {
             return (
                 this.$store.state.map &&
@@ -160,7 +163,7 @@ export default {
         loadDropList: function (id) {
             this.bossid = id;
             this.loading = true;
-            return getDrop(this.bossid)
+            return getDrop(this.bossid,this.client)
                 .then((data) => {
                     this.droplist = data && data.data;
                 })

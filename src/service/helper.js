@@ -16,12 +16,20 @@ function getBread(key) {
     return $helper({ mute: true }).get(`/api/breadcrumb/${key}`);
 }
 
-function getSkillGroup(key) {
-    return $helper().get(`/api/skill_group/${key}`);
+function getSkillGroup(key, client = "std") {
+    return $helper({
+        headers: {
+            "JX3-Client-Type": client == "std" ? 1 : 2,
+        },
+    }).get(`/api/skill_group/${key}`);
 }
 
-function getSkillGroups(keys) {
-    return $helper().get(`/api/skill_groups`, {
+function getSkillGroups(keys, client = "std") {
+    return $helper({
+        headers: {
+            "JX3-Client-Type": client == "std" ? 1 : 2,
+        },
+    }).get(`/api/skill_groups`, {
         params: {
             keys,
         },
@@ -34,11 +42,4 @@ function getMenuGroups(params) {
     });
 }
 
-export {
-    getCollection,
-    getMenuGroup,
-    getBread,
-    getSkillGroup,
-    getMenuGroups,
-    getSkillGroups,
-};
+export { getCollection, getMenuGroup, getBread, getSkillGroup, getMenuGroups, getSkillGroups };

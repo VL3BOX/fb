@@ -92,11 +92,15 @@ export default {
         zlp: function() {
             return this.$route.query.fb_zlp || this.$store.state.default_zlp;
         },
+        client : function (){
+            return this.$store.state.client || 'std'
+        },
         params : function (){
             return {
                 dungeon: this.fb,
                 page: this.page,
                 keyword: this.search,
+                client : this.client
             }
         }
     },

@@ -119,7 +119,7 @@
                     <div class="u-shield">
                         <b>防御</b>
                         <em>Shield</em>
-                        <span class="u-sitem">
+                        <!-- <span class="u-sitem">
                             <span
                                 class="u-value"
                             >外攻{{showDefence(~~npc.PhysicsShieldBase,~~npc.Level)}}</span>
@@ -128,8 +128,8 @@
                             <span
                                 class="u-value"
                             >内攻{{showDefence(~~npc.NeutralMagicDefence || ~~npc.SolarMagicDefence || ~~npc.LunarMagicDefence || ~~npc.PoisonMagicDefence,npc.Level)}}</span>
-                        </span>
-                        <!-- <template v-if="isAdmin">
+                        </span> -->
+                        <!-- <template v-if="isAdmin"> -->
                             <span class="u-sitem">
                                 外功防御
                                 <em>PhysicsShieldBase</em>
@@ -155,12 +155,12 @@
                                 <em>PoisonMagicDefence</em>
                                 <span class="u-value">{{~~npc.PoisonMagicDefence}}</span>
                             </span>
-                        </template> -->
+                        <!-- </template> -->
                     </div>
                     <div class="u-critical">
                         <b>会心</b>
                         <em>Critical</em>
-                        <span class="u-sitem">
+                        <!-- <span class="u-sitem">
                             <span
                                 class="u-value"
                             >外攻{{showCritical(~~npc.PhysicsCriticalStrike,~~npc.Level)}}</span>
@@ -169,9 +169,9 @@
                             <span
                                 class="u-value"
                             >内攻{{showCritical(~~npc.NeutralCriticalStrike || ~~npc.NeutralCriticalStrike || ~~npc.SolarCriticalStrike || ~~npc.LunarCriticalStrike,~~npc.Level)}}</span>
-                        </span>
-                        <span class="u-sitem">（即T御劲需求，具体以BOSS主要攻击类型为主）</span>
-                        <!-- <template v-if="isAdmin">
+                        </span> -->
+                        <!-- <span class="u-sitem">（即T御劲需求，具体以BOSS主要攻击类型为主）</span> -->
+                        <!-- <template v-if="isAdmin"> -->
                             <span class="u-sitem">
                                 外功会心
                                 <em>PhysicsCriticalStrike</em>
@@ -197,16 +197,15 @@
                                 <em>PoisonCriticalStrike</em>
                                 <span class="u-value">{{~~npc.PoisonCriticalStrike}}</span>
                             </span>
-                        </template> -->
+                        <!-- </template> -->
                     </div>
-                    <!-- TODO:怀旧服需转换命中率 -->
-                    <!-- <div class="u-attack" v-if="isAdmin">
+                    <div class="u-attack" v-if="isOrigin">
                         <b>命中</b>
                         <em>Attack</em>
-                        <span class="u-sitem">
+                        <!-- <span class="u-sitem">
                             <span class="u-value">{{~~npc.PhysicsAttackHit}}</span>
-                        </span>
-                        <template v-if="isAdmin">
+                        </span> -->
+                        <!-- <template v-if="isAdmin"> -->
                             <span class="u-sitem">
                                 外功命中
                                 <em>PhysicsAttackHit</em>
@@ -232,8 +231,8 @@
                                 <em>PoisonMagicHit</em>
                                 <span class="u-value">{{~~npc.PoisonMagicHit}}</span>
                             </span>
-                        </template>
-                    </div> -->
+                        <!-- </template> -->
+                    </div>
                 </div>
                 <!-- <div class="u-misc" v-if="hasRight">
                     <span class="u-remark">
@@ -362,9 +361,16 @@ export default {
         bosslist: function () {
             return this.$store.state.map[this.zlp]["dungeon"][this.fb]["boss"];
         },
+        client : function (){
+            return this.$store.state.client || 'std'
+        },
+        isOrigin : function (){
+            return this.client == 'origin'  
+        },
         params: function () {
             let params = {
                 per: this.per,
+                client : this.client
             };
             if (this.search) {
                 if (isNaN(this.search)) {

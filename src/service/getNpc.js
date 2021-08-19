@@ -1,6 +1,6 @@
 import axios from "axios";
 import { __node } from "@jx3box/jx3box-common/data/jx3box.json";
-// const __node = "http://localhost:3001/"; //TODO:
+// const __node = "http://localhost:7002/"; //TODO:
 
 function getMapNpc(fb, params) {
     return axios.get(__node + "npc/map/" + fb, {

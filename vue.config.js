@@ -4,6 +4,23 @@ const { JX3BOX, SEO } = require("@jx3box/jx3box-common");
 const Setting = require("./setting.json");
 
 module.exports = {
+
+    //❤️ Multiple pages ~
+    pages:{
+        index : {
+            title : '副本专栏 - JX3BOX',
+            entry:'src/main.js',
+            template : 'public/index.html',
+            filename:'index.html',
+        },
+        fb : {
+            title : '副本专栏 - JX3BOX',
+            entry:'src/post.js',
+            template : 'public/index.html',
+            filename:'post.html',
+        },
+    },
+    
     devServer: {
         proxy: {
             "/api/inspire": {
@@ -19,13 +36,13 @@ module.exports = {
                 }
             },
             "/api/summary": {
-                "target": "https://next.jx3box.com",
+                "target": "https://next2.jx3box.com",
                 "onProxyReq": function (request) {
                     request.setHeader("origin", "");
                 }
             },
             "/api/comment": {
-                "target": "https://next.jx3box.com",
+                "target": "https://next2.jx3box.com",
                 "onProxyReq": function (request) {
                     request.setHeader("origin", "");
                 }
@@ -40,29 +57,13 @@ module.exports = {
                 },
             },
             "/api": {
-                target: "https://next.jx3box.com",
+                target: "https://next2.jx3box.com",
                 onProxyReq: function(request) {
                     request.setHeader("origin", "");
                 },
             },
         },
         disableHostCheck: true
-    },
-
-    //❤️ Multiple pages ~
-    pages:{
-        index : {
-            title : '副本专栏 - JX3BOX',
-            entry:'src/main.js',
-            template : 'public/index.html',
-            filename:'index.html',
-        },
-        post : {
-            title : '副本专栏 - JX3BOX',
-            entry:'src/post.js',
-            template : 'public/index.html',
-            filename:'post.html',
-        },
     },
 
     //webpack配置

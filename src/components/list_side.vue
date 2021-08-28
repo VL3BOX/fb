@@ -3,7 +3,7 @@
         <RightSideMsg>
             <em>全服团长交流群</em> :
             <strong>
-                <a href="https://jq.qq.com/?_wv=1027&k=CAiizina" v-if="client == 'origin'">590349918</a>
+                <a href="https://jq.qq.com/?_wv=1027&k=nzOIpVGI" v-if="client == 'origin'">528707506</a>
                 <a href="https://jq.qq.com/?_wv=1027&k=HZdXPmZe" v-else>785597424</a>
             </strong>
         </RightSideMsg>

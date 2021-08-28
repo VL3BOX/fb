@@ -20,11 +20,17 @@ let store = {
         luaindex: {},
         default_zlp: location.href.includes("origin") ? "风起稻香" : "奉天证道",
         default_fb: location.href.includes("origin") ? "战宝迦兰" : "白帝江关",
+
+        // collections
+        collectionInfo: '',
     },
     mutations: {
         switchClient: function(state, val) {
             state.client = val || "std";
         },
+        SET_COLLECTION: function (state, val) {
+            state.collectionInfo = val
+        }
     },
     getters: {},
     actions: {},

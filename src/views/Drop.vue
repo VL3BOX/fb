@@ -185,6 +185,7 @@ export default {
             this.data = drop;
         },
         loadData: function () {
+            this.droplist = []
             this.loadBossList().then(() => {
                 this.loadDropList(this.bossid);
             });

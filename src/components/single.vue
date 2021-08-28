@@ -14,6 +14,7 @@
 import singlebox from "@jx3box/jx3box-page/src/cms-single";
 import { getPost } from "../service/getPost.js";
 import { getStat, postStat } from "@jx3box/jx3box-common/js/stat";
+import { getLink } from "@jx3box/jx3box-common/js/utils.js"
 import _ from 'lodash'
 export default {
     name: "single",
@@ -24,6 +25,8 @@ export default {
             post: {},
             author: {},
             stat: {},
+
+            showCollection: false,
         };
     },
     computed: {
@@ -35,13 +38,35 @@ export default {
         },
         author_id : function (){
             return this.post?.post_author || 0
+        },
+        collectionInfo: function (){
+            return this.$store.state.collectionInfo;
+        },
+        collapseTitle: function (){
+            return this.collectionInfo?.title
+        },
+        collectionList: function (){
+            return this.collectionInfo?.posts
         }
     },
     methods: {
+        handleShow: function (){
+            this.showCollection = !this.showCollection;
+        },
     },
     filters: {
         dateFormat: function(val) {
             return dateFormat(new Date(val));
+        },
+        getLink: function (id){
+            return getLink('collection', id);
+        },
+        showLink: function (item) {
+            if (item.type == "custom") {
+                return item.url;
+            } else {
+                return getLink(item.type, item.id);
+            }
         },
     },
     created: function() {

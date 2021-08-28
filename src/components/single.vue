@@ -6,6 +6,28 @@
                 {{ post_subtype }}
             </span>
         </div>
+        <div class="u-collection" v-if="collectionList && collectionList.length">
+            <div class="u-collection-title" @click="handleShow" :class="{ on: showCollection }">
+                <span><i class="el-icon-notebook-1"></i> 该作品已被收录至作者的剑三小册</span>
+                <a @click.stop :href="collectionInfo.id | getLink">《{{ collapseTitle }}》</a>
+            </div>
+            <transition name="fade">
+                <div v-if="showCollection">
+                    <ol
+                        v-if="collectionList && collectionList.length"
+                        class="u-list u-collection-content"
+                        :style="{ display: showCollection ? 'block' : 'none' }"
+                    >
+                        <li v-for="(item, i) in collectionList" :key="i" class="u-item">
+                            <a v-if="item" :href="item | showLink" target="_blank">
+                                <i class="el-icon-link"></i>
+                                {{ item.title }}
+                            </a>
+                        </li>
+                    </ol>
+                </div>
+            </transition>
+        </div>
         <Thx class="m-thx" slot="single-append" :postId="id" postType="fb" :userId="author_id" :adminBoxcoinEnable="true" :userBoxcoinEnable="true"/>
     </singlebox>
 </template>

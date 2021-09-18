@@ -8,6 +8,7 @@
             :publishEnable="true"
             :feedbackEnable="true"
             :adminEnable="true"
+            :crumbEnable="true"
         >
             <img slot="logo" svg-inline src="./assets/img/fb.svg" />
             <Info />

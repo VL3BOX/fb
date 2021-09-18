@@ -258,7 +258,7 @@ export default {
         showAvatar,
         authorLink,
         postLink: function (val) {
-            return location.origin + "/" + getAppType() + "/" + val;
+            return location.origin + "/fb/" + val;
         },
         isHighlight: function (val) {
             return val ? `color:${val};font-weight:600;` : "";

@@ -1,6 +1,6 @@
 <template>
     <div class="m-fb-cj" v-loading="loading">
-        <div class="m-cj-list" v-if="data">
+        <div class="m-cj-list" v-if="data && data.length">
             <a
                 class="m-cj-item"
                 v-for="(item, i) in data"

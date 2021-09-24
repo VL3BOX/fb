@@ -7,13 +7,14 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "inspect": "vue inspect > output.js",
-    "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common-ui@latest @jx3box/jx3box-common@latest @jx3box/jx3box-page@latest @jx3box/jx3box-data@latest"
+    "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common-ui@latest @jx3box/jx3box-common@latest @jx3box/jx3box-page@latest @jx3box/jx3box-data@latest",
+    "npc": "node ./tools/npc.js"
   },
   "dependencies": {
-    "@jx3box/jx3box-common": "^6.6.2",
-    "@jx3box/jx3box-common-ui": "^5.1.4",
-    "@jx3box/jx3box-data": "^1.5.4",
-    "@jx3box/jx3box-page": "^0.6.4",
+    "@jx3box/jx3box-common": "^6.6.7",
+    "@jx3box/jx3box-common-ui": "^5.2.0",
+    "@jx3box/jx3box-data": "^1.6.4",
+    "@jx3box/jx3box-page": "^0.6.8",
     "axios": "^0.21.1",
     "core-js": "^3.4.3",
     "element-ui": "^2.13.0",
@@ -34,6 +35,7 @@
     "@vue/cli-service": "^4.1.2",
     "babel-eslint": "^10.0.3",
     "csslab": "^4.0.3",
+    "csv-parse": "^4.16.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "glob": "^7.1.6",

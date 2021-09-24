@@ -1,6 +1,6 @@
 <template>
     <div class="m-fb-cj" v-loading="loading">
-        <div class="m-cj-list" v-if="data && data.length">
+        <div class="m-cj-list" v-if="hasData">
             <a
                 class="m-cj-item"
                 v-for="(item, i) in data"
@@ -77,6 +77,9 @@ export default {
                 limit : this.per,
                 client : this.client
             }
+        },
+        hasData : function (){
+            return this.data && this.data.length || Object.keys(this.data).length
         }
     },
     filters: {

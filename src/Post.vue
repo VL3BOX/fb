@@ -9,7 +9,7 @@
             :feedbackEnable="true"
             :adminEnable="true"
         >
-            <img slot="logo" svg-inline src="./assets/img/fb.svg" />
+            <img slot="logo" svg-inline :src="getAppIcon('fb')" />
         </Breadcrumb>
         <LeftSidebar>
             <Nav class="m-nav" />
@@ -28,13 +28,16 @@
 import Nav from "@/components/single_nav.vue";
 import Side from "@/components/single_side.vue";
 import single from "@/components/single.vue";
+import {getAppIcon} from '@jx3box/jx3box-common/js/utils'
 export default {
     name: "App",
     props: [],
     data: function () {
         return {};
     },
-    methods: {},
+    methods: {
+        getAppIcon
+    },
     components: {
         Nav,
         Side,
@@ -48,4 +51,9 @@ export default {
 
 <style lang="less">
 @import "./assets/css/layout.less";
+@media screen and (max-width: @phone) {
+    .c-crumb {
+        .none;
+    }
+}
 </style>

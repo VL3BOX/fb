@@ -19,10 +19,11 @@ let store = {
         zlp: "白帝江关",
         luaindex: {},
         default_zlp: location.href.includes("origin") ? "风起稻香" : "奉天证道",
-        default_fb: location.href.includes("origin") ? "战宝迦兰" : "白帝江关",
+        default_fb: location.href.includes("origin") ? "战宝迦兰" : "雷域大泽", //雷域大泽
 
         // collections
         collectionInfo: '',
+        maptree : ''
     },
     mutations: {
         switchClient: function(state, val) {

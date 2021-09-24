@@ -295,8 +295,8 @@
 </template>
 
 <script>
-import bossids from "@jx3box/jx3box-data/data/fb/fb_boss_ids.json";
-import mapids from "@jx3box/jx3box-data/data/common/mapids.json";
+import bossids from "@/assets/data/bossid.json";
+import mapids from "@jx3box/jx3box-data/data/common/map_id.json";
 import {
     getNpcList,
     getMapNpc,

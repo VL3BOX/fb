@@ -63,6 +63,9 @@ export default {
 <style lang="less">
 @import "./assets/css/layout.less";
 @media screen and (max-width: @phone) {
+    .c-crumb{
+        .none;
+    }
     .c-breadcrumb{
         .u-op{
             .none;

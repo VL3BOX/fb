@@ -1,5 +1,13 @@
 <template>
     <div class="m-fb-nav m-fb-list-nav">
+        <RightSideMsg class="u-group">
+            <em>全服团长交流群</em> :
+            <strong>
+                <a href="https://jq.qq.com/?_wv=1027&k=nzOIpVGI" v-if="client == 'origin'">528707506</a>
+                <a href="https://jq.qq.com/?_wv=1027&k=HZdXPmZe" v-else>785597424</a>
+            </strong>
+        </RightSideMsg>
+
         <div class="m-nav-search" @click.stop>
             <el-input placeholder="搜索副本或首领名称" v-model="search" clearable></el-input>
         </div>

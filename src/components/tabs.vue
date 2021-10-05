@@ -63,6 +63,14 @@
             </a>
         </el-tab-pane>
 
+        <el-tab-pane label="团队管理" name="team">
+            <a slot="label" href="/team" target="_blank">
+                <i class="el-icon-user"></i>
+                <b>团队管理</b>
+                <!-- <em class="u-ready">已结榜</em> -->
+            </a>
+        </el-tab-pane>
+
         <el-tab-pane label="背景故事" name="story">
             <span slot="label">
                 <i class="el-icon-film"></i>
@@ -88,6 +96,7 @@ export default {
         return {
             view: "index",
             isAdmin: User.isAdmin(),
+            links : ['rank','team']
         };
     },
     watch: {
@@ -105,7 +114,7 @@ export default {
     },
     methods: {
         changeView: function (tab) {
-            if (this.view != "rank") {
+            if (!this.links.includes(this.view)) {
                 this.$router.push({
                     name: this.view,
                     query: {

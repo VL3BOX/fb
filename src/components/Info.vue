@@ -1,14 +1,5 @@
 <template>
     <div class="m-info">
-        <RightSideMsg class="u-group">
-            <em>全服团长交流群</em> :
-            <strong>
-                <a href="https://jq.qq.com/?_wv=1027&k=nzOIpVGI" v-if="client == 'origin'">528707506</a>
-                <a href="https://jq.qq.com/?_wv=1027&k=HZdXPmZe" v-else>785597424</a>
-            </strong>
-        </RightSideMsg>
-        <a href="/team" class="u-team" target="_blank"><i class="el-icon-user"></i> 团队管理平台</a>
-
         <div class="m-info-router">
             <router-link to="/">
                 <i class="el-icon-collection"></i>

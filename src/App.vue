@@ -8,7 +8,7 @@
             :publishEnable="true"
             :feedbackEnable="true"
             :adminEnable="true"
-            :crumbEnable="false"
+            :crumbEnable="true"
         >
             <img slot="logo" svg-inline :src="getAppIcon('fb')" />
             <Info />

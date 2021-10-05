@@ -10,7 +10,7 @@
 
         <el-tab-pane label="副本成就" name="cj">
             <span slot="label">
-                <i class="el-icon-trophy"></i>
+                <i class="el-icon-medal"></i>
                 <b>副本成就</b>
                 <!-- <em class="u-new">最新同步</em> -->
             </span>

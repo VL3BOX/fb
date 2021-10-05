@@ -13,11 +13,8 @@
             <router-link to="/">
                 <i class="el-icon-collection"></i>
             </router-link>
-            <a href="/rank" target="_blank" v-if="client =='std'">
-                <i class="el-icon-trophy"></i>
-            </a>
             <router-link to="/cj">
-                <i class="el-icon-trophy"></i>
+                <i class="el-icon-medal"></i>
             </router-link>
             <router-link to="/npc">
                 <i class="el-icon-key"></i>
@@ -34,8 +31,14 @@
             <router-link to="/gem">
                 <i class="el-icon-cherry"></i>
             </router-link>
+            <a href="/rank" target="_blank" v-if="client =='std'">
+                <i class="el-icon-trophy"></i>
+            </a>
             <router-link to="/story">
                 <i class="el-icon-film"></i>
+            </router-link>
+            <router-link to="/map">
+                <i class="el-icon-map-location"></i>
             </router-link>
         </div>
     </div>

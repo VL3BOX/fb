@@ -16,10 +16,10 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="NPC数据" name="npc">
+        <el-tab-pane label="首领数据" name="npc">
             <span slot="label">
                 <i class="el-icon-key"></i>
-                <b>NPC数据</b>
+                <b>首领数据</b>
                 <!-- <em class="u-secret">重磅独家</em> -->
             </span>
         </el-tab-pane>
@@ -36,17 +36,9 @@
             <span slot="label">
                 <i class="el-icon-help"></i>
                 <b>特殊机制</b>
-                <em class="u-new">全新上线</em>
+                <!-- <em class="u-new">全新上线</em> -->
             </span>
         </el-tab-pane>
-
-        <!-- <el-tab-pane label="全服排行" name="rank">
-            <span slot="label">
-                <i class="el-icon-trophy"></i>
-                <b>全服排行</b>
-                <em class="u-ready">已结榜</em>
-            </span>
-        </el-tab-pane>-->
 
         <el-tab-pane label="副本掉落" name="drop">
             <span slot="label">
@@ -61,6 +53,14 @@
                 <i class="el-icon-cherry"></i>
                 <b>瑰石列表</b>
             </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="秘境百强" name="rank" v-if="client=='std'">
+            <a slot="label" href="/rank" target="_blank">
+                <i class="el-icon-trophy"></i>
+                <b>秘境百强</b>
+                <!-- <em class="u-ready">已结榜</em> -->
+            </a>
         </el-tab-pane>
 
         <el-tab-pane label="背景故事" name="story">
@@ -80,14 +80,14 @@
 </template>
 
 <script>
-import User from '@jx3box/jx3box-common/js/user'
+import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "tabs",
     props: [],
     data: function () {
         return {
             view: "index",
-            isAdmin : User.isAdmin()
+            isAdmin: User.isAdmin(),
         };
     },
     watch: {
@@ -98,16 +98,22 @@ export default {
             },
         },
     },
-    computed: {},
+    computed: {
+        client: function () {
+            return this.$store.state.client;
+        },
+    },
     methods: {
-        changeView: function () {
-            this.$router.push({
-                name: this.view,
-                query: {
-                    fb_name: this.$route.query.fb_name,
-                    fb_zlp: this.$route.query.fb_zlp,
-                },
-            });
+        changeView: function (tab) {
+            if (this.view != "rank") {
+                this.$router.push({
+                    name: this.view,
+                    query: {
+                        fb_name: this.$route.query.fb_name,
+                        fb_zlp: this.$route.query.fb_zlp,
+                    },
+                });
+            }
         },
     },
 };

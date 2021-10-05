@@ -13,13 +13,13 @@
                 <b>团队管理平台</b>
                 <span>在线排表 自动金团记录</span>
             </a>
-            <a href="/rank" class="m-team-app m-team-rank" target="_blank">
+            <a href="/rank" class="m-team-app" target="_blank">
                 <img class="u-icon" svg-inline src="../assets/img/rank.svg" />
                 <b>秘境百强榜</b>
                 <span>全服五甲 赢千元大奖</span>
             </a>
         </div>
-        <div class="m-extend-qlink">
+        <!-- <div class="m-extend-qlink">
             <a href="/rank" target="_blank">
                 <i class="el-icon-trophy"></i>
                 <span>全服排行</span>
@@ -60,7 +60,7 @@
                 <span>地图大全</span>
                 <i class="el-icon-arrow-right"></i>
             </router-link>
-        </div>
+        </div> -->
     </div>
 </template>
 

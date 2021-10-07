@@ -160,16 +160,18 @@
                     <div class="u-critical">
                         <b>会心</b>
                         <em>Critical</em>
-                        <!-- <span class="u-sitem">
+                        <span class="u-sitem" v-if="client == 'std'">
+                            外攻会心
                             <span
                                 class="u-value"
-                            >外攻{{showCritical(~~npc.PhysicsCriticalStrike,~~npc.Level)}}</span>
+                            >{{showCritical(~~npc.PhysicsCriticalStrike,~~npc.Level)}}</span>
                         </span>
-                        <span class="u-sitem">
+                        <span class="u-sitem" v-if="client == 'std'">
+                            内攻会心
                             <span
                                 class="u-value"
-                            >内攻{{showCritical(~~npc.NeutralCriticalStrike || ~~npc.NeutralCriticalStrike || ~~npc.SolarCriticalStrike || ~~npc.LunarCriticalStrike,~~npc.Level)}}</span>
-                        </span> -->
+                            >{{showCritical(~~npc.NeutralCriticalStrike || ~~npc.NeutralCriticalStrike || ~~npc.SolarCriticalStrike || ~~npc.LunarCriticalStrike,~~npc.Level)}}</span>
+                        </span>
                         <!-- <span class="u-sitem">（即T御劲需求，具体以BOSS主要攻击类型为主）</span> -->
                         <!-- <template v-if="isAdmin"> -->
                             <span class="u-sitem">

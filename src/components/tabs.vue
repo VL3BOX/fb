@@ -55,6 +55,20 @@
             </span>
         </el-tab-pane>
 
+        <el-tab-pane label="背景故事" name="story">
+            <span slot="label">
+                <i class="el-icon-film"></i>
+                <b>背景故事</b>
+            </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="地图大全" name="map">
+            <span slot="label">
+                <i class="el-icon-map-location"></i>
+                <b>地图大全</b>
+            </span>
+        </el-tab-pane>
+
         <el-tab-pane label="秘境百强" name="rank" v-if="client=='std'">
             <a slot="label" href="/rank" target="_blank">
                 <i class="el-icon-trophy"></i>
@@ -69,20 +83,6 @@
                 <b>团队管理</b>
                 <!-- <em class="u-ready">已结榜</em> -->
             </a>
-        </el-tab-pane>
-
-        <el-tab-pane label="背景故事" name="story">
-            <span slot="label">
-                <i class="el-icon-film"></i>
-                <b>背景故事</b>
-            </span>
-        </el-tab-pane>
-
-        <el-tab-pane label="地图大全" name="map">
-            <span slot="label">
-                <i class="el-icon-map-location"></i>
-                <b>地图大全</b>
-            </span>
         </el-tab-pane>
     </el-tabs>
 </template>

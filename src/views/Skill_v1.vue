@@ -3,7 +3,7 @@
         <!-- BOSS切换 -->
         <div class="m-skill-index">
             <el-tabs v-model="focus" type="card" @tab-click="loadLua" v-if="subnav">
-                <el-tab-pane v-for="(boss, i) in subnav" :label="boss" :key="i" :name="boss"></el-tab-pane>
+                <el-tab-pane v-for="boss in subnav" :label="boss" :key="boss" :name="boss"></el-tab-pane>
             </el-tabs>
         </div>
 
@@ -34,14 +34,13 @@ export default {
             focus: "",
             search: "",
             loading: false,
-            isSuperAuthor: true,//User.isSuperAuthor(),
+            isSuperAuthor: true, //User.isSuperAuthor(),
             cache: {},
-            luaindex: {},
             data: {},
             empty: false,
             hasRight: false,
-            // isAdmin : User.isAdmin(),
-            isAdmin : true
+            isAdmin: true,
+            subnav : []
         };
     },
     computed: {
@@ -50,17 +49,6 @@ export default {
         },
         zlp: function () {
             return this.$route.query.fb_zlp || this.$store.state.default_zlp;
-        },
-        subnav: function () {
-            let list = this.luaindex[this.fb];
-            let _list = [];
-            list &&
-                list.forEach((item) => {
-                    if (item) {
-                        _list.push(item);
-                    }
-                });
-            return _list;
         },
     },
     methods: {
@@ -78,18 +66,15 @@ export default {
                 });
         },
         loadLuaIndex: function () {
-            getLuaIndex()
+            getLuaIndex(this.fb)
                 .then((res) => {
-                    this.luaindex = this.$store.state.luaindex = res.data;
-                    if (Object.keys(this.luaindex).includes(this.fb)) {
-                        this.focus = this.subnav[0];
-                        this.empty = false;
-                        this.loadLua();
-                    } else {
-                        this.empty = true;
-                    }
+                    this.empty = false;
+                    this.subnav = res.data;
+                    this.focus = this.subnav[0];
+                    this.loadLua();
                 })
                 .catch((err) => {
+                    this.empty = true;
                     console.log(err);
                 });
         },
@@ -119,13 +104,7 @@ export default {
             }
         },
         fb: function () {
-            if (Object.keys(this.luaindex).includes(this.fb)) {
-                this.focus = this.subnav[0];
-                this.empty = false;
-                this.loadLua();
-            } else {
-                this.empty = true;
-            }
+            this.loadLuaIndex()
         },
     },
     mounted: function () {

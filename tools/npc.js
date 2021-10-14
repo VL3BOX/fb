@@ -15,6 +15,4 @@ let arr = []
 for(let record of records){
     if(record.NpcID) arr.push(parseInt(record.NpcID))
 }
-fs.writeFileSync('./src/assets/data/fb_boss_ids.json',JSON.stringify(arr))
-
-console.log(arr)
+fs.writeFileSync('./src/assets/data/bossid.json',JSON.stringify(arr))

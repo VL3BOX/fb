@@ -1,6 +1,6 @@
 <template>
     <div class="m-fb-skill-v2">
-        <p class="u-ac" v-html="ac"></p>
+        <!-- <p class="u-ac" v-html="ac"></p> -->
         <ul class="u-list">
             <li v-for="(item,i) in list" :key="i">
                 <a :href="item.link" target="_blank" :style="{color:item.color}">
@@ -28,9 +28,9 @@ export default {
     computed: {},
     methods: {
         init: function () {
-            getBread("fb-skill-ac").then((res) => {
-                this.ac = res.data.data.breadcrumb.html;
-            });
+            // getBread("fb-skill-ac").then((res) => {
+            //     this.ac = res.data.data.breadcrumb.html;
+            // });
             getMenuGroup("fb-skill").then((res) => {
                 this.list = res.data.data.menu_group.menus;
             });

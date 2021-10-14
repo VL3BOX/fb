@@ -1,34 +1,42 @@
 <template>
     <div class="v-skill">
-        <v1 v-if="isAdmin"></v1>
+        <v1 v-if="hasRight"></v1>
         <v2 v-else></v2>
     </div>
 </template>
 
 <script>
-import v1 from './Skill_v1.vue'
-import v2 from './Skill_v2.vue'
-import User from '@jx3box/jx3box-common/js/user'
+import v1 from "./Skill_v1.vue";
+import v2 from "./Skill_v2.vue";
+import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "Skill",
     props: [],
     components: {
         v1,
-        v2
+        v2,
     },
     data: function () {
         return {
-            // isAdmin : User.isAdmin(),
-            isAdmin : false
+            hasRight: false,
         };
     },
     computed: {},
     methods: {},
     filters: {},
     created: function () {
-        User.isPRO().then((data) => {
-            this.isAdmin = data
-        })
+        let hasRight = User.isAdmin();
+        this.hasRight = hasRight
+        if (!hasRight) {
+            User.isPRO().then((data) => {
+                this.hasRight = data;
+                if (!data) {
+                    User.isSuperAuthor().then((data) => {
+                        this.hasRight = data;
+                    });
+                }
+            });
+        }
     },
     mounted: function () {},
 };

@@ -14,7 +14,7 @@
                         :class="{ on: item.BossIndex == bossid }"
                         v-for="(item, j) in bosslist"
                         :key="j"
-                        @click="loadDropList(item.BossIndex)"
+                        @click="changeBoss(item.BossIndex)"
                     >
                         <!-- <img :src="bossavatar(j)" /> -->
                         <img class="u-boss-avatar" svg-inline src="../assets/img/skull.svg" />
@@ -115,12 +115,11 @@
 </template>
 
 <script>
-import { getDrop, getMapid, getBossid } from "../service/getDrop";
-import dropmap from "../assets/js/drop.json";
+import { getDrop, getBoss } from "../service/getDrop";
 import { __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
+import dropmap from "../assets/js/drop.json";
 import drop_item from "../components/drop_item";
 import _ from "lodash";
-const iconids = [4835, 8848, 10452, 10451, 2589, 2646, 2647, 2648];
 
 export default {
     name: "Drop",
@@ -154,18 +153,25 @@ export default {
         },
     },
     methods: {
-        loadBossList: function () {
-            return getBossid(this.mapid).then((data) => {
-                this.bosslist = data;
-                this.bossid = data[0]["BossIndex"];
+        changeBoss : function (bossindex){
+            this.bossid = bossindex
+        },
+        loadData: function () {
+            this.loadBossList().then(() => {
+                this.loadDropList();
             });
         },
-        loadDropList: function (id) {
-            this.bossid = id;
+        loadBossList: function () {
+            return getBoss(this.mapid,this.client).then((res) => {
+                this.bosslist = res?.data || [];
+                this.bossid = this.bosslist[0]["BossIndex"];
+            });
+        },
+        loadDropList: function () {
             this.loading = true;
             return getDrop(this.bossid,this.client)
-                .then((data) => {
-                    this.droplist = data && data.data;
+                .then((res) => {
+                    this.droplist = res?.data && res?.data?.data;
                 })
                 .finally(() => {
                     this.loading = false;
@@ -174,21 +180,12 @@ export default {
         dropType: function (val) {
             return dropmap[val];
         },
-        bossavatar: function (i) {
-            return __iconPath + "icon/" + iconids[i] + ".png";
-        },
         fillDroplist: function (list) {
             if (list) list["all"] = [];
             return list;
         },
         showDrop: function (drop) {
             this.data = drop;
-        },
-        loadData: function () {
-            this.droplist = []
-            this.loadBossList().then(() => {
-                this.loadDropList(this.bossid);
-            });
         },
     },
     watch: {
@@ -199,6 +196,11 @@ export default {
                 this.loadData();
             },
         },
+        bossid : {
+            handler : function (){
+                this.loadDropList()
+            }
+        }
     },
     components: {
         drop_item,

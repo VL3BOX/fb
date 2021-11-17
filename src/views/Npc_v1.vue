@@ -7,7 +7,7 @@
             @change="loadData"
             :disabled="onlyboss"
         >
-            <template slot="prepend">NPC</template>
+            <template slot="prepend"><i class="el-icon-search"></i> 搜索</template>
             <el-switch
                 class="u-switch u-onlyboss"
                 slot="append"

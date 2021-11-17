@@ -1,51 +1,26 @@
+// import { $node } from "@jx3box/jx3box-common/js/https";
+// const $ = $node();
+
 import axios from "axios";
-import { __node } from "@jx3box/jx3box-common/data/jx3box.json";
-const API = __node;
-// const API = "http://localhost:7002/";   //TODO:
+const $ = axios.create({
+    baseURL: "http://localhost:7002/",
+});
+
+function getBoss(map_id, client = "std") {
+    return $.get("/fb/boss", {
+        params: {
+            MapID: map_id,
+            client: client,
+        },
+    });
+}
 
 function getDrop(bossindex, client = "std") {
-    return axios
-        .get(API + "fb/drop/" + bossindex, {
-            params: {
-                client: client,
-            },
-        })
-        .then((res) => {
-            return res.data;
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    return $.get("/fb/drop/" + bossindex, {
+        params: {
+            client: client,
+        },
+    })
 }
 
-function getMapid(fbname) {
-    return axios
-        .get(API + "fb/info", {
-            params: {
-                OtherName: fbname,
-            },
-        })
-        .then((res) => {
-            return res.data;
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-
-function getBossid(mapid) {
-    return axios
-        .get(API + "fb/boss", {
-            params: {
-                MapID: mapid,
-            },
-        })
-        .then((res) => {
-            return res.data;
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-
-export { getDrop, getMapid, getBossid };
+export { getDrop, getBoss };

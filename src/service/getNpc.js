@@ -1,33 +1,24 @@
+// import { $node } from "@jx3box/jx3box-common/js/https";
+// const $ = $node();
+
 import axios from "axios";
-import { __node } from "@jx3box/jx3box-common/data/jx3box.json";
-// const __node = "http://localhost:7002/"; //TODO:
+const $ = axios.create({
+    baseURL: "http://localhost:7002/",
+});
 
 function getMapNpc(fb, params) {
-    return axios.get(__node + "npc/map/" + fb, {
+    return $.get("/npc/map/" + fb, {
         params: params,
     });
 }
 
-function getNpcList(params) {
-    return axios.get(__node + "npc", {
-        params: params,
-    });
-}
-
-function getBossList(mapid) {
-    return axios.get(__node + "fb/boss", {
+function getBoss(map_id, client = "std") {
+    return $.get("/fb/boss", {
         params: {
-            MapID: mapid,
+            MapID: map_id,
+            client: client,
         },
     });
 }
 
-function getBossIds(indexs) {
-    return axios.get(__node + "fb/npc", {
-        params: {
-            Index: indexs,
-        },
-    });
-}
-
-export { getNpcList, getMapNpc, getBossList, getBossIds };
+export { getMapNpc, getBoss };

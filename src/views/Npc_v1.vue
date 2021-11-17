@@ -28,7 +28,7 @@
         </div>
         <ul class="m-npc-list" v-if="data.length">
             <li v-for="(npc, i) in data" class="u-item" :key="npc + i">
-                <i v-if="isBoss(npc.ID)" class="u-isBoss">
+                <i v-if="onlyboss" class="u-isBoss">
                     <img src="../assets/img/boss_mini.png" />
                 </i>
                 <img class="u-icon" src="../assets/img/iboss.png" />
@@ -128,33 +128,33 @@
                             <span
                                 class="u-value"
                             >内攻{{showDefence(~~npc.NeutralMagicDefence || ~~npc.SolarMagicDefence || ~~npc.LunarMagicDefence || ~~npc.PoisonMagicDefence,npc.Level)}}</span>
-                        </span> -->
+                        </span>-->
                         <!-- <template v-if="isAdmin"> -->
-                            <span class="u-sitem">
-                                外功防御
-                                <em>PhysicsShieldBase</em>
-                                <span class="u-value">{{~~npc.PhysicsShieldBase}}</span>
-                            </span>
-                            <span class="u-sitem">
-                                混元防御
-                                <em>NeutralMagicDefence</em>
-                                <span class="u-value">{{ ~~npc.NeutralMagicDefence}}</span>
-                            </span>
-                            <span class="u-sitem">
-                                阳性防御
-                                <em>SolarMagicDefence</em>
-                                <span class="u-value">{{ ~~npc.SolarMagicDefence}}</span>
-                            </span>
-                            <span class="u-sitem">
-                                阴性防御
-                                <em>LunarMagicDefence</em>
-                                <span class="u-value">{{ ~~npc.LunarMagicDefence}}</span>
-                            </span>
-                            <span class="u-sitem">
-                                毒性防御
-                                <em>PoisonMagicDefence</em>
-                                <span class="u-value">{{~~npc.PoisonMagicDefence}}</span>
-                            </span>
+                        <span class="u-sitem">
+                            外功防御
+                            <em>PhysicsShieldBase</em>
+                            <span class="u-value">{{~~npc.PhysicsShieldBase}}</span>
+                        </span>
+                        <span class="u-sitem">
+                            混元防御
+                            <em>NeutralMagicDefence</em>
+                            <span class="u-value">{{ ~~npc.NeutralMagicDefence}}</span>
+                        </span>
+                        <span class="u-sitem">
+                            阳性防御
+                            <em>SolarMagicDefence</em>
+                            <span class="u-value">{{ ~~npc.SolarMagicDefence}}</span>
+                        </span>
+                        <span class="u-sitem">
+                            阴性防御
+                            <em>LunarMagicDefence</em>
+                            <span class="u-value">{{ ~~npc.LunarMagicDefence}}</span>
+                        </span>
+                        <span class="u-sitem">
+                            毒性防御
+                            <em>PoisonMagicDefence</em>
+                            <span class="u-value">{{~~npc.PoisonMagicDefence}}</span>
+                        </span>
                         <!-- </template> -->
                     </div>
                     <div class="u-critical">
@@ -174,31 +174,31 @@
                         </span>
                         <!-- <span class="u-sitem">（即T御劲需求，具体以BOSS主要攻击类型为主）</span> -->
                         <!-- <template v-if="isAdmin"> -->
-                            <span class="u-sitem">
-                                外功会心
-                                <em>PhysicsCriticalStrike</em>
-                                <span class="u-value">{{~~npc.PhysicsCriticalStrike}}</span>
-                            </span>
-                            <span class="u-sitem">
-                                混元会心
-                                <em>NeutralCriticalStrike</em>
-                                <span class="u-value">{{~~npc.NeutralCriticalStrike}}</span>
-                            </span>
-                            <span class="u-sitem">
-                                阳性会心
-                                <em>SolarCriticalStrike</em>
-                                <span class="u-value">{{~~npc.SolarCriticalStrike}}</span>
-                            </span>
-                            <span class="u-sitem">
-                                阴性会心
-                                <em>LunarCriticalStrike</em>
-                                <span class="u-value">{{~~npc.LunarCriticalStrike}}</span>
-                            </span>
-                            <span class="u-sitem">
-                                毒性会心
-                                <em>PoisonCriticalStrike</em>
-                                <span class="u-value">{{~~npc.PoisonCriticalStrike}}</span>
-                            </span>
+                        <span class="u-sitem">
+                            外功会心
+                            <em>PhysicsCriticalStrike</em>
+                            <span class="u-value">{{~~npc.PhysicsCriticalStrike}}</span>
+                        </span>
+                        <span class="u-sitem">
+                            混元会心
+                            <em>NeutralCriticalStrike</em>
+                            <span class="u-value">{{~~npc.NeutralCriticalStrike}}</span>
+                        </span>
+                        <span class="u-sitem">
+                            阳性会心
+                            <em>SolarCriticalStrike</em>
+                            <span class="u-value">{{~~npc.SolarCriticalStrike}}</span>
+                        </span>
+                        <span class="u-sitem">
+                            阴性会心
+                            <em>LunarCriticalStrike</em>
+                            <span class="u-value">{{~~npc.LunarCriticalStrike}}</span>
+                        </span>
+                        <span class="u-sitem">
+                            毒性会心
+                            <em>PoisonCriticalStrike</em>
+                            <span class="u-value">{{~~npc.PoisonCriticalStrike}}</span>
+                        </span>
                         <!-- </template> -->
                     </div>
                     <div class="u-attack" v-if="isOrigin">
@@ -206,33 +206,33 @@
                         <em>Attack</em>
                         <!-- <span class="u-sitem">
                             <span class="u-value">{{~~npc.PhysicsAttackHit}}</span>
-                        </span> -->
+                        </span>-->
                         <!-- <template v-if="isAdmin"> -->
-                            <span class="u-sitem">
-                                外功命中
-                                <em>PhysicsAttackHit</em>
-                                <span class="u-value">{{~~npc.PhysicsAttackHit}}</span>
-                            </span>
-                            <span class="u-sitem">
-                                混元命中
-                                <em>NeutralMagicHit</em>
-                                <span class="u-value">{{~~npc.NeutralMagicHit}}</span>
-                            </span>
-                            <span class="u-sitem">
-                                阳性命中
-                                <em>SolarMagicHit</em>
-                                <span class="u-value">{{ ~~npc.SolarMagicHit }}</span>
-                            </span>
-                            <span class="u-sitem">
-                                阴性命中
-                                <em>LunarMagicHit</em>
-                                <span class="u-value">{{ ~~npc.LunarMagicHit }}</span>
-                            </span>
-                            <span class="u-sitem">
-                                毒性命中
-                                <em>PoisonMagicHit</em>
-                                <span class="u-value">{{~~npc.PoisonMagicHit}}</span>
-                            </span>
+                        <span class="u-sitem">
+                            外功命中
+                            <em>PhysicsAttackHit</em>
+                            <span class="u-value">{{~~npc.PhysicsAttackHit}}</span>
+                        </span>
+                        <span class="u-sitem">
+                            混元命中
+                            <em>NeutralMagicHit</em>
+                            <span class="u-value">{{~~npc.NeutralMagicHit}}</span>
+                        </span>
+                        <span class="u-sitem">
+                            阳性命中
+                            <em>SolarMagicHit</em>
+                            <span class="u-value">{{ ~~npc.SolarMagicHit }}</span>
+                        </span>
+                        <span class="u-sitem">
+                            阴性命中
+                            <em>LunarMagicHit</em>
+                            <span class="u-value">{{ ~~npc.LunarMagicHit }}</span>
+                        </span>
+                        <span class="u-sitem">
+                            毒性命中
+                            <em>PoisonMagicHit</em>
+                            <span class="u-value">{{~~npc.PoisonMagicHit}}</span>
+                        </span>
                         <!-- </template> -->
                     </div>
                 </div>
@@ -271,8 +271,7 @@
             </li>
         </ul>
         <el-alert v-else class="m-archive-null" type="info" center show-icon>
-            该副本没有找到相关条目，全图搜索请前往
-            <a href="/app/database" target="_blank">剑三数据库</a>应用
+            该副本没有找到相关条目，全图搜索请前往<a href="/app/database" target="_blank">[剑三数据库]</a>应用
         </el-alert>
         <template v-if="!onlyboss">
             <el-button
@@ -297,14 +296,9 @@
 </template>
 
 <script>
-import bossids from "@/assets/data/bossid.json";
-import mapids from "@jx3box/jx3box-data/data/common/map_id.json";
-import {
-    getNpcList,
-    getMapNpc,
-    getBossList,
-    getBossIds,
-} from "../service/getNpc";
+// import bossids from "@/assets/data/bossid.json";
+// import mapids from "@jx3box/jx3box-data/data/common/map_id.json";
+import { getMapNpc, getBoss } from "../service/getNpc";
 import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
 import User from "@jx3box/jx3box-common/js/user";
 import { axios } from "../service/axios/api.js";
@@ -363,16 +357,16 @@ export default {
         bosslist: function () {
             return this.$store.state.map[this.zlp]["dungeon"][this.fb]["boss"];
         },
-        client : function (){
-            return this.$store.state.client || 'std'
+        client: function () {
+            return this.$store.state.client || "std";
         },
-        isOrigin : function (){
-            return this.client == 'origin'  
+        isOrigin: function () {
+            return this.client == "origin";
         },
         params: function () {
             let params = {
                 per: this.per,
-                client : this.client
+                client: this.client,
             };
             if (this.search) {
                 if (isNaN(this.search)) {
@@ -390,6 +384,7 @@ export default {
             if (!this.onlyboss) {
                 let params = Object.assign(this.params, {
                     page: i,
+                    client : this.client
                 });
                 getMapNpc(this.fb, params)
                     .then((res) => {
@@ -406,45 +401,20 @@ export default {
                         this.loading = false;
                     });
             } else {
-                // console.log(this.mapid)
-
-                // 获取boss表中索引
-                let indexs = [];
-                getBossList(this.mapid).then((res) => {
-                    res.data.forEach((item) => {
-                        item.Index && indexs.push(...item.Index.split("、"));
-                    });
-                    // console.log(indexs)
-
-                    // 通过info表中索引查id
-                    let ids = [];
-                    getBossIds(indexs.join(",")).then((res) => {
-                        res.data.forEach((item) => {
-                            item.NpcID && ids.push(item.NpcID);
-                            this.bossids = ids;
+                // 获取当前地图首领
+                this.page = 1;
+                getBoss(this.mapid, this.client)
+                    .then((res) => {
+                        let ids = res?.data?.map((item) => {
+                            return item.NPCID;
                         });
-                        // console.log(ids)
-
-                        getNpcList({
-                            per: this.per,
-                            page: i,
-                            ID: this.bossids.join(","),
-                        })
-                            .then((res) => {
-                                if (append) {
-                                    this.data = this.data.concat(res.data.list);
-                                } else {
-                                    window.scrollTo(0, 0);
-                                    this.data = res.data.list;
-                                }
-                                this.total = res.data.total;
-                                this.pages = res.data.pages;
-                            })
-                            .finally(() => {
-                                this.loading = false;
-                            });
+                        getMapNpc(this.fb, { ids : ids.join(','),client : this.client }).then((res) => {
+                            this.data = res?.data?.list || [];
+                        });
+                    })
+                    .finally(() => {
+                        this.loading = false;
                     });
-                });
             }
         },
         changePage: function (i) {
@@ -453,9 +423,9 @@ export default {
         appendPage: function (i) {
             this.loadData(i, true);
         },
-        isBoss: function (id) {
-            return !!bossids.includes(id);
-        },
+        // isBoss: function (id) {
+        //     return !!bossids.includes(id);
+        // },
         onCopy: function (val) {
             this.$notify({
                 title: "复制成功",

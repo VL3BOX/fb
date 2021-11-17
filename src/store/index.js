@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { getAppID } from "@jx3box/jx3box-common/js/utils";
 import map from "@jx3box/jx3box-data/data/fb/fb_map.json";
+import {default_zlp ,default_fb} from '../../setting.json'
 
 Vue.use(Vuex);
 
@@ -15,11 +16,11 @@ let store = {
         post: "",
         // list
         map,
-        fb: "奉天证道",
-        zlp: "白帝江关",
+        fb: "",
+        zlp: "",
         luaindex: {},
-        default_zlp: location.href.includes("origin") ? "风起稻香" : "奉天证道",
-        default_fb: location.href.includes("origin") ? "战宝迦兰" : "雷域大泽", //雷域大泽
+        default_zlp: location.href.includes("origin") ? default_zlp.origin : default_zlp.std,
+        default_fb: location.href.includes("origin") ? default_fb.origin : default_fb.std,
 
         // collections
         collectionInfo: '',

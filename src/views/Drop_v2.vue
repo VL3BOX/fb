@@ -36,6 +36,7 @@
                         <a
                             class="u-item"
                             :href="getDropLink(drop)"
+                            target="_blank"
                             v-for="drop in droplist"
                             :key="drop.ItemName"
                             v-show="!~~droptype || drop.ItemType == droptype"

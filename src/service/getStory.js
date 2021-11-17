@@ -1,25 +1,27 @@
+// import { $node } from "@jx3box/jx3box-common/js/https";
+// const $ = $node()
+
 import axios from "axios";
-import {__node} from '@jx3box/jx3box-common/data/jx3box.json'
-const API = __node
+const $ = axios.create({
+    baseURL: "http://localhost:7002/",
+});
 
-function getInfo(fb) {
-    return axios.get(API + 'fb/info',{
-        params : {
-            OtherName : fb
-        }
-    }).catch((err) => {
-        console.log(err)
-    })
+function getInfo(name, client = "std") {
+    return $.get("/fb/info", {
+        params: {
+            name: name,
+            client: client,
+        },
+    });
 }
 
-function getBoss(mapid){
-    return axios.get(API + 'fb/boss',{
-        params : {
-            MapID : mapid
-        }
-    }).catch((err) => {
-        console.log(err)
-    })
+function getBoss(map_id, client = "std") {
+    return $.get("/fb/boss", {
+        params: {
+            MapID: map_id,
+            client: client,
+        },
+    });
 }
 
-export { getInfo,getBoss };
+export { getInfo, getBoss };

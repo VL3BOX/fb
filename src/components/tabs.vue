@@ -55,10 +55,10 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="背景故事" name="story">
+        <el-tab-pane label="秘境传说" name="story">
             <span slot="label">
                 <i class="el-icon-film"></i>
-                <b>背景故事</b>
+                <b>秘境传说</b>
             </span>
         </el-tab-pane>
 

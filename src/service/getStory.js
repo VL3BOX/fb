@@ -24,4 +24,13 @@ function getBoss(map_id, client = "std") {
     });
 }
 
-export { getInfo, getBoss };
+function getBossSkills(skills,client='std'){
+    return $.get('/fb/skills',{
+        params : {
+            skills,
+            client
+        }
+    })
+}
+
+export { getInfo, getBoss,getBossSkills };

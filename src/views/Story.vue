@@ -29,6 +29,27 @@
                                 {{ boss.BOSS }}
                             </h5>
                             <p class="u-boss-detail" v-html="boss.Introduce"></p>
+                            <el-button
+                                class="u-boss-more"
+                                type="primary"
+                                plain
+                                @click="loadSkills(boss)"
+                                size="mini"
+                                icon="el-icon-key"
+                            >{{!skill_list[boss.NPCID] ? '查看技能' : (skill_status[boss.NPCID] ? '收起' : '展开')}}</el-button>
+                            <div class="u-boss-skills" v-show="skill_status[boss.NPCID]">
+                                <template v-if="skill_list[boss.NPCID]">
+                                    <div
+                                        class="u-skill"
+                                        v-for="skill in skill_list[boss.NPCID]"
+                                        :key="skill.idkey"
+                                    >
+                                        <h6 class="u-skill-name">※ {{skill.SkillName}}</h6>
+                                        <div class="u-skill-desc">{{skill.Desc}}</div>
+                                    </div>
+                                </template>
+                                <div class="u-skill-null" v-else><i class="el-icon-warning-outline"></i> 没有相关信息</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,17 +61,22 @@
 
 <script>
 import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
-import { getInfo, getBoss } from "@/service/getStory.js";
+import { getInfo, getBoss, getBossSkills } from "@/service/getStory.js";
 import { extractTextContent } from "@jx3box/jx3box-common/js/utils";
+import compact from "lodash/compact";
 export default {
     name: "Story",
     props: [],
     data: function () {
         return {
+            loading: false,
             map_id: "",
             data: "",
             boss_list: "",
-            loading: false,
+            skill_list: {
+                // NPCID : []
+            },
+            skill_status: {},
         };
     },
     computed: {
@@ -76,6 +102,36 @@ export default {
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        loadSkills: function (boss) {
+            let npc_id = boss?.NPCID;
+            if (this.skill_list[npc_id]) {
+                this.skill_status[npc_id] = !this.skill_status[npc_id];
+                this.$forceUpdate();
+            } else {
+                // 合并技能列表
+                let skills = [
+                    boss.Step1Skill,
+                    boss.Step2Skill,
+                    boss.Step3Skill,
+                    boss.Step4Skill,
+                    boss.szStep5Skill,
+                ];
+                skills = _.compact(skills);
+                skills = skills.join(";");
+
+                // 请求技能数据
+                this.loading = true;
+                getBossSkills(skills, this.client)
+                    .then((res) => {
+                        this.skill_list[npc_id] = res?.data || [];
+                        this.skill_status[npc_id] = true
+                        this.$forceUpdate();
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
+            }
         },
     },
     watch: {

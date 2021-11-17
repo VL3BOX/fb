@@ -1,10 +1,10 @@
-// import { $node } from "@jx3box/jx3box-common/js/https";
-// const $ = $node();
+import { $node } from "@jx3box/jx3box-common/js/https";
+const $ = $node();
 
-import axios from "axios";
-const $ = axios.create({
-    baseURL: "http://localhost:7002/",
-});
+// import axios from "axios";
+// const $ = axios.create({
+//     baseURL: "http://localhost:7002/",
+// });
 
 function getBoss(map_id, client = "std") {
     return $.get("/fb/boss", {
@@ -23,4 +23,10 @@ function getDrop(bossindex, client = "std") {
     })
 }
 
-export { getDrop, getBoss };
+function getDropV2(mapid,params){
+    return $.get(`/fb/drop/v2/${mapid}`,{
+        params : params
+    })
+}
+
+export { getDrop, getBoss,getDropV2 };

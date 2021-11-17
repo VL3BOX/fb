@@ -8,6 +8,17 @@
             </strong>
         </RightSideMsg>
 
+        <div class="m-nav-link">
+            <a class="el-button el-button--primary el-button--mini is-plain" href="/rank" target="_blank">
+                <i class="el-icon-trophy"></i>
+                <span>秘境百强</span>
+            </a>
+            <a class="el-button el-button--primary el-button--mini is-plain" href="/team" target="_blank">
+                <i class="el-icon-user"></i>
+                <span>团队管理</span>
+            </a>
+        </div>
+
         <div class="m-nav-search" @click.stop>
             <el-input placeholder="搜索副本或首领名称" v-model="search" clearable></el-input>
         </div>

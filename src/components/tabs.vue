@@ -69,11 +69,10 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="秘境百强" name="rank" v-if="client=='std'">
+        <!-- <el-tab-pane label="秘境百强" name="rank" v-if="client=='std'">
             <a slot="label" href="/rank" target="_blank">
                 <i class="el-icon-trophy"></i>
                 <b>秘境百强</b>
-                <!-- <em class="u-ready">已结榜</em> -->
             </a>
         </el-tab-pane>
 
@@ -81,9 +80,8 @@
             <a slot="label" href="/team" target="_blank">
                 <i class="el-icon-user"></i>
                 <b>团队管理</b>
-                <!-- <em class="u-ready">已结榜</em> -->
             </a>
-        </el-tab-pane>
+        </el-tab-pane> -->
     </el-tabs>
 </template>
 

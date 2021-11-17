@@ -42,9 +42,9 @@
                         >
                             <i
                                 class="u-drop-item-icon u-item-icon"
-                                :class="'u-item-color-' + drop.quality"
+                                :class="'u-item-color-' + drop.ItemQuality"
                             >
-                                <img :src="drop.IconID | iconLink" />
+                                <img :src="drop.ItemIconID | iconLink" />
                             </i>
                             <span class="u-item-name">{{ drop.ItemName}}</span>
                         </a>

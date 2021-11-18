@@ -20,6 +20,22 @@
                         {{ item.BOSS }}
                     </div>
                 </div>
+                <div class="u-schools">
+                    <div
+                        class="u-school"
+                        v-for="(school_name,school_id) in schoolmap"
+                        :key="school_id"
+                        @click="filterBySchool(school_id)"
+                        :class="{active:school_id == school}"
+                    >
+                        <img
+                            class="u-school-icon"
+                            :src="school_id | showSchoolIcon"
+                            :alt="school_name"
+                        />
+                        <span class="u-school-name">{{~~school_id ? school_name : '全部'}}</span>
+                    </div>
+                </div>
                 <div class="u-droplist">
                     <div class="u-tabs">
                         <el-tabs tab-position="left" class="u-group" v-model="droptype">
@@ -39,7 +55,7 @@
                             target="_blank"
                             v-for="drop in droplist"
                             :key="drop.ItemName"
-                            v-show="!~~droptype || drop.ItemType == droptype"
+                            v-show="isVisible(drop)"
                         >
                             <i
                                 class="u-drop-item-icon u-item-icon"
@@ -59,9 +75,14 @@
 
 <script>
 import { getDropV2, getBoss } from "../service/getDrop";
-import { __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
+import {
+    __iconPath,
+    __ossRoot,
+    __imgPath,
+} from "@jx3box/jx3box-common/data/jx3box.json";
 import dropmap from "../assets/data/drop_types.json";
 import { getLink, iconLink } from "@jx3box/jx3box-common/js/utils";
+import schoolmap from "@jx3box/jx3box-data/data/xf/schoolid.json";
 // import drop_item from "../components/drop_item";
 
 export default {
@@ -79,6 +100,9 @@ export default {
 
             data: {},
             loading: false,
+
+            school: "0",
+            schoolmap,
         };
     },
     computed: {
@@ -120,7 +144,11 @@ export default {
             this.loading = true;
             return getDropV2(this.mapid, this.params)
                 .then((res) => {
-                    this.droplist = res?.data;
+                    let data = res?.data;
+                    data.forEach((item) => {
+                        item.schools = item?.ApplicableSchoolIDs?.split("|");
+                    });
+                    this.droplist = data;
                 })
                 .finally(() => {
                     this.loading = false;
@@ -131,8 +159,26 @@ export default {
             this.loadDropList();
         },
         getDropLink(dropitem) {
+            if (dropitem.ItemExtID) {
+                return getLink(
+                    "item",
+                    dropitem.ItemType +
+                        "_" +
+                        dropitem.ItemID +
+                        "_" +
+                        dropitem.ItemExtID
+                );
+            }
             return getLink("item", dropitem.ItemType + "_" + dropitem.ItemID);
         },
+        filterBySchool(school_id) {
+            this.school = school_id;
+        },
+        isVisible : function (drop){
+            let categoryIsVisible = !~~this.droptype || drop.ItemType == this.droptype
+            let schoolIsVisible = !~~this.school || drop.schools?.includes(this.school)
+            return categoryIsVisible && schoolIsVisible
+        }
     },
     watch: {
         fb: {
@@ -150,6 +196,9 @@ export default {
     },
     filters: {
         iconLink,
+        showSchoolIcon: function (val) {
+            return __imgPath + "image/school/" + val + ".png";
+        },
     },
     components: {
         // drop_item,

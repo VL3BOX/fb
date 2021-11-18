@@ -106,6 +106,30 @@
             }
         }
     }
+    .u-schools{
+        .clearfix;
+        .mb(20px);
+        .u-school{
+            padding:4px 10px;
+            .fl;
+            .fz(12px,22px);
+            img{.size(22px);.y;.mr(2px);}
+            // .mr(20px);
+            // .mb(10px);
+            .pointer;
+            .bold;
+
+            &:hover{
+                color:@pink;
+                background-color:@bg-gray;
+            }
+
+            &.active{
+                color:@color-link;
+                background-color:#e6f0fb;
+            }
+        }
+    }
 }
 @media screen and (max-width:@phone){
     .m-fb-drop .u-droplist .u-tabs{

@@ -111,6 +111,7 @@
                 </div>
             </el-tab-pane>
         </el-tabs>
+        <router-link class="u-switch-version" to="/drop_v2"><i class="el-icon-sort"></i> 切换至新版</router-link>
     </div>
 </template>
 

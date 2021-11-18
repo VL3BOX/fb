@@ -40,7 +40,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="副本掉落" name="drop">
+        <el-tab-pane label="副本掉落" name="drop_v2">
             <span slot="label">
                 <i class="el-icon-present"></i>
                 <b>副本掉落</b>

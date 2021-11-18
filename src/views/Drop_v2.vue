@@ -49,22 +49,38 @@
                         </el-tabs>
                     </div>
                     <div class="u-drops" v-if="droplist && droplist.length">
-                        <a
-                            class="u-item"
-                            :href="getDropLink(drop)"
-                            target="_blank"
+                        <div
+                            class="u-item-wrapper"
                             v-for="drop in droplist"
                             :key="drop.ItemName"
                             v-show="isVisible(drop)"
                         >
-                            <i
-                                class="u-drop-item-icon u-item-icon"
-                                :class="'u-item-color-' + drop.ItemQuality"
+                            <el-popover
+                                placement="right-end"
+                                popper-class="u-drop-popup"
+                                width="auto"
+                                :visible-arrow="false"
+                                trigger="hover"
+                                transition="none"
+                                :close-delay="0"
                             >
-                                <img :src="drop.ItemIconID | iconLink" />
-                            </i>
-                            <span class="u-item-name">{{ drop.ItemName}}</span>
-                        </a>
+                                <a
+                                    slot="reference"
+                                    class="u-item"
+                                    :href="getDropLink(drop)"
+                                    target="_blank"
+                                >
+                                    <i
+                                        class="u-drop-item-icon u-item-icon"
+                                        :class="'u-item-color-' + drop.ItemQuality"
+                                    >
+                                        <img :src="drop.ItemIconID | iconLink" />
+                                    </i>
+                                    <span class="u-item-name">{{ drop.ItemName}}</span>
+                                </a>
+                                <jx3-item :item_id="drop.jx3_item_id" :jx3-client-type="client_id" />
+                            </el-popover>
+                        </div>
                     </div>
                     <el-alert v-else title="没有相关条目" type="info" show-icon></el-alert>
                 </div>
@@ -81,8 +97,13 @@ import {
     __imgPath,
 } from "@jx3box/jx3box-common/data/jx3box.json";
 import dropmap from "../assets/data/drop_types.json";
-import { getLink, iconLink } from "@jx3box/jx3box-common/js/utils";
+import {
+    getLink,
+    iconLink,
+    jx3ClientType,
+} from "@jx3box/jx3box-common/js/utils";
 import schoolmap from "@jx3box/jx3box-data/data/xf/schoolid.json";
+import Item from "@jx3box/jx3box-editor/src/Item.vue";
 // import drop_item from "../components/drop_item";
 
 export default {
@@ -127,6 +148,9 @@ export default {
                 // ItemType: this.droptype,
             };
         },
+        client_id: function () {
+            return jx3ClientType();
+        },
     },
     methods: {
         loadData: function () {
@@ -147,6 +171,7 @@ export default {
                     let data = res?.data;
                     data.forEach((item) => {
                         item.schools = item?.ApplicableSchoolIDs?.split("|");
+                        item.jx3_item_id = this.getDropItemID(item)
                     });
                     this.droplist = data;
                 })
@@ -158,27 +183,24 @@ export default {
             this.boss = boss;
             this.loadDropList();
         },
+        getDropItemID: function (dropitem) {
+            return dropitem.ItemExtID
+                ? `${dropitem.ItemType}_${dropitem.ItemID}_${dropitem.ItemExtID}`
+                : `${dropitem.ItemType}_${dropitem.ItemID}`;
+        },
         getDropLink(dropitem) {
-            if (dropitem.ItemExtID) {
-                return getLink(
-                    "item",
-                    dropitem.ItemType +
-                        "_" +
-                        dropitem.ItemID +
-                        "_" +
-                        dropitem.ItemExtID
-                );
-            }
-            return getLink("item", dropitem.ItemType + "_" + dropitem.ItemID);
+            return getLink("item", dropitem.jx3_item_id);
         },
         filterBySchool(school_id) {
             this.school = school_id;
         },
-        isVisible : function (drop){
-            let categoryIsVisible = !~~this.droptype || drop.ItemType == this.droptype
-            let schoolIsVisible = !~~this.school || drop.schools?.includes(this.school)
-            return categoryIsVisible && schoolIsVisible
-        }
+        isVisible: function (drop) {
+            let categoryIsVisible =
+                !~~this.droptype || drop.ItemType == this.droptype;
+            let schoolIsVisible =
+                !~~this.school || drop.schools?.includes(this.school);
+            return categoryIsVisible && schoolIsVisible;
+        },
     },
     watch: {
         fb: {
@@ -202,6 +224,7 @@ export default {
     },
     components: {
         // drop_item,
+        "jx3-item": Item,
     },
 };
 </script>

@@ -69,6 +69,7 @@
                                     class="u-item"
                                     :href="getDropLink(drop)"
                                     target="_blank"
+                                    @mouseenter="viewDrop(drop)"
                                 >
                                     <i
                                         class="u-drop-item-icon u-item-icon"
@@ -78,7 +79,7 @@
                                     </i>
                                     <span class="u-item-name">{{ drop.ItemName}}</span>
                                 </a>
-                                <jx3-item :item_id="drop.jx3_item_id" :jx3-client-type="client_id" />
+                                <jx3-item :item_id="drop.jx3_item_id" :jx3-client-type="client_id" v-if="focus == drop.ItemID"/>
                             </el-popover>
                         </div>
                     </div>
@@ -120,6 +121,7 @@ export default {
             droplist: [],
             droptype: "",
 
+            focus : '',
             data: {},
             loading: false,
 
@@ -202,6 +204,9 @@ export default {
                 !~~this.school || drop.schools?.includes(this.school);
             return categoryIsVisible && schoolIsVisible;
         },
+        viewDrop : function (item){
+            this.focus = item.ItemID
+        }
     },
     watch: {
         fb: {

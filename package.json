@@ -15,7 +15,7 @@
     "@jx3box/jx3box-common-ui": "^5.3.4",
     "@jx3box/jx3box-data": "^1.8.3",
     "@jx3box/jx3box-editor": "^0.8.8",
-    "@jx3box/jx3box-page": "^0.7.3",
+    "@jx3box/jx3box-page": "^0.7.4",
     "axios": "^0.21.1",
     "core-js": "^3.4.3",
     "element-ui": "^2.15.6",

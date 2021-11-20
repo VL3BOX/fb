@@ -16,15 +16,12 @@
             <router-link to="/attr">
                 <i class="el-icon-help"></i>
             </router-link>
-            <router-link to="/drop">
+            <router-link to="/drop_v2">
                 <i class="el-icon-present"></i>
             </router-link>
             <router-link to="/gem">
                 <i class="el-icon-cherry"></i>
             </router-link>
-            <a href="/rank" target="_blank" v-if="client =='std'">
-                <i class="el-icon-trophy"></i>
-            </a>
             <router-link to="/story">
                 <i class="el-icon-film"></i>
             </router-link>

@@ -75,7 +75,7 @@
                                         class="u-drop-item-icon u-item-icon"
                                         :class="'u-item-color-' + drop.ItemQuality"
                                     >
-                                        <img :src="drop.ItemIconID | iconLink" />
+                                        <img :src="iconLink(drop.ItemIconID)" />
                                     </i>
                                     <span class="u-item-name">{{ drop.ItemName}}</span>
                                 </a>
@@ -152,7 +152,7 @@ export default {
             };
         },
         client_id: function () {
-            return jx3ClientType();
+            return this.client == 'std' ? 1 : 2
         },
     },
     methods: {
@@ -206,7 +206,10 @@ export default {
         },
         viewDrop : function (item){
             this.focus = item.ItemID
-        }
+        },
+        iconLink : function (id){
+            return iconLink(id,this.client)
+        },
     },
     watch: {
         fb: {
@@ -223,7 +226,6 @@ export default {
         },
     },
     filters: {
-        iconLink,
         showSchoolIcon: function (val) {
             return __imgPath + "image/school/" + val + ".png";
         },

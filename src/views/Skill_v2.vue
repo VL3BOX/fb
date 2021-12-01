@@ -2,8 +2,8 @@
     <div class="m-fb-skill-v2">
         <!-- <p class="u-ac" v-html="ac"></p> -->
         <ul class="u-list">
-            <li v-for="(item,i) in list" :key="i">
-                <a :href="item.link" target="_blank" :style="{color:item.color}">
+            <li v-for="(item,i) in list" :key="i" v-show="client == item.color">
+                <a :href="item.link" target="_blank">
                     <img :src="item.icon | iconLink" />
                     {{item.label}}
                 </a>
@@ -25,7 +25,11 @@ export default {
             list: [],
         };
     },
-    computed: {},
+    computed: {
+        client: function () {
+            return this.$store.state.client || "std";
+        },
+    },
     methods: {
         init: function () {
             // getBread("fb-skill-ac").then((res) => {

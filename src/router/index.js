@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 const Index = () => import('../views/Index.vue')
-const Drop = () => import('../views/Drop.vue')
+// const Drop = () => import('../views/Drop.vue')
 const DropV2 = () => import('../views/Drop_v2.vue')
 const JMap = () => import('../views/Map.vue')
 const Npc = () => import('../views/Npc.vue')
@@ -18,7 +18,7 @@ Vue.use(VueRouter);
 
 const routes = [
     { name: "index", path: "/", component: Index },
-    { name: "drop", path: "/drop", component: Drop },
+    { name: "drop", path: "/drop", component: DropV2 },
     { name: "drop_v2", path: "/drop_v2", component: DropV2 },
     { name: "map", path: "/map", component: JMap },
     { name: "npc", path: "/npc", component: Npc },

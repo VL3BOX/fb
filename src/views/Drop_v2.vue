@@ -87,7 +87,7 @@
                 </div>
             </el-tab-pane>
         </el-tabs>
-        <router-link class="u-switch-version" to="/drop"><i class="el-icon-sort"></i> 切换至旧版</router-link>
+        <!-- <router-link class="u-switch-version" to="/drop"><i class="el-icon-sort"></i> 切换至旧版</router-link> -->
     </div>
 </template>
 

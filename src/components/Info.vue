@@ -16,7 +16,7 @@
             <router-link to="/attr">
                 <i class="el-icon-help"></i>
             </router-link>
-            <router-link to="/drop_v2">
+            <router-link to="/drop">
                 <i class="el-icon-present"></i>
             </router-link>
             <router-link to="/gem">

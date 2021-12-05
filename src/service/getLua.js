@@ -7,8 +7,9 @@ function getLuaIndex(fbname, client = "std") {
         },
     });
 }
-function getLua(fbname, boss, filename, client = "std") {
-    return $lua().get(`/lua/fb/src/${fbname}/${boss}/${filename}`, {
+function getLua(fbname, filename, client = "std") {
+    let _path = encodeURIComponent(`lua/fb/src/${fbname}/${filename}`);
+    return $lua().get(_path , {
         params: {
             client: client,
         },

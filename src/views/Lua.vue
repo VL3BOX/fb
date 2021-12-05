@@ -41,14 +41,14 @@
                 v-for="item in map"
                 :key="item"
             >
-                <template v-if="item.includes('/')">
-                    <div class="u-leaf" @click="showCode(item)">
-                        <i class="el-icon-tickets"></i> {{ item }}
+                <template v-if="!item.includes('/') && client == 'std'">
+                    <div class="u-leaf">
+                        ❤️ {{ item }}
                     </div>
                 </template>
                 <template v-else>
-                    <div class="u-leaf">
-                        ❤️ {{ item }}
+                    <div class="u-leaf" @click="showCode(item)">
+                        <i class="el-icon-tickets"></i> {{ item }}
                     </div>
                 </template>
             </div>

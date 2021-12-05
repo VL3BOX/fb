@@ -1,13 +1,20 @@
-import axios from "axios";
-import { __ossMirror, __luaPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { $lua } from "@jx3box/jx3box-common/js/https";
 
-function getLuaIndex(fbname) {
+function getLuaIndex(fbname, client = "std") {
     // return axios.get(__ossMirror + "lua/index.json?v=" + Date.now());
-    return axios.get(__luaPath + `fb/${fbname}/index.json?v=` + Date.now());
+    return $lua().get(`/lua/fb/dist/${fbname}/index.json`, {
+        params: {
+            client: client,
+        },
+    });
 }
-function getLua(fbname, boss) {
+function getLua(fbname, boss, client = "std") {
     // return axios.get(__ossMirror + `lua/${fb}/${boss}.json?v=` + Date.now());
-    return axios.get(__luaPath + `fb/${fbname}/${boss}.json?v=` + Date.now());
+    return $lua().get(`/lua/fb/dist/${fbname}/${boss}.json`, {
+        params: {
+            client: client,
+        },
+    });
 }
 
 export { getLuaIndex, getLua };

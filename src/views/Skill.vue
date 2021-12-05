@@ -1,6 +1,6 @@
 <template>
     <div class="v-skill">
-        <v1 v-if="hasRight"></v1>
+        <v1 v-if="hasRight && client == 'std'"></v1>
         <v2 v-else></v2>
     </div>
 </template>
@@ -21,7 +21,11 @@ export default {
             hasRight: false,
         };
     },
-    computed: {},
+    computed: {
+        client : function (){
+            return this.$store.state.client
+        }
+    },
     methods: {},
     filters: {},
     created: function () {

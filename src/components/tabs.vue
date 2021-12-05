@@ -18,7 +18,7 @@
 
         <el-tab-pane label="首领数据" name="npc">
             <span slot="label">
-                <i class="el-icon-key"></i>
+                <i class="el-icon-aim"></i>
                 <b>首领数据</b>
                 <!-- <em class="u-secret">重磅独家</em> -->
             </span>
@@ -26,8 +26,16 @@
 
         <el-tab-pane label="技能数据" name="skill">
             <span slot="label">
-                <i class="el-icon-cpu"></i>
+                <i class="el-icon-key"></i>
                 <b>技能数据</b>
+                <!-- <em class="u-secret">重磅独家</em> -->
+            </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="源码分析" name="lua" v-if="isSuperAuthor">
+            <span slot="label">
+                <i class="el-icon-cpu"></i>
+                <b>源码分析</b>
                 <!-- <em class="u-secret">重磅独家</em> -->
             </span>
         </el-tab-pane>
@@ -94,7 +102,8 @@ export default {
         return {
             view: "index",
             isAdmin: User.isAdmin(),
-            links : ['rank','team']
+            isSuperAuthor : User.isSuperAuthor(),
+            links : ['rank','team'],
         };
     },
     watch: {

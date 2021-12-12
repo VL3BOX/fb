@@ -8,9 +8,12 @@
                 <i class="el-icon-medal"></i>
             </router-link>
             <router-link to="/npc">
-                <i class="el-icon-key"></i>
+                <i class="el-icon-aim"></i>
             </router-link>
             <router-link to="/skill">
+                <i class="el-icon-key"></i>
+            </router-link>
+            <router-link to="/lua" v-if="isSuperAuthor">
                 <i class="el-icon-cpu"></i>
             </router-link>
             <router-link to="/attr">
@@ -33,11 +36,14 @@
 </template>
 
 <script>
+import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "Info",
     props: [],
     data: function () {
-        return {};
+        return {
+            isSuperAuthor : User.isSuperAuthor(),
+        };
     },
     computed: {
         client: function () {

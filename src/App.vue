@@ -1,15 +1,7 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb
-            name="副本专栏"
-            slug="fb"
-            root="/fb"
-            :publishEnable="true"
-            :feedbackEnable="true"
-            :adminEnable="true"
-            :crumbEnable="true"
-        >
+        <Breadcrumb name="副本专栏" slug="fb" root="/fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="true" :crumbEnable="true">
             <img slot="logo" svg-inline :src="getAppIcon('fb')" />
             <Info />
         </Breadcrumb>
@@ -34,18 +26,16 @@ import Info from "@/components/Info.vue";
 import Nav from "@/components/list_nav.vue";
 // import Side from "@/components/list_side.vue";
 import tabs from "@/components/tabs";
-import {getAppIcon} from '@jx3box/jx3box-common/js/utils'
+import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "App",
     props: [],
-    data: function () {
-        return {
-            
-        };
+    data: function() {
+        return {};
     },
     computed: {},
     methods: {
-        getAppIcon
+        getAppIcon,
     },
     components: {
         Info,
@@ -53,21 +43,18 @@ export default {
         // Side,
         tabs,
     },
-    beforeCreate : function (){
-        this.$store.state.zlp = this.$route.query.fb_zlp
-        this.$store.state.fb = this.$route.query.fb_name
-    }
+    beforeCreate: function() {
+        this.$store.state.zlp = this.$route.query.fb_zlp;
+        this.$store.state.fb = this.$route.query.fb_name;
+    },
 };
 </script>
 
 <style lang="less">
-@import "./assets/css/layout.less";
+@import "./assets/css/app.less";
 @media screen and (max-width: @phone) {
-    .c-crumb{
-        .none;
-    }
-    .c-breadcrumb{
-        .u-op{
+    .c-breadcrumb {
+        .u-op {
             .none;
         }
     }

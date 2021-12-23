@@ -301,8 +301,6 @@
 import { getMapNpc, getBoss } from "../service/getNpc";
 import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
 import User from "@jx3box/jx3box-common/js/user";
-import { axios } from "../service/axios/api.js";
-import { getDB } from "../service/getDB";
 import { getLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "NPCv1",

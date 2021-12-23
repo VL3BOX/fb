@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { getAppID } from "@jx3box/jx3box-common/js/utils";
 import map from "@jx3box/jx3box-data/data/fb/fb_map.json";
 import origin_map from "@jx3box/jx3box-data/data/fb/fb_map_origin.json";
 import { default_zlp, default_fb } from "../../setting.json";
@@ -12,9 +11,13 @@ let store = {
         // client
         client: location.href.includes("origin") ? "origin" : "std",
         // post
-        id: getAppID(),
+        id: 0,
         user_id: 0,
         post: "",
+        extend : {
+            collection_data : '',
+            directory : false,
+        },
         // list
         map: location.href.includes("origin") ? origin_map : map,
         fb: "",
@@ -23,16 +26,11 @@ let store = {
         default_zlp: location.href.includes("origin") ? default_zlp.origin : default_zlp.std,
         default_fb: location.href.includes("origin") ? default_fb.origin : default_fb.std,
 
-        // collections
-        collectionInfo: "",
         maptree: "",
     },
     mutations: {
         switchClient: function(state, val) {
             state.client = val || "std";
-        },
-        SET_COLLECTION: function(state, val) {
-            state.collectionInfo = val;
         },
     },
     getters: {},

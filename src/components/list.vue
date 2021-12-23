@@ -124,10 +124,10 @@
 </template>
 
 <script>
-import listbox from "@jx3box/jx3box-page/src/cms-list.vue";
+import listbox from "@jx3box/jx3box-common-ui/src/single/cms-list.vue";
 import { cms as mark_map } from "@jx3box/jx3box-common/data/mark.json";
 import _ from "lodash";
-import { getPosts } from "../service/getPost";
+import { getPosts } from "../service/post";
 import dateFormat from "../utils/dateFormat";
 import { __ossMirror, __imgPath } from "@jx3box/jx3box-common/data/jx3box";
 import {

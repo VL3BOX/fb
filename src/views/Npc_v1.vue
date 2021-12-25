@@ -1,29 +1,12 @@
 <template>
     <div class="m-fb-npc" v-loading="loading">
-        <el-input
-            class="m-npc-search"
-            placeholder="请输入NPC名称或ID"
-            v-model="search"
-            @change="loadData"
-            :disabled="onlyboss"
-        >
+        <el-input class="m-npc-search" placeholder="请输入NPC名称或ID" v-model="search" @change="loadData" :disabled="onlyboss">
             <template slot="prepend"><i class="el-icon-search"></i> 搜索</template>
-            <el-switch
-                class="u-switch u-onlyboss"
-                slot="append"
-                v-model="onlyboss"
-                active-color="#13ce66"
-                inactive-text="只看首领"
-                @change="loadData"
-            ></el-switch>
+            <el-switch class="u-switch u-onlyboss" slot="append" v-model="onlyboss" active-color="#13ce66" inactive-text="只看首领" @change="loadData"></el-switch>
         </el-input>
         <div class="m-filter-group" v-if="onlyboss">
             <el-radio-group v-model="mapid" size="medium">
-                <el-radio-button
-                    v-for="item in maps"
-                    :key="item.map_id"
-                    :label="item.map_id"
-                >{{ item.mode }}</el-radio-button>
+                <el-radio-button v-for="item in maps" :key="item.map_id" :label="item.map_id">{{ item.mode }}</el-radio-button>
             </el-radio-group>
         </div>
         <ul class="m-npc-list" v-if="data.length">
@@ -32,14 +15,7 @@
                     <img src="../assets/img/boss_mini.png" />
                 </i>
                 <img class="u-icon" src="../assets/img/iboss.png" />
-                <Mark
-                    class="u-mark u-id"
-                    :value="npc.ID"
-                    v-clipboard:copy="npc.ID"
-                    v-clipboard:success="onCopy"
-                    v-clipboard:error="onError"
-                    :key="npc.ID"
-                />
+                <Mark class="u-mark u-id" :value="npc.ID" v-clipboard:copy="npc.ID" v-clipboard:success="onCopy" v-clipboard:error="onError" :key="npc.ID" />
                 <div class="u-title">
                     <a class="u-name" :href="npc.ID | getNpcLink" target="_blank">
                         <i class="el-icon-link"></i>
@@ -47,7 +23,7 @@
                     </a>
                     <span class="u-name-add">
                         <span v-if="npc.Title || npc.Level">&lt;</span>
-                        <span class="u-nick" v-if="npc.Title">{{npc.Title}}</span>
+                        <span class="u-nick" v-if="npc.Title">{{ npc.Title }}</span>
                         <span v-if="npc.Title && npc.Level">·</span>
                         <b class="u-level" v-if="npc.Level">{{ npc.Level }}</b>
                         <span v-if="npc.Title || npc.Level">&gt;</span>
@@ -77,7 +53,8 @@
                                 :style="{
                                     width: (npc.MaxLife * 100) / 99999999 + '%',
                                 }"
-                            >{{ showBigInt(npc.MaxLife) }}</strong>
+                                >{{ showBigInt(npc.MaxLife) }}</strong
+                            >
                         </i>
                     </div>
                     <div class="u-mana">
@@ -88,7 +65,8 @@
                                 :style="{
                                     width: (npc.MaxMana * 100) / 99999999 + '%',
                                 }"
-                            >{{ showBigInt(npc.MaxMana) }}</strong>
+                                >{{ showBigInt(npc.MaxMana) }}</strong
+                            >
                         </i>
                     </div>
                     <div class="u-speed" v-if="npc.RunSpeed || npc.WalkSpeed">
@@ -133,27 +111,27 @@
                         <span class="u-sitem">
                             外功防御
                             <em>PhysicsShieldBase</em>
-                            <span class="u-value">{{~~npc.PhysicsShieldBase}}</span>
+                            <span class="u-value">{{ ~~npc.PhysicsShieldBase }}</span>
                         </span>
                         <span class="u-sitem">
                             混元防御
                             <em>NeutralMagicDefence</em>
-                            <span class="u-value">{{ ~~npc.NeutralMagicDefence}}</span>
+                            <span class="u-value">{{ ~~npc.NeutralMagicDefence }}</span>
                         </span>
                         <span class="u-sitem">
                             阳性防御
                             <em>SolarMagicDefence</em>
-                            <span class="u-value">{{ ~~npc.SolarMagicDefence}}</span>
+                            <span class="u-value">{{ ~~npc.SolarMagicDefence }}</span>
                         </span>
                         <span class="u-sitem">
                             阴性防御
                             <em>LunarMagicDefence</em>
-                            <span class="u-value">{{ ~~npc.LunarMagicDefence}}</span>
+                            <span class="u-value">{{ ~~npc.LunarMagicDefence }}</span>
                         </span>
                         <span class="u-sitem">
                             毒性防御
                             <em>PoisonMagicDefence</em>
-                            <span class="u-value">{{~~npc.PoisonMagicDefence}}</span>
+                            <span class="u-value">{{ ~~npc.PoisonMagicDefence }}</span>
                         </span>
                         <!-- </template> -->
                     </div>
@@ -162,42 +140,40 @@
                         <em>Critical</em>
                         <span class="u-sitem" v-if="client == 'std'">
                             外攻会心
-                            <span
-                                class="u-value"
-                            >{{showCritical(~~npc.PhysicsCriticalStrike,~~npc.Level)}}</span>
+                            <span class="u-value">{{ showCritical(~~npc.PhysicsCriticalStrike, ~~npc.Level) }}</span>
                         </span>
                         <span class="u-sitem" v-if="client == 'std'">
                             内攻会心
-                            <span
-                                class="u-value"
-                            >{{showCritical(~~npc.NeutralCriticalStrike || ~~npc.NeutralCriticalStrike || ~~npc.SolarCriticalStrike || ~~npc.LunarCriticalStrike,~~npc.Level)}}</span>
+                            <span class="u-value">{{
+                                showCritical(~~npc.NeutralCriticalStrike || ~~npc.NeutralCriticalStrike || ~~npc.SolarCriticalStrike || ~~npc.LunarCriticalStrike, ~~npc.Level)
+                            }}</span>
                         </span>
                         <!-- <span class="u-sitem">（即T御劲需求，具体以BOSS主要攻击类型为主）</span> -->
                         <!-- <template v-if="isAdmin"> -->
                         <span class="u-sitem">
                             外功会心
                             <em>PhysicsCriticalStrike</em>
-                            <span class="u-value">{{~~npc.PhysicsCriticalStrike}}</span>
+                            <span class="u-value">{{ ~~npc.PhysicsCriticalStrike }}</span>
                         </span>
                         <span class="u-sitem">
                             混元会心
                             <em>NeutralCriticalStrike</em>
-                            <span class="u-value">{{~~npc.NeutralCriticalStrike}}</span>
+                            <span class="u-value">{{ ~~npc.NeutralCriticalStrike }}</span>
                         </span>
                         <span class="u-sitem">
                             阳性会心
                             <em>SolarCriticalStrike</em>
-                            <span class="u-value">{{~~npc.SolarCriticalStrike}}</span>
+                            <span class="u-value">{{ ~~npc.SolarCriticalStrike }}</span>
                         </span>
                         <span class="u-sitem">
                             阴性会心
                             <em>LunarCriticalStrike</em>
-                            <span class="u-value">{{~~npc.LunarCriticalStrike}}</span>
+                            <span class="u-value">{{ ~~npc.LunarCriticalStrike }}</span>
                         </span>
                         <span class="u-sitem">
                             毒性会心
                             <em>PoisonCriticalStrike</em>
-                            <span class="u-value">{{~~npc.PoisonCriticalStrike}}</span>
+                            <span class="u-value">{{ ~~npc.PoisonCriticalStrike }}</span>
                         </span>
                         <!-- </template> -->
                     </div>
@@ -211,12 +187,12 @@
                         <span class="u-sitem">
                             外功命中
                             <em>PhysicsAttackHit</em>
-                            <span class="u-value">{{~~npc.PhysicsAttackHit}}</span>
+                            <span class="u-value">{{ ~~npc.PhysicsAttackHit }}</span>
                         </span>
                         <span class="u-sitem">
                             混元命中
                             <em>NeutralMagicHit</em>
-                            <span class="u-value">{{~~npc.NeutralMagicHit}}</span>
+                            <span class="u-value">{{ ~~npc.NeutralMagicHit }}</span>
                         </span>
                         <span class="u-sitem">
                             阳性命中
@@ -231,7 +207,7 @@
                         <span class="u-sitem">
                             毒性命中
                             <em>PoisonMagicHit</em>
-                            <span class="u-value">{{~~npc.PoisonMagicHit}}</span>
+                            <span class="u-value">{{ ~~npc.PoisonMagicHit }}</span>
                         </span>
                         <!-- </template> -->
                     </div>
@@ -270,17 +246,9 @@
                 </div>-->
             </li>
         </ul>
-        <el-alert v-else class="m-archive-null" type="info" center show-icon>
-            该副本没有找到相关条目，全图搜索请前往<a href="/app/database" target="_blank">[剑三数据库]</a>应用
-        </el-alert>
+        <el-alert v-else class="m-archive-null" type="info" center show-icon> 该副本没有找到相关条目，全图搜索请前往<a href="/app/database" target="_blank">[剑三数据库]</a>应用 </el-alert>
         <template v-if="!onlyboss">
-            <el-button
-                class="m-archive-more"
-                :class="{ show: hasNextPage }"
-                type="primary"
-                :loading="loading"
-                @click="appendPage(++page)"
-            >加载更多</el-button>
+            <el-button class="m-archive-more" :class="{ show: hasNextPage }" type="primary" :loading="loading" @click="appendPage(++page)">加载更多</el-button>
             <el-pagination
                 class="m-archive-pages"
                 background
@@ -305,7 +273,7 @@ import { getLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "NPCv1",
     props: [],
-    data: function () {
+    data: function() {
         return {
             loading: true,
             data: [],
@@ -340,28 +308,28 @@ export default {
         };
     },
     computed: {
-        hasNextPage: function () {
+        hasNextPage: function() {
             return this.total > 1 && this.page < this.pages;
         },
-        fb: function () {
+        fb: function() {
             return this.$route.query.fb_name || this.$store.state.default_fb;
         },
-        zlp: function () {
+        zlp: function() {
             return this.$route.query.fb_zlp || this.$store.state.default_zlp;
         },
-        maps: function () {
+        maps: function() {
             return this.$store.state.map[this.zlp]["dungeon"][this.fb]["maps"];
         },
-        bosslist: function () {
+        bosslist: function() {
             return this.$store.state.map[this.zlp]["dungeon"][this.fb]["boss"];
         },
-        client: function () {
+        client: function() {
             return this.$store.state.client || "std";
         },
-        isOrigin: function () {
+        isOrigin: function() {
             return this.client == "origin";
         },
-        params: function () {
+        params: function() {
             let params = {
                 per: this.per,
                 client: this.client,
@@ -377,12 +345,12 @@ export default {
         },
     },
     methods: {
-        loadData: function (i = 1, append = false) {
+        loadData: function(i = 1, append = false) {
             this.loading = true;
             if (!this.onlyboss) {
                 let params = Object.assign(this.params, {
                     page: i,
-                    client : this.client
+                    client: this.client,
                 });
                 getMapNpc(this.fb, params)
                     .then((res) => {
@@ -406,7 +374,7 @@ export default {
                         let ids = res?.data?.map((item) => {
                             return item.NPCID;
                         });
-                        getMapNpc(this.fb, { ids : ids.join(','),client : this.client }).then((res) => {
+                        getMapNpc(this.fb, { ids: ids.join(","), client: this.client }).then((res) => {
                             this.data = res?.data?.list || [];
                         });
                     })
@@ -415,29 +383,29 @@ export default {
                     });
             }
         },
-        changePage: function (i) {
+        changePage: function(i) {
             this.loadData(i);
         },
-        appendPage: function (i) {
+        appendPage: function(i) {
             this.loadData(i, true);
         },
         // isBoss: function (id) {
         //     return !!bossids.includes(id);
         // },
-        onCopy: function (val) {
+        onCopy: function(val) {
             this.$notify({
                 title: "复制成功",
                 message: "复制内容 : " + val.text,
                 type: "success",
             });
         },
-        onError: function () {
+        onError: function() {
             this.$notify.error({
                 title: "复制失败",
                 message: "请手动复制",
             });
         },
-        showDefence: function (val, level) {
+        showDefence: function(val, level) {
             // 等级 lv 防御shield 防御系数shieldx5.091【赛季维护】 属性因子y205 等级常数lvn18800
             // =FLOOR((shield/(shield+(shieldx*(y*lv-lvn)))*1024),1)/1024
             // =shield/(shield+(shieldx*(y*lv-lvn))))
@@ -446,29 +414,22 @@ export default {
             //     "%"
             // );
             if (level) {
-                return (
-                    ((val / this.defence_coefficient[level]) * 100).toFixed(2) +
-                    "%"
-                );
+                return ((val / this.defence_coefficient[level]) * 100).toFixed(2) + "%";
             } else {
                 return val;
             }
         },
-        showCritical: function (val, level) {
+        showCritical: function(val, level) {
             // 会心CriticalStrike 全局常数x3750【等级维护】会心CriticalStrikex
             // =ROUND(CriticalStrike/x/CriticalStrikex,3)
             // return ((val / 3750 / 9.53) * 100).toFixed(2) + "%";
             if (level) {
-                return (
-                    ((val / this.critical_coefficient[level]) * 100).toFixed(
-                        2
-                    ) + "%"
-                );
+                return ((val / this.critical_coefficient[level]) * 100).toFixed(2) + "%";
             } else {
                 return val;
             }
         },
-        showBigInt: function (val) {
+        showBigInt: function(val) {
             let _val = val / 100000000;
             if (_val > 1) {
                 return _val.toFixed(2) + "亿";
@@ -480,23 +441,23 @@ export default {
     watch: {
         fb: {
             immediate: true,
-            handler: function () {
+            handler: function() {
                 this.mapid = this.maps.slice(-1)[0]["map_id"];
                 this.loadData();
             },
         },
-        mapid: function () {
+        mapid: function() {
             this.loadData();
         },
     },
-    mounted: function () {
+    mounted: function() {
         User.isLogin() &&
             User.isVIP().then((data) => {
                 this.hasRight = data;
             });
     },
     filters: {
-        getNpcLink: function (val) {
+        getNpcLink: function(val) {
             return getLink("npc", val);
         },
     },

@@ -16,21 +16,21 @@ export default {
         v1,
         v2,
     },
-    data: function () {
+    data: function() {
         return {
             hasRight: false,
         };
     },
     computed: {
-        client : function (){
-            return this.$store.state.client
-        }
+        client: function() {
+            return this.$store.state.client;
+        },
     },
     methods: {},
     filters: {},
-    created: function () {
+    created: function() {
         let hasRight = User.isAdmin();
-        this.hasRight = hasRight
+        this.hasRight = hasRight;
         if (!hasRight) {
             User.isPRO().then((data) => {
                 this.hasRight = data;
@@ -42,6 +42,6 @@ export default {
             });
         }
     },
-    mounted: function () {},
+    mounted: function() {},
 };
 </script>

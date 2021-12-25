@@ -2,54 +2,25 @@
     <div class="v-lua" v-loading="loading" v-if="isSuperAuthor">
         <!-- 搜索 -->
         <div class="m-lua-search">
-            <el-input
-                placeholder="请输入关键词"
-                v-model="search"
-                class="input-with-select"
-                @change="searchLua"
-            >
+            <el-input placeholder="请输入关键词" v-model="search" class="input-with-select" @change="searchLua">
                 <span slot="prepend"><i class="el-icon-search"></i> 搜索</span>
-                <el-button
-                    slot="append"
-                    icon="el-icon-position"
-                    @change="searchLua"
-                ></el-button>
+                <el-button slot="append" icon="el-icon-position" @change="searchLua"></el-button>
             </el-input>
         </div>
-        <el-alert
-            class="m-lua-warning"
-            title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！"
-            type="warning"
-            effect="dark"
-            show-icon
-            :closable="false"
-        ></el-alert>
+        <el-alert class="m-lua-warning" title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！" type="warning" effect="dark" show-icon :closable="false"></el-alert>
         <div class="m-lua-tree m-lua-box">
             <div class="u-title">
                 <i class="el-icon-collection-tag"></i>
                 <span class="u-title-list" @click="showList">文件列表</span>
-                <span class="u-title-file"
-                    ><i class="el-icon-arrow-right"></i> {{ file }}</span
-                >
-                <div class="u-back" @click="showList" v-if="data">
-                    <i class="el-icon-caret-left"></i> 返 回
-                </div>
+                <span class="u-title-file"><i class="el-icon-arrow-right"></i> {{ file }}</span>
+                <div class="u-back" @click="showList" v-if="data"><i class="el-icon-caret-left"></i> 返 回</div>
             </div>
-            <div
-                class="u-item"
-                v-show="!data"
-                v-for="item in map"
-                :key="item"
-            >
+            <div class="u-item" v-show="!data" v-for="item in map" :key="item">
                 <template v-if="!item.includes('/') && client == 'std'">
-                    <div class="u-leaf">
-                        ❤️ {{ item }}
-                    </div>
+                    <div class="u-leaf">❤️ {{ item }}</div>
                 </template>
                 <template v-else>
-                    <div class="u-leaf" @click="showCode(item)">
-                        <i class="el-icon-tickets"></i> {{ item }}
-                    </div>
+                    <div class="u-leaf" @click="showCode(item)"><i class="el-icon-tickets"></i> {{ item }}</div>
                 </template>
             </div>
             <div class="u-data" v-show="data">
@@ -60,7 +31,9 @@
         </div>
     </div>
     <div class="v-null" v-else>
-        <el-alert type="warning" show-icon><span slot="title">没有查看权限，仅<a href="/dashboard/#cooperation" target="_blank">【签约作者】</a>可见。</span></el-alert>
+        <el-alert type="warning" show-icon
+            ><span slot="title">没有查看权限，仅<a href="/dashboard/#cooperation" target="_blank">【签约作者】</a>可见。</span></el-alert
+        >
     </div>
 </template>
 
@@ -73,7 +46,7 @@ export default {
     name: "Lua",
     props: [],
     components: {},
-    data: function () {
+    data: function() {
         return {
             loading: false,
             map: [],
@@ -86,17 +59,17 @@ export default {
         };
     },
     computed: {
-        fb: function () {
+        fb: function() {
             return this.$route.query.fb_name || this.$store.state.default_fb;
         },
-        client: function () {
-            return this.$store.state.client || 'std';
+        client: function() {
+            return this.$store.state.client || "std";
         },
     },
     watch: {
-        fb: function (){
-            this.loadLuaIndex()
-        }
+        fb: function() {
+            this.loadLuaIndex();
+        },
     },
     methods: {
         isDirectory: function(val) {
@@ -106,7 +79,7 @@ export default {
             this.$refs[key][0]["classList"].toggle("on");
         },
         showCode: function(path) {
-            console.log(path)
+            console.log(path);
             this.file = path;
             this.loadLua(path);
         },
@@ -131,32 +104,33 @@ export default {
         },
         searchLua: function() {
             if (this.search) {
-                this.map = this.copyMap.filter(item => item.includes(this.search))
+                this.map = this.copyMap.filter((item) => item.includes(this.search));
             } else {
-                this.map = this.copyMap
+                this.map = this.copyMap;
             }
         },
-        loadLuaIndex: function (){
-            this.loading = true
-            getLuaIndex(this.fb, this.client).then(res => {
-                this.map = this.copyMap = res.data.filter(item => item) || []
-            }).finally(() => {
-                this.loading = false
-            })
-        }
+        loadLuaIndex: function() {
+            this.loading = true;
+            getLuaIndex(this.fb, this.client)
+                .then((res) => {
+                    this.map = this.copyMap = res.data.filter((item) => item) || [];
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
     },
     filters: {},
-    created: function () {},
-    mounted: function () {
-        
+    created: function() {},
+    mounted: function() {
         User.isSuperAuthor().then((data) => {
-            this.isSuperAuthor = data
+            this.isSuperAuthor = data;
 
             if (this.isSuperAuthor) {
                 this.current = this.school_name;
-                this.loadLuaIndex()
+                this.loadLuaIndex();
             }
-        })
+        });
     },
 };
 </script>

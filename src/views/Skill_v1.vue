@@ -29,7 +29,7 @@ import skill_item from "@/components/skill_item.vue";
 export default {
     name: "Skill_v1",
     props: [],
-    data: function () {
+    data: function() {
         return {
             focus: "",
             search: "",
@@ -40,19 +40,19 @@ export default {
             empty: false,
             hasRight: false,
             isAdmin: true,
-            subnav : []
+            subnav: [],
         };
     },
     computed: {
-        fb: function () {
+        fb: function() {
             return this.$route.query.fb_name || this.$store.state.default_fb;
         },
-        zlp: function () {
+        zlp: function() {
             return this.$route.query.fb_zlp || this.$store.state.default_zlp;
         },
     },
     methods: {
-        loadLua: function () {
+        loadLua: function() {
             this.loading = true;
             getLua(this.fb, this.focus)
                 .then((res) => {
@@ -65,7 +65,7 @@ export default {
                     this.loading = false;
                 });
         },
-        loadLuaIndex: function () {
+        loadLuaIndex: function() {
             getLuaIndex(this.fb)
                 .then((res) => {
                     this.empty = false;
@@ -80,7 +80,7 @@ export default {
         },
     },
     watch: {
-        search: function (val) {
+        search: function(val) {
             if (!val) {
                 for (let key in this.data) {
                     this.data[key]["show"] = true;
@@ -89,12 +89,8 @@ export default {
                 for (let key in this.data) {
                     if (
                         key.includes(val) ||
-                        (!!this.data[key]["origin_id"]
-                            ? String(this.data[key]["origin_id"]).includes(val)
-                            : false) ||
-                        (!!this.data[key]["origin_name"]
-                            ? this.data[key]["origin_name"].includes(val)
-                            : false)
+                        (!!this.data[key]["origin_id"] ? String(this.data[key]["origin_id"]).includes(val) : false) ||
+                        (!!this.data[key]["origin_name"] ? this.data[key]["origin_name"].includes(val) : false)
                     ) {
                         this.data[key]["show"] = true;
                     } else {
@@ -103,11 +99,11 @@ export default {
                 }
             }
         },
-        fb: function () {
-            this.loadLuaIndex()
+        fb: function() {
+            this.loadLuaIndex();
         },
     },
-    mounted: function () {
+    mounted: function() {
         this.loadLuaIndex();
         User.isLogin() &&
             User.isVIP().then((data) => {

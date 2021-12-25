@@ -2,10 +2,10 @@
     <div class="m-fb-skill-v2">
         <!-- <p class="u-ac" v-html="ac"></p> -->
         <ul class="u-list">
-            <li v-for="(item,i) in list" :key="i" v-show="client == item.color">
+            <li v-for="(item, i) in list" :key="i" v-show="client == item.color">
                 <a :href="item.link" target="_blank">
                     <img :src="item.icon | iconLink" />
-                    {{item.label}}
+                    {{ item.label }}
                 </a>
             </li>
         </ul>
@@ -19,19 +19,19 @@ export default {
     name: "Skill_v2",
     props: [],
     components: {},
-    data: function () {
+    data: function() {
         return {
             ac: "",
             list: [],
         };
     },
     computed: {
-        client: function () {
+        client: function() {
             return this.$store.state.client || "std";
         },
     },
     methods: {
-        init: function () {
+        init: function() {
             // getBread("fb-skill-ac").then((res) => {
             //     this.ac = res.data.data.breadcrumb.html;
             // });
@@ -41,12 +41,12 @@ export default {
         },
     },
     filters: {
-        iconLink
+        iconLink,
     },
-    created: function () {
+    created: function() {
         this.init();
     },
-    mounted: function () {},
+    mounted: function() {},
 };
 </script>
 
@@ -55,25 +55,25 @@ export default {
     background-color: #fafbfc;
     border: 1px solid #dfe6f7;
     border-radius: 4px;
-    padding:10px;
-    .fz(14px,2);
+    padding: 10px;
+    .fz(14px, 2);
 }
-.u-list{
+.u-list {
     list-style: none;
-    padding:0;
-    margin:0;
-    li{
+    padding: 0;
+    margin: 0;
+    li {
         .mb(10px);
-        border-bottom:1px solid #eee;
+        border-bottom: 1px solid #eee;
     }
-    a{
+    a {
         .db;
-        .fz(14px,2);
-        &:hover{
-            color:@pink;
+        .fz(14px, 2);
+        &:hover {
+            color: @pink;
         }
     }
-    img{
+    img {
         .r(3px);
         .y;
         .size(24px);

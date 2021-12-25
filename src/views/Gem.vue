@@ -1,23 +1,12 @@
 <template>
     <div class="m-fb-gem" v-loading="loading">
-        <el-input
-            class="m-gem-search"
-            placeholder="请输入关键词"
-            v-model="search"
-            @change="loadPosts"
-        >
+        <el-input class="m-gem-search" placeholder="请输入关键词" v-model="search" @change="loadPosts">
             <template slot="prepend">关键词</template>
             <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
 
         <div class="m-gem-list" v-if="data.length">
-            <a
-                class="m-gem-item"
-                v-for="(item, i) in data"
-                :href="item.Link"
-                :key="i"
-                target="_blank"
-            >
+            <a class="m-gem-item" v-for="(item, i) in data" :href="item.Link" :key="i" target="_blank">
                 <img class="u-icon" :src="item.IconID | icon" />
                 <span class="u-title">{{ item.Name }}</span>
                 <span class="u-desc" v-html="item.DescHtml"></span>
@@ -30,26 +19,11 @@
                         {{ drop }}
                     </span>
                 </span> -->
-                <span class="u-id">UUID:{{item.UiID}}</span>
+                <span class="u-id">UUID:{{ item.UiID }}</span>
             </a>
         </div>
-        <el-alert
-            v-else
-            class="m-archive-null"
-            title="没有找到相关条目"
-            type="info"
-            center
-            show-icon
-        >
-        </el-alert>
-        <el-button
-            class="m-archive-more"
-            :class="{ show: hasNextPage }"
-            type="primary"
-            :loading="loading"
-            @click="appendPage(++page)"
-            >加载更多</el-button
-        >
+        <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon> </el-alert>
+        <el-button class="m-archive-more" :class="{ show: hasNextPage }" type="primary" :loading="loading" @click="appendPage(++page)">加载更多</el-button>
         <el-pagination
             class="m-archive-pages"
             background
@@ -66,7 +40,7 @@
 
 <script>
 import { getGemList } from "../service/getGem";
-import { __ossMirror, __iconPath,__ossRoot } from "@jx3box/jx3box-common/data/jx3box";
+import { __ossMirror, __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box";
 export default {
     name: "Gem",
     props: [],
@@ -79,7 +53,7 @@ export default {
             per: 15,
             loading: false,
             search: "",
-            appendMode : false
+            appendMode: false,
         };
     },
     computed: {
@@ -92,17 +66,17 @@ export default {
         zlp: function() {
             return this.$route.query.fb_zlp || this.$store.state.default_zlp;
         },
-        client : function (){
-            return this.$store.state.client || 'std'
+        client: function() {
+            return this.$store.state.client || "std";
         },
-        params : function (){
+        params: function() {
             return {
                 dungeon: this.fb,
                 page: this.page,
                 keyword: this.search,
-                client : this.client
-            }
-        }
+                client: this.client,
+            };
+        },
     },
     filters: {
         icon: function(id) {
@@ -136,10 +110,10 @@ export default {
         },
         changePage: function() {
             window.scrollTo(0, 0);
-            this.appendMode = false
+            this.appendMode = false;
         },
         appendPage: function(i) {
-            this.appendMode = true
+            this.appendMode = true;
         },
         getDesc: function(str) {
             const RE = /使用(.*?)装备。/;
@@ -152,16 +126,16 @@ export default {
             return result;
         },
     },
-    watch : {
-        params : {
-            deep : true,
-            handler : function (){
-                this.loadPosts()
-            }
-        }
+    watch: {
+        params: {
+            deep: true,
+            handler: function() {
+                this.loadPosts();
+            },
+        },
     },
     created: function() {
-        this.loadPosts()
+        this.loadPosts();
     },
 };
 </script>

@@ -1,7 +1,6 @@
 <template>
     <div class="m-fb-team">
-        <el-alert title="即将推出，敬请期待" type="warning" center show-icon>
-        </el-alert>
+        <el-alert title="即将推出，敬请期待" type="warning" center show-icon> </el-alert>
     </div>
 </template>
 

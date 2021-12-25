@@ -43,7 +43,7 @@
                         </a>
 
                         <h2 class="u-post" :class="{ isSticky: item.sticky }">
-                            <img class="u-icon" svg-inline src="../assets/img/post.svg" />
+                            <img class="u-icon" svg-inline src="../../assets/img/post.svg" />
                             <a
                                 class="u-title"
                                 :style="item.color | isHighlight"
@@ -127,8 +127,8 @@
 import listbox from "@jx3box/jx3box-common-ui/src/single/cms-list.vue";
 import { cms as mark_map } from "@jx3box/jx3box-common/data/mark.json";
 import _ from "lodash";
-import { getPosts } from "../service/post";
-import dateFormat from "../utils/dateFormat";
+import { getPosts } from "../../service/post";
+import dateFormat from "../../utils/dateFormat";
 import { __ossMirror, __imgPath } from "@jx3box/jx3box-common/data/jx3box";
 import {
     showAvatar,
@@ -301,5 +301,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/list.less";
+@import "../../assets/css/list.less";
 </style>

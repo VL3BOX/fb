@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="副本专栏" slug="fb" root="/fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="true" :crumbEnable="true">
+        <Breadcrumb name="副本专栏" slug="fb" root="/fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="false" :crumbEnable="true">
             <img slot="logo" svg-inline :src="getAppIcon('fb')" />
             <Info />
         </Breadcrumb>
@@ -23,7 +23,7 @@
 
 <script>
 import Info from "@/components/Info.vue";
-import Nav from "@/components/list_nav.vue";
+import Nav from "@/components/list/list_nav.vue";
 // import Side from "@/components/list_side.vue";
 import tabs from "@/components/tabs";
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
@@ -52,11 +52,4 @@ export default {
 
 <style lang="less">
 @import "./assets/css/app.less";
-@media screen and (max-width: @phone) {
-    .c-breadcrumb {
-        .u-op {
-            .none;
-        }
-    }
-}
 </style>

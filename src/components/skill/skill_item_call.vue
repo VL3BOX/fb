@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import args from "@/components/skill_item_call_args.vue";
-import arg from "@/components/skill_item_call_arg.vue";
+import args from "@/components/skill/skill_item_call_args.vue";
+import arg from "@/components/skill/skill_item_call_arg.vue";
 export default {
     name: "skill_item_call",
     props: ["data"],

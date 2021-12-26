@@ -25,7 +25,7 @@
 import { getLuaIndex, getLua } from "../service/getSkill";
 import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
 import User from "@jx3box/jx3box-common/js/user";
-import skill_item from "@/components/skill_item.vue";
+import skill_item from "@/components/skill/skill_item.vue";
 export default {
     name: "Skill_v1",
     props: [],

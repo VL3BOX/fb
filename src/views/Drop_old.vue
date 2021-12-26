@@ -119,7 +119,7 @@
 import { getDrop, getBoss } from "../service/getDrop";
 import { __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import dropmap from "../assets/js/drop.json";
-import drop_item from "../components/drop_item";
+import drop_item from "../components/drop/drop_item";
 import _ from "lodash";
 
 export default {

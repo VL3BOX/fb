@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import unit from "@/components/skill_item_call_arg.vue";
+import unit from "@/components/skill/skill_item_call_arg.vue";
 export default {
     name: "args",
     props: ["args"],

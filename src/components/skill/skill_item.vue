@@ -1,7 +1,7 @@
 <template>
     <div class="m-skill-item">
         <!-- 图标 -->
-        <img class="u-icon" src="../assets/img/iskill.png" />
+        <img class="u-icon" src="../../assets/img/iskill.png" />
 
         <!-- 原始ID -->
         <template v-if="AdvancedMode">
@@ -112,8 +112,8 @@
 
 <script>
 import keymap from "@/assets/data/keymap.json";
-import skill_item_props from "@/components/skill_item_props.vue";
-import skill_item_call from "@/components/skill_item_call.vue";
+import skill_item_props from "@/components/skill/skill_item_props.vue";
+import skill_item_call from "@/components/skill/skill_item_call.vue";
 export default {
     name: "skill_item",
     props: ["hasRight", "data", "name"],

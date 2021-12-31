@@ -42,7 +42,7 @@ export default {
             this.loading = false;
         },
         mapLink: function(val, i) {
-            return __iconPath + "map/map_" + val + "_" + i + ".png";
+            return __iconPath + "map/maps/map_" + val + "_" + i + ".png";
         },
     },
     mounted: function() {

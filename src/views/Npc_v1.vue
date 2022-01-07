@@ -1,6 +1,6 @@
 <template>
     <div class="m-fb-npc" v-loading="loading">
-        <el-input class="m-npc-search" placeholder="请输入NPC名称或ID" v-model="search" @change="loadData" :disabled="onlyboss">
+        <el-input class="m-npc-search" placeholder="请输入NPC名称或ID" v-model.trim.lazy="search" @change="loadData" :disabled="onlyboss">
             <template slot="prepend"><i class="el-icon-search"></i> 搜索</template>
             <el-switch class="u-switch u-onlyboss" slot="append" v-model="onlyboss" active-color="#13ce66" inactive-text="只看首领" @change="loadData"></el-switch>
         </el-input>

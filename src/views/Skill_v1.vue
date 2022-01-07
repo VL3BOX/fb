@@ -7,7 +7,7 @@
             </el-tabs>
         </div>
 
-        <el-input class="m-skill-search" placeholder="请输入技能名称" v-model="search">
+        <el-input class="m-skill-search" placeholder="请输入技能名称" v-model.trim.lazy="search">
             <template slot="prepend">技能名称</template>
             <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>

@@ -1,6 +1,6 @@
 <template>
     <div class="m-fb-gem" v-loading="loading">
-        <el-input class="m-gem-search" placeholder="请输入关键词" v-model="search" @change="loadPosts">
+        <el-input class="m-gem-search" placeholder="请输入关键词" v-model.trim.lazy="search" @change="loadPosts">
             <template slot="prepend">关键词</template>
             <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>

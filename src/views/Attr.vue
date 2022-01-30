@@ -2,7 +2,7 @@
     <div class="m-fb-attr" v-loading="loading">
         <template v-if="client == 'std'">
             <el-divider content-position="left">穿透</el-divider>
-            <div class="u-desc">{{chuantou['desc']}}</div>
+            <div class="u-desc" v-html="chuantou['desc']"></div>
             <ul class="u-content">
                 <li v-for="(item, i) in chuantou['list']" :key="i">
                     <a :href="item.link" target="_blank">
@@ -13,7 +13,7 @@
                 </li>
             </ul>
             <el-divider content-position="left">穿刺</el-divider>
-            <div class="u-desc">{{chuanci['desc']}}</div>
+            <div class="u-desc" v-html="chuanci['desc']"></div>
             <ul class="u-content">
                 <li v-for="(item, i) in chuanci['list']" :key="i">
                     <a :href="item.link" target="_blank" :title="item.meta_1">
@@ -25,7 +25,7 @@
             </ul>
         </template>
         <el-divider content-position="left">贯体</el-divider>
-        <div class="u-desc">{{guanti['desc']}}</div>
+        <div class="u-desc" v-html="guanti['desc']"></div>
         <ul class="u-content">
             <li v-for="(item, i) in guanti['list']" :key="i">
                 <a :href="item.link" target="_blank" :title="item.meta_1">

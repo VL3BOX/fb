@@ -2,9 +2,9 @@
     <div class="m-fb-attr" v-loading="loading">
         <template v-if="client == 'std'">
             <el-divider content-position="left">穿透</el-divider>
-            <div class="u-desc">穿透属性会将通用减伤效果降低100%，无视格挡伤害类效果。依旧可以受到属性减伤、小部分伤害吸收盾、内外功防御以及免死效果影响。</div>
+            <div class="u-desc">{{chuantou['desc']}}</div>
             <ul class="u-content">
-                <li v-for="(item, i) in chuantou" :key="i">
+                <li v-for="(item, i) in chuantou['list']" :key="i">
                     <a :href="item.link" target="_blank">
                         <img :src="item.icon | iconLink" />
                         {{ item.label }}
@@ -13,9 +13,9 @@
                 </li>
             </ul>
             <el-divider content-position="left">穿刺</el-divider>
-            <div class="u-desc">穿刺伤害会在伤害作用玩家之前主要删除/无视无敌类型的技能，但是依旧可以受到通用减伤、属性减伤、部分分担伤害、伤害吸收盾、内外功防御以及免死效果影响。</div>
+            <div class="u-desc">{{chuanci['desc']}}</div>
             <ul class="u-content">
-                <li v-for="(item, i) in chuanci" :key="i">
+                <li v-for="(item, i) in chuanci['list']" :key="i">
                     <a :href="item.link" target="_blank" :title="item.meta_1">
                         <img :src="item.icon | iconLink" />
                         {{ item.label }}
@@ -25,9 +25,9 @@
             </ul>
         </template>
         <el-divider content-position="left">贯体</el-divider>
-        <div class="u-desc">可按百分比治疗目标的技能，在有较高禁疗下时很重要。</div>
+        <div class="u-desc">{{guanti['desc']}}</div>
         <ul class="u-content">
-            <li v-for="(item, i) in guanti" :key="i">
+            <li v-for="(item, i) in guanti['list']" :key="i">
                 <a :href="item.link" target="_blank" :title="item.meta_1">
                     <img :src="item.icon | iconLink" />
                     {{ item.label }}
@@ -48,9 +48,18 @@ export default {
     data: function() {
         return {
             loading: false,
-            chuantou: "",
-            chuanci: "",
-            guanti: "",
+            chuantou: {
+                list : [],
+                desc : ''
+            },
+            chuanci: {
+                list : [],
+                desc : ''
+            },
+            guanti: {
+                list : [],
+                desc : ''
+            },
         };
     },
     computed: {
@@ -69,7 +78,8 @@ export default {
                 .then((res) => {
                     let data = res.data.data.data;
                     for (let key in data) {
-                        this[key] = data[key]["items"];
+                        this[key]['list'] = data[key]["items"] || [];
+                        this[key]['desc'] = data[key]["description"];
                     }
                 })
                 .finally(() => {

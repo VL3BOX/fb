@@ -29,9 +29,7 @@
 
             <div class="u-metalist u-mode-list c-jx3fb-mode" v-if="item.post_meta && item.post_meta.fb_level">
                 <strong>模式</strong>
-                <em>
-                    {{ format(item, "fb_level") + "" }}
-                </em>
+                <em>{{ format(item, "fb_level").join('、') }}</em>
             </div>
         </div>
 
@@ -81,7 +79,7 @@ export default {
             }
         },
         format: function(item, key) {
-            let val = item?.post_meta?.[key]
+            let val = item?.post_meta?.[key];
             if (val && val.length) {
                 return val;
             } else {

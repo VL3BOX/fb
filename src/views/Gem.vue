@@ -6,8 +6,8 @@
         </el-input>
 
         <div class="m-gem-list" v-if="data.length">
-            <a class="m-gem-item" v-for="(item, i) in data" :href="item.Link" :key="i" target="_blank">
-                <img class="u-icon" :src="item.IconID | icon" />
+            <a class="m-gem-item" v-for="(item, i) in data" :href="'/item' + item.Link" :key="i" target="_blank">
+                <img class="u-icon" :src="item.IconID | iconLink" />
                 <span class="u-title">{{ item.Name }}</span>
                 <span class="u-desc" v-html="item.DescHtml"></span>
                 <!-- <span class="u-drops">
@@ -41,6 +41,7 @@
 <script>
 import { getGemList } from "../service/getGem";
 import { __ossMirror, __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box";
+import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Gem",
     props: [],
@@ -78,11 +79,7 @@ export default {
             };
         },
     },
-    filters: {
-        icon: function(id) {
-            return __iconPath + "icon/" + id + ".png";
-        },
-    },
+    filters: { iconLink },
     methods: {
         loadPosts: function() {
             this.loading = true;
@@ -94,7 +91,6 @@ export default {
                     } else {
                         data = res.data.data.data;
                     }
-                    // console.log(data)
                     // for (let item of data) {
                     //     item._desc = this.getDesc(item.Desc);
                     //     item._drops = this.getDrops(item.Desc);
@@ -125,6 +121,7 @@ export default {
             let result = str.match(RE) || [];
             return result;
         },
+        getLink,
     },
     watch: {
         params: {

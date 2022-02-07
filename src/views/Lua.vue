@@ -7,7 +7,7 @@
                 <el-button slot="append" icon="el-icon-position" @change="searchLua"></el-button>
             </el-input>
         </div>
-        <el-alert class="m-lua-warning" title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！" type="warning" effect="dark" show-icon :closable="false"></el-alert>
+        <el-alert class="m-lua-warning" title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！(本功能需要额外独立申请授权)" type="warning" effect="dark" show-icon :closable="false"></el-alert>
         <div class="m-lua-tree m-lua-box">
             <div class="u-title">
                 <i class="el-icon-collection-tag"></i>

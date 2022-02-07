@@ -79,7 +79,7 @@ export default {
             this.$refs[key][0]["classList"].toggle("on");
         },
         showCode: function(path) {
-            console.log(path);
+            // console.log(path);
             this.file = path;
             this.loadLua(path);
         },

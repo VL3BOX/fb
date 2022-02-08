@@ -14,7 +14,7 @@
                 <i class="el-icon-key"></i>
             </router-link>
             <router-link to="/lua" v-if="isSuperAuthor">
-                <i class="el-icon-cpu"></i>
+                <i class="el-icon-full-screen"></i>
             </router-link>
             <router-link to="/attr">
                 <i class="el-icon-help"></i>

@@ -134,6 +134,11 @@ export default {
             }
         },
     },
+    mounted : function (){
+        User.isSuperAuthor().then((data) => {
+            this.isSuperAuthor = data;
+        });
+    }
 };
 </script>
 

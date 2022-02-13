@@ -34,11 +34,6 @@ export default {
         if (!hasRight) {
             User.isPRO().then((data) => {
                 this.hasRight = data;
-                // if (!data) {
-                //     User.isSuperAuthor().then((data) => {
-                //         this.hasRight = data;
-                //     });
-                // }
             });
         }
     },

@@ -7,7 +7,14 @@
                 <el-button slot="append" icon="el-icon-position" @change="searchLua"></el-button>
             </el-input>
         </div>
-        <el-alert class="m-lua-warning" title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！(本功能需要额外独立申请授权)" type="warning" effect="dark" show-icon :closable="false"></el-alert>
+        <el-alert
+            class="m-lua-warning"
+            title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！(本功能需要额外独立申请授权)"
+            type="warning"
+            effect="dark"
+            show-icon
+            :closable="false"
+        ></el-alert>
         <div class="m-lua-tree m-lua-box">
             <div class="u-title">
                 <i class="el-icon-collection-tag"></i>
@@ -64,13 +71,22 @@ export default {
         client: function() {
             return this.$store.state.client || "std";
         },
-        isSuperAuthor : function (){
-            return this.$store.state.isSuperAuthor
-        }
+        isSuperAuthor: function() {
+            return this.$store.state.isSuperAuthor;
+        },
     },
     watch: {
         fb: function() {
             this.loadLuaIndex();
+        },
+        isSuperAuthor: {
+            immediate: true,
+            handler: function(val) {
+                if (val) {
+                    this.current = this.school_name;
+                    this.loadLuaIndex();
+                }
+            },
         },
     },
     methods: {
@@ -115,28 +131,16 @@ export default {
             this.loading = true;
             getLuaIndex(this.fb, this.client)
                 .then((res) => {
-                    this.$store.state.isSuperAuthor = true
+                    this.$store.state.isSuperAuthor = true;
                     this.map = this.copyMap = res.data.filter((item) => item) || [];
                 })
                 .catch((err) => {
-                    this.$store.state.isSuperAuthor = false
+                    this.$store.state.isSuperAuthor = false;
                 })
                 .finally(() => {
                     this.loading = false;
                 });
         },
-    },
-    filters: {},
-    created: function() {},
-    mounted: function() {
-        User.isSuperAuthor().then((data) => {
-            this.isSuperAuthor = data;
-
-            if (this.isSuperAuthor) {
-                this.current = this.school_name;
-                this.loadLuaIndex();
-            }
-        });
     },
 };
 </script>

@@ -136,7 +136,7 @@ export default {
     },
     mounted : function (){
         User.isSuperAuthor().then((data) => {
-            this.isSuperAuthor = data;
+            this.$store.state.isSuperAuthor = data;
         });
     }
 };

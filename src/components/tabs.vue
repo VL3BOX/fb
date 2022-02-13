@@ -102,7 +102,6 @@ export default {
         return {
             view: "index",
             isAdmin: User.isAdmin(),
-            isSuperAuthor : User.isSuperAuthor(),
             links : ['rank','team'],
         };
     },
@@ -118,6 +117,9 @@ export default {
         client: function () {
             return this.$store.state.client;
         },
+        isSuperAuthor : function (){
+            return this.$store.state.isSuperAuthor || false
+        }
     },
     methods: {
         changeView: function (tab) {

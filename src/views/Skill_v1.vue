@@ -34,7 +34,6 @@ export default {
             focus: "",
             search: "",
             loading: false,
-            isSuperAuthor: true, //User.isSuperAuthor(),
             cache: {},
             data: {},
             empty: false,

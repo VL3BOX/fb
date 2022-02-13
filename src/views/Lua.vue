@@ -54,7 +54,6 @@ export default {
             current: "",
             data: "",
             file: "",
-            isSuperAuthor: false,
             search: "",
         };
     },
@@ -65,6 +64,9 @@ export default {
         client: function() {
             return this.$store.state.client || "std";
         },
+        isSuperAuthor : function (){
+            return this.$store.state.isSuperAuthor
+        }
     },
     watch: {
         fb: function() {
@@ -113,7 +115,11 @@ export default {
             this.loading = true;
             getLuaIndex(this.fb, this.client)
                 .then((res) => {
+                    this.$store.state.isSuperAuthor = true
                     this.map = this.copyMap = res.data.filter((item) => item) || [];
+                })
+                .catch((err) => {
+                    this.$store.state.isSuperAuthor = false
                 })
                 .finally(() => {
                     this.loading = false;

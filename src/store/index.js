@@ -27,6 +27,8 @@ let store = {
         default_fb: location.href.includes("origin") ? default_fb.origin : default_fb.std,
 
         maptree: "",
+
+        isSuperAuthor : false,
     },
     mutations: {
         switchClient: function(state, val) {

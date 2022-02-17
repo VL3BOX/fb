@@ -145,6 +145,7 @@ export default {
                     }
                     this.total = res.data?.data?.total;
                     this.pages = res.data?.data?.pages;
+                    this.$forceUpdate()
                 })
                 .finally(() => {
                     this.loading = false;

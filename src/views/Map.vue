@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { __iconPath } from "@jx3box/jx3box-common/data/jx3box";
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box";
 import { getMaptree } from "@/service/getMap.js";
 export default {
     name: "JMap",
@@ -42,7 +42,7 @@ export default {
             this.loading = false;
         },
         mapLink: function(val, i) {
-            return __iconPath + "map/maps/map_" + val + "_" + i + ".png";
+            return __imgPath + "map/maps/map_" + val + "_" + i + ".png";
         },
     },
     mounted: function() {

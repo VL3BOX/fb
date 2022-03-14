@@ -1,8 +1,7 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="副本专栏" slug="fb" root="/fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="true">
-            <img slot="logo" svg-inline :src="getAppIcon('fb')" />
+        <Breadcrumb name="副本专栏" slug="fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="true">
         </Breadcrumb>
         <LeftSidebar>
             <Nav :id="id" class="m-nav" />

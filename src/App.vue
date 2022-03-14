@@ -1,8 +1,7 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="副本专栏" slug="fb" root="/fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="false" :crumbEnable="true">
-            <img slot="logo" svg-inline :src="getAppIcon('fb')" />
+        <Breadcrumb name="副本专栏" slug="fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="false" :crumbEnable="true">
             <Info />
         </Breadcrumb>
         <LeftSidebar>
@@ -26,7 +25,6 @@ import Info from "@/components/Info.vue";
 import Nav from "@/components/list/list_nav.vue";
 // import Side from "@/components/list_side.vue";
 import tabs from "@/components/tabs";
-import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "App",
     props: [],
@@ -35,7 +33,6 @@ export default {
     },
     computed: {},
     methods: {
-        getAppIcon,
     },
     components: {
         Info,

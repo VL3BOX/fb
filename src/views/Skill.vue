@@ -9,6 +9,7 @@
 import v1 from "./Skill_v1.vue";
 import v2 from "./Skill_v2.vue";
 import User from "@jx3box/jx3box-common/js/user";
+import {getIsSuperAuthor} from '@/service/getSkill.js'
 export default {
     name: "Skill",
     props: [],
@@ -18,25 +19,22 @@ export default {
     },
     data: function() {
         return {
-            hasRight: false,
+            isAdmin: false,
+            isSuperAuthor : false,
         };
     },
     computed: {
         client: function() {
             return this.$store.state.client;
         },
-    },
-    methods: {},
-    filters: {},
-    created: function() {
-        let hasRight = User.isAdmin();
-        this.hasRight = hasRight;
-        if (!hasRight) {
-            User.isPRO().then((data) => {
-                this.hasRight = data;
-            });
+        hasRight : function (){
+            return this.isAdmin || this.isSuperAuthor
         }
     },
-    mounted: function() {},
+    mounted: function() {
+        getIsSuperAuthor(User.getInfo().uid).then((res) => {
+            this.isSuperAuthor = res.data?.data;
+        })
+    },
 };
 </script>

@@ -1,4 +1,4 @@
-import { $lua } from "@jx3box/jx3box-common/js/https";
+import { $lua, $cms } from "@jx3box/jx3box-common/js/https";
 
 function getLuaIndex(fbname, client = "std") {
     // return axios.get(__ossMirror + "lua/index.json?v=" + Date.now());
@@ -17,4 +17,8 @@ function getLua(fbname, boss, client = "std") {
     });
 }
 
-export { getLuaIndex, getLua };
+function getIsSuperAuthor(uid) {
+    return $cms().get(`/api/cms/user/is_super_author/${uid}`);
+}
+
+export { getLuaIndex, getLua, getIsSuperAuthor };

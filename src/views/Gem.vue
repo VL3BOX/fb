@@ -31,7 +31,7 @@
             </div>
         </div>
         <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon> </el-alert>
-        <el-button class="m-archive-more" :class="{ show: hasNextPage }" type="primary" :loading="loading" @click="appendPage(++page)" icon="el-icon-arrow-down">加载更多</el-button>
+        <el-button class="m-archive-more" :class="{ show: hasNextPage }" type="primary" :loading="loading" @click="appendPage(++page)" icon="el-icon-arrow-down" v-show="hasNextPage">加载更多</el-button>
         <el-pagination
             class="m-archive-pages"
             background

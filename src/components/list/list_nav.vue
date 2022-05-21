@@ -24,7 +24,7 @@
         </div>
 
         <div class="m-nav-group" v-for="(group, key) in map" :key="key">
-            <h2 class="u-category active" v-show="!search && group.client.includes(client)">
+            <h2 class="u-category active" v-show="!search">
                 <span class="u-title">🍄 {{ key }}</span>
                 <em class="u-level">({{ group.level }})</em>
             </h2>
@@ -37,9 +37,8 @@
                         active: isActive(subkey),
                         hidden: isHide(subkey),
                     }"
-                    v-show="item.client.includes(client)"
                 >
-                    <router-link class="u-link" :to="{ query: { fb_zlp: group.name, fb_name: item.name } }">{{ item.name }}</router-link>
+                    <router-link class="u-link" :to="{ query: { fb_zlp: group.name, fb_name: subkey } }">{{ item.name }}</router-link>
                 </li>
             </ul>
         </div>

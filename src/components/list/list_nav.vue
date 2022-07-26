@@ -34,7 +34,7 @@
                     :key="subkey"
                     class="u-item"
                     :class="{
-                        active: isActive(subkey),
+                        active: isActive(subkey,group),
                         hidden: isHide(subkey),
                     }"
                 >
@@ -85,11 +85,12 @@ export default {
         url: function(zlp, fb) {
             return `/fb/?fb_zlp=${zlp}&fb_name=${fb}` + "#" + this.$route.path;
         },
-        isActive: function(subkey) {
+        isActive: function(subkey,group) {
             // let params = new URLSearchParams(location.search);
             // let current = params.get("fb_name");
             let current = this.$route.query.fb_name;
-            return current == subkey;
+            let zlp = this.$route.query.fb_zlp
+            return current == subkey && group.name == zlp;
         },
         isHide: function(subkey) {
             if (!this.search) return;

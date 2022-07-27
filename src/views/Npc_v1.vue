@@ -376,7 +376,11 @@ export default {
                             if(NpcID) ids.push(...(NpcID.map(id => parseInt(id))));
                             return ids;
                         }, []);
-                        getMapNpc(this.fb, { ids: ids.join(","), client: this.client }).then((res) => {
+                        getMapNpc(this.fb, {
+                            ids: ids.join(","),
+                            client: this.client,
+                            per: 20
+                        }).then((res) => {
                             this.data = res?.data?.list || [];
                         });
                     })

@@ -371,9 +371,11 @@ export default {
                 this.page = 1;
                 getBoss(this.mapid, this.client)
                     .then((res) => {
-                        let ids = res?.data?.map((item) => {
-                            return item.NPCID;
-                        });
+                        let ids = res?.data?.reduce((ids, cur) => {
+                            let NpcID = cur.NpcID?.split("、");
+                            if(NpcID) ids.push(...(NpcID.map(id => parseInt(id))));
+                            return ids;
+                        }, []);
                         getMapNpc(this.fb, { ids: ids.join(","), client: this.client }).then((res) => {
                             this.data = res?.data?.list || [];
                         });

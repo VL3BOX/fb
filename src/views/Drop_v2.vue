@@ -90,6 +90,7 @@ import dropmap from "../assets/data/drop_types.json";
 import { getLink, iconLink, jx3ClientType } from "@jx3box/jx3box-common/js/utils";
 import schoolmap from "@jx3box/jx3box-data/data/xf/schoolid.json";
 import Item from "@jx3box/jx3box-editor/src/Item.vue";
+import { getResource } from "@/service/resource";
 // import drop_item from "../components/drop_item";
 
 export default {
@@ -149,20 +150,31 @@ export default {
                 this.boss = this.bosslist[0]["BOSS"];
             });
         },
-        loadDropList: function () {
-            this.loading = true;
-            return getDropV2(this.mapid, this.params)
-                .then((res) => {
-                    let data = res?.data;
-                    data.forEach((item) => {
-                        item.schools = item?.ApplicableSchoolIDs?.split("|");
-                        item.jx3_item_id = this.getDropItemID(item);
-                    });
-                    this.droplist = data;
-                })
-                .finally(() => {
-                    this.loading = false;
+        loadDropList: async function () {
+            try {
+                this.loading = true;
+                let drops = await getDropV2(this.mapid, this.params);
+                drops = drops?.data;
+                let item_ids = drops.map((drop) => this.getDropItemID(drop));
+                let items = await getResource("item_merged", this.client, {
+                    ids: item_ids,
                 });
+                // 用到的物品找出来，先缓存防止多次请求
+                items = items?.data;
+                for (let item of items) {
+                    let cacheKey = `item-${this.client}-${item.id}`;
+                    sessionStorage.setItem(cacheKey, JSON.stringify(item));
+                }
+                for (let drop of drops) {
+                    drop.schools = drop?.ApplicableSchoolIDs?.split("|");
+                    drop.jx3_item_id = this.getDropItemID(drop);
+                }
+                this.droplist = drops;
+            } catch (e) {
+                console.log(e);
+            } finally {
+                this.loading = false;
+            }
         },
         changeBoss: function (boss) {
             this.boss = boss;

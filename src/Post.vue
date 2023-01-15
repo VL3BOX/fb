@@ -3,7 +3,7 @@
         <Header></Header>
         <Breadcrumb name="副本专栏" slug="fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="true">
         </Breadcrumb>
-        <LeftSidebar>
+        <LeftSidebar :uid="user_id">
             <Nav :id="id" class="m-nav" />
         </LeftSidebar>
         <Main :withoutRight="false">
@@ -28,6 +28,11 @@ export default {
         return {
             id: getAppID(),
         };
+    },
+    computed: {
+        user_id: function () {
+            return this.$store.state.user_id;
+        },
     },
     methods: { getAppIcon },
     components: {

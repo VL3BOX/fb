@@ -20,7 +20,7 @@ module.exports = {
             filename:'post.html',
         },
     },
-    
+
     devServer: {
         proxy: {
             "/api/inspire": {
@@ -52,6 +52,12 @@ module.exports = {
             },
             "/api/team": {
                 target: "https://team.api.jx3box.com",
+                onProxyReq: function(request) {
+                    request.setHeader("origin", "");
+                },
+            },
+            "/api/cny": {
+                target: "https://pay.jx3box.com/",
                 onProxyReq: function(request) {
                     request.setHeader("origin", "");
                 },

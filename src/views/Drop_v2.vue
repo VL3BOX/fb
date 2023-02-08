@@ -150,7 +150,7 @@ export default {
                 this.boss = this.bosslist[0]["BOSS"];
             });
         },
-        loadDropList: async function () {
+        loadDropList: async function (old) {
             try {
                 this.loading = true;
                 let drops = await getDropV2(this.mapid, this.params);
@@ -171,14 +171,17 @@ export default {
                 }
                 this.droplist = drops;
             } catch (e) {
+                this.$message.error("数据获取失败，请稍后再试");
+                this.boss = old;
                 console.log(e);
             } finally {
                 this.loading = false;
             }
         },
         changeBoss: function (boss) {
+            let oldBoss = this.boss;
             this.boss = boss;
-            this.loadDropList();
+            this.loadDropList(oldBoss);
         },
         getDropItemID: function (dropitem) {
             return dropitem.ItemExtID

@@ -161,14 +161,21 @@ export default {
                 });
                 // 用到的物品找出来，先缓存防止多次请求
                 items = items?.data;
-                for (let item of items) {
-                    let cacheKey = `item-${this.client}-${item.id}`;
-                    sessionStorage.setItem(cacheKey, JSON.stringify(item));
-                }
                 for (let drop of drops) {
                     drop.schools = drop?.ApplicableSchoolIDs?.split("|");
                     drop.jx3_item_id = this.getDropItemID(drop);
                 }
+                for (let item of items) {
+                    let cacheKey = `item-${this.client}-${item.id}`;
+                    sessionStorage.setItem(cacheKey, JSON.stringify(item));
+                    for (let drop of drops) {
+                        if (drop.jx3_item_id == item.id) {
+                            drop.jx3_item = item;
+                            break;
+                        }
+                    }
+                }
+
                 this.droplist = drops;
             } catch (e) {
                 this.$message.error("数据获取失败，请稍后再试");
@@ -195,8 +202,22 @@ export default {
             this.school = school_id;
         },
         isVisible: function (drop) {
-            let categoryIsVisible = !~~this.droptype || drop.ItemType == this.droptype;
             let schoolIsVisible = !~~this.school || drop.schools?.includes(this.school);
+            // let categoryIsVisible = !~~this.droptype || drop.ItemType == this.droptype; 要根据具体物品判断
+            let categoryIsVisible = false;
+            if (this.droptype == 5) {
+                if (drop.jx3_item.Source == "other") categoryIsVisible = true;
+                if (drop.jx3_item.Source == "trinket" && [5, 20, 22].includes(~~drop.jx3_item.AucGenre))
+                    categoryIsVisible = true; // 5=坐骑 20=宠物 22=挂件
+            } else if ([6, 7, 8].includes(~~this.droptype)) {
+                if (drop.jx3_item.Source == "trinket" && [5, 20, 22].includes(~~drop.jx3_item.AucGenre)) {
+                    categoryIsVisible = false;
+                } else {
+                    categoryIsVisible = ~~drop.ItemType == this.droptype;
+                }
+            } else if (!~~this.droptype) {
+                categoryIsVisible = true;
+            }
             return categoryIsVisible && schoolIsVisible;
         },
         viewDrop: function (item) {

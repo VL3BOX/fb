@@ -1,13 +1,13 @@
 <template>
     <div class="m-fb-gem" v-loading="loading">
-        <el-input class="m-gem-search" placeholder="请输入关键词" v-model.trim.lazy="search" @change="loadPosts">
+        <el-input class="m-gem-search" placeholder="请输入关键词" v-model.trim.lazy="search" clearable @clear="onSearch" @keydown.native.enter="onSearch">
             <template slot="prepend">关键词</template>
-            <el-button slot="append" icon="el-icon-search"></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="onSearch"></el-button>
         </el-input>
 
         <div class="m-gem-list" v-if="data.length">
             <div class="m-gem-item" v-for="(item, i) in data" :key="i">
-                <img class="u-icon" :src="item.IconID | iconLink" />
+                <img class="u-icon" :src="iconLink(item.IconID)" />
                 <span class="u-title">
                     <a :href="'/item' + item.Link" target="_blank" draggable="false">{{ item.Name }}</a>
                     <i
@@ -95,16 +95,22 @@ export default {
             return {
                 dungeon: this.fb,
                 page: this.page,
-                keyword: this.search,
                 client: this.client,
             };
         },
     },
-    filters: { iconLink },
     methods: {
+        iconLink,
+        onSearch() {
+            this.loadPosts();
+        },
         loadPosts: function () {
             this.loading = true;
-            getGemList(this.params)
+            const params = {
+                ...this.params,
+                keyword: this.search,
+            };
+            getGemList(params)
                 .then((res) => {
                     let data = [];
                     if (this.appendMode) {

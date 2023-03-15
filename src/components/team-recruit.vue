@@ -4,7 +4,7 @@
             <img
                 class="u-icon"
                 svg-inline
-                src="../assets/img/puzzle.svg"
+                src="@/assets/img/puzzle.svg"
             />团队招募
             <a class="u-more" href="/team" target="_blank">查看更多 &raquo;</a>
         </h3>

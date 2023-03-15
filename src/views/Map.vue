@@ -1,7 +1,9 @@
 <template>
-    <div class="m-fb-map" v-if="maptree">
-        <img class="u-map" :src="mapLink(mapid, item)" :alt="fb" ref="fb_map_img" v-for="item in maplist" :key="item" />
-    </div>
+    <ListLayout>
+        <div class="m-fb-map" v-if="maptree">
+            <img class="u-map" :src="mapLink(mapid, item)" :alt="fb" ref="fb_map_img" v-for="item in maplist" :key="item" />
+        </div>
+    </ListLayout>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <template>
     <div class="m-skill-item">
         <!-- 图标 -->
-        <img class="u-icon" src="../../assets/img/iskill.png" />
+        <img class="u-icon" src="@/assets/img/iskill.png" />
 
         <!-- 原始ID -->
         <template v-if="AdvancedMode">

@@ -1,20 +1,21 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="副本专栏" slug="fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="false" :crumbEnable="true">
+        <Breadcrumb name="副本专栏" slug="fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="false"
+            :crumbEnable="true">
             <Info />
         </Breadcrumb>
         <LeftSidebar>
             <Nav class="m-nav" />
         </LeftSidebar>
-        <Main :withoutRight="true">
+        <Main :withoutRight="false">
             <div class="m-fb">
                 <tabs />
                 <router-view />
             </div>
-            <!-- <RightSidebar>
+            <RightSidebar>
                 <Side class="m-extend" />
-            </RightSidebar> -->
+            </RightSidebar>
             <Footer></Footer>
         </Main>
     </div>
@@ -23,12 +24,12 @@
 <script>
 import Info from "@/components/Info.vue";
 import Nav from "@/components/list/list_nav.vue";
-// import Side from "@/components/list_side.vue";
+import Side from "@/components/list/list_side.vue";
 import tabs from "@/components/tabs";
 export default {
     name: "App",
     props: [],
-    data: function() {
+    data: function () {
         return {};
     },
     computed: {},
@@ -37,10 +38,10 @@ export default {
     components: {
         Info,
         Nav,
-        // Side,
+        Side,
         tabs,
     },
-    beforeCreate: function() {
+    beforeCreate: function () {
         this.$store.state.zlp = this.$route.query.fb_zlp;
         this.$store.state.fb = this.$route.query.fb_name;
     },

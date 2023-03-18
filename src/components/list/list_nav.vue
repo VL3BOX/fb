@@ -24,9 +24,10 @@
             <!-- 输入框 -->
             <!-- <el-input placeholder="搜索副本或首领名称" v-model="search" clearable></el-input> -->
             <!-- 下拉框 -->
-            <el-select v-model="search" placeholder="选择副本" clearable>
+            <el-select v-model="search" placeholder="选择副本">
                 <el-option-group v-for="(group, key) in map" :key="key" :label="'🍄' + key + '(' + group.level + ')'">
-                    <el-option v-for="(item, subkey) in group.dungeon" :key="subkey" :label="subkey" :value="subkey">
+                    <el-option v-for="(item, subkey) in group.dungeon" :key="subkey" :label="subkey" :value="subkey"
+                        @click.native="changeFb(key, subkey)">
                     </el-option>
                 </el-option-group>
             </el-select>
@@ -38,12 +39,25 @@
             <div class="u-fbName">{{ fbName }}</div>
         </div>
         <div class="m-nav-fbInfo">
-            <p class="u-fbName">{{ fbName }}</p>
-            <p><span>模式:</span><a v-for="(group, key) in modeList" :key="key" href="">{{ group.mode }}</a></p>
-            <p><span>首领:</span><a v-for="item in bossList" :key="item" href="">{{ item }}</a></p>
-            <p><a href="">副本简介</a><a href="">副本掉落</a><a href="">瑰石列表</a><a href="">Npc信息</a><a href="">副本成就</a></p>
+            <div class="m-nav-sel">
+                <el-select v-model="mode" placeholder="选择模式" size="small">
+                    <el-option v-for="(group, key) in modeList" :key="key" :label="group.mode" :value="group.mode">
+                    </el-option>
+                </el-select>
+                <el-select v-model="boss" placeholder="选择首领" size="small">
+                    <el-option v-for="item in bossList" :key="item" :label="item" :value="item">
+                    </el-option>
+                </el-select>
+            </div>
+            <div class="m-nav-detail">
+                <a href="" class="u-tag"><i class="el-icon-collection"></i>副本攻略</a>
+                <a href="" class="u-tag"><i class="el-icon-film"></i>副本简介</a>
+                <a href="" class="u-tag"><i class="el-icon-present"></i>副本掉落</a>
+                <a href="" class="u-tag"><i class="el-icon-medal"></i>副本成就</a>
+                <a href="" class="u-tag"><i class="el-icon-cherry"></i>瑰石列表</a>
+                <a href="" class="u-tag"><i class="el-icon-help"></i>Npc信息</a>
+            </div>
         </div>
-
         <h5 class="u-title">在线应用</h5>
         <div class="m-nav-app">
             <a href="/jcl" target="_blank">
@@ -73,7 +87,7 @@
             </a>
             <a href="/bahuang" target="_blank">
                 <img class="u-icon" :src="getAppIcon('battle')" />
-                <span>八荒衡坚</span>
+                <span>八荒衡鉴</span>
                 <em>Ba Huang</em>
             </a>
             <a href="/baizhan" target="_blank">
@@ -94,8 +108,9 @@
                     active: isActive(subkey, group),
                     hidden: isHide(subkey),
                 }">
-                    <router-link class="u-link" :to="{ query: { fb_zlp: group.name, fb_name: subkey } }">{{ item.name
-                    }}</router-link>
+                    <router-link class="u-link" :to="{ query: { fb_zlp: group.name, fb_name: subkey } }">
+                        {{ item.name }}
+                    </router-link>
                 </li>
             </ul>
         </div> -->
@@ -122,6 +137,8 @@ export default {
             fbImg: this.$store.state.map[defaultFb.default_zlp.std].dungeon[defaultFb.default_fb.std].icon,
             modeList: this.$store.state.map[defaultFb.default_zlp.std].dungeon[defaultFb.default_fb.std].maps,
             bossList: this.$store.state.map[defaultFb.default_zlp.std].dungeon[defaultFb.default_fb.std].boss,
+            boss: "",
+            mode: ""
         };
     },
     computed: {
@@ -172,7 +189,18 @@ export default {
             }
             return true;
         },
-        getAppIcon
+        getAppIcon,
+        //下拉框修改展示的副本内容
+        changeFb: function (fb_zlp, fb_name) {
+            this.$router.push('?fb_zlp=' + fb_zlp + '&fb_name=' + fb_name)
+            this.fbZlp = fb_zlp;
+            this.fbName = fb_name;
+            this.fbImg = this.map[fb_zlp].dungeon[fb_name].icon;
+            this.modeList = this.map[fb_zlp].dungeon[fb_name].maps;
+            this.bossList = this.map[fb_zlp].dungeon[fb_name].boss;
+            this.boss = "";
+            this.mode = "";
+        }
     },
     watch: {
         "$route.query.fb_zlp": function (val) {
@@ -181,22 +209,15 @@ export default {
         "$route.query.fb_name": function (val) {
             this.$store.state.fb = val;
         },
-        //修改展示的副本内容
-        search: function (val) {
-            if (val.length > 0) {
-                this.fbName = val;
-                for (let obj in this.map) {
-                    if (this.map[obj].dungeon[val] != null) {
-                        this.fbImg = this.map[obj].dungeon[val].icon
-                        this.modeList = this.map[obj].dungeon[val].maps;
-                        this.bossList = this.map[obj].dungeon[val].boss;
-                    }
-                }
-            } else {
-                this.fbName = defaultFb.default_fb.std
-                this.fbImg = this.map[this.fbZlp].dungeon[defaultFb.default_fb.std].icon
-            }
+        mode: function (val) {
+            this.mode = val;
+            //路由待定
+        },
+        boss: function (val) {
+            this.boss = val;
+            //路由待定
         }
+
     },
 };
 </script>

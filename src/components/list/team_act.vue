@@ -10,7 +10,9 @@
             <span :class="{ 'u-tab': true, 'is-active': tab == 'act' }" @click="actTab">活动</span>
             <span :class="{ 'u-tab': true, 'is-active': tab == 'team' }" @click="teamTab">团队</span>
         </div>
-        <div class="m-act-info" v-show="tab == 'act'" v-for="(item, key) in acts" :key="key" @click="viewDetail(item.id)">
+        <div class="m-act-info-null" v-show="tab == 'act'" v-if="acts.length == 0"><span>暂无团队活动</span></div>
+        <div class="m-act-info" v-show="tab == 'act'" v-else v-for="(item, key) in acts" :key="key"
+            @click="viewDetail(item.id)">
             <img :src="item.team_logo" alt="" class="u-img">
             <div class="u-act-title">
                 <span>【{{ item.team_name }}】{{ item.name }}</span>
@@ -71,7 +73,6 @@ export default {
             });
             getTeams(this.params).then((res) => {
                 this.teams = res.data.data.list;
-                console.log(this.teams)
             });
         },
         getAppIcon,

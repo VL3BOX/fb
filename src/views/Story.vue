@@ -7,11 +7,9 @@
                     <el-descriptions :column="3" border>
                         <el-descriptions-item label="名称">{{ item.OtherName }}</el-descriptions-item>
                         <el-descriptions-item label="地图ID">{{ item.MapID }}</el-descriptions-item>
-                        <el-descriptions-item label="资料片"
-                            >Level.{{ item.DivideLevel }}／{{ item.DivideName }}／{{
-                                item.VersionName
-                            }}</el-descriptions-item
-                        >
+                        <el-descriptions-item label="资料片">Level.{{ item.DivideLevel }}／{{ item.DivideName }}／{{
+                            item.VersionName
+                        }}</el-descriptions-item>
                         <el-descriptions-item label="最低等级要求">{{ item.MinLevel }}</el-descriptions-item>
                         <el-descriptions-item label="入口" :span="2">{{ item.EnterWay }}</el-descriptions-item>
                         <el-descriptions-item label="简介">{{
@@ -28,17 +26,10 @@
                                 {{ boss.BOSS }}
                             </h5>
                             <p class="u-boss-detail" v-html="boss.Introduce"></p>
-                            <el-button
-                                class="u-boss-more"
-                                type="primary"
-                                plain
-                                @click="loadSkills(boss)"
-                                size="mini"
-                                icon="el-icon-key"
-                                >{{
+                            <el-button class="u-boss-more" type="primary" plain @click="loadSkills(boss)" size="mini"
+                                icon="el-icon-key">{{
                                     !skill_list[boss.NPCID] ? "查看技能" : skill_status[boss.NPCID] ? "收起" : "展开"
-                                }}</el-button
-                            >
+                                }}</el-button>
                             <div class="u-boss-skills" v-show="skill_status[boss.NPCID]">
                                 <template v-if="skill_list[boss.NPCID]">
                                     <div class="u-skill" v-for="skill in skill_list[boss.NPCID]" :key="skill.idkey">
@@ -54,6 +45,9 @@
                     </div>
                 </div>
             </el-tab-pane>
+            <el-tab-pane :label="'副本地图'">
+                <fb-map></fb-map>
+            </el-tab-pane>
         </el-tabs>
         <el-alert title="未找到相关信息" type="info" show-icon v-else></el-alert>
     </div>
@@ -63,8 +57,12 @@
 import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
 import { getInfo, getBoss, getBossSkills } from "@/service/getStory.js";
 import { extractTextContent } from "@jx3box/jx3box-common/js/utils";
+import fbMap from "./Map.vue";
 export default {
     name: "Story",
+    components: {
+        fbMap,
+    },
     props: [],
     data: function () {
         return {
@@ -95,7 +93,7 @@ export default {
             getInfo(this.fb, this.client)
                 .then((res) => {
                     this.data = res?.data || [];
-                    if(!this.map_id){
+                    if (!this.map_id) {
                         this.map_id = String(this.data?.[0]?.["MapID"]);
                     }
                     return this.map_id;

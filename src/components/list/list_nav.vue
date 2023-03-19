@@ -242,7 +242,7 @@ export default {
     },
     watch: {
         "$route.query.fb_zlp": function (val) {
-            this.$store.state.zlp = val;
+
         },
         "$route.query.fb_name": function (val) {
             this.$store.state.fb = val;

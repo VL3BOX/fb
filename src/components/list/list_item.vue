@@ -6,7 +6,7 @@
         <!-- 标题 -->
         <h2 class="u-post" :class="{ isSticky: item.sticky }">
             <!-- 图标 -->
-            <img class="u-icon" svg-inline src="../../assets/img/list/post.svg" />
+            <img class="u-icon" svg-inline src="@/assets/img/list/post.svg" />
 
             <!-- 标题文字 -->
             <a class="u-title" :style="item.color | showHighlight" :href="item.ID | postLink" :target="target">{{ item.post_title || "无标题" }}</a>

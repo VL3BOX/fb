@@ -35,6 +35,8 @@ const routes = [
 
 const router = new VueRouter({
     routes,
+    mode: 'history',
+    base: '/fb'
 });
 
 export default router;

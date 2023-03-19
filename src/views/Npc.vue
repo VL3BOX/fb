@@ -1,9 +1,11 @@
 <template>
-    <div class="v-npc">
-        <v1></v1>
-        <!-- <v1 v-if="isAdmin"></v1> -->
-        <!-- <v2 v-else></v2> -->
-    </div>
+    <ListLayout>
+        <div class="v-npc">
+            <v1></v1>
+            <!-- <v1 v-if="isAdmin"></v1> -->
+            <!-- <v2 v-else></v2> -->
+        </div>
+    </ListLayout>
 </template>
 
 <script>

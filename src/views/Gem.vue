@@ -1,4 +1,5 @@
 <template>
+<ListLayout>
     <div class="m-fb-gem" v-loading="loading">
         <el-input class="m-gem-search" placeholder="请输入关键词" v-model.trim.lazy="search" clearable @clear="onSearch" @keydown.native.enter="onSearch">
             <template slot="prepend">关键词</template>
@@ -53,6 +54,7 @@
         >
         </el-pagination>
     </div>
+</ListLayout>
 </template>
 
 <script>

@@ -1,4 +1,6 @@
 <template>
+<ListLayout>
+
     <div class="v-lua" v-loading="loading" v-if="isSuperAuthor">
         <!-- 搜索 -->
         <div class="m-lua-search">
@@ -42,6 +44,7 @@
             ><span slot="title">没有查看权限，仅<a href="/dashboard/#cooperation" target="_blank">【签约作者】</a>可见。</span></el-alert
         >
     </div>
+</ListLayout>
 </template>
 
 <script>

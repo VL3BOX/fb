@@ -1,4 +1,6 @@
 <template>
+<ListLayout>
+
     <div class="m-fb-drop" v-loading="loading">
         <el-tabs v-model="mapid" type="card">
             <el-tab-pane :label="item.mode" :name="item.map_id" v-for="(item, i) in maplist" :key="i">
@@ -11,7 +13,7 @@
                         @click="changeBoss(item.BOSS)"
                     >
                         <!-- <img :src="bossavatar(j)" /> -->
-                        <img class="u-boss-avatar" svg-inline src="../assets/img/skull.svg" />
+                        <img class="u-boss-avatar" svg-inline src="@/assets/img/skull.svg" />
                         {{ item.BOSS }}
                     </div>
                 </div>
@@ -81,6 +83,7 @@
         </el-tabs>
         <!-- <router-link class="u-switch-version" to="/drop"><i class="el-icon-sort"></i> 切换至旧版</router-link> -->
     </div>
+</ListLayout>
 </template>
 
 <script>

@@ -4,7 +4,7 @@
             <img
                 class="u-icon"
                 svg-inline
-                src="../assets/img/rank.svg"
+                src="@/assets/img/rank.svg"
             />全服排行
         </h3>
         <el-tabs @tab-click="loadRank" v-model="active">
@@ -91,5 +91,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/rank.less";
+@import "@/assets/css/rank.less";
 </style>

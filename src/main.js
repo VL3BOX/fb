@@ -13,6 +13,14 @@ import "@jx3box/jx3box-common/css/element.css";
 import "@jx3box/jx3box-common/css/normalize.css";
 Vue.use(JX3BOX_UI);
 
+import ListLayout from "@/layouts/ListLayout.vue";
+import AppLayout from "@/layouts/AppLayout.vue";
+import SingleLayout from "@/layouts/SingleLayout.vue";
+
+Vue.component("AppLayout", AppLayout);
+Vue.component("ListLayout", ListLayout);
+Vue.component("SingleLayout", SingleLayout);
+
 /**
  * 数据组件
  */

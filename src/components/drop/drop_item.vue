@@ -6,7 +6,7 @@
                 class="u-item-icon"
                 :src="data.Icon.FileName"
             />
-            <img v-else class="u-item-icon" src="../assets/img/null.png" />
+            <img v-else class="u-item-icon" src="@/assets/img/null.png" />
             <span>{{data.Name}}</span>
         </div>
         <div class="u-drop-item-info" v-if="type == 'weapons' || type == 'armors'">

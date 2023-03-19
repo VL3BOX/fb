@@ -33,29 +33,28 @@
             </el-select>
         </div>
 
-        <!--副本选择面板 路由及样式未完成 -->
-        <div class="m-nav-fbPanel">
-            <img :src="imgPath + fbImg" />
-            <div class="u-fbName">{{ fbName }}</div>
+        <div class="m-nav-panel">
+            <img class="u-img" :src="getMap(fbDetail.icon)" />
+            <div class="u-name">{{ fbName }}</div>
         </div>
-        <div class="m-nav-fbInfo">
+        <div class="m-nav-info">
+            <!-- 模式与首领选择 功能未实现 -->
             <div class="m-nav-sel">
-                <el-select v-model="mode" placeholder="选择模式" size="small">
-                    <el-option v-for="(group, key) in modeList" :key="key" :label="group.mode" :value="group.mode">
+                <el-select v-model="mode" placeholder="全部模式" size="small" clearable>
+                    <el-option v-for="(group, key) in fbDetail.maps" :key="key" :label="group.mode" :value="group.mode">
                     </el-option>
                 </el-select>
-                <el-select v-model="boss" placeholder="选择首领" size="small">
-                    <el-option v-for="item in bossList" :key="item" :label="item" :value="item">
+                <el-select v-model="boss" placeholder="全部首领" size="small" clearable>
+                    <el-option v-for="item in fbDetail.boss" :key="item" :label="item" :value="item">
                     </el-option>
                 </el-select>
             </div>
-            <div class="m-nav-detail">
-                <a href="" class="u-tag"><i class="el-icon-collection"></i>副本攻略</a>
-                <a href="" class="u-tag"><i class="el-icon-film"></i>副本简介</a>
-                <a href="" class="u-tag"><i class="el-icon-present"></i>副本掉落</a>
-                <a href="" class="u-tag"><i class="el-icon-medal"></i>副本成就</a>
-                <a href="" class="u-tag"><i class="el-icon-cherry"></i>瑰石列表</a>
-                <a href="" class="u-tag"><i class="el-icon-help"></i>Npc信息</a>
+            <div class="m-nav-tag">
+                <div v-for="(item, key) in tabs" :key="key" class="u-tag" :class="{ active: tagActive(item.name) }"
+                    @click="url(item.name)">
+                    <i :class="'el-icon-' + item.icon"></i>
+                    <span>{{ item.label }}</span>
+                </div>
             </div>
         </div>
         <h5 class="u-title">在线应用</h5>
@@ -128,17 +127,43 @@ export default {
     data: function () {
         return {
             search: "",
-            map: this.$store.state.map,
             searchBelong: [],
-            imgPath: __imgPath,
-            //初始变量定义需优化↓
             fbName: defaultFb.default_fb.std,
             fbZlp: defaultFb.default_zlp.std,
-            fbImg: this.$store.state.map[defaultFb.default_zlp.std].dungeon[defaultFb.default_fb.std].icon,
-            modeList: this.$store.state.map[defaultFb.default_zlp.std].dungeon[defaultFb.default_fb.std].maps,
-            bossList: this.$store.state.map[defaultFb.default_zlp.std].dungeon[defaultFb.default_fb.std].boss,
+            fbDetail: this.$store.state.map[defaultFb.default_zlp.std].dungeon[defaultFb.default_fb.std],
             boss: "",
-            mode: ""
+            mode: "",
+            tabs: [
+                {
+                    label: '副本攻略',
+                    icon: 'collection',
+                    name: 'index'
+                }, {
+                    label: '副本掉落',
+                    icon: 'present',
+                    name: 'drop'
+                }, {
+                    label: '瑰石列表',
+                    icon: 'cherry',
+                    name: 'gem'
+                }, {
+                    label: '副本成就',
+                    icon: 'medal',
+                    name: 'cj'
+                }, {
+                    label: '秘境传说',
+                    icon: 'film',
+                    name: 'story'
+                }, {
+                    label: '首领数据',
+                    icon: 'aim',
+                    name: 'npc'
+                }, {
+                    label: '高阶技巧',
+                    icon: 'help',
+                    name: 'attr'
+                }
+            ]
         };
     },
     computed: {
@@ -164,10 +189,22 @@ export default {
         client: function () {
             return this.$store.state.client;
         },
+        map: function () {
+            return this.$store.state.map;
+        },
     },
     methods: {
-        url: function (zlp, fb) {
-            return `/fb/?fb_zlp=${zlp}&fb_name=${fb}` + "#" + this.$route.path;
+        url: function (tagname) {
+            this.$router.push({
+                name: tagname,
+                query: {
+                    fb_name: this.$route.query.fb_name,
+                    fb_zlp: this.$route.query.fb_zlp,
+                },
+            });
+        },
+        getMap: function (path) {
+            return __imgPath + path
         },
         isActive: function (subkey, group) {
             // let params = new URLSearchParams(location.search);
@@ -195,11 +232,12 @@ export default {
             this.$router.push('?fb_zlp=' + fb_zlp + '&fb_name=' + fb_name)
             this.fbZlp = fb_zlp;
             this.fbName = fb_name;
-            this.fbImg = this.map[fb_zlp].dungeon[fb_name].icon;
-            this.modeList = this.map[fb_zlp].dungeon[fb_name].maps;
-            this.bossList = this.map[fb_zlp].dungeon[fb_name].boss;
+            this.fbDetail = this.map[fb_zlp].dungeon[fb_name];
             this.boss = "";
             this.mode = "";
+        },
+        tagActive: function (tag_name) {
+            return this.$route.name == tag_name
         }
     },
     watch: {
@@ -215,9 +253,10 @@ export default {
         },
         boss: function (val) {
             this.boss = val;
-            //路由待定
-        }
-
+        },
+        // search: function (val1, val2) {
+        //     console.log(val1, val2)
+        // }
     },
 };
 </script>

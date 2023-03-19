@@ -54,28 +54,36 @@
 .m-tab {
     .flex;
     .fz(14px);
-    padding: 8px 0;
-    justify-content: space-around;
+    padding: 5px 0;
+    justify-content: space-between;
     border-bottom: 1px dotted #eee;
 
     .u-tab {
+        .w(43%);
+        text-align: center;
         border: 1px solid #eee;
-        padding: 0 5px;
-        border-radius: 2px;
+        padding: 4px 0;
+        .r(4px);
         color: #aaa;
         cursor: pointer;
+        letter-spacing: 1px;
+
+        &:hover {
+            border-color: #0366d6;
+        }
     }
 
     .is-active {
+        .bold;
         color: #fff;
-        border-color: #fba524;
-        background-color: #fba524;
+        border-color: #0366d6;
+        background-color: #0366d6;
     }
 }
 
 .m-act-info {
     .pr;
-    padding: 2px;
+    padding: 5px 0;
     .pl(60px);
     .pointer;
     .flex;
@@ -96,7 +104,8 @@
 
     .u-img {
         .pa;
-        .lt(2px);
+        left: 2px;
+        top: 7px;
         .size(56px);
         .r(4px);
         border: 1px solid #eee;

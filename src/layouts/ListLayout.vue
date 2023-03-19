@@ -1,5 +1,5 @@
 <template>
-    <div class="m-fb">
+    <div>
         <Header></Header>
         <Breadcrumb
             name="副本"
@@ -16,7 +16,7 @@
             <Nav class="m-nav" />
         </LeftSidebar>
         <Main :withoutRight="true">
-            <div class="m-main">
+            <div class="m-main m-fb">
                 <tabs />
                 <slot></slot>
             </div>
@@ -29,9 +29,7 @@
 </template>
 
 <script>
-// import Info from "@/components/list/Info.vue";
 import Nav from "@/components/list/list_nav.vue";
-// import Side from "@/components/list/list_side.vue";
 import tabs from "@/components/tabs.vue";
 export default {
     name: "App",
@@ -41,9 +39,7 @@ export default {
     },
     methods: {},
     components: {
-        // Info,
         Nav,
-        // Side,
         tabs,
     },
 };

@@ -1,15 +1,8 @@
 <template>
     <div>
         <Header></Header>
-        <Breadcrumb
-            name="职业专栏"
-            slug="bps"
-            root="/bps"
-            :publishEnable="false"
-            :adminEnable="false"
-            :feedbackEnable="true"
-            :crumbEnable="true"
-        >
+        <Breadcrumb name="职业专栏" slug="bps" root="/bps" :publishEnable="false" :adminEnable="false" :feedbackEnable="true"
+            :crumbEnable="true">
             <!-- <Info /> -->
         </Breadcrumb>
         <LeftSidebar>

@@ -1,27 +1,20 @@
 <template>
     <div>
         <Header></Header>
-        <Breadcrumb
-            name="副本"
-            slug="fb"
-            root="/fb"
-            :publishEnable="true"
-            :adminEnable="false"
-            :feedbackEnable="true"
-            :crumbEnable="true"
-        >
+        <Breadcrumb name="副本" slug="fb" root="/fb" :publishEnable="true" :adminEnable="false" :feedbackEnable="true"
+            :crumbEnable="true">
             <!-- <Info /> -->
         </Breadcrumb>
         <LeftSidebar>
             <Nav class="m-nav" />
         </LeftSidebar>
-        <Main :withoutRight="true">
+        <Main :withoutRight="false">
             <div class="m-main m-fb">
                 <tabs />
                 <slot></slot>
             </div>
             <RightSidebar>
-                <!-- <Side class="m-extend" /> -->
+                <Side class="m-extend" />
             </RightSidebar>
             <Footer></Footer>
         </Main>
@@ -31,6 +24,7 @@
 <script>
 import Nav from "@/components/list/list_nav.vue";
 import tabs from "@/components/tabs.vue";
+import Side from "@/components/list/list_side.vue";
 export default {
     name: "App",
     props: [],
@@ -41,6 +35,7 @@ export default {
     components: {
         Nav,
         tabs,
+        Side,
     },
 };
 </script>

@@ -401,5 +401,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "~@/assets/css/bahuang.less";
+@import "~@/assets/css/bhhjSimulator/bahuang.less";
 </style>

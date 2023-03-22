@@ -37,7 +37,7 @@
                 <span>@{{ item.server }}</span>
             </div>
             <div class="u-detail">
-                <span class="u-tag" v-for="(tag, key) in item.tags.slice(0, 3)" :key="key">{{ tag }}</span>
+                <span class="u-tag" v-for="(tag, key) in tag(item.tags)" :key="key">{{ tag }}</span>
             </div>
         </div>
 
@@ -69,7 +69,11 @@ export default {
         loadData: function () {
             //获取活动列表前三个
             getActs(this.params).then((res) => {
-                this.acts = res.data.data.list.slice(0, 3);
+                if (res.data.data.list.length > 3) {
+                    this.acts = res.data.data.list.slice(0, 3);
+                } else {
+                    this.acts = res.data.data.list;
+                }
             });
             getTeams(this.params).then((res) => {
                 this.teams = res.data.data.list;
@@ -95,6 +99,13 @@ export default {
         viewTeam(val) {
             //跳转团队详情
             window.open("https://www.jx3box.com/team/org/" + val)
+        },
+        tag(tags) {
+            if (tags != null) {
+                return tags.slice(0, 3)
+            } else {
+                return ['无标签']
+            }
         }
     },
     filters: {

@@ -85,12 +85,12 @@
                 <em>DBM Structure</em>
             </a>
             <a href="/bahuang" target="_blank">
-                <img class="u-icon" :src="getAppIcon('battle')" />
+                <img class="u-icon" :src="getAppIcon('bhhj')" />
                 <span>八荒衡鉴</span>
                 <em>Ba Huang</em>
             </a>
             <a href="/baizhan" target="_blank">
-                <img class="u-icon" :src="getAppIcon('battle')" />
+                <img class="u-icon" :src="getAppIcon('baizhan')" />
                 <span>百战查询</span>
                 <em>Bai Zhan</em>
             </a>

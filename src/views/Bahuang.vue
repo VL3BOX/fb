@@ -1,5 +1,5 @@
 <template>
-    <app-layout>
+    <app-layout slug="bhhj">
         <div class="m-bahuang">
             <h1 class="m-bahuang-title">八荒衡鉴模拟器</h1>
             <div class="u-my-scheme">

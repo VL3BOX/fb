@@ -123,7 +123,7 @@ import { default_zlp } from "/setting.json"
 import { default_fb } from "/setting.json"
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
-    name: "list",
+    name: "listNav",
     props: [],
     data: function () {
         return {

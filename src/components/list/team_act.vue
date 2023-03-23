@@ -45,9 +45,7 @@
 </template>
 
 <script>
-import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
-import { getLink } from "@jx3box/jx3box-common/js/utils";
-import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
+import { getAppIcon, getLink, getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import { getActs, getTeams } from "@/service/getActs.js";
 import { moment } from "@jx3box/jx3box-common/js/moment";
 export default {

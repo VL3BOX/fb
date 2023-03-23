@@ -1,28 +1,6 @@
 <template>
     <div class="m-fb-nav m-fb-list-nav">
-        <!--
-        <RightSideMsg class="u-group">
-            <em>全服团长交流群</em> :
-            <strong>
-                <a href="https://jq.qq.com/?_wv=1027&k=nzOIpVGI" v-if="client == 'origin'">528707506</a>
-                <a href="https://jq.qq.com/?_wv=1027&k=HZdXPmZe" v-else>785597424</a>
-            </strong>
-        </RightSideMsg>
-        -->
-        <!-- <div class="m-nav-link">
-            <a class="el-button el-button--primary el-button--mini is-plain" href="/rank" target="_blank">
-                <i class="el-icon-trophy"></i>
-                <span>秘境百强</span>
-            </a>
-            <a class="el-button el-button--primary el-button--mini is-plain" href="/team" target="_blank">
-                <i class="el-icon-user"></i>
-                <span>团队管理</span>
-            </a>
-        </div> -->
-
         <div class="m-nav-search" @click.stop>
-            <!-- 输入框 -->
-            <!-- <el-input placeholder="搜索副本或首领名称" v-model="search" clearable></el-input> -->
             <!-- 下拉框 -->
             <el-select v-model="search" placeholder="选择副本">
                 <el-option-group v-for="(group, key) in map" :key="key" :label="'🍄' + key + '(' + group.level + ')'">
@@ -40,11 +18,11 @@
         <div class="m-nav-info">
             <!-- 模式与首领选择 功能未实现 -->
             <div class="m-nav-sel">
-                <el-select v-model="mode" placeholder="全部模式" size="small" clearable>
+                <el-select v-model="mode" placeholder="全部模式" size="small" clearable popper-append-to-body>
                     <el-option v-for="(group, key) in fbDetail.maps" :key="key" :label="group.mode" :value="group.mode">
                     </el-option>
                 </el-select>
-                <el-select v-model="boss" placeholder="全部首领" size="small" clearable>
+                <el-select v-model="boss" placeholder="全部首领" size="small" clearable popper-append-to-body>
                     <el-option v-for="item in fbDetail.boss" :key="item" :label="item" :value="item">
                     </el-option>
                 </el-select>
@@ -119,8 +97,7 @@
 <script>
 import { __imgPath } from "/node_modules/@jx3box/jx3box-common/data/jx3box.json"
 //引入默认副本信息
-import { default_zlp } from "/setting.json"
-import { default_fb } from "/setting.json"
+import { default_zlp, default_fb } from "/setting.json"
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "listNav",
@@ -129,9 +106,9 @@ export default {
         return {
             search: "",
             searchBelong: [],
-            fbName: default_fb.std,
-            fbZlp: default_zlp.std,
-            fbDetail: this.$store.state.map[default_zlp.std].dungeon[default_fb.std],
+            fbName: '',
+            fbZlp: '',
+            fbDetail: {},
             boss: "",
             mode: "",
             tabs: [
@@ -193,6 +170,9 @@ export default {
         map: function () {
             return this.$store.state.map;
         },
+        topic() {
+            return this.boss || this.mode || undefined;
+        }
     },
     methods: {
         url: function (tagname) {
@@ -230,7 +210,13 @@ export default {
         getAppIcon,
         //下拉框修改展示的副本内容
         changeFb: function (fb_zlp, fb_name) {
-            this.$router.push('?fb_zlp=' + fb_zlp + '&fb_name=' + fb_name)
+            const topic = this.boss || this.mode || undefined;
+            const query = {
+                fb_zlp,
+                fb_name,
+                topic
+            }
+            this.$router.push({ query })
             this.fbZlp = fb_zlp;
             this.fbName = fb_name;
             this.fbDetail = this.map[fb_zlp].dungeon[fb_name];
@@ -242,21 +228,36 @@ export default {
         }
     },
     watch: {
-        "$route.query.fb_zlp": function (val) {
+        "$route.query": {
+            deep: true,
+            immediate: true,
+            handler(val) {
+                const fb_zlp = val.fb_zlp || default_zlp[this.client];
+                this.$store.commit('setState', { key: 'zlp', val: fb_zlp });
+                this.fbZlp = fb_zlp;
 
+                const fb_name = val.fb_name || default_fb[this.client];
+                this.$store.commit('setState', { key: 'fb', val: fb_name });
+                this.fbName = fb_name;
+
+                this.fbDetail = this.map[fb_zlp].dungeon[fb_name];
+
+                this.search = this.fbName || '';
+            }
         },
-        "$route.query.fb_name": function (val) {
-            this.$store.state.fb = val;
+        topic() {
+            const query = {
+                fb_zlp: this.fbZlp,
+                fb_name: this.fbName,
+                topic: this.topic
+            }
+            this.$router.push({ query })
         },
-        mode: function (val) {
-            this.mode = val;
-            //路由待定
+        mode(val) {
+            if (val) this.boss = '';
         },
-        boss: function (val) {
-            this.boss = val;
-        },
-        search: function (val) {
-            console.log(this.test)
+        boss(val) {
+            if (val) this.mode = '';
         }
     },
 };

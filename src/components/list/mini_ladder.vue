@@ -4,7 +4,7 @@
             <span class="u-title">
                 <img class="u-icon" svg-inline :src="getAppIcon('rank')" /> 天梯榜
             </span>
-            <a class="u-more" :href="getLink('rank', zlp)">查看更多<i class="el-icon-d-arrow-right"></i></a>
+            <a class="u-more" target="_blank" :href="getLink('rank', zlp)">查看更多<i class="el-icon-d-arrow-right"></i></a>
         </h3>
         <div class="m-ladder-select" v-loading="loading">
             <el-select v-model="zlp" placeholder="请选择" size="medium" class="u-select">

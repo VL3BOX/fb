@@ -1,28 +1,52 @@
 <template>
     <div>
         <Header></Header>
-        <Breadcrumb name="副本" slug="fb" root="/fb" :feedbackEnable="true" :crumbEnable="false">
-            <!-- <Info /> -->
+        <Breadcrumb
+            :name="title"
+            :slug="slug"
+            :root="root"
+            :feedbackEnable="true"
+            :crumbEnable="false"
+        >
+            <img slot="logo" svg-inline :src="logo" />
         </Breadcrumb>
-        <Main :withoutRight="true" :withoutLeft="true">
-            <div class="m-main">
-                <slot></slot>
-            </div>
+        <Main :class="className" :withoutRight="true" :withoutLeft="true">
+            <slot></slot>
             <Footer></Footer>
         </Main>
     </div>
 </template>
 
 <script>
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import app from "../assets/data/app.json";
 export default {
-    name: "App",
-    props: [],
-    data: function () {
-        return {};
+    name: "AppLayout",
+    props: {
+        slug: {
+            type: String,
+            default: "",
+        },
+        icon: {
+            type: String,
+            default: "",
+        },
+        className: {
+            type: String,
+            default: "",
+        }
     },
-    methods: {},
-    components: {
-
+    computed: {
+        root() {
+            return `/macro/${this.slug}`
+        },
+        logo() {
+            const key = this.icon || this.slug;
+            return __imgPath + "image/box/" + key + ".svg";
+        },
+        title() {
+            return app[this.slug]?.title || ''
+        }
     },
 };
 </script>

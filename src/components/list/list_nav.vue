@@ -122,7 +122,7 @@ import { __imgPath } from "/node_modules/@jx3box/jx3box-common/data/jx3box.json"
 import defaultFb from "/setting.json"
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
-    name: "list",
+    name: "listNav",
     props: [],
     data: function () {
         return {

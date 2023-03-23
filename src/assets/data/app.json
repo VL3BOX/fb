@@ -1,0 +1,20 @@
+{
+    "jcl": {
+        "title": "日志分析"
+    },
+    "battle": {
+        "title": "团队统计"
+    },
+    "team": {
+        "title": "团队管理"
+    },
+    "dbm": {
+        "title": "数据构建"
+    },
+    "bhhj": {
+        "title": "八荒衡鉴"
+    },
+    "baizhan": {
+        "title": "百战查询"
+    }
+}

@@ -119,7 +119,8 @@
 <script>
 import { __imgPath } from "/node_modules/@jx3box/jx3box-common/data/jx3box.json"
 //引入默认副本信息
-import defaultFb from "/setting.json"
+import { default_zlp } from "/setting.json"
+import { default_fb } from "/setting.json"
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "list",
@@ -128,9 +129,9 @@ export default {
         return {
             search: "",
             searchBelong: [],
-            fbName: defaultFb.default_fb.std,
-            fbZlp: defaultFb.default_zlp.std,
-            fbDetail: this.$store.state.map[defaultFb.default_zlp.std].dungeon[defaultFb.default_fb.std],
+            fbName: default_fb.std,
+            fbZlp: default_zlp.std,
+            fbDetail: this.$store.state.map[default_zlp.std].dungeon[default_fb.std],
             boss: "",
             mode: "",
             tabs: [
@@ -254,9 +255,9 @@ export default {
         boss: function (val) {
             this.boss = val;
         },
-        // search: function (val1, val2) {
-        //     console.log(val1, val2)
-        // }
+        search: function (val) {
+            console.log(this.test)
+        }
     },
 };
 </script>

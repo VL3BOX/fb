@@ -4,17 +4,18 @@
             <span class="u-title">
                 <img class="u-icon" svg-inline :src="getAppIcon('rank')" /> 天梯榜
             </span>
-            <span class="u-more" @click="viewMore">查看更多<i class="el-icon-d-arrow-right"></i></span>
+            <a class="u-more" :href="getLink('rank', zlp)">查看更多<i class="el-icon-d-arrow-right"></i></a>
         </h3>
-        <div class="m-ladder-select" v-if="!loading">
+        <div class="m-ladder-select" v-loading="loading">
             <el-select v-model="zlp" placeholder="请选择" size="medium" class="u-select">
                 <el-option v-for="item in zlps" :key="item.ID" :label="item.name" :value="item.ID"></el-option>
             </el-select>
             <div class="m-ladder-rank">
                 <ul>
-                    <li v-for="item in teams" :key="item.ID">
-                        <a :href="'https://www.jx3box.com/team/org/' + item.team_id" class="u-link" target="_blank">
-                            <img :src="item.team_logo" alt="" class="u-img">
+                    <li v-for="(item, j) in teams" :key="item.ID">
+                        <a :href="getLink('org', item.team_id)" class="u-link" target="_blank">
+                            <span class="u-order" :class="highlight(j)">{{ j + 1 }}</span>
+                            <!-- <img :src="getThumbnail(item.team_logo)" alt="" class="u-img"> -->
                             <span class="u-team">{{ item.team_name }}</span>
                             <span class="u-serve">@{{ item.server }}</span>
                         </a>
@@ -22,12 +23,13 @@
                 </ul>
             </div>
         </div>
-        <div class="m-ladder-loading" v-else><span>请稍后……</span></div>
     </div>
 </template>
 
 <script>
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
+import { getLink } from "@jx3box/jx3box-common/js/utils";
+import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
 //百强榜赛季名称接口
 import { getEvents } from "@/service/getEvent.js";
 import { getTeams } from "@/service/getTeam.js";
@@ -63,9 +65,17 @@ export default {
             });
         },
         getAppIcon,
-        viewMore() {
-            this.$router.push('/rank');
-        }
+        getLink,
+        getThumbnail,
+        highlight: function (i) {
+            if (i == 0) {
+                return "t1";
+            } else if (i == 1) {
+                return "t2";
+            } else if (i == 2) {
+                return "t3";
+            }
+        },
     },
     filters: {
 

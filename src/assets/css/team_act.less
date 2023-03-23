@@ -52,32 +52,21 @@
 }
 
 .m-tab {
-    .flex;
-    .fz(14px);
-    padding: 5px 0;
-    justify-content: space-between;
-    border-bottom: 1px dotted #eee;
+    .w(100%);
+    .mt(8px);
 
-    .u-tab {
-        .w(43%);
-        text-align: center;
-        border: 1px solid #eee;
-        padding: 4px 0;
-        .r(4px);
-        color: #aaa;
-        cursor: pointer;
-        letter-spacing: 1px;
+    .el-radio-button {
+        .w(50%);
 
-        &:hover {
-            border-color: #0366d6;
+        .el-radio-button__inner {
+            .w(100%);
+            .fz(14px);
+            letter-spacing: 1px;
         }
     }
 
     .is-active {
         .bold;
-        color: #fff;
-        border-color: #0366d6;
-        background-color: #0366d6;
     }
 }
 

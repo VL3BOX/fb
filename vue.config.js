@@ -13,12 +13,6 @@ module.exports = {
             template : 'public/index.html',
             filename:'index.html',
         },
-        fb : {
-            title : '副本专栏 - JX3BOX',
-            entry:'src/post.js',
-            template : 'public/index.html',
-            filename:'post.html',
-        },
     },
 
     devServer: {

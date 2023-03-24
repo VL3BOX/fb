@@ -38,7 +38,7 @@
         <h5 class="u-title">在线应用</h5>
         <div class="m-nav-app">
             <a href="/jcl" target="_blank">
-                <img class="u-icon" :src="getAppIcon('jcl', true)" />
+                <img class="u-icon" :src="getAppIcon('jcl')" />
                 <span>日志分析</span>
                 <em>JX3 Combat Log</em>
             </a>
@@ -48,7 +48,7 @@
                 <em>Team Statistics</em>
             </a>
             <a href="" target="_blank">
-                <img class="u-icon" :src="getAppIcon('battle')" />
+                <img class="u-icon" :src="getAppIcon('')" />
                 <span>Boss时间轴</span>
                 <em>Boss Timeline</em>
             </a>

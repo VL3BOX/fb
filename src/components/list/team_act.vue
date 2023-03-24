@@ -4,7 +4,7 @@
             <span class="u-title">
                 <img class="u-icon" svg-inline :src="getAppIcon('team')" /> 团队招募
             </span>
-            <a class="u-more" href="/team">查看更多<i class="el-icon-d-arrow-right"></i></a>
+            <a class="u-more" href="/team" target="_blank">查看更多<i class="el-icon-d-arrow-right"></i></a>
         </h3>
         <el-radio-group v-model="tab" size="small" class="m-tab">
             <el-radio-button label="活动"></el-radio-button>

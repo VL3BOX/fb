@@ -179,8 +179,19 @@ export default {
                 topic
             }
             this.$router.push({ query })
+
             this.fbName = fb_name;
-            this.fbDetail = this.dungeons[fb_name];
+
+            if (fb_name) {
+                this.fbDetail = this.dungeons?.[fb_name];
+                this.search = this.fbName || '';
+            } else {
+                this.fbDetail = {
+                    maps: [],
+                    boss: [],
+                    icon: ''
+                };
+            }
             this.boss = "";
             this.mode = "";
         },

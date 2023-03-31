@@ -1,27 +1,20 @@
 <template>
-    <div class="m-fb">
+    <div>
         <Header></Header>
-        <Breadcrumb
-            name="副本"
-            slug="fb"
-            root="/fb"
-            :publishEnable="true"
-            :adminEnable="false"
-            :feedbackEnable="true"
-            :crumbEnable="true"
-        >
+        <Breadcrumb name="副本专栏" slug="fb" root="/fb" :publishEnable="true" :adminEnable="false" :feedbackEnable="true"
+            :crumbEnable="true">
             <!-- <Info /> -->
         </Breadcrumb>
         <LeftSidebar>
             <Nav class="m-nav" />
         </LeftSidebar>
-        <Main :withoutRight="true">
-            <div class="m-main">
+        <Main :withoutRight="false">
+            <div class="m-main m-fb">
                 <tabs />
                 <slot></slot>
             </div>
             <RightSidebar>
-                <!-- <Side class="m-extend" /> -->
+                <Side class="m-extend" />
             </RightSidebar>
             <Footer></Footer>
         </Main>
@@ -29,10 +22,9 @@
 </template>
 
 <script>
-// import Info from "@/components/list/Info.vue";
 import Nav from "@/components/list/list_nav.vue";
-// import Side from "@/components/list/list_side.vue";
 import tabs from "@/components/tabs.vue";
+import Side from "@/components/list/list_side.vue";
 export default {
     name: "App",
     props: [],
@@ -41,10 +33,9 @@ export default {
     },
     methods: {},
     components: {
-        // Info,
         Nav,
-        // Side,
         tabs,
+        Side,
     },
 };
 </script>

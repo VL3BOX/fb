@@ -1,7 +1,7 @@
 <template>
     <li class="m-fb-item u-item">
         <!-- Banner -->
-        <a class="u-banner" :href="item.ID | postLink" :target="target"><img :src="getBanner(item)" :key="item.ID"/></a>
+        <a class="u-banner" :href="item.ID | postLink" :target="target"><img :src="getBanner(item)" :key="item.ID" /></a>
 
         <!-- 标题 -->
         <h2 class="u-post" :class="{ isSticky: item.sticky }">
@@ -9,7 +9,8 @@
             <img class="u-icon" svg-inline src="@/assets/img/list/post.svg" />
 
             <!-- 标题文字 -->
-            <a class="u-title" :style="item.color | showHighlight" :href="item.ID | postLink" :target="target">{{ item.post_title || "无标题" }}</a>
+            <a class="u-title" :style="item.color | showHighlight" :href="item.ID | postLink" :target="target">{{
+                item.post_title || "无标题" }}</a>
 
             <!-- 角标 -->
             <span class="u-marks" v-if="item.mark && item.mark.length">
@@ -36,7 +37,8 @@
         <!-- 作者 -->
         <div class="u-misc">
             <img class="u-author-avatar" :src="item.author_info | showAvatar" :alt="item.author_info | showNickname" />
-            <a class="u-author-name" :href="item.post_author | authorLink" target="_blank">{{ item.author_info | showNickname }}</a>
+            <a class="u-author-name" :href="item.post_author | authorLink" target="_blank">{{ item.author_info |
+                showNickname }}</a>
             <span class="u-date">
                 Updated on
                 <time v-if="order == 'update'">{{ item.post_modified | dateFormat }}</time>
@@ -56,7 +58,7 @@ export default {
     name: "ListItem",
     props: ["item", "order"],
     components: {},
-    data: function() {
+    data: function () {
         return {
             target: buildTarget(),
         };
@@ -64,7 +66,7 @@ export default {
     computed: {},
     watch: {},
     methods: {
-        getBanner: function(item) {
+        getBanner: function (item) {
             if (item.post_banner) {
                 return showBanner(item.post_banner);
             } else {
@@ -78,7 +80,7 @@ export default {
                 }
             }
         },
-        format: function(item, key) {
+        format: function (item, key) {
             let val = item?.post_meta?.[key];
             if (val && val.length) {
                 return val;
@@ -89,26 +91,26 @@ export default {
     },
     filters: {
         authorLink,
-        postLink: function(val) {
+        postLink: function (val) {
             return location.origin + `/${appKey}/` + val;
         },
-        showHighlight: function(val) {
+        showHighlight: function (val) {
             return val ? `color:${val};font-weight:600;` : "";
         },
-        showMark: function(val) {
+        showMark: function (val) {
             return mark_map[val] || val;
         },
-        showAvatar: function(userinfo) {
+        showAvatar: function (userinfo) {
             return showAvatar(userinfo?.user_avatar);
         },
-        showNickname: function(userinfo) {
+        showNickname: function (userinfo) {
             return userinfo?.display_name || "匿名";
         },
-        dateFormat: function(gmt) {
+        dateFormat: function (gmt) {
             return showDate(new Date(gmt));
         },
     },
-    created: function() {},
-    mounted: function() {},
+    created: function () { },
+    mounted: function () { },
 };
 </script>

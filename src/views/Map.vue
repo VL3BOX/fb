@@ -1,9 +1,7 @@
 <template>
-    <ListLayout>
-        <div class="m-fb-map" v-if="maptree">
-            <img class="u-map" :src="mapLink(mapid, item)" :alt="fb" ref="fb_map_img" v-for="item in maplist" :key="item" />
-        </div>
-    </ListLayout>
+    <div class="m-fb-map" v-if="maptree">
+        <img class="u-map" :src="mapLink(mapid, item)" :alt="fb" ref="fb_map_img" v-for="item in maplist" :key="item" />
+    </div>
 </template>
 
 <script>
@@ -12,42 +10,42 @@ import { getMaptree } from "@/service/getMap.js";
 export default {
     name: "JMap",
     props: [],
-    data: function() {
+    data: function () {
         return {
             loading: true,
         };
     },
     computed: {
-        zlp: function() {
+        zlp: function () {
             return this.$store.state.zlp || this.$store.state.default_zlp;
         },
-        fb: function() {
+        fb: function () {
             return this.$store.state.fb || this.$store.state.default_fb;
         },
-        mapid: function() {
+        mapid: function () {
             return this.$store.state.map[this.zlp]["dungeon"][this.fb]["maps"][0]["map_id"];
         },
-        maplist: function() {
+        maplist: function () {
             return this.maptree[this.mapid];
         },
-        maptree: function() {
+        maptree: function () {
             return this.$store.state.maptree;
         },
     },
     watch: {
-        mapid: function(val) {
+        mapid: function (val) {
             // console.log(val)
         },
     },
     methods: {
-        loaded: function() {
+        loaded: function () {
             this.loading = false;
         },
-        mapLink: function(val, i) {
+        mapLink: function (val, i) {
             return __imgPath + "map/maps/map_" + val + "_" + i + ".png";
         },
     },
-    mounted: function() {
+    mounted: function () {
         getMaptree().then((res) => {
             this.$store.state.maptree = res.data;
         });

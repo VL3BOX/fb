@@ -34,6 +34,9 @@ let store = {
         switchClient: function(state, val) {
             state.client = val || "std";
         },
+        setState: function(state, val) {
+            state[val.key] = val.value;
+        }
     },
     getters: {},
     actions: {},

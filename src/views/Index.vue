@@ -87,6 +87,7 @@ export default {
             mark: "", //筛选模式
             client: this.$store.state.client, //版本选择
             search: "", //搜索字串
+            topic: "", //专题
         };
     },
     computed: {
@@ -105,6 +106,7 @@ export default {
                 order: this.order,
                 mark: this.mark,
                 client: this.client,
+                topic: this.topic,
             };
         },
         // 分页相关参数

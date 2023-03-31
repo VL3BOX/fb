@@ -7,10 +7,6 @@
 <script>
 export default {
     name: "App",
-    beforeCreate: function() {
-        this.$store.state.zlp = this.$route.query.fb_zlp;
-        this.$store.state.fb = this.$route.query.fb_name;
-    },
 };
 </script>
 

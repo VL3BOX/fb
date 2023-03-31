@@ -14,6 +14,7 @@ const Rank = () => import('../views/Rank.vue')
 const Team = () => import('../views/Team.vue')
 const Gem = () => import('../views/Gem.vue')
 const Lua = () => import('../views/Lua.vue')
+const Bahuang = () => import('../views/Bahuang.vue')
 
 Vue.use(VueRouter);
 
@@ -31,10 +32,14 @@ const routes = [
     { name: "team", path: "/team", component: Team },
     { name: "gem", path: "/gem", component: Gem },
     { name: "lua", path: "/lua", component: Lua },
+    { name: "bahuang", path: "/bahuang", component: Bahuang }
+
 ];
 
 const router = new VueRouter({
     routes,
+    mode: 'history',
+    base: '/fb'
 });
 
 export default router;

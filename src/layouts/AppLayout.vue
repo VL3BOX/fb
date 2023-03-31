@@ -2,44 +2,51 @@
     <div>
         <Header></Header>
         <Breadcrumb
-            name="职业专栏"
-            slug="bps"
-            root="/bps"
-            :publishEnable="false"
-            :adminEnable="false"
+            :name="title"
+            :slug="slug"
+            :root="root"
             :feedbackEnable="true"
-            :crumbEnable="true"
+            :crumbEnable="false"
         >
-            <!-- <Info /> -->
+            <img slot="logo" svg-inline :src="logo" />
         </Breadcrumb>
-        <LeftSidebar>
-            <Nav class="m-nav" />
-        </LeftSidebar>
-        <Main :withoutRight="true">
-            <div class="m-main">
-                <tabs />
-                <slot></slot>
-            </div>
+        <Main :class="className" :withoutRight="true" :withoutLeft="true">
+            <slot></slot>
             <Footer></Footer>
         </Main>
     </div>
 </template>
 
 <script>
-// import Info from "@/components/list/Info.vue";
-import Nav from "@/components/list/list_nav.vue";
-import tabs from "@/components/tabs.vue";
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import app from "../assets/data/app.json";
 export default {
-    name: "App",
-    props: [],
-    data: function () {
-        return {};
+    name: "AppLayout",
+    props: {
+        slug: {
+            type: String,
+            default: "",
+        },
+        icon: {
+            type: String,
+            default: "",
+        },
+        className: {
+            type: String,
+            default: "",
+        }
     },
-    methods: {},
-    components: {
-        // Info,
-        Nav,
-        tabs,
+    computed: {
+        root() {
+            return `/macro/${this.slug}`
+        },
+        logo() {
+            const key = this.icon || this.slug;
+            return __imgPath + "image/box/" + key + ".svg";
+        },
+        title() {
+            return app[this.slug]?.title || ''
+        }
     },
 };
 </script>

@@ -4,12 +4,12 @@
             <span class="u-title"> <img class="u-icon" svg-inline :src="getAppIcon('team')" /> 团队招募 </span>
             <a class="u-more" href="/team" target="_blank">查看更多<i class="el-icon-d-arrow-right"></i></a>
         </h3>
-        <el-radio-group v-model="tab" size="small" class="m-tab">
-            <el-radio-button label="活动"></el-radio-button>
+        <!-- <el-radio-group v-model="tab" size="small" class="m-tab" plain>
             <el-radio-button label="团队"></el-radio-button>
-        </el-radio-group>
-        <div class="m-act-info-null" v-show="tab == '活动'" v-if="acts.length == 0"><span>暂无团队活动</span></div>
-        <a
+            <el-radio-button label="活动"></el-radio-button>
+        </el-radio-group> -->
+        <!-- <div class="m-act-info-null" v-show="tab == '活动'" v-if="acts.length == 0"><span>暂无团队活动</span></div> -->
+        <!-- <a
             class="m-act-info"
             v-show="tab == 'act'"
             v-else
@@ -29,23 +29,15 @@
                     >{{ item.start_time | showRaidMonth }}月{{ item.start_time | showRaidDate }}日</span
                 >
                 <span class="u-week">({{ item.start_time | showRaidWeek }})</span>
-                <!-- <span class="u-today" v-if="isToday(activity.start_time)">★ 今天</span> -->
+                <span class="u-today" v-if="isToday(activity.start_time)">★ 今天</span>
                 <span class="u-time">{{ item.start_time | showRaidTime }}</span>
             </div>
-        </a>
-        <a
-            class="m-act-info"
-            v-show="tab == '团队'"
-            v-for="(item, key) in teams"
-            :key="key"
-            :href="getLink('org', item.ID)"
-        >
-            <img :src="getThumbnail(item.logo)" alt="" class="u-img" />
-            <div class="u-team-title">
-                <span>{{ item.name }}</span>
-            </div>
-            <div class="u-detail">
-                <span>@{{ item.server }}</span>
+        </a> -->
+        <a class="m-act-info" v-for="(item, key) in teams" :key="key" :href="getLink('org', item.ID)" target="_blank">
+            <el-image :src="getThumbnail(item.logo)" alt="" class="u-img"></el-image>
+            <div class="u-title">
+                <span class="u-team-name">{{ item.name }}</span>
+                <span class="u-team-server">@{{ item.server }}</span>
             </div>
             <div class="u-detail">
                 <span class="u-tag" v-for="(tag, key) in tag(item.tags)" :key="key">{{ tag }}</span>
@@ -70,17 +62,26 @@ export default {
             tabDefault: "teams",
         };
     },
-    computed: {},
+    computed: {
+        params: function () {
+            return {
+                pageIndex: 1,
+                pageSize: 5,
+                client: this.$store.state.client,
+                status: 1,
+            };
+        },
+    },
     methods: {
         loadData: function () {
             //获取活动列表前三个
-            getActs(this.params).then((res) => {
-                if (res.data.data.list.length > 3) {
-                    this.acts = res.data.data.list.slice(0, 3);
-                } else {
-                    this.acts = res.data.data.list;
-                }
-            });
+            // getActs(this.params).then((res) => {
+            //     if (res.data.data.list.length > 3) {
+            //         this.acts = res.data.data.list.slice(0, 3);
+            //     } else {
+            //         this.acts = res.data.data.list;
+            //     }
+            // });
             getTeams(this.params).then((res) => {
                 this.teams = res.data.data.list;
             });

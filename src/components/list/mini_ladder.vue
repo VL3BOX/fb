@@ -1,28 +1,28 @@
 <template>
     <div class="m-team-ladder-mini">
-        <h3 class="m-ladder-title">
-            <span class="u-title"> <img class="u-icon" svg-inline :src="getAppIcon('jdt')" /> 天梯榜 </span>
-            <a class="u-more" target="_blank" :href="getLink('rank', event_id)"
-                >查看更多<i class="el-icon-d-arrow-right"></i
-            ></a>
-        </h3>
-        <div class="m-ladder-select" v-loading="loading">
-            <el-select v-model="event_id" placeholder="请选择" size="small" class="u-select">
+        <div class="m-ladder-header">
+            <h3 class="m-ladder-title">
+                <span class="u-title"> <img class="u-icon" svg-inline :src="getAppIcon('jdt')" /> 天梯榜 </span>
+                <a class="u-more" target="_blank" :href="getLink('rank', event_id)"
+                    >查看更多<i class="el-icon-d-arrow-right"></i
+                ></a>
+            </h3>
+            <el-select class="m-ladder-select" v-model="event_id" placeholder="请选择" size="small">
                 <el-option v-for="event in events" :key="event.ID" :label="event.name" :value="event.ID"></el-option>
             </el-select>
-            <div class="m-ladder-rank">
-                <ul v-if="teams && teams.length">
-                    <li v-for="(item, j) in teams" :key="item.ID">
-                        <a :href="getLink('org', item.team_id)" class="u-link" target="_blank">
-                            <span class="u-order" :class="highlight(j)">{{ j + 1 }}</span>
-                            <img :src="getThumbnail(item.team_logo)" alt="" class="u-img" />
-                            <span class="u-team">{{ item.team_name }}</span>
-                            <span class="u-server">{{ item.server }}</span>
-                        </a>
-                    </li>
-                </ul>
-                <div class="u-null" v-else><i class="el-icon-warning-outline"></i> 当前榜单暂无数据</div>
-            </div>
+        </div>
+        <div class="m-ladder-rank" v-loading="loading">
+            <ul v-if="teams && teams.length">
+                <li v-for="(item, j) in teams" :key="item.ID">
+                    <a :href="getLink('org', item.team_id)" class="u-link" target="_blank">
+                        <span class="u-order" :class="highlight(j)">{{ j + 1 }}</span>
+                        <img :src="getThumbnail(item.team_logo)" alt="" class="u-img" />
+                        <span class="u-team">{{ item.team_name }}</span>
+                        <span class="u-server">{{ item.server }}</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="u-null" v-else><i class="el-icon-warning-outline"></i> 当前榜单暂无数据</div>
         </div>
     </div>
 </template>
@@ -67,16 +67,15 @@ export default {
             });
         },
         loadRank: function () {
-
-            if(!this.achievement_id){
+            if (!this.achievement_id) {
                 this.teams = [];
-                return
+                return;
             }
 
             this.loading = true;
             return getRank(this.achievement_id, {
                 event_id: this.event_id,
-                limit: 10,
+                limit: 100,
             })
                 .then((res) => {
                     this.teams = res.data.data || [];

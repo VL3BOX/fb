@@ -38,7 +38,7 @@ export default {
     },
     computed: {
         root() {
-            return `/macro/${this.slug}`
+            return `/fb/bahuang`
         },
         logo() {
             const key = this.icon || this.slug;

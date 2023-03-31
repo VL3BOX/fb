@@ -54,7 +54,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="技能数据" name="skill" v-if="isAdmin">
+        <el-tab-pane label="技能数据" name="skill" v-if="isSuperAuthor">
             <span slot="label">
                 <i class="el-icon-key"></i>
                 <b>技能数据</b>

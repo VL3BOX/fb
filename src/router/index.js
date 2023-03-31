@@ -11,7 +11,6 @@ const Attr = () => import('../views/Attr.vue')
 const Story = () => import('../views/Story.vue')
 const Cj = () => import('../views/Cj.vue')
 const Rank = () => import('../views/Rank.vue')
-const Team = () => import('../views/Team.vue')
 const Gem = () => import('../views/Gem.vue')
 const Lua = () => import('../views/Lua.vue')
 const Bahuang = () => import('../views/Bahuang.vue')
@@ -29,7 +28,6 @@ const routes = [
     { name: "story", path: "/story", component: Story },
     { name: "cj", path: "/cj", component: Cj },
     { name: "rank", path: "/rank", component: Rank },
-    { name: "team", path: "/team", component: Team },
     { name: "gem", path: "/gem", component: Gem },
     { name: "lua", path: "/lua", component: Lua },
     { name: "bahuang", path: "/bahuang", component: Bahuang }

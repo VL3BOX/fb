@@ -2,8 +2,8 @@
     <div class="m-fb-nav m-fb-list-nav">
         <div class="m-nav-search" @click.stop>
             <!-- 下拉框 -->
-            <el-select v-model="search" placeholder="选择副本">
-                <el-option-group v-for="(group, key) in map" :key="key" :label="'🍄' + key + '(' + group.level + ')'">
+            <el-select v-model="search" placeholder="选择副本" clearable filterable>
+                <el-option-group v-for="(group, key) in map" :key="key" :label="'🍄 ' + key + '(' + group.level + ')'">
                     <el-option v-for="(item, subkey) in group.dungeon" :key="subkey" :label="subkey" :value="subkey"
                         @click.native="changeFb(key, subkey)">
                     </el-option>
@@ -38,7 +38,7 @@
         <h5 class="u-title">在线应用</h5>
         <div class="m-nav-app">
             <a href="/jcl" target="_blank">
-                <img class="u-icon" :src="getAppIcon('jcl', true)" />
+                <img class="u-icon" :src="getAppIcon('jcl')" />
                 <span>日志分析</span>
                 <em>JX3 Combat Log</em>
             </a>
@@ -48,7 +48,7 @@
                 <em>Team Statistics</em>
             </a>
             <a href="" target="_blank">
-                <img class="u-icon" :src="getAppIcon('battle')" />
+                <img class="u-icon" :src="getAppIcon('')" />
                 <span>Boss时间轴</span>
                 <em>Boss Timeline</em>
             </a>

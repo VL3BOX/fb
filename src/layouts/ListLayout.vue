@@ -1,7 +1,7 @@
 <template>
     <div>
         <Header></Header>
-        <Breadcrumb name="副本" slug="fb" root="/fb" :publishEnable="true" :adminEnable="false" :feedbackEnable="true"
+        <Breadcrumb name="副本专栏" slug="fb" root="/fb" :publishEnable="true" :adminEnable="false" :feedbackEnable="true"
             :crumbEnable="true">
             <!-- <Info /> -->
         </Breadcrumb>

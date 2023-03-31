@@ -16,7 +16,6 @@
             <div class="u-name">{{ fbName }}</div>
         </div>
         <div class="m-nav-info">
-            <!-- 模式与首领选择 功能未实现 -->
             <div class="m-nav-sel">
                 <el-select v-model="mode" placeholder="全部模式" size="small" clearable popper-append-to-body>
                     <el-option v-for="(group, key) in fbDetail.maps" :key="key" :label="group.mode" :value="group.mode">
@@ -73,24 +72,6 @@
                 <em>Bai Zhan</em>
             </a>
         </div>
-
-        <!-- 原副本分组 -->
-        <!-- <div class="m-nav-group" v-for="(group, key) in map" :key="key">
-            <h2 class="u-category active" v-show="!search">
-                <span class="u-title">🍄 {{ key }}</span>
-                <em class="u-level">({{ group.level }})</em>
-            </h2>
-            <ul class="u-list">
-                <li v-for="(item, subkey) in group.dungeon" :key="subkey" class="u-item" :class="{
-                    active: isActive(subkey, group),
-                    hidden: isHide(subkey),
-                }">
-                    <router-link class="u-link" :to="{ query: { fb_zlp: group.name, fb_name: subkey } }">
-                        {{ item.name }}
-                    </router-link>
-                </li>
-            </ul>
-        </div> -->
     </div>
 </template>
 
@@ -107,7 +88,6 @@ export default {
             search: "",
             searchBelong: [],
             fbName: '',
-            fbZlp: '',
             fbDetail: {},
             boss: "",
             mode: "",
@@ -145,25 +125,6 @@ export default {
         };
     },
     computed: {
-        searchMap: function () {
-            let search_map = {};
-            for (let group in this.map) {
-                let fbs = this.map[group]["dungeon"];
-                for (let fbname in fbs) {
-                    let fb = fbs[fbname];
-                    // 副本单元信息
-                    let __ = [];
-                    __.push(group);
-                    __.push(fbname);
-                    for (let boss of fb.boss) {
-                        __.push(boss);
-                    }
-
-                    search_map[fbname] = __;
-                }
-            }
-            return search_map;
-        },
         client: function () {
             return this.$store.state.client;
         },
@@ -172,6 +133,15 @@ export default {
         },
         topic() {
             return this.boss || this.mode || undefined;
+        },
+        dungeons() {
+            let dungeons = {};
+
+            Object.values(this.map).forEach((group) => {
+                Object.assign(dungeons, group.dungeon);
+            });
+
+            return dungeons;
         }
     },
     methods: {
@@ -188,36 +158,19 @@ export default {
             return __imgPath + path
         },
         isActive: function (subkey, group) {
-            // let params = new URLSearchParams(location.search);
-            // let current = params.get("fb_name");
             let current = this.$route.query.fb_name;
             let zlp = this.$route.query.fb_zlp
             return current == subkey && group.name == zlp;
-        },
-        isHide: function (subkey) {
-            if (!this.search) return;
-            if (this.searchMap[subkey].includes(this.search)) {
-                return false;
-            } else {
-                for (let key of this.searchMap[subkey]) {
-                    if (key.includes(this.search)) {
-                        return false;
-                    }
-                }
-            }
-            return true;
         },
         getAppIcon,
         //下拉框修改展示的副本内容
         changeFb: function (fb_zlp, fb_name) {
             const topic = this.boss || this.mode || undefined;
             const query = {
-                fb_zlp,
                 fb_name,
                 topic
             }
             this.$router.push({ query })
-            this.fbZlp = fb_zlp;
             this.fbName = fb_name;
             this.fbDetail = this.map[fb_zlp].dungeon[fb_name];
             this.boss = "";
@@ -232,22 +185,17 @@ export default {
             deep: true,
             immediate: true,
             handler(val) {
-                const fb_zlp = val.fb_zlp || default_zlp[this.client];
-                this.$store.commit('setState', { key: 'zlp', val: fb_zlp });
-                this.fbZlp = fb_zlp;
-
-                const fb_name = val.fb_name || default_fb[this.client];
+                const fb_name = val?.fb_name || default_fb[this.client];
                 this.$store.commit('setState', { key: 'fb', val: fb_name });
                 this.fbName = fb_name;
 
-                this.fbDetail = this.map[fb_zlp].dungeon[fb_name];
+                this.fbDetail = this.dungeons?.[fb_name];
 
                 this.search = this.fbName || '';
             }
         },
         topic() {
             const query = {
-                fb_zlp: this.fbZlp,
                 fb_name: this.fbName,
                 topic: this.topic
             }

@@ -27,13 +27,13 @@
                     </el-option>
                 </el-select>
             </div>
-            <div class="m-nav-tag">
+            <!-- <div class="m-nav-tag">
                 <div v-for="(item, key) in tabs" :key="key" class="u-tag" :class="{ active: tagActive(item.name) }"
                     @click="url(item.name)">
                     <i :class="'el-icon-' + item.icon"></i>
                     <span>{{ item.label }}</span>
                 </div>
-            </div>
+            </div> -->
         </div>
         <h5 class="u-title">在线应用</h5>
         <div class="m-nav-app">

@@ -23,10 +23,14 @@ function getDrop(bossindex, client = "std") {
     })
 }
 
-function getDropV2(mapid,params){
-    return $.get(`/fb/drop/v2/${mapid}`,{
-        params : params
+function getDropV2(mapid, params) {
+    return $.get(`/fb/drop/v2/${mapid}`, {
+        params: params
     })
 }
 
-export { getDrop, getBoss,getDropV2 };
+function getResource(type, client, data) {
+    return $.post(`/resource/${client}/${type}`, data)
+}
+
+export { getDrop, getBoss, getDropV2, getResource };

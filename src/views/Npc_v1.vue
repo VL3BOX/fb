@@ -266,7 +266,7 @@
 <script>
 // import bossids from "@/assets/data/bossid.json";
 // import mapids from "@jx3box/jx3box-data/data/common/map_id.json";
-import { getMapNpc, getBoss } from "../service/getNpc";
+import { getMapNpc, getBoss } from "../service/npc";
 import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
 import User from "@jx3box/jx3box-common/js/user";
 import { getLink } from "@jx3box/jx3box-common/js/utils";

@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { getLuaIndex, getLua } from "@/service/getLua.js";
+import { getLuaIndex, getLua } from "@/service/lua.js";
 import User from "@jx3box/jx3box-common/js/user";
 import "../plugins/prism.js";
 import "../plugins/prism.css";

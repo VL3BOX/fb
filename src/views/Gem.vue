@@ -59,7 +59,7 @@
 
 <script>
 import GameText from "@jx3box/jx3box-editor/src/GameText.vue"
-import { getGemList } from "../service/getGem";
+import { getGemList } from "../service/gem";
 import { __ossMirror, __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box";
 import { iconLink, getLink } from "@jx3box/jx3box-common/js/utils";
 export default {

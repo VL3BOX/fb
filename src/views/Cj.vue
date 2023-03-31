@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { getCJ } from "../service/getCJ";
+import { getAchievements } from "../service/achievement";
 import { __ossMirror, __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 export default {
@@ -75,7 +75,7 @@ export default {
     methods: {
         loadPosts: function (append = false) {
             this.loading = true;
-            getCJ(this.params)
+            getAchievements(this.params)
                 .then((res) => {
                     this.data = res.data.data.achievements;
                     this.total = res.data.data.total;

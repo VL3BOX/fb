@@ -107,7 +107,42 @@
 
 }
 
-.m-nav-panel {
+.m-nav-search {
+    // .pr;
+    position: sticky;
+    top: 0;
+
+    // 图标
+    // &:after {
+    //     content: "\e778";
+    //     font-family: element-icons !important;
+    //     speak: none;
+    //     font-style: normal;
+    //     font-weight: 400;
+    //     font-variant: normal;
+    //     text-transform: none;
+    //     line-height: 1;
+    //     vertical-align: baseline;
+    //     display: inline-block;
+    //     -webkit-font-smoothing: antialiased;
+    //     .pa;
+    //     .rt(10px, 12px);
+    //     color: #d1d3da;
+    // }
+
+    .el-select {
+        width: 100%;
+    }
+}
+
+.m-nav-info {
+    a {
+        .fz(13px);
+        color: #565656;
+    }
+}
+
+.m-nav-info__preview {
     .pr;
     .h(150px);
     .mt(10px);
@@ -135,11 +170,63 @@
     }
 }
 
-.m-nav-info {
-    a {
-        .fz(13px);
-        color: #565656;
+.m-nav-info__meta {
+    .flex;
+    justify-content: space-between;
+    .fz(14px);
+    .mt(10px);
+
+    .el-select {
+        .w(49%);
     }
+}
+
+.m-nav-info__tags {
+    .flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .mt(10px);
+
+    .u-tag {
+        font-style: normal;
+        border: 1px solid #dcdfe6;
+        background-color: #fff;
+        .mb(10px);
+        .w(79px);
+        text-align: center;
+        padding: 4px 0px;
+        .r(4px);
+        color: #c0c4cc;
+        .pointer;
+        .fz(14px);
+
+        i {
+            .mr(2px);
+        }
+
+        &:hover {
+            border-color: #0366d6;
+        }
+    }
+
+    .active {
+        .bold;
+        color: #fff;
+        border-color: #0366d6;
+        background-color: #0366d6;
+    }
+}
+@media screen and (max-width: @phone) {
+    .m-nav-info__tags {
+        .u-tag {
+            .w(75px);
+        }
+
+        i {
+            display: none;
+        }
+    }
+
 }
 
 .m-nav-app {
@@ -260,102 +347,4 @@
         cursor: not-allowed;
         .tm(0.5);
     }
-}
-
-.m-nav-search {
-    // .pr;
-    position: sticky;
-    top: 0;
-
-    // 图标
-    // &:after {
-    //     content: "\e778";
-    //     font-family: element-icons !important;
-    //     speak: none;
-    //     font-style: normal;
-    //     font-weight: 400;
-    //     font-variant: normal;
-    //     text-transform: none;
-    //     line-height: 1;
-    //     vertical-align: baseline;
-    //     display: inline-block;
-    //     -webkit-font-smoothing: antialiased;
-    //     .pa;
-    //     .rt(10px, 12px);
-    //     color: #d1d3da;
-    // }
-
-    .el-select {
-        width: 100%;
-    }
-}
-
-.m-nav-link {
-    .mb(10px);
-}
-
-.el-select-group__title {
-    .bold;
-    .fz(13px);
-    color: #3d454d;
-}
-
-.m-nav-sel {
-    .flex;
-    justify-content: space-between;
-    .fz(14px);
-    .mt(10px);
-
-    .el-select {
-        .w(49%);
-    }
-}
-
-.m-nav-tag {
-    .flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    .mt(10px);
-
-    .u-tag {
-        font-style: normal;
-        border: 1px solid #dcdfe6;
-        background-color: #fff;
-        .mb(10px);
-        .w(79px);
-        text-align: center;
-        padding: 4px 0px;
-        .r(4px);
-        color: #c0c4cc;
-        .pointer;
-        .fz(14px);
-
-        i {
-            .mr(2px);
-        }
-
-        &:hover {
-            border-color: #0366d6;
-        }
-    }
-
-    .active {
-        .bold;
-        color: #fff;
-        border-color: #0366d6;
-        background-color: #0366d6;
-    }
-}
-
-@media screen and (max-width: @phone) {
-    .m-nav-tag {
-        .u-tag {
-            .w(75px);
-        }
-
-        i {
-            display: none;
-        }
-    }
-
 }

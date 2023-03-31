@@ -1,9 +1,7 @@
 <template>
     <div class="m-team-act-mini">
         <h3 class="m-act-title">
-            <span class="u-title">
-                <img class="u-icon" svg-inline :src="getAppIcon('team')" /> 团队招募
-            </span>
+            <span class="u-title"> <img class="u-icon" svg-inline :src="getAppIcon('team')" /> 团队招募 </span>
             <a class="u-more" href="/team" target="_blank">查看更多<i class="el-icon-d-arrow-right"></i></a>
         </h3>
         <el-radio-group v-model="tab" size="small" class="m-tab">
@@ -11,9 +9,15 @@
             <el-radio-button label="团队"></el-radio-button>
         </el-radio-group>
         <div class="m-act-info-null" v-show="tab == '活动'" v-if="acts.length == 0"><span>暂无团队活动</span></div>
-        <a class="m-act-info" v-show="tab == 'act'" v-else v-for="(item, key) in acts" :key="key"
-            :href="getLink('raid', item.id)">
-            <img :src="getThumbnail(item.team_logo)" alt="" class="u-img">
+        <a
+            class="m-act-info"
+            v-show="tab == 'act'"
+            v-else
+            v-for="(item, key) in acts"
+            :key="key"
+            :href="getLink('raid', item.id)"
+        >
+            <img :src="getThumbnail(item.team_logo)" alt="" class="u-img" />
             <div class="u-act-title">
                 <span>【{{ item.team_name }}】{{ item.name }}</span>
             </div>
@@ -21,15 +25,22 @@
                 <span>服务器:@{{ item.server }}</span>
             </div>
             <div class="u-detail">
-                <span class="u-date">{{ item.start_time | showRaidMonth }}月{{ item.start_time | showRaidDate
-                }}日</span>
+                <span class="u-date"
+                    >{{ item.start_time | showRaidMonth }}月{{ item.start_time | showRaidDate }}日</span
+                >
                 <span class="u-week">({{ item.start_time | showRaidWeek }})</span>
                 <!-- <span class="u-today" v-if="isToday(activity.start_time)">★ 今天</span> -->
                 <span class="u-time">{{ item.start_time | showRaidTime }}</span>
             </div>
         </a>
-        <a class="m-act-info" v-show="tab == '团队'" v-for="(item, key) in teams" :key="key" :href="getLink('org', item.ID)">
-            <img :src="getThumbnail(item.logo)" alt="" class="u-img">
+        <a
+            class="m-act-info"
+            v-show="tab == '团队'"
+            v-for="(item, key) in teams"
+            :key="key"
+            :href="getLink('org', item.ID)"
+        >
+            <img :src="getThumbnail(item.logo)" alt="" class="u-img" />
             <div class="u-team-title">
                 <span>{{ item.name }}</span>
             </div>
@@ -40,31 +51,26 @@
                 <span class="u-tag" v-for="(tag, key) in tag(item.tags)" :key="key">{{ tag }}</span>
             </div>
         </a>
-
     </div>
 </template>
 
 <script>
 import { getAppIcon, getLink, getThumbnail } from "@jx3box/jx3box-common/js/utils";
-import { getActs, getTeams } from "@/service/getActs.js";
+import { getActs, getTeams } from "@/service/team.js";
 import { moment } from "@jx3box/jx3box-common/js/moment";
 export default {
     name: "team_act",
-    components: {
-
-    },
+    components: {},
     props: [],
     data: function () {
         return {
-            tab: '活动',
+            tab: "活动",
             acts: [],
             teams: [],
-            tabDefault: 'teams',
+            tabDefault: "teams",
         };
     },
-    computed: {
-
-    },
+    computed: {},
     methods: {
         loadData: function () {
             //获取活动列表前三个
@@ -86,11 +92,11 @@ export default {
         getTeams,
         tag(tags) {
             if (tags != null) {
-                return tags.slice(0, 3)
+                return tags.slice(0, 3);
             } else {
-                return ['无标签']
+                return ["无标签"];
             }
-        }
+        },
     },
     filters: {
         showRaidTime(d) {
@@ -106,15 +112,13 @@ export default {
             return moment(d).format("DD");
         },
     },
-    watch: {
-
-    },
+    watch: {},
     mounted: function () {
         this.loadData();
     },
 };
 </script>
 
-<style lang="less" >
+<style lang="less">
 @import "~@/assets/css/team_act.less";
 </style>

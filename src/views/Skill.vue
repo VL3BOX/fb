@@ -11,7 +11,7 @@
 import v1 from "./Skill_v1.vue";
 import v2 from "./Skill_v2.vue";
 import User from "@jx3box/jx3box-common/js/user";
-import { getIsSuperAuthor } from "@/service/getSkill.js";
+import { getIsSuperAuthor } from "@/service/skill.js";
 export default {
     name: "Skill",
     props: [],

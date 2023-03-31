@@ -10,22 +10,35 @@
             </el-select>
         </div>
 
-        <div class="m-nav-panel">
-            <img class="u-img" :src="getMap(fbDetail.icon)" />
-            <div class="u-name">{{ fbName }}</div>
-        </div>
         <div class="m-nav-info">
-            <div class="m-nav-sel">
-                <el-select v-model="mode" placeholder="全部模式" size="small" clearable popper-append-to-body :disabled="!fbName">
+            <div class="m-nav-info__preview">
+                <img class="u-img" :src="getMap(fbDetail.icon)" />
+                <div class="u-name">{{ fbName }}</div>
+            </div>
+            <div class="m-nav-info__meta">
+                <el-select
+                    v-model="mode"
+                    placeholder="全部模式"
+                    size="small"
+                    clearable
+                    popper-append-to-body
+                    :disabled="!fbName"
+                >
                     <el-option v-for="(group, key) in fbDetail.maps" :key="key" :label="group.mode" :value="group.mode">
                     </el-option>
                 </el-select>
-                <el-select v-model="boss" placeholder="全部首领" size="small" clearable popper-append-to-body :disabled="!fbName">
-                    <el-option v-for="item in fbDetail.boss" :key="item" :label="item" :value="item">
-                    </el-option>
+                <el-select
+                    v-model="boss"
+                    placeholder="全部首领"
+                    size="small"
+                    clearable
+                    popper-append-to-body
+                    :disabled="!fbName"
+                >
+                    <el-option v-for="item in fbDetail.boss" :key="item" :label="item" :value="item"> </el-option>
                 </el-select>
             </div>
-            <!-- <div class="m-nav-tag">
+            <!-- <div class="m-nav-info__tags">
                 <div v-for="(item, key) in tabs" :key="key" class="u-tag" :class="{ active: tagActive(item.name) }"
                     @click="tagClick(item.name)">
                     <i :class="'el-icon-' + item.icon"></i>
@@ -71,7 +84,7 @@
                 <span>八荒衡鉴</span>
                 <em>Ba Huang</em>
             </a>
-            <a href="/baizhan" target="_blank" v-if="client == 'std'"  class="disabled" @click.prevent>
+            <a href="/baizhan" target="_blank" v-if="client == 'std'" class="disabled" @click.prevent>
                 <img class="u-icon" :src="getAppIcon('bhhj')" />
                 <span>百战查询</span>
                 <em>Bai Zhan</em>
@@ -81,9 +94,9 @@
 </template>
 
 <script>
-import { __imgPath } from "/node_modules/@jx3box/jx3box-common/data/jx3box.json"
+import { __imgPath } from "/node_modules/@jx3box/jx3box-common/data/jx3box.json";
 //引入默认副本信息
-import { default_zlp, default_fb } from "/setting.json"
+import { default_zlp, default_fb } from "/setting.json";
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "listNav",
@@ -92,45 +105,51 @@ export default {
         return {
             search: "",
             searchBelong: [],
-            fbName: '',
+            fbName: "",
             fbDetail: {
                 maps: [],
                 boss: [],
-                icon: ''
+                icon: "",
             },
             boss: "",
             mode: "",
             tabs: [
                 {
-                    label: '副本攻略',
-                    icon: 'collection',
-                    name: 'index'
-                }, {
-                    label: '副本掉落',
-                    icon: 'present',
-                    name: 'drop'
-                }, {
-                    label: '瑰石列表',
-                    icon: 'cherry',
-                    name: 'gem'
-                }, {
-                    label: '副本成就',
-                    icon: 'medal',
-                    name: 'cj'
-                }, {
-                    label: '秘境传说',
-                    icon: 'film',
-                    name: 'story'
-                }, {
-                    label: '首领数据',
-                    icon: 'aim',
-                    name: 'npc'
-                }, {
-                    label: '高阶技巧',
-                    icon: 'help',
-                    name: 'attr'
-                }
-            ]
+                    label: "副本攻略",
+                    icon: "collection",
+                    name: "index",
+                },
+                {
+                    label: "副本掉落",
+                    icon: "present",
+                    name: "drop",
+                },
+                {
+                    label: "瑰石列表",
+                    icon: "cherry",
+                    name: "gem",
+                },
+                {
+                    label: "副本成就",
+                    icon: "medal",
+                    name: "cj",
+                },
+                {
+                    label: "秘境传说",
+                    icon: "film",
+                    name: "story",
+                },
+                {
+                    label: "首领数据",
+                    icon: "aim",
+                    name: "npc",
+                },
+                {
+                    label: "高阶技巧",
+                    icon: "help",
+                    name: "attr",
+                },
+            ],
         };
     },
     computed: {
@@ -151,11 +170,11 @@ export default {
             });
 
             return dungeons;
-        }
+        },
     },
     methods: {
         tagClick: function (tagname) {
-            if (!this.fbName) return
+            if (!this.fbName) return;
             this.$router.push({
                 name: tagname,
                 query: {
@@ -164,11 +183,11 @@ export default {
             });
         },
         getMap: function (path) {
-            return path ? __imgPath + path : __imgPath + "image/fb_map_thumbnail/null.png"
+            return path ? __imgPath + path : __imgPath + "image/fb_map_thumbnail/null.png";
         },
         isActive: function (subkey, group) {
             let current = this.$route.query.fb_name;
-            return current == subkey
+            return current == subkey;
         },
         getAppIcon,
         //下拉框修改展示的副本内容
@@ -176,57 +195,57 @@ export default {
             const topic = this.boss || this.mode || undefined;
             const query = {
                 fb_name,
-                topic
-            }
-            this.$router.push({ query })
+                topic,
+            };
+            this.$router.push({ query });
 
             this.fbName = fb_name;
 
             if (fb_name) {
                 this.fbDetail = this.dungeons?.[fb_name];
-                this.search = this.fbName || '';
+                this.search = this.fbName || "";
             } else {
                 this.fbDetail = {
                     maps: [],
                     boss: [],
-                    icon: ''
+                    icon: "",
                 };
             }
             this.boss = "";
             this.mode = "";
         },
         tagActive: function (tag_name) {
-            return this.$route.name == tag_name
-        }
+            return this.$route.name == tag_name;
+        },
     },
     watch: {
         "$route.query": {
             deep: true,
             immediate: true,
             handler(val) {
-                const fb_name = val?.fb_name
+                const fb_name = val?.fb_name;
                 if (fb_name) {
-                    this.$store.commit('setState', { key: 'fb', val: fb_name });
+                    this.$store.commit("setState", { key: "fb", val: fb_name });
                     this.fbName = fb_name;
 
                     this.fbDetail = this.dungeons?.[fb_name];
-                    this.search = this.fbName || '';
+                    this.search = this.fbName || "";
                 }
-            }
+            },
         },
         topic() {
             const query = {
                 fb_name: this.fbName,
-                topic: this.topic
-            }
-            this.$router.push({ query })
+                topic: this.topic,
+            };
+            this.$router.push({ query });
         },
         mode(val) {
-            if (val) this.boss = '';
+            if (val) this.boss = "";
         },
         boss(val) {
-            if (val) this.mode = '';
-        }
+            if (val) this.mode = "";
+        },
     },
 };
 </script>

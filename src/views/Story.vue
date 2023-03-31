@@ -61,7 +61,7 @@
 
 <script>
 import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
-import { getInfo, getBoss, getBossSkills } from "@/service/getStory.js";
+import { getInfo, getBoss, getBossSkills } from "@/service/story.js";
 import { extractTextContent } from "@jx3box/jx3box-common/js/utils";
 import fbMap from "./Map.vue";
 

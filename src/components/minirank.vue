@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { getMiniRank } from "../service/getRank";
+import { getMiniRank } from "../service/team";
 import moment from "moment";
 // import mock from '../mock/rank.json'
 

@@ -87,13 +87,13 @@
 </template>
 
 <script>
-import { getDropV2, getBoss } from "../service/getDrop";
+import { getDropV2, getBoss } from "../service/drop";
 import { __iconPath, __ossRoot, __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import dropmap from "../assets/data/drop_types.json";
 import { getLink, iconLink, jx3ClientType } from "@jx3box/jx3box-common/js/utils";
 import schoolmap from "@jx3box/jx3box-data/data/xf/schoolid.json";
 import Item from "@jx3box/jx3box-editor/src/Item.vue";
-import { getResource } from "@/service/resource";
+import { getResource } from "@/service/drop";
 // import drop_item from "../components/drop_item";
 
 export default {

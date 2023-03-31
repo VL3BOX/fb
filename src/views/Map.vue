@@ -6,7 +6,7 @@
 
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box";
-import { getMaptree } from "@/service/getMap.js";
+import { getMaptree } from "@/service/map.js";
 export default {
     name: "JMap",
     props: [],

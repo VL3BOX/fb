@@ -1,7 +1,7 @@
 import { $lua } from "@jx3box/jx3box-common/js/https";
 
 function getLuaIndex(fbname, client = "std") {
-    return $lua({mute:true}).get(`/lua/fb/src/${fbname}/index.json`, {
+    return $lua({ mute: true }).get(`/lua/fb/src/${fbname}/index.json`, {
         params: {
             client: client,
         },
@@ -9,7 +9,7 @@ function getLuaIndex(fbname, client = "std") {
 }
 function getLua(fbname, filename, client = "std") {
     let _path = encodeURIComponent(`lua/fb/src/${fbname}/${filename}`);
-    return $lua().get(_path , {
+    return $lua().get(_path, {
         params: {
             client: client,
         },

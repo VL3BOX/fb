@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import { getDrop, getBoss } from "../service/getDrop";
+import { getDrop, getBoss } from "../service/drop";
 import { __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import dropmap from "../assets/js/drop.json";
 import drop_item from "../components/drop/drop_item";

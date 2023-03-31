@@ -68,7 +68,7 @@
 // 10人 7503,7504,7505,7506,7507
 // 25普通 7514,7515,7516,7517,7518
 // 25英雄 7525,7526,7527,7528,7529
-import { getDateRank } from "../service/getRank";
+import { getDateRank } from "../service/team";
 import moment, { fn } from "moment";
 import rankmap from "../assets/js/rank.json";
 // import mock from '../mock/rank.json'

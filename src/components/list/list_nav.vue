@@ -2,10 +2,9 @@
     <div class="m-fb-nav m-fb-list-nav">
         <div class="m-nav-search" @click.stop>
             <!-- 下拉框 -->
-            <el-select v-model="search" placeholder="选择副本" clearable filterable>
+            <el-select v-model="search" placeholder="选择副本" clearable filterable @change="changeFb">
                 <el-option-group v-for="(group, key) in map" :key="key" :label="'🍄 ' + key + '(' + group.level + ')'">
-                    <el-option v-for="(item, subkey) in group.dungeon" :key="subkey" :label="subkey" :value="subkey"
-                        @click.native="changeFb(key, subkey)">
+                    <el-option v-for="(item, subkey) in group.dungeon" :key="subkey" :label="subkey" :value="subkey">
                     </el-option>
                 </el-option-group>
             </el-select>
@@ -17,18 +16,18 @@
         </div>
         <div class="m-nav-info">
             <div class="m-nav-sel">
-                <el-select v-model="mode" placeholder="全部模式" size="small" clearable popper-append-to-body>
+                <el-select v-model="mode" placeholder="全部模式" size="small" clearable popper-append-to-body :disabled="!fbName">
                     <el-option v-for="(group, key) in fbDetail.maps" :key="key" :label="group.mode" :value="group.mode">
                     </el-option>
                 </el-select>
-                <el-select v-model="boss" placeholder="全部首领" size="small" clearable popper-append-to-body>
+                <el-select v-model="boss" placeholder="全部首领" size="small" clearable popper-append-to-body :disabled="!fbName">
                     <el-option v-for="item in fbDetail.boss" :key="item" :label="item" :value="item">
                     </el-option>
                 </el-select>
             </div>
             <div class="m-nav-tag">
                 <div v-for="(item, key) in tabs" :key="key" class="u-tag" :class="{ active: tagActive(item.name) }"
-                    @click="url(item.name)">
+                    @click="tagClick(item.name)">
                     <i :class="'el-icon-' + item.icon"></i>
                     <span>{{ item.label }}</span>
                 </div>
@@ -88,7 +87,11 @@ export default {
             search: "",
             searchBelong: [],
             fbName: '',
-            fbDetail: {},
+            fbDetail: {
+                maps: [],
+                boss: [],
+                icon: ''
+            },
             boss: "",
             mode: "",
             tabs: [
@@ -145,26 +148,25 @@ export default {
         }
     },
     methods: {
-        url: function (tagname) {
+        tagClick: function (tagname) {
+            if (!this.fbName) return
             this.$router.push({
                 name: tagname,
                 query: {
                     fb_name: this.$route.query.fb_name,
-                    fb_zlp: this.$route.query.fb_zlp,
                 },
             });
         },
         getMap: function (path) {
-            return __imgPath + path
+            return path ? __imgPath + path : __imgPath + "image/fb_map_thumbnail/null.png"
         },
         isActive: function (subkey, group) {
             let current = this.$route.query.fb_name;
-            let zlp = this.$route.query.fb_zlp
-            return current == subkey && group.name == zlp;
+            return current == subkey
         },
         getAppIcon,
         //下拉框修改展示的副本内容
-        changeFb: function (fb_zlp, fb_name) {
+        changeFb: function (fb_name) {
             const topic = this.boss || this.mode || undefined;
             const query = {
                 fb_name,
@@ -172,7 +174,7 @@ export default {
             }
             this.$router.push({ query })
             this.fbName = fb_name;
-            this.fbDetail = this.map[fb_zlp].dungeon[fb_name];
+            this.fbDetail = this.dungeons[fb_name];
             this.boss = "";
             this.mode = "";
         },
@@ -185,13 +187,14 @@ export default {
             deep: true,
             immediate: true,
             handler(val) {
-                const fb_name = val?.fb_name || default_fb[this.client];
-                this.$store.commit('setState', { key: 'fb', val: fb_name });
-                this.fbName = fb_name;
+                const fb_name = val?.fb_name
+                if (fb_name) {
+                    this.$store.commit('setState', { key: 'fb', val: fb_name });
+                    this.fbName = fb_name;
 
-                this.fbDetail = this.dungeons?.[fb_name];
-
-                this.search = this.fbName || '';
+                    this.fbDetail = this.dungeons?.[fb_name];
+                    this.search = this.fbName || '';
+                }
             }
         },
         topic() {

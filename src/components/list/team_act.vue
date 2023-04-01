@@ -66,7 +66,7 @@ export default {
         params: function () {
             return {
                 pageIndex: 1,
-                pageSize: 5,
+                pageSize: 10,
                 client: this.$store.state.client,
                 status: 1,
             };

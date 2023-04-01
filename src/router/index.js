@@ -15,6 +15,7 @@ const Gem = () => import('../views/Gem.vue')
 const Lua = () => import('../views/Lua.vue')
 const Bahuang = () => import('../views/Bahuang.vue')
 const ListLayout = () => import('@/layouts/ListLayout.vue')
+const Post = () => import('@/views/Single.vue')
 
 Vue.use(VueRouter);
 
@@ -49,7 +50,9 @@ const routes = [
         ]
     },
 
-    { name: "bahuang", path: "/bahuang", component: Bahuang }
+    { name: "bahuang", path: "/bahuang", component: Bahuang },
+
+    { name: "post", path: "/:id(\\d+)", component: Post },
 
 ];
 

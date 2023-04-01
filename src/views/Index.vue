@@ -1,67 +1,65 @@
 <template>
-    <ListLayout>
-        <div class="m-archive-box" v-loading="loading">
-            <!-- 搜索 -->
-            <div class="m-archive-search" slot="search-before">
-                <a :href="publish_link" class="u-publish el-button el-button--primary">+ 发布作品</a>
-                <el-input
-                    placeholder="请输入搜索内容"
-                    v-model.trim.lazy="search"
-                    clearable
-                    @clear="onSearch"
-                    @keydown.native.enter="onSearch"
-                >
-                    <span slot="prepend">关键词</span>
-                    <template #append>
-                        <el-button icon="el-icon-search" @click="onSearch"></el-button>
-                    </template>
-                </el-input>
-            </div>
-
-            <!-- 筛选 -->
-            <div class="m-archive-filter">
-                <!-- 版本过滤 -->
-                <clientBy @filter="filterImperceptibly" :type="client"></clientBy>
-                <!-- 角标过滤 -->
-                <markBy @filter="filterMeta"></markBy>
-                <!-- 排序过滤 -->
-                <orderBy @filter="filterMeta"></orderBy>
-            </div>
-
-            <!-- 列表 -->
-            <div class="m-archive-list" v-if="data && data.length">
-                <ul class="u-list">
-                    <list-item v-for="(item, i) in data" :key="i + item" :item="item" :order="order" />
-                </ul>
-            </div>
-
-            <!-- 空 -->
-            <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon></el-alert>
-
-            <!-- 下一页 -->
-            <el-button
-                class="m-archive-more"
-                v-show="hasNextPage"
-                type="primary"
-                @click="appendPage"
-                :loading="loading"
-                icon="el-icon-arrow-down"
-                >加载更多</el-button
+    <div class="m-archive-box" v-loading="loading">
+        <!-- 搜索 -->
+        <div class="m-archive-search" slot="search-before">
+            <a :href="publish_link" class="u-publish el-button el-button--primary">+ 发布作品</a>
+            <el-input
+                placeholder="请输入搜索内容"
+                v-model.trim.lazy="search"
+                clearable
+                @clear="onSearch"
+                @keydown.native.enter="onSearch"
             >
-
-            <!-- 分页 -->
-            <el-pagination
-                class="m-archive-pages"
-                background
-                layout="total, prev, pager, next, jumper"
-                :hide-on-single-page="true"
-                :page-size="per"
-                :total="total"
-                :current-page.sync="page"
-                @current-change="changePage"
-            ></el-pagination>
+                <span slot="prepend"><i class="el-icon-search"></i> 关键词</span>
+                <template #append>
+                    <el-button icon="el-icon-position" @click="onSearch"></el-button>
+                </template>
+            </el-input>
         </div>
-    </ListLayout>
+
+        <!-- 筛选 -->
+        <div class="m-archive-filter">
+            <!-- 版本过滤 -->
+            <clientBy @filter="filterImperceptibly" :type="client"></clientBy>
+            <!-- 角标过滤 -->
+            <markBy @filter="filterMeta"></markBy>
+            <!-- 排序过滤 -->
+            <orderBy @filter="filterMeta"></orderBy>
+        </div>
+
+        <!-- 列表 -->
+        <div class="m-archive-list" v-if="data && data.length">
+            <ul class="u-list">
+                <list-item v-for="(item, i) in data" :key="i + item" :item="item" :order="order" />
+            </ul>
+        </div>
+
+        <!-- 空 -->
+        <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon></el-alert>
+
+        <!-- 下一页 -->
+        <el-button
+            class="m-archive-more"
+            v-show="hasNextPage"
+            type="primary"
+            @click="appendPage"
+            :loading="loading"
+            icon="el-icon-arrow-down"
+            >加载更多</el-button
+        >
+
+        <!-- 分页 -->
+        <el-pagination
+            class="m-archive-pages"
+            background
+            layout="total, prev, pager, next, jumper"
+            :hide-on-single-page="true"
+            :page-size="per"
+            :total="total"
+            :current-page.sync="page"
+            @current-change="changePage"
+        ></el-pagination>
+    </div>
 </template>
 <script>
 import { appKey } from "@/../setting.json";

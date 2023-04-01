@@ -1,28 +1,26 @@
 <template>
-    <ListLayout>
-        <div class="m-fb-cj" v-loading="loading">
-            <div class="m-cj-list" v-if="hasData">
-                <a class="m-cj-item" v-for="(item, i) in data" :href="item.ID | url" :key="i" target="_blank">
-                    <img class="u-icon" :src="item.IconID | iconLink" />
-                    <span class="u-title">{{ item.Name }}</span>
-                    <span class="u-desc">{{ item.BossName }} · {{ item.ShortDesc }}</span>
-                    <i class="u-point"><img src="@/assets/img/point.png" />{{ item.Point }}</i>
-                </a>
-            </div>
-            <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon> </el-alert>
-            <el-pagination
-                class="m-archive-pages"
-                background
-                :hide-on-single-page="true"
-                @current-change="changePage"
-                :current-page.sync="page"
-                :page-size.sync="per"
-                layout="total, prev, pager, next, jumper"
-                :total="total"
-            >
-            </el-pagination>
+    <div class="m-fb-cj" v-loading="loading">
+        <div class="m-cj-list" v-if="hasData">
+            <a class="m-cj-item" v-for="(item, i) in data" :href="item.ID | url" :key="i" target="_blank">
+                <img class="u-icon" :src="item.IconID | iconLink" />
+                <span class="u-title">{{ item.Name }}</span>
+                <span class="u-desc">{{ item.BossName }} · {{ item.ShortDesc }}</span>
+                <i class="u-point"><img src="@/assets/img/point.png" />{{ item.Point }}</i>
+            </a>
         </div>
-    </ListLayout>
+        <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon> </el-alert>
+        <el-pagination
+            class="m-archive-pages"
+            background
+            :hide-on-single-page="true"
+            @current-change="changePage"
+            :current-page.sync="page"
+            :page-size.sync="per"
+            layout="total, prev, pager, next, jumper"
+            :total="total"
+        >
+        </el-pagination>
+    </div>
 </template>
 
 <script>

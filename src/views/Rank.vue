@@ -52,7 +52,9 @@
                                     <span class="u-verified" v-if="item.teamname"><i class="el-icon-success"></i>{{ item.teamname }}</span>
                                     <span class="u-undefined" v-else>公示期</span>
                                 </el-col>
-                                <el-col :span="24" class="u-members" :class="{ on: item.active }" v-html="showMembers(item.teamMembers)" v-if="item.teamMembers"></el-col>
+                                <el-col :span="24" class="u-members" :class="{ on: item.active }"  v-if="item.teamMembers">
+                                    <div v-html="showMembers(item.teamMembers)"></div>
+                                </el-col>
                             </el-row>
                         </div>
                     </div>

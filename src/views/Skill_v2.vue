@@ -4,7 +4,7 @@
         <ul class="u-list">
             <li v-for="(item, i) in list" :key="i" v-show="client == item.color">
                 <a :href="item.link" target="_blank">
-                    <img :src="item.icon | iconLink" />
+                    <img :src="iconLink(item.icon)" />
                     {{ item.label }}
                 </a>
             </li>
@@ -39,14 +39,11 @@ export default {
                 this.list = res.data.data.menu_group.menus;
             });
         },
-    },
-    filters: {
         iconLink,
     },
     created: function() {
         this.init();
     },
-    mounted: function() {},
 };
 </script>
 

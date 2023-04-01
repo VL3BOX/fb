@@ -128,7 +128,6 @@ export default {
                     name: this.view,
                     query: {
                         fb_name: this.$route.query.fb_name,
-                        fb_zlp: this.$route.query.fb_zlp,
                     },
                 });
             }

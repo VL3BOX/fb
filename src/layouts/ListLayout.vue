@@ -11,7 +11,7 @@
         <Main :withoutRight="false">
             <div class="m-main m-fb">
                 <tabs />
-                <slot></slot>
+                <router-view />
             </div>
             <RightSidebar>
                 <Side class="m-extend" />

@@ -16,14 +16,14 @@ export default {
         };
     },
     computed: {
-        zlp: function () {
-            return this.$store.state.zlp || this.$store.state.default_zlp;
-        },
         fb: function () {
             return this.$store.state.fb || this.$store.state.default_fb;
         },
+        dungeons() {
+            return this.$store.getters.dungeons;
+        },
         mapid: function () {
-            return this.$store.state.map[this.zlp]["dungeon"][this.fb]["maps"][0]["map_id"];
+            return this.dungeons?.[this.fb]["maps"][0]["map_id"];
         },
         maplist: function () {
             return this.maptree[this.mapid];

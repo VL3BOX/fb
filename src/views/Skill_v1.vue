@@ -46,9 +46,6 @@ export default {
         fb: function() {
             return this.$route.query.fb_name || this.$store.state.default_fb;
         },
-        zlp: function() {
-            return this.$route.query.fb_zlp || this.$store.state.default_zlp;
-        },
     },
     methods: {
         loadLua: function() {

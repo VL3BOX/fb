@@ -1,5 +1,4 @@
 <template>
-<ListLayout>
     <div class="m-fb-gem" v-loading="loading">
         <el-input class="m-gem-search" placeholder="请输入关键词" v-model.trim.lazy="search" clearable @clear="onSearch" @keydown.native.enter="onSearch">
             <template slot="prepend">关键词</template>
@@ -54,7 +53,6 @@
         >
         </el-pagination>
     </div>
-</ListLayout>
 </template>
 
 <script>
@@ -86,9 +84,6 @@ export default {
         },
         fb: function () {
             return this.$route.query.fb_name || this.$store.state.default_fb;
-        },
-        zlp: function () {
-            return this.$route.query.fb_zlp || this.$store.state.default_zlp;
         },
         client: function () {
             return this.$store.state.client || "std";

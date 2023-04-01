@@ -14,22 +14,41 @@ const Rank = () => import('../views/Rank.vue')
 const Gem = () => import('../views/Gem.vue')
 const Lua = () => import('../views/Lua.vue')
 const Bahuang = () => import('../views/Bahuang.vue')
+const ListLayout = () => import('@/layouts/ListLayout.vue')
 
 Vue.use(VueRouter);
 
+// 解决重复点击路由报错的BUG
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch((err) => err);
+};
+
 const routes = [
-    { name: "index", path: "/", component: Index },
-    { name: "drop", path: "/drop", component: DropV2 },
-    { name: "drop_v2", path: "/drop_v2", component: DropV2 },
-    { name: "map", path: "/map", component: JMap },
-    { name: "npc", path: "/npc", component: Npc },
-    { name: "skill", path: "/skill", component: Skill },
-    { name: "attr", path: "/attr", component: Attr },
-    { name: "story", path: "/story", component: Story },
-    { name: "cj", path: "/cj", component: Cj },
-    { name: "rank", path: "/rank", component: Rank },
-    { name: "gem", path: "/gem", component: Gem },
-    { name: "lua", path: "/lua", component: Lua },
+    // default layout
+    {
+        name: 'list',
+        component: ListLayout,
+        path: '/',
+        redirect: {
+            name: "index"
+        },
+        children: [
+            { name: "index", path: "", component: Index },
+            { name: "drop", path: "/drop", component: DropV2 },
+            { name: "drop_v2", path: "/drop_v2", component: DropV2 },
+            { name: "map", path: "/map", component: JMap },
+            { name: "npc", path: "/npc", component: Npc },
+            { name: "skill", path: "/skill", component: Skill },
+            { name: "attr", path: "/attr", component: Attr },
+            { name: "story", path: "/story", component: Story },
+            { name: "cj", path: "/cj", component: Cj },
+            { name: "rank", path: "/rank", component: Rank },
+            { name: "gem", path: "/gem", component: Gem },
+            { name: "lua", path: "/lua", component: Lua },
+        ]
+    },
+
     { name: "bahuang", path: "/bahuang", component: Bahuang }
 
 ];

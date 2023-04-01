@@ -314,14 +314,23 @@ export default {
         fb: function() {
             return this.$route.query.fb_name || this.$store.state.default_fb;
         },
-        zlp: function() {
-            return this.$route.query.fb_zlp || this.$store.state.default_zlp;
+        map() {
+            return this.$store.state.map;
+        },
+        dungeons() {
+            let dungeons = {};
+
+            Object.values(this.map).forEach((group) => {
+                Object.assign(dungeons, group.dungeon);
+            });
+
+            return dungeons;
         },
         maps: function() {
-            return this.$store.state.map[this.zlp]["dungeon"][this.fb]["maps"];
+            return this.dungeons?.[this.fb]["maps"];
         },
         bosslist: function() {
-            return this.$store.state.map[this.zlp]["dungeon"][this.fb]["boss"];
+            return this.dungeons?.[this.fb]["boss"];
         },
         client: function() {
             return this.$store.state.client || "std";

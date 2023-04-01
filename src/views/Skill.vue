@@ -1,10 +1,8 @@
 <template>
-    <ListLayout>
-        <div class="v-skill">
-            <v1 v-if="hasRight && client == 'std'"></v1>
-            <v2 v-else></v2>
-        </div>
-    </ListLayout>
+    <div class="v-skill">
+        <v1 v-if="hasRight && client == 'std'"></v1>
+        <v2 v-else></v2>
+    </div>
 </template>
 
 <script>

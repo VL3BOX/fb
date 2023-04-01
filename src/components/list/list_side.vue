@@ -8,20 +8,20 @@
             </strong>
         </RightSideMsg>
         <!-- 团队天梯 -->
-        <mini-ladder></mini-ladder>
+        <mini-ladder v-if="client === 'std'"></mini-ladder>
         <!-- 团队招募 -->
-        <!-- <team-act></team-act> -->
+        <team-act v-if="client === 'origin'"></team-act>
     </div>
 </template>
 
 <script>
 import miniLadder from "./mini_ladder.vue";
-// import teamAct from "./team_act.vue";
+import teamAct from "./team_act.vue";
 export default {
     name: "list_side",
     components: {
         miniLadder,
-        // teamAct
+        teamAct
     },
     props: [],
     data: function () {
@@ -30,7 +30,9 @@ export default {
         };
     },
     computed: {
-
+        client() {
+            return this.$store.state.client;
+        }
     },
     methods: {
 

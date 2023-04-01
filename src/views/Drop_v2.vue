@@ -1,6 +1,4 @@
 <template>
-<ListLayout>
-
     <div class="m-fb-drop" v-loading="loading">
         <el-tabs v-model="mapid" type="card">
             <el-tab-pane :label="item.mode" :name="item.map_id" v-for="(item, i) in maplist" :key="i">
@@ -83,7 +81,6 @@
         </el-tabs>
         <!-- <router-link class="u-switch-version" to="/drop"><i class="el-icon-sort"></i> 切换至旧版</router-link> -->
     </div>
-</ListLayout>
 </template>
 
 <script>
@@ -121,14 +118,14 @@ export default {
         fb: function () {
             return this.$route.query.fb_name || this.$store.state.default_fb;
         },
-        zlp: function () {
-            return this.$route.query.fb_zlp || this.$store.state.default_zlp;
+        dungeons() {
+            return this.$store.getters.dungeons;
         },
         client: function () {
             return this.$store.state.client || "std";
         },
         maplist: function () {
-            return this.$store.state.map?.[this.zlp]?.["dungeon"]?.[this.fb]?.["maps"];
+            return this.dungeons?.[this.fb]?.["maps"];
         },
         params: function () {
             return {

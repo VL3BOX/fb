@@ -12,7 +12,7 @@
 
         <div class="m-nav-info">
             <div class="m-nav-info__preview">
-                <img class="u-img" :src="getMap(fbDetail.icon)" />
+                <img class="u-img" :src="getMap(fbDetail.icon)" @click="onMapBgClick" />
                 <div class="u-name">{{ fbName }}</div>
             </div>
             <div class="m-nav-info__meta">
@@ -160,7 +160,7 @@ export default {
             return this.$store.state.map;
         },
         topic() {
-            return this.boss || this.mode || undefined;
+            return [this.boss, this.mode].filter(Boolean).join(",");
         },
         dungeons() {
             let dungeons = {};
@@ -192,10 +192,12 @@ export default {
         getAppIcon,
         //下拉框修改展示的副本内容
         changeFb: function (fb_name) {
-            const topic = this.boss || this.mode || undefined;
+            this.boss = "";
+            this.mode = "";
+
             const query = {
                 fb_name,
-                topic,
+                topic: this.topic,
             };
             this.$router.push({ query });
 
@@ -211,11 +213,18 @@ export default {
                     icon: "",
                 };
             }
-            this.boss = "";
-            this.mode = "";
         },
         tagActive: function (tag_name) {
             return this.$route.name == tag_name;
+        },
+        onMapBgClick() {
+            if (!this.fbName) return;
+            this.$router.push({
+                name: "story",
+                query: {
+                    fb_name: this.fbName,
+                },
+            });
         },
     },
     watch: {
@@ -224,12 +233,24 @@ export default {
             immediate: true,
             handler(val) {
                 const fb_name = val?.fb_name;
-                if (fb_name) {
-                    this.$store.commit("setState", { key: "fb", val: fb_name });
-                    this.fbName = fb_name;
+                this.$store.commit("setState", { key: "fb", val: fb_name });
+                this.fbName = fb_name;
+                this.search = fb_name || "";
 
+                if (fb_name) {
                     this.fbDetail = this.dungeons?.[fb_name];
-                    this.search = this.fbName || "";
+                }
+
+                if (val?.topic) {
+                    const [topicA, topicB] = val.topic.split(",");
+                    // 包含阿拉伯数字，赋值给mode
+                    if (/\d/.test(topicB)) {
+                        this.mode = topicB;
+                        this.boss = topicA;
+                    } else {
+                        this.mode = topicA;
+                        this.boss = topicB;
+                    }
                 }
             },
         },
@@ -239,12 +260,6 @@ export default {
                 topic: this.topic,
             };
             this.$router.push({ query });
-        },
-        mode(val) {
-            if (val) this.boss = "";
-        },
-        boss(val) {
-            if (val) this.mode = "";
         },
     },
 };

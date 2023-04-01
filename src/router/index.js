@@ -10,7 +10,7 @@ const Skill = () => import('../views/Skill.vue')
 const Attr = () => import('../views/Attr.vue')
 const Story = () => import('../views/Story.vue')
 const Cj = () => import('../views/Cj.vue')
-const Rank = () => import('../views/Rank.vue')
+// const Rank = () => import('../views/Rank.vue')
 const Gem = () => import('../views/Gem.vue')
 const Lua = () => import('../views/Lua.vue')
 const Bahuang = () => import('../views/Bahuang.vue')
@@ -43,7 +43,7 @@ const routes = [
             { name: "attr", path: "/attr", component: Attr, meta: { withoutRight: true } },
             { name: "story", path: "/story", component: Story, meta: { withoutRight: true } },
             { name: "cj", path: "/cj", component: Cj, meta: { withoutRight: true } },
-            { name: "rank", path: "/rank", component: Rank, meta: { withoutRight: true } },
+            // { name: "rank", path: "/rank", component: Rank, meta: { withoutRight: true } },
             { name: "gem", path: "/gem", component: Gem, meta: { withoutRight: true } },
             { name: "lua", path: "/lua", component: Lua, meta: { withoutRight: true } },
         ]

@@ -133,11 +133,7 @@ export default {
                 .then((res) => {
                     this.$store.state.isSuperAuthor = true;
                     this.map = this.copyMap = res.data.filter((item) => item) || [];
-                })
-                .catch((err) => {
-                    this.$store.state.isSuperAuthor = false;
-                })
-                .finally(() => {
+                }).finally(() => {
                     this.loading = false;
                 });
         },

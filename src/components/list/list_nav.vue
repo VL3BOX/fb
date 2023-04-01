@@ -244,12 +244,12 @@ export default {
                 if (val?.topic) {
                     const [topicA, topicB] = val.topic.split(",");
                     // 包含阿拉伯数字，赋值给mode
-                    if (/\d/.test(topicB)) {
-                        this.mode = topicB;
-                        this.boss = topicA;
-                    } else {
+                    if (/\d/.test(topicA)) {
                         this.mode = topicA;
                         this.boss = topicB;
+                    } else {
+                        this.mode = topicB;
+                        this.boss = topicA;
                     }
                 }
             },

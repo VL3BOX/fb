@@ -8,7 +8,7 @@
         <LeftSidebar>
             <Nav class="m-nav" />
         </LeftSidebar>
-        <Main :withoutRight="false">
+        <Main :withoutRight="withoutRight">
             <div class="m-main m-fb">
                 <tabs />
                 <router-view />
@@ -27,15 +27,20 @@ import tabs from "@/components/tabs.vue";
 import Side from "@/components/list/list_side.vue";
 export default {
     name: "App",
-    props: [],
     data: function () {
-        return {};
+        return {
+            withoutRight: false
+        };
     },
-    methods: {},
     components: {
         Nav,
         tabs,
         Side,
+    },
+    watch: {
+        $route: function (to, from) {
+            this.withoutRight = to?.meta?.withoutRight;
+        },
     },
 };
 </script>

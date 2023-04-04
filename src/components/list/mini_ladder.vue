@@ -2,7 +2,7 @@
     <div class="m-team-ladder-mini">
         <div class="m-ladder-header">
             <h3 class="m-ladder-title">
-                <span class="u-title"> <img class="u-icon" svg-inline :src="getAppIcon('jdt')" /> 天梯榜 </span>
+                <span class="u-title"> <img class="u-icon" svg-inline :src="getAppIcon('jdt')" /> 秘境百强榜 </span>
                 <a class="u-more" target="_blank" :href="getLink('rank', event_id)"
                     >查看更多<i class="el-icon-d-arrow-right"></i
                 ></a>

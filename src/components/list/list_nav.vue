@@ -2,7 +2,9 @@
     <div class="m-fb-nav m-fb-list-nav">
         <div class="m-nav-search" @click.stop>
             <!-- 下拉框 -->
-            <el-select v-model="search" placeholder="选择副本" clearable filterable @change="changeFb">
+            <el-select v-model="search" placeholder="选择副本" clearable filterable @change="changeFb" class="u-fb-select">
+                <el-option label="全部" value=""></el-option>
+                <hr class="u-divider">
                 <el-option-group v-for="(group, key) in map" :key="key" :label="'🍄 ' + key + '(' + group.level + ')'">
                     <el-option v-for="(item, subkey) in group.dungeon" :key="subkey" :label="subkey" :value="subkey">
                     </el-option>

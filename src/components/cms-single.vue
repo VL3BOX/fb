@@ -165,9 +165,9 @@ export default {
         post_client: function () {
             return this.post?.client || "all";
         },
-        allow_gift: function () {
+        allow_gift: function (){
             return this.post?.allow_gift;
-        },
+        }
     },
     methods: {
         updateCollection: function (val) {

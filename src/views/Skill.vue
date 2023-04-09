@@ -1,14 +1,14 @@
 <template>
     <div class="v-skill">
-        <v1></v1>
-        <!-- <v1 v-if="hasRight && client == 'std'"></v1> -->
-        <!-- <v2 v-else></v2> -->
+        <v1 v-if="hasRight && client == 'std'"></v1>
+        <v2 v-else></v2>
     </div>
 </template>
 
 <script>
+import User from "@jx3box/jx3box-common/js/user";
 import v1 from "./Skill_v1.vue";
-// import v2 from "./Skill_v2.vue";
+import v2 from "./Skill_v2.vue";
 // import User from "@jx3box/jx3box-common/js/user";
 // import { getIsSuperAuthor } from "@/service/skill.js";
 export default {
@@ -16,7 +16,7 @@ export default {
     props: [],
     components: {
         v1,
-        // v2,
+        v2,
     },
     data: function () {
         return {
@@ -33,9 +33,7 @@ export default {
         },
     },
     mounted: function () {
-        // getIsSuperAuthor(User.getInfo().uid).then((res) => {
-        //     this.isSuperAuthor = res.data?.data;
-        // });
+        this.isAdmin = User.isAdmin()
     },
 };
 </script>

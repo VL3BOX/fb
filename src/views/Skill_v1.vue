@@ -101,10 +101,10 @@ export default {
     },
     mounted: function() {
         this.loadLuaIndex();
-        User.isLogin() &&
-            User.isVIP().then((data) => {
-                this.hasRight = data;
-            });
+        // User.isLogin() &&
+        //     User.isVIP().then((data) => {
+        //         this.hasRight = data;
+        //     });
     },
     components: {
         "skill-item": skill_item,

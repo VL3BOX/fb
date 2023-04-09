@@ -62,7 +62,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="源码分析" name="lua" v-if="isAdmin">
+        <el-tab-pane label="源码分析" name="lua" v-if="isSuperAuthor">
             <span slot="label">
                 <i class="el-icon-full-screen"></i>
                 <b>源码分析</b>
@@ -134,7 +134,7 @@ export default {
         },
     },
     mounted: function () {
-        User.isSuperAuthor().then((data) => {
+        User.isLogin() && User.isSuperAuthor().then((data) => {
             this.$store.state.isSuperAuthor = data;
         });
     }

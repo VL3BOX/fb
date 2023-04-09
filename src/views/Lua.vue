@@ -1,6 +1,5 @@
 <template>
     <div class="v-lua" v-loading="loading" v-if="isSuperAuthor">
-        <!-- 搜索 -->
         <div class="m-lua-search">
             <el-input placeholder="请输入关键词" v-model.trim.lazy="search" class="input-with-select" @change="searchLua">
                 <span slot="prepend"><i class="el-icon-search"></i> 搜索</span>

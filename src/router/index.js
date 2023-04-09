@@ -46,7 +46,7 @@ const routes = [
             { name: "cj", path: "/cj", component: Cj, meta: { withoutRight: true } },
             // { name: "rank", path: "/rank", component: Rank, meta: { withoutRight: true } },
             { name: "gem", path: "/gem", component: Gem, meta: { withoutRight: true } },
-            { name: "lua", path: "/lua", component: Lua, meta: { ithoutRight: true } },
+            { name: "lua", path: "/lua", component: Lua, meta: { withoutRight: true } },
         ]
     },
 

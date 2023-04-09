@@ -38,9 +38,13 @@ export default {
         Side,
     },
     watch: {
-        $route: function (to, from) {
-            this.withoutRight = to?.meta?.withoutRight;
-        },
+        $route: {
+            deep: true,
+            immediate: true,
+            handler: function (to, from) {
+                this.withoutRight = to?.meta?.withoutRight;
+            }
+        }
     },
 };
 </script>

@@ -21,19 +21,21 @@ export default {
     data: function () {
         return {
             isAdmin: false,
-            isSuperAuthor: false,
         };
     },
     computed: {
         client: function () {
             return this.$store.state.client;
         },
+        isSuperAuthor: function () {
+            return this.$store.state.isSuperAuthor;
+        },
         hasRight: function () {
             return this.isAdmin || this.isSuperAuthor;
         },
     },
     mounted: function () {
-        this.isAdmin = User.isAdmin()
+        this.isAdmin = User.isAdmin();
     },
 };
 </script>

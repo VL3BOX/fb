@@ -62,7 +62,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="源码分析" name="lua" v-if="isSuperAuthor">
+        <el-tab-pane label="源码分析" name="lua" v-if="isEditor">
             <span slot="label">
                 <i class="el-icon-full-screen"></i>
                 <b>源码分析</b>
@@ -101,7 +101,7 @@ export default {
     data: function () {
         return {
             view: "index",
-            isAdmin: User.isAdmin(),
+            isEditor: User.isEditor(),
             links: ['rank', 'team'],
         };
     },

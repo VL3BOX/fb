@@ -89,24 +89,19 @@
             </a>
             <a href="/jcl" target="_blank">
                 <img class="u-icon" :src="getAppIcon('jcl')" />
-                <span>日志分析</span>
+                <span>战斗日志</span>
                 <em>JX3 Combat Log</em>
-            </a>
-            <a href="/jdt" target="_blank">
-                <img class="u-icon" :src="getAppIcon('jdt')" />
-                <span>秘境百强</span>
-                <em>JX3 Dungeon Top100</em>
             </a>
             <a href="/team" target="_blank">
                 <img class="u-icon" :src="getAppIcon('team')" />
                 <span>团队平台</span>
                 <em>Team Platform</em>
             </a>
-            <!-- <a href="/jcl" target="_blank" class="disabled" @click.prevent>
-                <img class="u-icon" src="@/assets/img/timeline.svg" />
-                <span>时间轴</span>
-                <em>Boss Timeline</em>
-            </a> -->
+            <a href="/jdt" target="_blank">
+                <img class="u-icon" :src="getAppIcon('jdt')" />
+                <span>秘境百强</span>
+                <em>JX3 Dungeon Top100</em>
+            </a>
         </div>
     </div>
 </template>

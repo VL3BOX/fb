@@ -8,8 +8,8 @@
         </div>
 
         <el-input class="m-skill-search" placeholder="请输入技能名称" v-model.trim.lazy="search">
-            <template slot="prepend">技能名称</template>
-            <el-button slot="append" icon="el-icon-search"></el-button>
+            <span slot="prepend"><i class="el-icon-search"></i> 搜索</span>
+            <el-button slot="append" icon="el-icon-position"></el-button>
         </el-input>
 
         <ul class="m-skill-list" v-if="!empty">
@@ -29,7 +29,7 @@ import skill_item from "@/components/skill/skill_item.vue";
 export default {
     name: "Skill_v1",
     props: [],
-    data: function() {
+    data: function () {
         return {
             focus: "",
             search: "",
@@ -43,12 +43,12 @@ export default {
         };
     },
     computed: {
-        fb: function() {
+        fb: function () {
             return this.$route.query.fb_name || this.$store.state.default_fb;
         },
     },
     methods: {
-        loadLua: function() {
+        loadLua: function () {
             this.loading = true;
             getLua(this.fb, this.focus)
                 .then((res) => {
@@ -61,7 +61,7 @@ export default {
                     this.loading = false;
                 });
         },
-        loadLuaIndex: function() {
+        loadLuaIndex: function () {
             getLuaIndex(this.fb)
                 .then((res) => {
                     this.empty = false;
@@ -76,7 +76,7 @@ export default {
         },
     },
     watch: {
-        search: function(val) {
+        search: function (val) {
             if (!val) {
                 for (let key in this.data) {
                     this.data[key]["show"] = true;
@@ -95,11 +95,11 @@ export default {
                 }
             }
         },
-        fb: function() {
+        fb: function () {
             this.loadLuaIndex();
         },
     },
-    mounted: function() {
+    mounted: function () {
         this.loadLuaIndex();
         // User.isLogin() &&
         //     User.isVIP().then((data) => {

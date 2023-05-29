@@ -1,8 +1,8 @@
 <template>
     <div class="m-fb-gem" v-loading="loading">
         <el-input class="m-gem-search" placeholder="请输入关键词" v-model.trim.lazy="search" clearable @clear="onSearch" @keydown.native.enter="onSearch">
-            <template slot="prepend">关键词</template>
-            <el-button slot="append" icon="el-icon-search" @click="onSearch"></el-button>
+            <span slot="prepend"><i class="el-icon-search"></i> 搜索</span>
+            <el-button slot="append" icon="el-icon-position" @click="onSearch"></el-button>
         </el-input>
 
         <div class="m-gem-list" v-if="data.length">

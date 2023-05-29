@@ -3,8 +3,8 @@
         <!-- 群号 -->
         <RightSideMsg>
             <em>全服团长交流群</em> :
-            <strong>
-                <a href="https://jq.qq.com/?_wv=1027&k=mEl1e2hL">785597424</a>
+            <strong @click="onQQClick" class="u-link" title="点击复制">
+                <a>{{ qq }}</a>
             </strong>
         </RightSideMsg>
         <!-- 团队天梯 -->
@@ -26,7 +26,7 @@ export default {
     props: [],
     data: function () {
         return {
-
+            qq: "785597424"
         };
     },
     computed: {
@@ -35,13 +35,15 @@ export default {
         }
     },
     methods: {
-
-    },
-    filters: {
-
-    },
-    watch: {
-
+        onQQClick() {
+            navigator.clipboard.writeText(this.qq).then(() => {
+                this.$notify({
+                    title: "复制成功",
+                    message: "内容：" + this.qq,
+                    type: "success",
+                });
+            })
+        }
     },
     mounted: function () { },
 };
@@ -49,4 +51,9 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/assets/css/side.less";
+.m-list-side {
+    .u-link {
+        cursor: pointer;
+    }
+}
 </style>

@@ -29,10 +29,10 @@ export default {
     methods: {
         init: function() {
             getBread("fb-npc-ac").then((res) => {
-                this.ac = res.data.data.breadcrumb.html;
+                this.ac = res.data.data.html;
             });
             getMenuGroup("fb-npc").then((res) => {
-                this.list = res.data.data.menu_group.menus;
+                this.list = res.data.data.menus;
             });
         },
     },

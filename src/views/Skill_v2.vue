@@ -36,7 +36,7 @@ export default {
             //     this.ac = res.data.data.breadcrumb.html;
             // });
             getMenuGroup("fb-skill").then((res) => {
-                this.list = res.data.data.menu_group.menus;
+                this.list = res.data.data.menus;
             });
         },
         iconLink,

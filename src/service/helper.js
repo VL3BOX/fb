@@ -1,4 +1,4 @@
-import { $helper } from "@jx3box/jx3box-common/js/https";
+import { $helper, $cms } from "@jx3box/jx3box-common/js/https";
 
 function getCollection($collection_id, params = {}) {
     return $helper()({
@@ -9,11 +9,11 @@ function getCollection($collection_id, params = {}) {
 }
 
 function getMenuGroup(name) {
-    return $helper({ mute: true }).get(`/api/menu_group/${name}`);
+    return $cms({ mute: true }).get(`/api/cms/menu-group/${name}`);
 }
 
 function getBread(key) {
-    return $helper({ mute: true }).get(`/api/breadcrumb/${key}`);
+    return $cms({ mute: true }).get(`/api/cms/breadcrumb/${key}`);
 }
 
 function getSkillGroup(key, client = "std") {
@@ -37,7 +37,7 @@ function getSkillGroups(keys, client = "std") {
 }
 
 function getMenuGroups(params) {
-    return $helper({ mute: true }).get(`/api/menu_groups`, {
+    return $cms({ mute: true }).get(`/api/cms/menu-group`, {
         params: params,
     });
 }

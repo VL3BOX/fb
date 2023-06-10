@@ -16,22 +16,10 @@ function getBread(key) {
     return $cms({ mute: true }).get(`/api/cms/breadcrumb/${key}`);
 }
 
-function getSkillGroup(key, client = "std") {
-    return $helper({
-        headers: {
-            "JX3-Client-Type": client == "std" ? 1 : 2,
-        },
-    }).get(`/api/skill_group/${key}`);
-}
-
-function getSkillGroups(keys, client = "std") {
-    return $helper({
-        headers: {
-            "JX3-Client-Type": client == "std" ? 1 : 2,
-        },
-    }).get(`/api/skill_groups`, {
+function getSkillGroups(key) {
+    return $cms({ mute: true }).get(`/api/cms/bps/pvp/specialskill`, {
         params: {
-            keys,
+            group: key,
         },
     });
 }
@@ -42,4 +30,4 @@ function getMenuGroups(params) {
     });
 }
 
-export { getCollection, getMenuGroup, getBread, getSkillGroup, getMenuGroups, getSkillGroups };
+export { getCollection, getMenuGroup, getBread, getMenuGroups, getSkillGroups };

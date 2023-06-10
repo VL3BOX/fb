@@ -7,8 +7,8 @@
                 <li v-for="(item, i) in chuantou['list']" :key="i">
                     <a :href="item.link" target="_blank">
                         <img :src="item.icon | iconLink" />
-                        {{ item.label }}
-                        <span v-if="item.color">{{ item.color }}</span>
+                        {{ item.name }}
+                        <span v-if="item.school">{{ showSchool(item.school) }}</span>
                     </a>
                 </li>
             </ul>
@@ -18,8 +18,8 @@
                 <li v-for="(item, i) in chuanci['list']" :key="i">
                     <a :href="item.link" target="_blank" :title="item.meta_1">
                         <img :src="item.icon | iconLink" />
-                        {{ item.label }}
-                        <span v-if="item.color">{{ item.color }}</span>
+                        {{ item.name }}
+                        <span v-if="item.school">{{ showSchool(item.school) }}</span>
                     </a>
                 </li>
             </ul>
@@ -30,8 +30,8 @@
             <li v-for="(item, i) in guanti['list']" :key="i">
                 <a :href="item.link" target="_blank" :title="item.meta_1">
                     <img :src="item.icon | iconLink" />
-                    {{ item.label }}
-                    <span v-if="item.color">{{ item.color }}</span>
+                    {{ item.name }}
+                    <span v-if="item.school">{{ showSchool(item.school) }}</span>
                 </a>
             </li>
         </ul>
@@ -40,8 +40,10 @@
 
 <script>
 import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box";
+import schoolid from "@jx3box/jx3box-data/data/xf/schoolid.json";
 import { getSkillGroups } from "@/service/helper.js";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
+import { groupBy } from "lodash"
 export default {
     name: "Attr",
     props: [],
@@ -76,16 +78,19 @@ export default {
             let params = this.client == "origin" ? ["guanti", "origin"] : ["chuantou,chuanci,guanti", "std"];
             getSkillGroups(...params)
                 .then((res) => {
-                    let data = res.data.data.data;
+                    let data = groupBy(res.data.data, 'group')
                     for (let key in data) {
-                        this[key]["list"] = data[key]["items"] || [];
-                        this[key]["desc"] = data[key]["description"];
+                        this[key]["list"] = data[key] || [];
+                        this[key]["desc"] = data[key][0]?.group_info?.desc || '';
                     }
                 })
                 .finally(() => {
                     this.loading = false;
                 });
         },
+        showSchool(id) {
+            return schoolid[id] || "";
+        }
     },
     mounted: function () {
         this.loadData();

@@ -1,12 +1,4 @@
-import { $helper, $cms } from "@jx3box/jx3box-common/js/https";
-
-function getCollection($collection_id, params = {}) {
-    return $helper()({
-        method: "GET",
-        url: `/api/post/collection/${$collection_id}`,
-        params: params,
-    });
-}
+import { $cms } from "@jx3box/jx3box-common/js/https";
 
 function getMenuGroup(name) {
     return $cms({ mute: true }).get(`/api/cms/menu-group/${name}`);
@@ -30,4 +22,4 @@ function getMenuGroups(params) {
     });
 }
 
-export { getCollection, getMenuGroup, getBread, getMenuGroups, getSkillGroups };
+export { getMenuGroup, getBread, getMenuGroups, getSkillGroups };

@@ -2,7 +2,7 @@
   "name": "fb",
   "private": true,
   "scripts": {
-    "dev": "env DEV_SERVER=true vue-cli-service serve",
+    "dev": "cross-env DEV_SERVER=true vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
@@ -13,7 +13,7 @@
   "dependencies": {
     "@jx3box/jx3box-comment-ui": "^1.7.13",
     "@jx3box/jx3box-common": "^7.9.5",
-    "@jx3box/jx3box-common-ui": "^7.4.5",
+    "@jx3box/jx3box-common-ui": "^7.4.6",
     "@jx3box/jx3box-data": "^3.3.0",
     "@jx3box/jx3box-editor": "^1.9.9",
     "axios": "^0.21.1",
@@ -35,6 +35,7 @@
     "@vue/cli-plugin-vuex": "^4.0.0",
     "@vue/cli-service": "^4.1.2",
     "babel-eslint": "^10.0.3",
+    "cross-env": "^7.0.3",
     "csslab": "^4.0.3",
     "csv-parse": "^4.16.3",
     "eslint": "^5.16.0",

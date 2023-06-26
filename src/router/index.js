@@ -1,21 +1,22 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-const Index = () => import('../views/Index.vue')
+const Index = () => import("../views/Index.vue");
 // const Drop = () => import('../views/Drop.vue')
-const DropV2 = () => import('../views/Drop_v2.vue')
-const JMap = () => import('../views/Map.vue')
-const Npc = () => import('../views/Npc.vue')
-const Skill = () => import('../views/Skill.vue')
-const Attr = () => import('../views/Attr.vue')
-const Story = () => import('../views/Story.vue')
-const Cj = () => import('../views/Cj.vue')
+const DropV2 = () => import("../views/Drop_v2.vue");
+const JMap = () => import("../views/Map.vue");
+const Npc = () => import("../views/Npc.vue");
+const Skill = () => import("../views/Skill.vue");
+const Attr = () => import("../views/Attr.vue");
+const Story = () => import("../views/Story.vue");
+const Cj = () => import("../views/Cj.vue");
 // const Rank = () => import('../views/Rank.vue')
-const Gem = () => import('../views/Gem.vue')
-const Lua = () => import('../views/Lua.vue')
-const Bahuang = () => import('../views/Bahuang.vue')
-const ListLayout = () => import('@/layouts/ListLayout.vue')
-const Post = () => import('@/views/Single.vue')
+const Gem = () => import("../views/Gem.vue");
+const Lua = () => import("../views/Lua.vue");
+const Bahuang = () => import("../views/Bahuang.vue");
+const Baizhan = () => import("../views/Baizhan.vue");
+const ListLayout = () => import("@/layouts/ListLayout.vue");
+const Post = () => import("@/views/Single.vue");
 
 Vue.use(VueRouter);
 
@@ -28,11 +29,11 @@ VueRouter.prototype.push = function push(location) {
 const routes = [
     // default layout
     {
-        name: 'list',
+        name: "list",
         component: ListLayout,
-        path: '/',
+        path: "/",
         redirect: {
-            name: "index"
+            name: "index",
         },
         children: [
             { name: "index", path: "", component: Index, meta: { withoutRight: false } },
@@ -47,19 +48,20 @@ const routes = [
             // { name: "rank", path: "/rank", component: Rank, meta: { withoutRight: true } },
             { name: "gem", path: "/gem", component: Gem, meta: { withoutRight: true } },
             { name: "lua", path: "/lua", component: Lua, meta: { withoutRight: true } },
-        ]
+        ],
     },
 
     { name: "bahuang", path: "/bahuang", component: Bahuang },
 
-    { name: "post", path: "/:id(\\d+)", component: Post },
+    { name: "baizhan", path: "/baizhan", component: Baizhan },
 
+    { name: "post", path: "/:id(\\d+)", component: Post },
 ];
 
 const router = new VueRouter({
     routes,
-    mode: 'history',
-    base: '/fb'
+    mode: "history",
+    base: "/fb",
 });
 
 export default router;

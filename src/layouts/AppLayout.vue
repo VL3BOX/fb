@@ -1,13 +1,7 @@
 <template>
     <div>
         <Header></Header>
-        <Breadcrumb
-            :name="title"
-            :slug="slug"
-            :root="root"
-            :feedbackEnable="true"
-            :crumbEnable="false"
-        >
+        <Breadcrumb :name="title" :slug="slug" :root="root" :feedbackEnable="true" :crumbEnable="false">
             <img slot="logo" svg-inline :src="logo" />
         </Breadcrumb>
         <Main :class="className" :withoutRight="true" :withoutLeft="true">
@@ -34,19 +28,19 @@ export default {
         className: {
             type: String,
             default: "",
-        }
+        },
     },
     computed: {
         root() {
-            return `/fb/bahuang`
+            return app[this.slug]?.root || "/";
         },
         logo() {
             const key = this.icon || this.slug;
             return __imgPath + "image/box/" + key + ".svg";
         },
         title() {
-            return app[this.slug]?.title || ''
-        }
+            return app[this.slug]?.title || "";
+        },
     },
 };
 </script>

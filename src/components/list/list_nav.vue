@@ -72,7 +72,7 @@
                 <span>八荒衡鉴</span>
                 <em>Ba Huang</em>
             </a>
-            <a href="/fb/baizhan" target="_blank" v-if="client == 'std'" class="disabled" @click.prevent>
+            <a href="/fb/baizhan" target="_blank" v-if="client == 'std'">
                 <img class="u-icon" :src="getAppIcon('bhhj')" />
                 <span>百战查询</span>
                 <em>Bai Zhan</em>

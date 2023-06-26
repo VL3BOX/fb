@@ -1,0 +1,21 @@
+.p-skills {
+    .flex;
+    flex-direction: column;
+    gap: 20px;
+    .m-table {
+        .flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 0 20px;
+        .u-item {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            .u-skill-item {
+                .flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+    }
+}

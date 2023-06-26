@@ -12,9 +12,11 @@
         "title": "数据构建"
     },
     "bhhj": {
-        "title": "八荒衡鉴"
+        "title": "八荒衡鉴",
+        "root": "/fb/bahuang"
     },
     "baizhan": {
-        "title": "百战查询"
+        "title": "百战查询",
+        "root": "/fb/baizhan"
     }
 }

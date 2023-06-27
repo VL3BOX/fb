@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { getTypes } from "@/service/baizhan";
+import { getBosses, getBuffs, getEffects, getTypes } from "@/service/baizhan";
 import Skills from "@/components/baizhan/Skills.vue";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {

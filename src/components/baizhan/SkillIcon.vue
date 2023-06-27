@@ -1,8 +1,16 @@
 <template>
     <div class="u-skill-item">
-        <el-popover placement="right-start" trigger="hover" :visible-arrow="false" popper-class="u-item__popup">
+        <el-popover
+            class="u-skill-popover"
+            placement="right-start"
+            trigger="hover"
+            :visible-arrow="false"
+            :popper-class="`u-skill__popup__${source.nColor}`"
+        >
             <template slot="reference">
-                <img class="u-skill-icon" :src="iconLink(iconId, client)" />
+                <div class="u-skill-icon" :class="`u-skill-icon__${source.nColor}`">
+                    <img :src="iconLink(iconId, client)" />
+                </div>
             </template>
             <jx3-skill v-if="id" :client="client" :id="id" :level="level"></jx3-skill>
         </el-popover>
@@ -32,10 +40,7 @@ export default {
             deep: true,
             handler(source) {
                 const data = source?.InSkill || {};
-                if (data.SkillID) {
-                    // 将数据放入 sessionStorage
-                    sessionStorage.setItem(`skill-${this.client}-${this.id}-${this.level}`, JSON.stringify(data));
-                }
+                sessionStorage.setItem(`skill-${this.client}-${this.id}-${this.level}`, JSON.stringify(data));
             },
         },
     },

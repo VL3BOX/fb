@@ -14,7 +14,7 @@
                 <div class="u-name">
                     <span
                         >{{ item.name }}
-                        <a v-if="item.link" :title="`${item.name}攻略`" :href="item.link" target="_blank">
+                        <a v-if="item.link" :title="`${item.name}攻略`" :href="item.link" target="_blank" @click.stop>
                             <i class="el-icon-link"></i> </a
                     ></span>
                     <a v-if="isEditor" class="u-edit" @click.stop="toEdit(item)">

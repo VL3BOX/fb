@@ -2,11 +2,23 @@
     flex: 1;
     .flex;
     flex-direction: column;
-    gap: 20px;
     .m-search {
         padding: 20px 0;
         .flex;
         gap: 10px;
+    }
+    .m-header {
+        position: sticky;
+        top: 112px;
+        background: #fff;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        z-index: 9;
+        text-align: center;
+        padding: 10px 20px;
+        border-bottom: 1px solid #eee;
+        box-sizing: border-box;
     }
     .m-table {
         .flex;
@@ -24,6 +36,10 @@
                     img {
                         .size(16px, 16px);
                     }
+                }
+                .u-edit {
+                    margin-left: 5px;
+                    cursor: pointer;
                 }
             }
             .u-skill-item {
@@ -88,6 +104,7 @@
             }
         }
         .m-pages {
+            margin-top: 10px;
             text-align: center;
         }
     }
@@ -129,5 +146,11 @@
         // 黑色
         background: @skill_black;
         border-color: @skill_black;
+    }
+}
+
+@media screen and (max-width: @phone) {
+    .m-skill-dialog {
+        max-width: 100%;
     }
 }

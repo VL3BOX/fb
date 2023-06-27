@@ -94,8 +94,8 @@ export default {
                 let map = new Map();
                 let mapList = list.filter((v) => !map.has(v.name) && map.set(v.name, 1));
                 const names = mapList.map((item) => item.name).join(",");
-                getBossInfo({ names: names }).then((res) => {
-                    const bossExtraList = res.data?.data || [];
+                getBossInfo({ names: names }).then((resInfo) => {
+                    const bossExtraList = resInfo.data?.data || [];
                     this.bosses = mapList.map((item) => {
                         item.link = bossExtraList.find((boss) => boss.boss_name === item.name)?.link || "";
                         return item;

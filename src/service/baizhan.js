@@ -48,3 +48,15 @@ export function getBossInfo(params) {
 export function addBossInfo(data) {
     return $cms().post(`/api/cms/app/monster/boss`, data);
 }
+
+// 获取技能额外数据
+export function getSkillInfo(params) {
+    return $cms().get(`/api/cms/app/monster/skill`, {
+        params,
+    });
+}
+
+// 更新或添加技能数据
+export function addSkillInfo(data) {
+    return $cms().post(`/api/cms/app/monster/skill`, data);
+}

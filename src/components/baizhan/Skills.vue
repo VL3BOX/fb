@@ -12,13 +12,16 @@
             </el-select>
             <el-input v-model="keyword" placeholder="请输入技能名称或BOSS名称" clearable></el-input>
         </div>
+        <div class="m-header">
+            <div class="u-card" v-for="item in headList" :key="item">{{ item }}</div>
+        </div>
         <div class="m-table">
-            <div class="u-item u-header">
-                <div class="u-card" v-for="item in headList" :key="item">{{ item }}</div>
-            </div>
             <div class="u-item" v-for="skill in skills" :key="skill.dwInSkillID">
                 <div class="u-card">
                     <SkillIcon :source="skill"></SkillIcon>
+                    <a v-if="isEditor" class="u-edit" @click.stop="toEdit(skill)">
+                        <i class="el-icon-edit-outline"></i>
+                    </a>
                 </div>
                 <div class="u-card">{{ skill.szBossName }}</div>
                 <div class="u-card">
@@ -26,6 +29,14 @@
                         <img v-for="point in skill.nCost" :key="point" :src="`${__imgRoot}baizhan_6.png`" />
                     </div>
                 </div>
+                <div v-if="skill.extra" class="u-card">{{ skill.extra.cooldown }}</div>
+                <div v-if="skill.extra && (skill.extra.cost_vigor || skill.extra.cost_endurance)" class="u-card">
+                    {{ skill.extra.cost_vigor || 0 }}/{{ skill.extra.cost_endurance || 0 }}
+                </div>
+                <div v-if="skill.extra && (skill.extra.hit_vigor || skill.extra.hit_endurance)" class="u-card">
+                    {{ skill.extra.hit_vigor || 0 }}/{{ skill.extra.hit_endurance || 0 }}
+                </div>
+                <div v-if="skill.extra" class="u-card">{{ skill.extra.remarks }}</div>
             </div>
             <el-button
                 class="u-more"
@@ -47,18 +58,22 @@
                 @current-change="handleCurrentChange"
             ></el-pagination>
         </div>
+        <SkillForm v-if="visible" :visible="visible" :staged="staged" @update="handleUpdate($event)" @close="close" />
     </div>
 </template>
 
 <script>
-import { getSkills } from "@/service/baizhan";
+import { getSkills, getSkillInfo } from "@/service/baizhan";
 import { removeEmptyIncludeZero } from "@/utils";
 import SkillIcon from "./SkillIcon.vue";
+import SkillForm from "./SkillForm.vue";
+import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "Skills",
     inject: ["__imgRoot"],
     components: {
         SkillIcon,
+        SkillForm,
     },
     props: {
         types: {
@@ -68,6 +83,7 @@ export default {
     },
     data() {
         return {
+            visible: false,
             loading: false,
             skills: [],
             cost: 0, // 技能占用点数
@@ -79,7 +95,8 @@ export default {
             page: 1,
             limit: 30,
             total: 0,
-            headList: ["技能", "所属BOSS", "点数消耗", "技能CD", "精耐消耗", "精耐打击", "备注"],
+            headList: ["技能", "所属BOSS", "点数消耗", "技能CD", "精/耐消耗", "精/耐打击", "备注"],
+            staged: {},
         };
     },
     computed: {
@@ -112,6 +129,9 @@ export default {
         currentBoss() {
             return this.$store.state.baizhanBoss;
         },
+        isEditor: function () {
+            return User.isEditor();
+        },
     },
     watch: {
         currentBoss: {
@@ -129,6 +149,24 @@ export default {
         },
     },
     methods: {
+        toEdit(item) {
+            this.staged = item;
+            this.visible = true;
+        },
+        handleUpdate(data) {
+            const index = this.skills.findIndex((item) => item.dwInSkillID === data.skill_id);
+            if (index !== -1) {
+                this.skills[index].extra = data;
+            } else {
+                this.skills.unshift({
+                    dwInSkillID: data.skill_id,
+                    extra: data,
+                });
+            }
+        },
+        close() {
+            this.visible = false;
+        },
         getColor(color) {
             return this.colors.find((item) => item.ID === color)?.TypeName || "";
         },
@@ -138,13 +176,21 @@ export default {
             this.loading = true;
             getSkills(data)
                 .then((res) => {
-                    if (isAppend) {
-                        const list = res.data?.data?.list || [];
-                        this.skills = this.skills.concat(list);
-                    } else {
-                        this.skills = res.data?.data?.list || [];
-                    }
-                    this.total = res.data?.data?.total || 0;
+                    const list = res.data?.data?.list || [];
+                    const ids = list.map((item) => item.dwInSkillID).join(",");
+                    getSkillInfo({ ids: ids }).then((resInfo) => {
+                        const skillExtraList = resInfo.data?.data || [];
+                        const newList = list.map((item) => {
+                            item.extra = skillExtraList.find((extra) => extra.skill_id === item.dwInSkillID) || {};
+                            return item;
+                        });
+                        if (isAppend) {
+                            this.skills = this.skills.concat(newList);
+                        } else {
+                            this.skills = newList;
+                        }
+                        this.total = res.data?.data?.total || 0;
+                    });
                 })
                 .finally(() => {
                     this.loading = false;

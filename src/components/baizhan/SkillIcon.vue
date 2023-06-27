@@ -17,6 +17,15 @@
         <div v-if="source.szSkillName" class="u-item-name">
             {{ source.szSkillName }}
         </div>
+        <a
+            v-if="source.extra && source.extra.link"
+            :title="`${source.szSkillName}攻略`"
+            :href="source.extra.link"
+            target="_blank"
+            class="u-item-link"
+        >
+            <i class="el-icon-link"></i>
+        </a>
     </div>
 </template>
 

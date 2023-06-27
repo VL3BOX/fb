@@ -109,8 +109,17 @@ export default {
         hasNextPage() {
             return this.page < this.total / this.limit;
         },
+        currentBoss() {
+            return this.$store.state.baizhanBoss;
+        },
     },
     watch: {
+        currentBoss: {
+            immediate: true,
+            handler(boss) {
+                this.keyword = boss;
+            },
+        },
         params: {
             deep: true,
             handler() {

@@ -14,9 +14,9 @@ let store = {
         id: 0,
         user_id: 0,
         post: "",
-        extend : {
-            collection_data : '',
-            directory : false,
+        extend: {
+            collection_data: "",
+            directory: false,
         },
         // list
         map: location.href.includes("origin") ? origin_map : map,
@@ -28,15 +28,17 @@ let store = {
 
         maptree: "",
 
-        isSuperAuthor : false,
+        isSuperAuthor: false,
+
+        baizhanBoss: "",
     },
     mutations: {
-        switchClient: function(state, val) {
+        switchClient: function (state, val) {
             state.client = val || "std";
         },
         setState(state, val) {
             state[val.key] = val.val;
-        }
+        },
     },
     getters: {
         dungeons(state) {

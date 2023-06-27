@@ -1,0 +1,79 @@
+.c-main {
+    margin-left: 0 !important;
+}
+.p-baizhan {
+    .flex;
+    gap: 20px;
+    width: 100%;
+    background-color: #fafbfc;
+    .c-sidebar {
+        padding: 0;
+    }
+    .m-bosses {
+        // width: 280px;
+        // height: 100%;
+        .flex;
+        flex-direction: column;
+        .scrollbar();
+        .u-boss {
+            padding: 15px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            .flex;
+            gap: 10px;
+            align-items: flex-start;
+            .u-left {
+                flex: none;
+            }
+            .u-avatar {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+            .u-right {
+                width: 100%;
+                .u-name {
+                    .flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 10px;
+                }
+                .u-skills {
+                    .flex;
+                    gap: 5px;
+                    overflow-x: auto;
+                    margin-top: 5px;
+                    .scrollbar();
+                    .u-skill-item {
+                        flex: none;
+                    }
+                    img {
+                        .size(25px, 25px);
+                    }
+                }
+            }
+            &.is-active,
+            &:hover {
+                background-color: #eee;
+            }
+        }
+    }
+    .m-content {
+        margin-left: 280px;
+        transition: 0.2s ease-in;
+        padding: 20px;
+        flex: none;
+        width: calc(100% - 320px);
+        min-height: calc(100vh - 210px);
+        background-color: #fff;
+        &.is-phone {
+            margin-left: 0;
+            width: calc(100% - 40px);
+        }
+    }
+    .isclose + .m-content {
+        margin-left: 0;
+        width: calc(100% - 40px);
+    }
+}

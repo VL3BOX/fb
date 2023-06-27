@@ -1,4 +1,4 @@
-import { $node } from "@jx3box/jx3box-common/js/https";
+import { $node, $cms } from "@jx3box/jx3box-common/js/https";
 
 // 获取所有的百战BOSS列表
 export function getBosses() {
@@ -25,4 +25,26 @@ export function getSkills(params) {
     return $node().get("/monster/skills", {
         params,
     });
+}
+
+// 技能查询
+export function getSkill({ id, client, level }) {
+    return $node().get(`/skill/id/${id}`, {
+        params: {
+            client: client,
+            level: level,
+        },
+    });
+}
+
+// 获取BOSS额外数据
+export function getBossInfo(params) {
+    return $cms().get(`/api/cms/app/monster/boss`, {
+        params,
+    });
+}
+
+// 更新或添加BOSS数据
+export function addBossInfo(data) {
+    return $cms().post(`/api/cms/app/monster/boss`, data);
 }

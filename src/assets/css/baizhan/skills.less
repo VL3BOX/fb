@@ -1,21 +1,21 @@
 .p-skills {
+    flex: 1;
     .flex;
     flex-direction: column;
     gap: 20px;
     .m-search {
-        padding: 20px 20px 0;
+        padding: 20px 0;
         .flex;
         gap: 10px;
     }
     .m-table {
         .flex;
         flex-direction: column;
-        min-height: calc(100vh - 250px);
-        gap: 20px;
-        padding: 0 20px;
         .u-item {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
+            padding: 10px 20px;
+            box-sizing: border-box;
             .u-card {
                 .flex;
                 justify-content: center;
@@ -82,6 +82,9 @@
                     .dbi;
                     .size(48px, 48px);
                 }
+            }
+            &:not(:first-of-type):hover {
+                background-color: #eee;
             }
         }
         .m-pages {

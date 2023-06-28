@@ -69,9 +69,8 @@
                 transform: scale(1.1);
             }
             .u-img {
+                .size(85px);
                 position: relative;
-                width: 85px;
-                height: 85px;
                 border-radius: 50%;
                 // background-image: url("@{baizhan_img_path}fbcdpanel02_51.png");
                 // background-size: cover;
@@ -79,11 +78,10 @@
             .u-index {
                 position: absolute;
                 top: 0;
-                font-size: 12px;
+                .fz(16px, 22px);
                 color: #fff;
                 font-weight: bold;
                 .size(22px, 22px);
-                line-height: 22px;
                 border-radius: 50%;
                 &.u-effect {
                     background: url("@{baizhan_img_path}baizhan_41.png");
@@ -92,9 +90,8 @@
             }
             .u-icon {
                 position: absolute;
-                bottom: 0;
-                width: 25px;
-                height: 25px;
+                bottom: -6px;
+                .size(36px);
                 border-radius: 50%;
                 overflow: hidden;
                 img {
@@ -107,7 +104,8 @@
                 position: absolute;
                 bottom: -20px;
                 color: #fff;
-                font-size: 12px;
+                .bold;
+                .fz(14px);
                 &.is-current {
                     color: @skill_yellow;
                     font-weight: bold;

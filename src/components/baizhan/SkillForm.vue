@@ -1,13 +1,18 @@
 <template>
-    <el-dialog class="m-skill-dialog" :visible.sync="show" :title="title" :before-close="close" draggable>
+    <el-dialog class="m-skill-dialog" :visible.sync="show" title="百战技能数据维护" :before-close="close">
         <el-form class="m-skill-form" ref="form" :model="form" :rules="rules" label-width="100px">
             <el-form-item label="技能等级" prop="level">
-                <el-select v-model="form.level" placeholder="请选择技能等级" style="width: 100%">
-                    <el-option v-for="item in maxLevel" :key="item" :value="item" :label="`${item}级`"></el-option>
+                <el-select v-model="form.level" placeholder="请选择技能重数" style="width: 100%">
+                    <el-option v-for="item in maxLevel" :key="item" :value="item" :label="`第 ${item} 重`"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="技能CD" prop="cooldown">
-                <el-input v-model="form.cooldown" placeholder="请填写技能CD" />
+            <el-form-item label="技能CD" prop="cooldown" style="width: 100%">
+                <el-select v-model="form.cooldown" placeholder="请选择技能CD">
+                    <el-option :value="60" label="三级 - 60秒"></el-option>
+                    <el-option :value="30" label="二级 - 30秒"></el-option>
+                    <el-option :value="10" label="一级 - 10秒"></el-option>
+                    <el-option :value="0" label="被动技能"></el-option>
+                </el-select>
             </el-form-item>
             <el-form-item label="精力消耗" prop="cost_vigor">
                 <el-input v-model="form.cost_vigor" placeholder="请填写精力消耗" />
@@ -38,30 +43,31 @@
 </template>
 <script>
 import { addSkillInfo } from "@/service/baizhan";
-import { pick, cloneDeep } from "lodash";
 import { removeEmptyIncludeZero } from "@/utils";
-import User from "@jx3box/jx3box-common/js/user";
+import { cloneDeep } from "lodash";
+
+const form = {
+    user_id: 0,
+    skill_id: 0,
+    level: 5,
+    cooldown: 0,
+    cost_vigor: 0,
+    cost_endurance: 0,
+    hit_vigor: 0,
+    hit_endurance: 0,
+    link: "",
+    remarks: "",
+};
+
 export default {
     name: "SkillForm",
-    props: ["visible", "staged"],
-    data: function () {
-        return {
-            loading: false,
-            form: {
-                user_id: 0,
-                skill_id: 0,
-                level: null,
-                cooldown: null,
-                cost_vigor: null,
-                cost_endurance: null,
-                hit_vigor: null,
-                hit_endurance: null,
-                link: "",
-                remarks: "",
-            },
-            rules: {},
-        };
-    },
+    props: ["staged"],
+    data: () => ({
+        show: false,
+        loading: false,
+        form: cloneDeep(form),
+        rules: {},
+    }),
     computed: {
         title() {
             return "百战技能编辑";
@@ -71,18 +77,6 @@ export default {
         },
     },
     watch: {
-        staged: {
-            immediate: true,
-            handler: function (obj) {
-                this.form = {
-                    ...this.form,
-                    ...obj,
-                    ...obj.extra,
-                    skill_id: obj.dwInSkillID,
-                    user_id: ~~User.getInfo().uid,
-                };
-            },
-        },
         visible: {
             immediate: true,
             handler: function (val) {
@@ -91,11 +85,17 @@ export default {
         },
     },
     methods: {
+        open(addon) {
+            this.form = {
+                ...form,
+                ...addon,
+            };
+            this.show = true;
+        },
         // 关闭
         close() {
             this.show = false;
             this.$refs.form.resetFields();
-            this.$emit("close");
         },
         submitForm() {
             this.$refs.form.validate((valid, fields) => {
@@ -109,26 +109,14 @@ export default {
         // 编辑
         edit() {
             if (this.loading) return;
-            const data = removeEmptyIncludeZero(cloneDeep(this.form));
-            const form = pick(data, [
-                "user_id",
-                "skill_id",
-                "level",
-                "cooldown",
-                "cost_vigor",
-                "cost_endurance",
-                "hit_vigor",
-                "hit_endurance",
-                "link",
-                "remarks",
-            ]);
             this.loading = true;
-            addSkillInfo(form)
-                .then(() => {
+            addSkillInfo(this.form)
+                .then((res) => {
                     this.$notify({
                         type: "success",
                         message: "修改成功!",
                     });
+                    const { data } = res.data || {};
                     this.$emit("update", data);
                 })
                 .finally(() => {

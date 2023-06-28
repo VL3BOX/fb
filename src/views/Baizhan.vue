@@ -14,8 +14,10 @@
                         >{{ item.label }}</el-button
                     >
                 </div>
-                <BMap v-if="activeTab === 0" :bosses="bosses"></BMap>
-                <Skills v-if="activeTab === 1" :types="types"></Skills>
+                <keep-alive>
+                    <BMap v-if="activeTab === 0" :bosses="bosses"></BMap>
+                    <Skills v-if="activeTab === 1" :types="types"></Skills>
+                </keep-alive>
             </div>
         </div>
     </app-layout>

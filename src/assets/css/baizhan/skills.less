@@ -19,10 +19,12 @@
         padding: 10px 20px;
         border-bottom: 1px solid #eee;
         box-sizing: border-box;
+        min-width: 1200px;
     }
     .m-table {
         .flex;
         flex-direction: column;
+        min-width: 1200px;
         .u-item {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -155,5 +157,9 @@
 @media screen and (max-width: @phone) {
     .m-skill-dialog {
         max-width: 100%;
+        .el-dialog {
+            margin-top: 3vh !important;
+            width: 90%;
+        }
     }
 }

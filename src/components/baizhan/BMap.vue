@@ -1,5 +1,5 @@
 <template>
-    <div class="p-map">
+    <div class="p-map" v-loading="loading">
         <div class="m-left">
             <div class="m-title">
                 <div class="u-title"></div>
@@ -8,14 +8,18 @@
                     <div>|</div>
                     <div class="u-time">{{ endDate }}</div>
                 </div>
-                <el-button
-                    class="u-edit"
-                    v-if="isEditor"
-                    :icon="!editStatus ? 'el-icon-edit-outline' : ''"
-                    :loading="loading"
-                    @click="toOperate"
-                    >{{ editStatus ? "立即上传" : "编辑" }}</el-button
-                >
+                <div class="u-btns">
+                    <el-button @click="visible = true">往期地图</el-button>
+                    <el-button v-if="isEditor" @click="toSetLastData">应用上次数据</el-button>
+                    <el-button
+                        class="u-edit"
+                        v-if="isEditor"
+                        :icon="!editStatus ? 'el-icon-edit-outline' : ''"
+                        :loading="btnLoading"
+                        @click="toOperate"
+                        >{{ editStatus ? "立即上传" : "编辑" }}</el-button
+                    >
+                </div>
             </div>
             <div class="m-boss-list">
                 <div class="u-step" v-for="(item, step) in list" :key="step">
@@ -27,7 +31,7 @@
                         ]"
                         v-for="(floor, index) in item"
                         :key="index"
-                        @click="setFloor(step * 10 + index + 1, step)"
+                        @click="setFloor(step * 10 + index + 1)"
                     >
                         <div class="u-img">
                             <img :src="getBossAvatar(floor.boss)" :alt="floor.boss || '未知'" />
@@ -74,7 +78,12 @@
                             </div>
                         </el-option>
                     </el-select>
-                    <el-button @click="save">保存</el-button>
+                    <div class="u-btns">
+                        <el-button @click="save">保存</el-button>
+                        <el-button @click="editStatus = false">返回</el-button>
+                        <el-button @click="switchFloor(-1)">上一层</el-button>
+                        <el-button @click="switchFloor(1)">下一层</el-button>
+                    </div>
                 </div>
             </div>
             <div v-else class="m-show-wrap">
@@ -109,27 +118,32 @@
                 </div>
             </div>
         </div>
+        <MapList v-if="visible" :visible="visible" @update="handleUpdate($event)" @close="close"></MapList>
     </div>
 </template>
 
 <script>
 import User from "@jx3box/jx3box-common/js/user";
-import { getBuffs, getEffects, getMap, addMap } from "@/service/baizhan";
+import { getBuffs, getEffects, getMap, addMap, getMaps } from "@/service/baizhan";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 import { arr1to2 } from "@/utils";
 import { getWeekStartDate, getWeekEndDate } from "@/utils/dateFormat";
 import { cloneDeep } from "lodash";
 import SkillIcon from "./SkillIcon.vue";
+import MapList from "./MapList.vue";
 export default {
     name: "BaizhanMap",
     inject: ["__imgRoot"],
     props: ["bosses"],
     components: {
         SkillIcon,
+        MapList,
     },
     data() {
         return {
+            visible: false,
             loading: false,
+            btnLoading: false,
             editStatus: false,
             data: [],
             effects: [],
@@ -143,7 +157,6 @@ export default {
             step: 6,
             row: 10,
             activeFloor: 1, // 当前层数 BOSS
-            currentStep: 1, // 当前阶段
             currentFloor: {
                 level: 1,
                 boss: "",
@@ -170,12 +183,52 @@ export default {
                 const point = cloneDeep(this.point);
                 const data = cloneDeep(this.data);
                 const floor = data?.[index - 1] || point;
-                floor.level = this.currentStep;
+                floor.level = Math.ceil(index / this.row);
                 this.currentFloor = floor;
             },
         },
     },
     methods: {
+        handleUpdate(data) {
+            this.setData(data);
+            this.close();
+            this.editStatus = true;
+        },
+        close() {
+            this.visible = false;
+        },
+        toSetLastData() {
+            this.$confirm("确定应用上一次数据？", "温馨提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+            })
+                .then(() => {
+                    getMaps().then((res) => {
+                        const list = res.data?.data || [];
+                        if (!list.length) {
+                            this.$message({
+                                type: "warning",
+                                message: "暂无临时数据",
+                            });
+                        } else {
+                            const data = list[0]?.data || [];
+                            this.setData(data);
+                            this.editStatus = true;
+                        }
+                    });
+                })
+                .catch(() => {});
+        },
+        switchFloor(index) {
+            if (this.activeFloor === this.data.length && index === 1) {
+                return (this.activeFloor = 1);
+            }
+            if (this.activeFloor === 1 && index === -1) {
+                return (this.activeFloor = this.data.length);
+            }
+            this.activeFloor += index;
+        },
         getRewardList() {
             const boss_name = this.currentFloor.boss;
             return this.bosses.find((item) => item.name === boss_name)?.skills || [];
@@ -208,7 +261,7 @@ export default {
         toOperate() {
             if (this.editStatus) {
                 // 编辑状态 保存
-                if (this.loading) return;
+                if (this.btnLoading) return;
                 const isAll = this.data.every((item) => item.boss);
                 const message = isAll ? "确认是否上传？" : "数据尚未添加完整，确认是否临时保存？";
                 this.$confirm(message, "温馨提示", {
@@ -227,13 +280,12 @@ export default {
                 this.editStatus = true;
             }
         },
-        setFloor(index, step) {
-            this.currentStep = step + 1;
+        setFloor(index) {
             this.activeFloor = index;
         },
         iconLink,
         async addMap() {
-            this.loading = true;
+            this.btnLoading = true;
             const isAll = this.data.every((item) => item.boss);
             const formData = {
                 start: this.startDate + " 14:00",
@@ -245,22 +297,30 @@ export default {
                     console.log(res);
                 })
                 .finally(() => {
-                    this.loading = false;
+                    this.btnLoading = false;
                 });
         },
         load() {
-            getMap().then((res) => {
-                const data = res.data?.data?.data;
-                const total = this.step * this.row;
-                const point = cloneDeep(this.point);
-                if (!data || data.length < total) {
-                    const list = new Array(total).fill(point);
-                    this.data = list;
-                } else {
-                    this.data = data;
-                }
-                this.currentFloor = this.data[0];
-            });
+            this.loading = true;
+            getMap()
+                .then((res) => {
+                    const data = res.data?.data?.data;
+                    this.setData(data);
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
+        setData(data) {
+            const total = this.step * this.row;
+            const point = cloneDeep(this.point);
+            if (!data || data.length < total) {
+                const list = new Array(total).fill(point);
+                this.data = list;
+            } else {
+                this.data = data;
+            }
+            this.currentFloor = this.data[0];
         },
         loadBuffs() {
             getBuffs().then((res) => {

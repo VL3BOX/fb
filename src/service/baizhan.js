@@ -60,3 +60,27 @@ export function getSkillInfo(params) {
 export function addSkillInfo(data) {
     return $cms().post(`/api/cms/app/monster/skill`, data);
 }
+
+// 获取当前地图
+export function getMap(params) {
+    return $cms().get(`/api/cms/app/monster/map`, {
+        params,
+    });
+}
+
+// 新增百战地图
+export function addMap(data) {
+    return $cms().post(`/api/cms/app/monster/map`, data);
+}
+
+// 更新百战地图
+export function updateMap(id, data) {
+    return $cms().put(`/api/cms/app/monster/map/${id}`, data);
+}
+
+// 获取历史百战地图
+export function getMaps(params) {
+    return $cms().get(`/api/cms/app/monster/map/list`, {
+        params,
+    });
+}

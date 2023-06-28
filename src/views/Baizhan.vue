@@ -14,6 +14,7 @@
                         >{{ item.label }}</el-button
                     >
                 </div>
+                <BMap v-if="activeTab === 0" :bosses="bosses"></BMap>
                 <Skills v-if="activeTab === 1" :types="types"></Skills>
             </div>
         </div>
@@ -21,8 +22,9 @@
 </template>
 
 <script>
-import { getBosses, getBossInfo, getBuffs, getEffects, getTypes } from "@/service/baizhan";
+import { getBosses, getBossInfo, getTypes } from "@/service/baizhan";
 import Skills from "@/components/baizhan/Skills.vue";
+import BMap from "@/components/baizhan/BMap.vue";
 import Bosses from "@/components/baizhan/Bosses.vue";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { isPhone } from "@/utils";
@@ -34,6 +36,7 @@ export default {
     components: {
         Skills,
         Bosses,
+        BMap,
     },
     data() {
         return {
@@ -62,7 +65,6 @@ export default {
     },
     methods: {
         updateBoss(data) {
-            console.log(data);
             const index = this.bosses.findIndex((item) => item.name === data.boss_name);
             this.bosses[index].link = data.link;
         },

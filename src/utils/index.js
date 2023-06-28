@@ -19,3 +19,12 @@ export function isPhone() {
     );
     return mobile !== null;
 }
+
+export function arr1to2(arr, number) {
+    const arr2 = [];
+    let len = arr.length;
+    for (let i = 0, j = 0; i < len; i += number, j++) {
+        arr2[j] = arr.splice(0, number);
+    }
+    return arr2;
+}

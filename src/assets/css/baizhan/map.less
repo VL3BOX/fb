@@ -204,12 +204,13 @@
         }
     }
     .m-show-wrap {
-        padding-right: 100px;
+        max-width: 500px;
         .m-header {
             gap: 20px;
         }
         .u-avatar {
             margin-left: -12px;
+            margin-right: -12px;
             width: 120px;
             height: 120px;
             background-image: url("@{baizhan_img_path}baizhan_39.png");
@@ -222,6 +223,21 @@
                 width: 90px;
                 height: 90px;
                 border-radius: 50%;
+            }
+        }
+        .u-effect-icon {
+            .size(48px, 48px);
+        }
+        .u-effect-info {
+            .flex;
+            flex-direction: column;
+            .u-effect-name {
+                font-weight: bold;
+            }
+            .u-effect-desc {
+                font-size: 12px;
+                max-width: 200px;
+                color: @skill_yellow;
             }
         }
         .m-reward {

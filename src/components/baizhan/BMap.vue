@@ -37,7 +37,7 @@
                             {{ step * 10 + index + 1 }}
                         </div>
                         <div class="u-icon">
-                            <img :src="getEffectIcon(floor.effect)" />
+                            <img :src="getEffectInfo(floor.effect)" />
                         </div>
                         <div class="u-name" :class="currentBoss === floor.boss && 'is-current'">{{ floor.boss }}</div>
                     </div>
@@ -84,6 +84,15 @@
                     <div class="u-avatar">
                         <img :src="getBossAvatar(currentFloor.boss)" :alt="currentFloor.boss || '未知'" />
                     </div>
+                    <template v-if="currentFloor.effect">
+                        <div class="u-effect-icon">
+                            <img :src="getEffectInfo(currentFloor.effect)" />
+                        </div>
+                        <div class="u-effect-info">
+                            <div class="u-effect-name">{{ getEffectInfo(currentFloor.effect, "name") }}</div>
+                            <div class="u-effect-desc">{{ getEffectInfo(currentFloor.effect, "desc") }}</div>
+                        </div>
+                    </template>
                 </div>
                 <div v-if="getRewardList().length" class="m-reward">
                     <div class="u-title"></div>
@@ -176,9 +185,17 @@ export default {
                 this.bosses.find((item) => item.name === name)?.avatar || `${this.__imgRoot}fbcdpanel02_51.png`;
             return avatar;
         },
-        getEffectIcon(id) {
-            const iconId = this.effects.find((item) => item.nID === id)?.dwIconID || 18005;
-            return iconLink(iconId);
+        getEffectInfo(id, type = "icon") {
+            const item = this.effects.find((item) => item.nID === id);
+            const iconId = item?.dwIconID || 18005;
+            let str = iconLink(iconId);
+            if (type === "name") {
+                str = item?.szName;
+            }
+            if (type === "desc") {
+                str = item?.szDescription;
+            }
+            return str;
         },
         save() {
             const currentFloor = cloneDeep(this.currentFloor);

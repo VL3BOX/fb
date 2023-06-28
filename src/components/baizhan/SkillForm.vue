@@ -14,6 +14,9 @@
                     <el-option :value="0" label="被动技能"></el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item label="伤害" prop="damage">
+                <el-input v-model="form.damage" placeholder="请填写伤害数值" />
+            </el-form-item>
             <el-form-item label="精力消耗" prop="cost_vigor">
                 <el-input v-model="form.cost_vigor" placeholder="请填写精力消耗" />
             </el-form-item>
@@ -51,6 +54,7 @@ const form = {
     skill_id: 0,
     level: 5,
     cooldown: 0,
+    damage: 0,
     cost_vigor: 0,
     cost_endurance: 0,
     hit_vigor: 0,

@@ -86,6 +86,7 @@
                     <div class="u-vigor-about">{{ skill._hit_endurance }}</div>
                 </template>
             </el-table-column>
+            <el-table-column prop="_remarks" label="备注"></el-table-column>
         </el-table>
         <el-button
             class="u-more"
@@ -145,7 +146,7 @@ export default {
         limit: 30,
         total: 0,
 
-        addon_key: ["cooldown", "damage", "cost_vigor", "cost_endurance", "hit_vigor", "hit_endurance"],
+        addon_key: ["cooldown", "damage", "cost_vigor", "cost_endurance", "hit_vigor", "hit_endurance", "remarks"],
     }),
     computed: {
         params() {
@@ -252,8 +253,8 @@ export default {
                     return getSkillInfo({ ids: ids });
                 })
                 .then((res) => {
+                    if (!res) return;
                     const skillAddonList = res.data?.data || [];
-                    this.skillAddon = {};
                     for (let addon of skillAddonList) this.addAddon(addon);
                 })
                 .finally(() => {

@@ -13,6 +13,9 @@ import "@jx3box/jx3box-common/css/element.css";
 import "@jx3box/jx3box-common/css/normalize.css";
 Vue.use(JX3BOX_UI);
 
+import reporter from "@jx3box/jx3box-common/js/reporter";
+reporter.install(Vue);
+
 import ListLayout from "@/layouts/ListLayout.vue";
 import AppLayout from "@/layouts/AppLayout.vue";
 import SingleLayout from "@/layouts/SingleLayout.vue";

@@ -1,7 +1,19 @@
 <template>
     <li class="m-fb-item u-item">
         <!-- Banner -->
-        <a class="u-banner" :href="item.ID | postLink" :target="target"><img :src="getBanner(item)" :key="item.ID" /></a>
+        <a
+            class="u-banner"
+            :href="item.ID | postLink"
+            :target="target"
+            v-reporter="{
+                data: {
+                    href: reporterLink(item.ID),
+                    ...reporter,
+                },
+                caller: 'fb_index',
+            }"
+            ><img :src="getBanner(item)" :key="item.ID"
+        /></a>
 
         <!-- 标题 -->
         <h2 class="u-post" :class="{ isSticky: item.sticky }">
@@ -9,8 +21,20 @@
             <img class="u-icon" svg-inline src="@/assets/img/list/post.svg" />
 
             <!-- 标题文字 -->
-            <a class="u-title" :style="item.color | showHighlight" :href="item.ID | postLink" :target="target">{{
-                item.post_title || "无标题" }}</a>
+            <a
+                class="u-title"
+                :style="item.color | showHighlight"
+                :href="item.ID | postLink"
+                :target="target"
+                v-reporter="{
+                    data: {
+                        href: reporterLink(item.ID),
+                        ...reporter,
+                    },
+                    caller: 'fb_index',
+                }"
+                >{{ item.post_title || "无标题" }}</a
+            >
 
             <!-- 角标 -->
             <span class="u-marks" v-if="item.mark && item.mark.length">
@@ -30,15 +54,16 @@
 
             <div class="u-metalist u-mode-list c-jx3fb-mode" v-if="item.post_meta && item.post_meta.fb_level">
                 <strong>模式</strong>
-                <em>{{ format(item, "fb_level").join('、') }}</em>
+                <em>{{ format(item, "fb_level").join("、") }}</em>
             </div>
         </div>
 
         <!-- 作者 -->
         <div class="u-misc">
             <img class="u-author-avatar" :src="item.author_info | showAvatar" :alt="item.author_info | showNickname" />
-            <a class="u-author-name" :href="item.post_author | authorLink" target="_blank">{{ item.author_info |
-                showNickname }}</a>
+            <a class="u-author-name" :href="item.post_author | authorLink" target="_blank">{{
+                item.author_info | showNickname
+            }}</a>
             <span class="u-date">
                 Updated on
                 <time v-if="order == 'update'">{{ item.post_modified | dateFormat }}</time>
@@ -56,7 +81,7 @@ import { cms as mark_map } from "@jx3box/jx3box-common/data/mark.json";
 import { showDate } from "@jx3box/jx3box-common/js/moment.js";
 export default {
     name: "ListItem",
-    props: ["item", "order"],
+    props: ["item", "order", "reporter"],
     components: {},
     data: function () {
         return {
@@ -93,8 +118,11 @@ export default {
                 query: {
                     topic: c,
                 },
-            })
-        }
+            });
+        },
+        reporterLink: function (val) {
+            return `/${appKey}/` + val;
+        },
     },
     filters: {
         authorLink,
@@ -117,7 +145,7 @@ export default {
             return showDate(new Date(gmt));
         },
     },
-    created: function () { },
-    mounted: function () { },
+    created: function () {},
+    mounted: function () {},
 };
 </script>

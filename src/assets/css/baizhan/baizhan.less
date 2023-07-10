@@ -1,11 +1,14 @@
 .c-main {
     margin-left: 0 !important;
+    &.p-baizhan-app {
+        background-color: @baizhan_bg;
+    }
 }
 .p-baizhan {
     .flex;
     gap: 20px;
     width: 100%;
-    background-color: #fafbfc;
+    background-color: @baizhan_bg;
     .c-sidebar {
         padding: 0;
     }
@@ -66,7 +69,6 @@
         flex: none;
         width: calc(100% - 320px);
         min-height: calc(100vh - 210px);
-        background-color: #fff;
         &.is-phone {
             margin-left: 0;
             width: calc(100% - 40px);

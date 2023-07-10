@@ -22,11 +22,12 @@
 </template>
 
 <script>
-import { getBosses, getBossInfo, getTypes, getSkills, getSkillInfo } from "@/service/baizhan";
+import { getBosses, getBossInfo, getTypes, getSkills, getSkillInfo, getEffects } from "@/service/baizhan";
 import Skills from "@/components/baizhan/Skills.vue";
 import BMap from "@/components/baizhan/BMap.vue";
 import Bosses from "@/components/baizhan/Bosses.vue";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import baizhanEffects from "@/assets/data/baizhan_effects.json";
 import { isPhone } from "@/utils";
 export default {
     name: "Baizhan",
@@ -44,7 +45,7 @@ export default {
             types: {},
             bosses: [],
             skills: [],
-            activeTab: 3,
+            activeTab: 0,
             tabs: [
                 {
                     value: 0,
@@ -56,6 +57,26 @@ export default {
                 },
             ],
         };
+    },
+    computed: {
+        bossList() {
+            const skills = this.skills;
+            return this.bosses.map((boss) => {
+                return {
+                    ...boss,
+                    skills: boss.skills
+                        ? boss.skills.map((skill) => {
+                              const skillObj = skills.find((item) => item.dwInSkillID === skill);
+                              return {
+                                  skillId: skill,
+                                  skillName: skillObj?.szSkillName,
+                                  skillColor: skillObj?.nColor,
+                              };
+                          })
+                        : [],
+                };
+            });
+        },
     },
     watch: {
         activeTab() {
@@ -71,81 +92,113 @@ export default {
             this.bosses[index].link = data.link;
         },
         isPhone,
-        async loadSkills() {
-            const cache = sessionStorage.getItem(`baizhan-skills`);
-            if (cache) {
-                this.skills = JSON.parse(cache);
-            } else {
-                await getSkills().then((res) => {
-                    const list = res.data?.data?.list || [];
-                    const ids = list.map((item) => item.dwInSkillID).join(",");
-                    getSkillInfo({ ids: ids }).then((resInfo) => {
-                        const skillExtraList = resInfo.data?.data || [];
-                        const newList = list.map((item) => {
-                            item.extra = skillExtraList.find((extra) => extra.skill_id === item.dwInSkillID) || {};
-                            return item;
-                        });
-                        this.skills = newList;
-                        sessionStorage.setItem(`baizhan-skills`, JSON.stringify(newList));
-                    });
+        async loadEffects() {
+            await getEffects().then((res) => {
+                const list = res.data?.data || [];
+                list.unshift({
+                    nID: 0,
+                    dwIconID: 18505,
+                    szName: "无",
+                    szDescription: "",
+                    coin: 0,
+                    sketch: "",
                 });
-            }
+                this.effects = list.map((item) => {
+                    return {
+                        ...item,
+                        coin: baizhanEffects.find((effect) => effect.nID === item.nID)?.coin || 0,
+                        sketch: baizhanEffects.find((effect) => effect.nID === item.nID)?.sketch || "",
+                    };
+                });
+                sessionStorage.setItem(`baizhan-effects`, JSON.stringify(this.effects));
+            });
+        },
+        async loadSkills() {
+            await getSkills().then((res) => {
+                const list = res.data?.data?.list || [];
+                const ids = list.map((item) => item.dwInSkillID).join(",");
+                getSkillInfo({ ids: ids }).then((resInfo) => {
+                    const skillExtraList = resInfo.data?.data || [];
+                    const newList = list.map((item) => {
+                        item.extra = skillExtraList.find((extra) => extra.skill_id === item.dwInSkillID) || {};
+                        return item;
+                    });
+                    this.skills = newList;
+                    sessionStorage.setItem(`baizhan-skills`, JSON.stringify(newList));
+                });
+            });
         },
         async loadTypes() {
-            const cache = sessionStorage.getItem(`baizhan-types`);
-            if (cache) {
-                this.types = JSON.parse(cache);
-            } else {
-                await getTypes().then((res) => {
-                    const data = res.data?.data || {};
-                    this.types = {
-                        szTypes: data?.[1] || [],
-                        costs: data?.[2] || [],
-                        colors: data?.[3] || [],
-                    };
-                    sessionStorage.setItem(`baizhan-types`, JSON.stringify(data));
-                });
-            }
+            await getTypes().then((res) => {
+                const data = res.data?.data || {};
+                this.types = {
+                    szTypes: data?.[1] || [],
+                    costs: data?.[2] || [],
+                    colors: data?.[3] || [],
+                };
+                sessionStorage.setItem(`baizhan-types`, JSON.stringify(this.types));
+            });
         },
         async loadBosses() {
-            const cache = sessionStorage.getItem(`baizhan-bosses`);
-            if (cache) {
-                this.bosses = JSON.parse(cache);
-            } else {
-                await getBosses().then((res) => {
-                    let list = res.data?.data || [];
-                    list = list.map((item) => {
-                        return {
-                            avatar: item.ImagePath
-                                ? `${__imgPath}pve/baizhan/${item.ImagePath.match(/\\([^\\]*)\./)[1].toLowerCase()}_${
-                                      item.ImageFrame
-                                  }.png`
-                                : `${__imgPath}pve/baizhan/fbcdpanel02_51.png`,
-                            name: item.szName,
-                            skills: item.szSkill,
-                        };
-                    });
-                    let map = new Map();
-                    let mapList = list.filter((v) => !map.has(v.name) && map.set(v.name, 1));
-                    const names = mapList.map((item) => item.name).join(",");
-                    getBossInfo({ names: names }).then((resInfo) => {
-                        const bossExtraList = resInfo.data?.data || [];
-                        const bosses = mapList.map((item) => {
-                            item.link = bossExtraList.find((boss) => boss.boss_name === item.name)?.link || "";
-                            return item;
-                        });
-                        this.bosses = bosses;
-                        sessionStorage.setItem(`baizhan-bosses`, JSON.stringify(bosses));
-                    });
+            await getBosses().then((res) => {
+                let list = res.data?.data || [];
+                list = list.map((item) => {
+                    return {
+                        avatar: item.ImagePath
+                            ? `${__imgPath}pve/baizhan/${item.ImagePath.match(/\\([^\\]*)\./)[1].toLowerCase()}_${
+                                  item.ImageFrame
+                              }.png`
+                            : `${__imgPath}pve/baizhan/fbcdpanel02_51.png`,
+                        name: item.szName,
+                        skills: item.szSkill,
+                    };
                 });
-            }
+                let map = new Map();
+                let mapList = list.filter((v) => !map.has(v.name) && map.set(v.name, 1));
+                const names = mapList.map((item) => item.name).join(",");
+                getBossInfo({ names: names }).then((resInfo) => {
+                    const bossExtraList = resInfo.data?.data || [];
+                    const bosses = mapList.map((item) => {
+                        item.link = bossExtraList.find((boss) => boss.boss_name === item.name)?.link || "";
+                        return item;
+                    });
+                    this.bosses = bosses;
+                    sessionStorage.setItem(`baizhan-bosses`, JSON.stringify(bosses));
+                });
+            });
         },
         load() {
-            const typePro = this.loadTypes();
-            const bossPro = this.loadBosses();
-            const skillPro = this.loadSkills();
+            const proArr = [];
+            const bossCache = sessionStorage.getItem(`baizhan-bosses`);
+            if (bossCache) {
+                this.bosses = JSON.parse(bossCache);
+            } else {
+                const bossPro = this.loadBosses();
+                proArr.push(bossPro);
+            }
+            const skillCache = sessionStorage.getItem(`baizhan-skills`);
+            if (skillCache) {
+                this.skills = JSON.parse(skillCache);
+            } else {
+                const skillPro = this.loadSkills();
+                proArr.push(skillPro);
+            }
+            const typeCache = sessionStorage.getItem(`baizhan-types`);
+            if (typeCache) {
+                this.types = JSON.parse(typeCache);
+            } else {
+                const typePro = this.loadTypes();
+                proArr.push(typePro);
+            }
+            const effectCache = sessionStorage.getItem(`baizhan-effects`);
+            if (effectCache) {
+                this.effects = JSON.parse(effectCache);
+            } else {
+                const effectPro = this.loadEffects();
+                proArr.push(effectPro);
+            }
             this.loading = true;
-            Promise.allSettled([typePro, bossPro, skillPro]).then(() => {
+            Promise.allSettled(proArr).then(() => {
                 this.loading = false;
             });
         },

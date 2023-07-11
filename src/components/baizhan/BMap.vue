@@ -1,54 +1,60 @@
 <template>
     <div class="p-map" v-loading="loading">
-        <div class="m-left">
-            <div class="m-title">
-                <div class="u-title"></div>
-                <div class="u-date">
-                    <div class="u-time">{{ startDate }}</div>
-                    <div>|</div>
-                    <div class="u-time">{{ endDate }}</div>
-                </div>
-                <div class="u-btns">
-                    <el-button @click="visible = true">往期地图</el-button>
-                    <el-button v-if="isEditor" @click="toSetLastData">应用上次数据</el-button>
-                    <el-button
-                        class="u-edit"
-                        v-if="isEditor"
-                        :icon="!editStatus ? 'el-icon-edit-outline' : ''"
-                        :loading="btnLoading"
-                        @click="toOperate"
-                        >{{ editStatus ? "立即上传" : "编辑" }}</el-button
-                    >
-                </div>
-            </div>
-            <div class="m-boss-list">
-                <div class="u-step" v-for="(item, step) in list" :key="step">
-                    <div
-                        class="u-floor"
-                        :class="[
-                            activeFloor === step * 10 + index + 1 ? 'is-active' : '',
-                            currentBoss === floor.boss ? 'is-current' : '',
-                        ]"
-                        v-for="(floor, index) in item"
-                        :key="index"
-                        @click="setFloor(step * 10 + index + 1)"
-                    >
-                        <div class="u-img">
-                            <img :src="getBossAvatar(floor.boss)" :alt="floor.boss || '未知'" />
-                        </div>
-
+        <div class="m-boss-list" ref="map">
+            <el-button class="u-download" icon="el-icon-download" @click="exportToImage"></el-button>
+            <div class="u-step" v-for="(item, step) in list" :key="step">
+                <div
+                    class="u-floor"
+                    :class="[
+                        floor.effect ? 'is-effect' : '',
+                        activeFloor === step * 10 + index + 1 ? 'is-active' : '',
+                        currentBoss === floor.boss ? 'is-current' : '',
+                    ]"
+                    v-for="(floor, index) in item"
+                    :key="index"
+                    @click="setFloor(step * 10 + index + 1)"
+                >
+                    <div class="u-floor-content">
                         <div class="u-index" :class="floor.effect && 'u-effect'">
                             {{ step * 10 + index + 1 }}
                         </div>
-                        <div class="u-icon">
-                            <img :src="getEffectInfo(floor.effect)" />
+                        <div class="u-img">
+                            <img :src="getBossAvatar(floor.boss)" :alt="floor.boss || '未知'" />
                         </div>
                         <div class="u-name" :class="currentBoss === floor.boss && 'is-current'">{{ floor.boss }}</div>
+                        <div class="u-desc">
+                            <div v-if="getEffectInfo(floor.effect, 'sketch').length" class="u-sketch">
+                                <div
+                                    class="u-sketch-info"
+                                    v-for="(sketch, si) in getEffectInfo(floor.effect, 'sketch')"
+                                    :key="si"
+                                >
+                                    {{ sketch }}
+                                </div>
+                            </div>
+                            <div v-if="getEffectInfo(floor.effect, 'coin')" class="u-coin">
+                                <img class="u-coin-img" src="@/assets/img/baizhan/coin.svg" svg-inline />
+                                <span>{{ getEffectInfo(floor.effect, "coin") }}</span>
+                            </div>
+                        </div>
+                        <div v-if="floor.effect" class="u-icon">
+                            <img :src="getEffectInfo(floor.effect)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="u-watermark" ref="watermark">
+                <h1 class="u-title">百战异闻录 {{ startDate }} 至 {{ endDate }}</h1>
+                <h1 class="u-title u-bottom-title">By: 魔盒 (https://www.jx3box.com/fb/baizhan)</h1>
+                <div class="u-watermark-content">
+                    <div v-for="item in 5" :key="item">
+                        <h1 class="u-title">魔盒</h1>
+                        <h1 class="u-title">https://www.jx3box.com</h1>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="m-right">
+        <!-- <div class="m-right">
             <div v-if="editStatus" class="m-edit-wrap">
                 <div class="m-header">
                     <div class="u-title">{{ activeFloor }}</div>
@@ -117,27 +123,28 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <MapList v-if="visible" :visible="visible" @update="handleUpdate($event)" @close="close"></MapList>
+        </div> -->
+        <!-- <MapList v-if="visible" :visible="visible" @update="handleUpdate($event)" @close="close"></MapList> -->
     </div>
 </template>
 
 <script>
 import User from "@jx3box/jx3box-common/js/user";
-import { getBuffs, getEffects, getMap, addMap, getMaps } from "@/service/baizhan";
+import { getMap, addMap, getMaps } from "@/service/baizhan";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
-import { arr1to2 } from "@/utils";
+import { arr1to2, isPhone, isQQ, isWeChat } from "@/utils";
 import { getWeekStartDate, getWeekEndDate } from "@/utils/dateFormat";
 import { cloneDeep } from "lodash";
-import SkillIcon from "./SkillIcon.vue";
-import MapList from "./MapList.vue";
+// import SkillIcon from "./SkillIcon.vue";
+// import MapList from "./MapList.vue";
+import html2canvas from "html2canvas";
 export default {
     name: "BaizhanMap",
     inject: ["__imgRoot"],
-    props: ["bosses"],
+    props: ["bosses", "effects"],
     components: {
-        SkillIcon,
-        MapList,
+        // SkillIcon,
+        // MapList,
     },
     data() {
         return {
@@ -146,7 +153,6 @@ export default {
             btnLoading: false,
             editStatus: false,
             data: [],
-            effects: [],
             startDate: getWeekStartDate(),
             endDate: getWeekEndDate(),
             point: {
@@ -162,6 +168,7 @@ export default {
                 boss: "",
                 effect: 0,
             },
+            scale: 1,
         };
     },
     computed: {
@@ -248,6 +255,12 @@ export default {
             if (type === "desc") {
                 str = item?.szDescription;
             }
+            if (type === "coin") {
+                str = item?.coin;
+            }
+            if (type === "sketch") {
+                str = item?.sketch.split("/")[0] ? item?.sketch.split("/") : [];
+            }
             return str;
         },
         save() {
@@ -300,9 +313,9 @@ export default {
                     this.btnLoading = false;
                 });
         },
-        load() {
+        async load() {
             this.loading = true;
-            getMap()
+            await getMap()
                 .then((res) => {
                     const data = res.data?.data?.data;
                     this.setData(data);
@@ -322,28 +335,74 @@ export default {
             }
             this.currentFloor = this.data[0];
         },
-        loadBuffs() {
-            getBuffs().then((res) => {
-                // console.log(res.data?.data);
-            });
+        handleScroll(event) {
+            const delta = event.deltaY || event.detail || event.wheelDelta;
+            const map = this.$refs.map;
+
+            let scaleNum = 0.05;
+            if (delta < 0) {
+                // 向上滚动，放大元素
+                this.scale += scaleNum;
+                if (this.scale > 1.5) {
+                    this.scale = 1.5;
+                }
+            } else {
+                // 向下滚动，缩小元素
+                this.scale -= scaleNum;
+                if (this.scale < 0.5) {
+                    this.scale = 0.5;
+                }
+            }
+            map.style.transform = `scale(${this.scale})`;
+
+            event.preventDefault();
         },
-        loadEffects() {
-            getEffects().then((res) => {
-                const list = res.data?.data || [];
-                list.unshift({
-                    nID: 0,
-                    dwIconID: 18505,
-                    szName: "无",
-                    szDescription: "",
+        exportToImage() {
+            if (isPhone() && (isWeChat() || isQQ())) {
+                return this.$message({
+                    message: "请在游览器中打开",
+                    type: "warning",
                 });
-                this.effects = list;
-            });
+            }
+            const map = this.$refs.map;
+            const watermark = this.$refs.watermark;
+            watermark.style.display = "block";
+            watermark.style["z-index"] = -1;
+            html2canvas(map, {
+                useCORS: true,
+                width: map.offsetWidth,
+                height: map.offsetHeight,
+            })
+                .then((canvas) => {
+                    watermark.style.display = "none";
+                    // 创建一个虚拟链接
+                    const link = document.createElement("a");
+                    link.href = canvas.toDataURL(); // 将 Canvas 转换为 Data URL
+                    link.download = `魔盒百战${this.startDate}至${this.endDate}.png`; // 下载文件的名称
+
+                    link.addEventListener("click", () => {
+                        setTimeout(() => {
+                            URL.revokeObjectURL(link.href); // 删除链接的资源
+                        }, 100); // 延迟删除以确保下载完成
+
+                        link.removeEventListener("click", () => {}); // 移除事件监听器
+                        document.body.removeChild(link);
+                    });
+                    document.body.appendChild(link);
+                    link.click();
+                })
+                .catch((error) => {
+                    console.error("导出图片出错:", error);
+                });
         },
     },
     mounted() {
-        this.load();
-        // this.loadBuffs();
-        this.loadEffects();
+        this.load().then(() => {
+            this.$nextTick(() => {
+                const map = this.$refs.map;
+                map.addEventListener("wheel", this.handleScroll);
+            });
+        });
     },
 };
 </script>

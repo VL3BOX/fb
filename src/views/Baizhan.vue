@@ -5,7 +5,7 @@
                 <!-- <Bosses :bosses="bosses" @update="updateBoss($event)"></Bosses> -->
             </LeftSidebar>
             <div class="m-content" :class="isPhone() && 'is-phone'">
-                <div class="m-btns">
+                <!-- <div class="m-btns">
                     <el-button
                         :type="item.value === activeTab ? 'primary' : 'default'"
                         v-for="item in tabs"
@@ -13,8 +13,8 @@
                         @click="activeTab = item.value"
                         >{{ item.label }}</el-button
                     >
-                </div>
-                <BMap v-if="activeTab === 0" :bosses="bosses"></BMap>
+                </div> -->
+                <BMap v-if="activeTab === 0" :bosses="bosses" :effects="effects"></BMap>
                 <Skills v-if="activeTab === 1" :types="types"></Skills>
             </div>
         </div>
@@ -45,6 +45,7 @@ export default {
             types: {},
             bosses: [],
             skills: [],
+            effects: [],
             activeTab: 0,
             tabs: [
                 {

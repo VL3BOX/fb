@@ -72,6 +72,10 @@
                 </div>
             </div> -->
         </div>
+        <!-- <div style="width: 1132px; height: 960px">
+            <img class="canvas" :src="canvas1" alt="" />
+            <img class="canvas" :src="canvas" alt="" />
+        </div> -->
     </div>
 </template>
 
@@ -118,6 +122,9 @@ export default {
             dampingFactor: 0.9, // 越小速度衰减的越快
             momentumMultiplier: 0, // 根据鼠标移动的距离动态计算惯性效果的远近
             containerBounds: null,
+
+            // canvas: null,
+            // canvas1: null,
         };
     },
     computed: {
@@ -308,24 +315,32 @@ export default {
                 height: map.offsetHeight,
             })
                 .then((canvas) => {
+                    // this.canvas1 = canvas.toDataURL();
                     // watermark.style.display = "none";
-                    // const canvas1 = this.createWatermark();
-                    // 创建一个虚拟链接
-                    const link = document.createElement("a");
-                    link.href = canvas.toDataURL(); // 将 Canvas 转换为 Data URL
-                    link.download = `魔盒百战${this.startDate}至${this.endDate}.png`; // 下载文件的名称
+                    this.createWatermark().then((waterCanvas) => {
+                        const newCanvas = document.createElement("canvas");
+                        const newCtx = newCanvas.getContext("2d");
+                        newCanvas.width = canvas.width;
+                        newCanvas.height = canvas.height;
+                        newCtx.drawImage(canvas, 0, 0);
+                        newCtx.drawImage(waterCanvas, 0, 0);
+                        // 创建一个虚拟链接
+                        const link = document.createElement("a");
+                        link.href = newCanvas.toDataURL(); // 将 Canvas 转换为 Data URL
+                        link.download = `魔盒百战${this.startDate}至${this.endDate}.png`; // 下载文件的名称
 
-                    link.addEventListener("click", () => {
-                        setTimeout(() => {
-                            URL.revokeObjectURL(link.href); // 删除链接的资源
-                        }, 100); // 延迟删除以确保下载完成
+                        link.addEventListener("click", () => {
+                            setTimeout(() => {
+                                URL.revokeObjectURL(link.href); // 删除链接的资源
+                            }, 100); // 延迟删除以确保下载完成
 
-                        link.removeEventListener("click", () => {}); // 移除事件监听器
-                        document.body.removeChild(link);
+                            link.removeEventListener("click", () => {}); // 移除事件监听器
+                            document.body.removeChild(link);
+                        });
+                        document.body.appendChild(link);
+                        link.click();
+                        this.loading = false;
                     });
-                    document.body.appendChild(link);
-                    link.click();
-                    this.loading = false;
                 })
                 .catch((error) => {
                     this.loading = false;
@@ -333,23 +348,82 @@ export default {
                 });
         },
         createWatermark() {
-            // 创造一个画布，包含标题，底部和水印
-            const canvas = document.createElement("canvas");
-            const map = this.$refs.map;
-            canvas.width = map.offsetWidth;
-            canvas.height = map.offsetHeight;
-            const ctx = canvas.getContext("2d");
-            ctx.font = `bold 20px`;
-            ctx.fillStyle = "#deddd31a";
-            ctx.textBaseline = "bottom";
-            ctx.transform(1, 0.5, -0.5, 1, 0, -canvas.height / 2);
-            let txt = new Array(20).fill(" ").concat(["JX3BOX"]).join("");
-            const txtHeight = canvas.height / 6;
-            txt = Array(Math.ceil(canvas.width / ctx.measureText(txt).width) * 2).join(txt);
-            for (let i = 0; i < Math.ceil(canvas.height / txtHeight) * 2; i++) {
-                ctx.fillText(txt, 0, i * txtHeight);
-            }
-            return canvas;
+            return new Promise((resolve) => {
+                const map = this.$refs.map;
+                const canvas = document.createElement("canvas");
+                canvas.width = map.offsetWidth;
+                canvas.height = map.offsetHeight;
+                const ctx = canvas.getContext("2d");
+
+                // 绘制顶部文字
+                ctx.font = `bold 24px Arial`;
+                ctx.fillStyle = "#deddd3";
+                ctx.textBaseline = "middle";
+                ctx.textAlign = "center"; // 设置居中对齐
+
+                const topTxt = `百战异闻录 ${this.startDate} 至 ${this.endDate}`;
+                const topTxtX = canvas.width / 2; // 居中位置
+                const topTxtY = 30; // 垂直位置
+                ctx.fillText(topTxt, topTxtX, topTxtY);
+
+                const bottomTxt = "By: 魔盒 (https://www.jx3box.com)";
+                const bottomTxtX = canvas.width / 2; // 居中位置
+                const bottomTxtY = canvas.height - topTxtY; // 垂直位置
+                ctx.fillText(bottomTxt, bottomTxtX, bottomTxtY);
+
+                // 绘制文字水印
+                const txt = "JX3BOX";
+                const txtHeight = canvas.height / 6;
+                const txtWidth = ctx.measureText(txt).width;
+                const txtRepeat = Math.ceil(canvas.width / (txtWidth + 20)) * 2; // 添加间隔距离
+                const txtRows = Math.ceil(canvas.height / (txtHeight + 20)) * 2; // 添加间隔距离
+                ctx.font = `bold 12px Arial`;
+                ctx.fillStyle = "#deddd31a";
+                ctx.transform(1, 0.5, -0.5, 1, 0, -canvas.height / 2);
+                for (let i = 0; i < txtRows; i++) {
+                    for (let j = 0; j < txtRepeat; j++) {
+                        const x = j * (txtWidth + 20); // 添加间隔距离
+                        const y = i * (txtHeight + 20); // 添加间隔距离
+                        ctx.fillText(txt, x, y);
+                    }
+                }
+
+                // 加载本地图片
+                const image = new Image();
+                image.src = require("@/assets/img/logo.svg");
+                image.onload = () => {
+                    // 创建临时canvas用于处理图片
+                    const imageSize = 30;
+                    const tempCanvas = document.createElement("canvas");
+                    tempCanvas.width = imageSize;
+                    tempCanvas.height = imageSize;
+                    const tempCtx = tempCanvas.getContext("2d");
+                    tempCtx.drawImage(image, 0, 0, imageSize, imageSize);
+
+                    // 获取图片的ImageData对象
+                    const imageData = tempCtx.getImageData(0, 0, imageSize, imageSize);
+
+                    // 修改图片颜色
+                    const pixels = imageData.data;
+                    for (let i = 0; i < pixels.length; i += 4) {
+                        // 修改RGBA颜色值
+                        pixels[i] = 255 - pixels[i]; // R
+                        pixels[i + 1] = 255 - pixels[i + 1]; // G
+                        pixels[i + 2] = 255 - pixels[i + 2]; // B
+                    }
+
+                    // 将修改后的ImageData对象绘制到canvas中
+                    const textWidth = ctx.measureText(topTxt).width; // 顶部文字的宽度
+                    const padding = 5; // 图片与文字之间的间距
+                    const imageX = topTxtX - textWidth - imageSize - padding;
+                    const imageY = imageSize / 2;
+                    ctx.putImageData(imageData, imageX, imageY);
+
+                    // this.canvas = canvas.toDataURL();
+
+                    resolve(canvas);
+                };
+            });
         },
     },
     mounted() {
@@ -360,6 +434,13 @@ export default {
 
                 this.containerBounds = this.$refs.container.getBoundingClientRect();
                 window.addEventListener("resize", this.updateContainerBounds);
+
+                const imgs = document.getElementsByTagName("img");
+                [...imgs].forEach((img) => {
+                    img.addEventListener("dragstart", (event) => {
+                        event.preventDefault();
+                    });
+                });
             });
         });
     },

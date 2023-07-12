@@ -6,17 +6,18 @@
     gap: 40px;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
     .m-boss-list {
         position: relative;
+        padding: 30px;
+        box-sizing: border-box;
         .flex;
         flex-direction: column;
         box-sizing: border-box;
-        transition: all 0.2s ease-in;
+        transition: transform 0.2s ease-out;
         cursor: grab;
-        padding: 40px 20px;
-        margin-top: -40px;
-        box-sizing: border-box;
         background-color: #1f2937;
+        user-select: none;
         .u-watermark {
             display: none;
             position: absolute;
@@ -24,12 +25,19 @@
             left: 0;
             right: 0;
             bottom: 0;
-            z-index: 1;
             .u-title {
-                text-align: center;
-                color: #fff;
+                .flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                color: #deddd3;
                 margin: 0;
                 padding-top: 5px;
+                font-size: 18px;
+                svg {
+                    width: 30px;
+                    height: 30px;
+                }
             }
             .u-bottom-title {
                 position: absolute;
@@ -40,26 +48,26 @@
             .u-watermark-content {
                 position: absolute;
                 top: 10%;
-                left: 20%;
-                width: 60%;
+                left: 10%;
+                width: 90%;
                 height: 90%;
-                overflow: hidden;
                 box-sizing: border-box;
-                transform: rotate(30deg);
                 z-index: 0;
+                overflow: hidden;
                 .flex;
-                flex-direction: column;
-                gap: 40px;
+                flex-wrap: wrap;
+                gap: 100px;
                 .u-title {
-                    opacity: 0.3;
-                    color: #000;
+                    opacity: 0.1;
+                    color: #deddd3;
+                    transform: rotate(30deg);
                 }
             }
         }
         .u-download {
             position: absolute;
-            right: -40px;
-            top: 40px;
+            right: -30px;
+            top: 55px;
             display: none;
             z-index: 2;
         }

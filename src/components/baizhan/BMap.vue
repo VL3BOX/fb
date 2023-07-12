@@ -58,19 +58,19 @@
                     </div>
                 </div>
             </div>
-            <div class="u-watermark" ref="watermark">
+            <!-- <div class="u-watermark" ref="watermark">
                 <h1 class="u-title">
                     <img svg-inline src="@/assets/img/logo.svg" fill="#deddd3" />百战异闻录 {{ startDate }} 至
                     {{ endDate }}
                 </h1>
                 <h1 class="u-title u-bottom-title">By: 魔盒 (https://www.jx3box.com)</h1>
                 <div class="u-watermark-content">
-                    <h1 v-for="item in 8" :key="item" class="u-title">
+                    <h1 v-for="item in 20" :key="item" class="u-title">
                         <img svg-inline src="@/assets/img/logo.svg" fill="#deddd3" />
                         <span>JX3BOX</span>
                     </h1>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -299,15 +299,17 @@ export default {
                 y: 0,
             };
             map.style.transform = `translate(${this.position.x}px, ${this.position.y}px) scale(${this.scale})`;
-            const watermark = this.$refs.watermark;
-            watermark.style.display = "block";
+            // const watermark = this.$refs.watermark;
+            // watermark.style.display = "block";
+            this.loading = true;
             html2canvas(map, {
                 useCORS: true,
                 width: map.offsetWidth,
                 height: map.offsetHeight,
             })
                 .then((canvas) => {
-                    watermark.style.display = "none";
+                    // watermark.style.display = "none";
+                    // const canvas1 = this.createWatermark();
                     // 创建一个虚拟链接
                     const link = document.createElement("a");
                     link.href = canvas.toDataURL(); // 将 Canvas 转换为 Data URL
@@ -323,10 +325,31 @@ export default {
                     });
                     document.body.appendChild(link);
                     link.click();
+                    this.loading = false;
                 })
                 .catch((error) => {
+                    this.loading = false;
                     console.error("导出图片出错:", error);
                 });
+        },
+        createWatermark() {
+            // 创造一个画布，包含标题，底部和水印
+            const canvas = document.createElement("canvas");
+            const map = this.$refs.map;
+            canvas.width = map.offsetWidth;
+            canvas.height = map.offsetHeight;
+            const ctx = canvas.getContext("2d");
+            ctx.font = `bold 20px`;
+            ctx.fillStyle = "#deddd31a";
+            ctx.textBaseline = "bottom";
+            ctx.transform(1, 0.5, -0.5, 1, 0, -canvas.height / 2);
+            let txt = new Array(20).fill(" ").concat(["JX3BOX"]).join("");
+            const txtHeight = canvas.height / 6;
+            txt = Array(Math.ceil(canvas.width / ctx.measureText(txt).width) * 2).join(txt);
+            for (let i = 0; i < Math.ceil(canvas.height / txtHeight) * 2; i++) {
+                ctx.fillText(txt, 0, i * txtHeight);
+            }
+            return canvas;
         },
     },
     mounted() {

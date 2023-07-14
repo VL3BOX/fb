@@ -145,6 +145,7 @@ export default {
                 let list = res.data?.data || [];
                 list = list.map((item) => {
                     return {
+                        id: item.dwNpcID,
                         avatar: item.ImagePath
                             ? `${__imgPath}pve/baizhan/${item.ImagePath.match(/\\([^\\]*)\./)[1].toLowerCase()}_${
                                   item.ImageFrame
@@ -159,7 +160,7 @@ export default {
                 const names = mapList.map((item) => item.name).join(",");
                 getBossInfo({ names: names }).then((resInfo) => {
                     const bossExtraList = resInfo.data?.data || [];
-                    const bosses = mapList.map((item) => {
+                    const bosses = list.map((item) => {
                         item.link = bossExtraList.find((boss) => boss.boss_name === item.name)?.link || "";
                         return item;
                     });

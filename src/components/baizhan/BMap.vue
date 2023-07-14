@@ -19,63 +19,46 @@
                 <div
                     class="u-floor"
                     :class="[
-                        floor.effect ? 'is-effect' : '',
+                        floor.nEffectID ? 'is-effect' : '',
                         activeFloor === step * 10 + index + 1 ? 'is-active' : '',
-                        currentBoss === floor.boss ? 'is-current' : '',
+                        currentBoss === floor.boss.name ? 'is-current' : '',
                     ]"
                     v-for="(floor, index) in item"
                     :key="index"
                     @click="setFloor(step * 10 + index + 1)"
                 >
                     <div class="u-floor-content">
-                        <div class="u-index" :class="floor.effect && 'u-effect'">
+                        <div class="u-index" :class="floor.nEffectID && 'u-effect'">
                             {{ step * 10 + index + 1 }}
                         </div>
                         <div class="u-img">
-                            <img :src="getBossAvatar(floor.boss)" :alt="floor.boss || '未知'" />
+                            <img :src="floor.boss.avatar" :alt="floor.boss.name || '未知'" />
                         </div>
-                        <div class="u-name" :class="currentBoss === floor.boss && 'is-current'">
-                            {{ floor.boss }}
+                        <div class="u-name" :class="currentBoss === floor.boss.name && 'is-current'">
+                            {{ floor.boss.name }}
                         </div>
                         <div class="u-desc">
-                            <div v-if="getEffectInfo(floor.effect, 'sketch').length" class="u-sketch">
+                            <div v-if="getEffectInfo(floor.nEffectID, 'sketch').length" class="u-sketch">
                                 <div
                                     class="u-sketch-info"
-                                    v-for="(sketch, si) in getEffectInfo(floor.effect, 'sketch')"
+                                    v-for="(sketch, si) in getEffectInfo(floor.nEffectID, 'sketch')"
                                     :key="si"
                                 >
                                     {{ sketch }}
                                 </div>
                             </div>
-                            <div v-if="getEffectInfo(floor.effect, 'coin')" class="u-coin">
+                            <div v-if="getEffectInfo(floor.nEffectID, 'coin')" class="u-coin">
                                 <img class="u-coin-img" src="@/assets/img/baizhan/coin.svg" svg-inline />
-                                <span>{{ getEffectInfo(floor.effect, "coin") }}</span>
+                                <span>{{ getEffectInfo(floor.nEffectID, "coin") }}</span>
                             </div>
                         </div>
-                        <div v-if="floor.effect" class="u-icon">
-                            <img :src="getEffectInfo(floor.effect)" />
+                        <div v-if="floor.nEffectID" class="u-icon">
+                            <img :src="getEffectInfo(floor.nEffectID)" />
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- <div class="u-watermark" ref="watermark">
-                <h1 class="u-title">
-                    <img svg-inline src="@/assets/img/logo.svg" fill="#deddd3" />百战异闻录 {{ startDate }} 至
-                    {{ endDate }}
-                </h1>
-                <h1 class="u-title u-bottom-title">By: 魔盒 (https://www.jx3box.com)</h1>
-                <div class="u-watermark-content">
-                    <h1 v-for="item in 20" :key="item" class="u-title">
-                        <img svg-inline src="@/assets/img/logo.svg" fill="#deddd3" />
-                        <span>JX3BOX</span>
-                    </h1>
-                </div>
-            </div> -->
         </div>
-        <!-- <div style="width: 1132px; height: 960px">
-            <img class="canvas" :src="canvas1" alt="" />
-            <img class="canvas" :src="canvas" alt="" />
-        </div> -->
     </div>
 </template>
 
@@ -122,9 +105,6 @@ export default {
             dampingFactor: 0.9, // 越小速度衰减的越快
             momentumMultiplier: 0, // 根据鼠标移动的距离动态计算惯性效果的远近
             containerBounds: null,
-
-            // canvas: null,
-            // canvas1: null,
         };
     },
     computed: {
@@ -223,9 +203,8 @@ export default {
             }
             this.activeFloor += index;
         },
-        getBossAvatar(name) {
-            const avatar =
-                this.bosses.find((item) => item.name === name)?.avatar || `${this.__imgRoot}fbcdpanel02_51.png`;
+        getBossAvatar(id) {
+            const avatar = this.bosses.find((item) => item.id === id)?.avatar || `${this.__imgRoot}fbcdpanel02_51.png`;
             return avatar;
         },
         getEffectInfo(id, type = "icon") {
@@ -254,8 +233,17 @@ export default {
             this.loading = true;
             await getMap()
                 .then((res) => {
-                    const data = res.data?.data?.data;
-                    this.setData(data);
+                    const bosses = this.bosses;
+                    const effects = this.effects;
+                    const data = res.data?.data?.data || [];
+                    const list = data.map((item) => {
+                        return {
+                            ...item,
+                            boss: bosses.find((boss) => boss.id === item.dwBossID),
+                            effect: effects.find((effect) => effect.nID === item.nEffectID),
+                        };
+                    });
+                    this.setData(list);
                 })
                 .finally(() => {
                     this.loading = false;
@@ -306,8 +294,7 @@ export default {
                 y: 0,
             };
             map.style.transform = `translate(${this.position.x}px, ${this.position.y}px) scale(${this.scale})`;
-            // const watermark = this.$refs.watermark;
-            // watermark.style.display = "block";
+
             this.loading = true;
             html2canvas(map, {
                 useCORS: true,
@@ -315,8 +302,6 @@ export default {
                 height: map.offsetHeight,
             })
                 .then((canvas) => {
-                    // this.canvas1 = canvas.toDataURL();
-                    // watermark.style.display = "none";
                     this.createWatermark().then((waterCanvas) => {
                         const newCanvas = document.createElement("canvas");
                         const newCtx = newCanvas.getContext("2d");
@@ -418,8 +403,6 @@ export default {
                     const imageX = topTxtX - textWidth - imageSize - padding;
                     const imageY = imageSize / 2;
                     ctx.putImageData(imageData, imageX, imageY);
-
-                    // this.canvas = canvas.toDataURL();
 
                     resolve(canvas);
                 };

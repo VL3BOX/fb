@@ -12,53 +12,102 @@
             </el-select>
             <el-input v-model="keyword" placeholder="请输入技能名称或BOSS名称" clearable></el-input>
         </div>
-        <div class="m-header">
-            <div class="u-card" v-for="item in headList" :key="item">{{ item }}</div>
-        </div>
-        <div class="m-table">
-            <div class="u-item" v-for="skill in skills" :key="skill.dwInSkillID">
-                <div class="u-card">
-                    <SkillIcon :source="skill"></SkillIcon>
-                    <a v-if="isEditor" class="u-edit" @click.stop="toEdit(skill)">
-                        <i class="el-icon-edit-outline"></i>
-                    </a>
-                </div>
-                <div class="u-card">{{ skill.szBossName }}</div>
-                <div class="u-card">
+        <el-table ref="table" class="m-table" :data="skills">
+            <el-table-column label="技能" width="200">
+                <template #default="{ row: skill }">
+                    <div class="u-skill-cell">
+                        <SkillIcon :source="skill"></SkillIcon>
+                        <a v-if="isEditor" class="u-edit" @click.stop="toEdit(skill)">
+                            <i class="el-icon-edit-outline"></i>
+                        </a>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="szBossName" label="所属Boss" sortable> </el-table-column>
+            <el-table-column prop="nCost" label="点数" align="center" sortable width="80">
+                <template #default="{ row: skill }">
                     <div class="u-points">
                         <img v-for="point in skill.nCost" :key="point" :src="`${__imgRoot}baizhan_6.png`" />
                     </div>
-                </div>
-                <div v-if="skill.extra" class="u-card">{{ skill.extra.cooldown }}</div>
-                <div v-if="skill.extra && (skill.extra.cost_vigor || skill.extra.cost_endurance)" class="u-card">
-                    {{ skill.extra.cost_vigor || 0 }}/{{ skill.extra.cost_endurance || 0 }}
-                </div>
-                <div v-if="skill.extra && (skill.extra.hit_vigor || skill.extra.hit_endurance)" class="u-card">
-                    {{ skill.extra.hit_vigor || 0 }}/{{ skill.extra.hit_endurance || 0 }}
-                </div>
-                <div v-if="skill.extra" class="u-card">{{ skill.extra.remarks }}</div>
-            </div>
-            <el-button
-                class="u-more"
-                v-show="hasNextPage"
-                type="primary"
-                @click="appendPage"
-                :loading="loading"
-                icon="el-icon-arrow-down"
-                >加载更多</el-button
-            >
-            <el-pagination
-                class="m-pages"
-                background
-                layout="total, prev, pager, next, jumper"
-                :hide-on-single-page="true"
-                :page-size="limit"
-                :total="total"
-                :current-page.sync="page"
-                @current-change="handleCurrentChange"
-            ></el-pagination>
-        </div>
-        <SkillForm v-if="visible" :visible="visible" :staged="staged" @update="handleUpdate($event)" @close="close" />
+                </template>
+            </el-table-column>
+            <el-table-column prop="select_level" label="等级" align="center" width="120">
+                <template #header>
+                    <div class="u-level-select-header">
+                        <el-select size="mini" v-model="allLevel" placeholder="重数" @change="changeAllLevel">
+                            <el-option v-for="item in 6" :key="item" :value="item" :label="`第 ${item} 重`"></el-option>
+                        </el-select>
+                    </div>
+                </template>
+                <template #default="{ row: skill }">
+                    <div v-if="skill.InSkill">
+                        <el-select
+                            v-model="skill._select_level"
+                            size="mini"
+                            placeholder="重数"
+                            @change="applyAddon(skill)"
+                        >
+                            <el-option
+                                v-for="item in Number(skill.InSkill.MaxLevel)"
+                                :key="item"
+                                :value="item"
+                                :label="`第 ${item} 重`"
+                            ></el-option>
+                        </el-select>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="_cooldown" label="冷却时间" sortable>
+                <template #default="{ row: skill }">
+                    <div v-if="skill._cooldown == 60" class="u-cooldown-60">三级 - 60s</div>
+                    <div v-if="skill._cooldown == 30" class="u-cooldown-30">二级 - 30s</div>
+                    <div v-if="skill._cooldown == 10" class="u-cooldown-10">一级 - 10s</div>
+                    <div v-if="skill._cooldown == 0" class="u-cooldown-0">被动技能</div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="_damage" label="伤害" sortable></el-table-column>
+            <el-table-column prop="_cost_vigor" label="精力消耗" sortable>
+                <template #default="{ row: skill }">
+                    <div class="u-vigor-about">{{ skill._cost_vigor }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="_cost_endurance" label="耐力消耗" sortable>
+                <template #default="{ row: skill }">
+                    <div class="u-endurance-about">{{ skill._cost_endurance }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="_hit_vigor" label="精力打击" sortable>
+                <template #default="{ row: skill }">
+                    <div class="u-vigor-about">{{ skill._hit_vigor }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="_hit_endurance" label="耐力打击" sortable>
+                <template #default="{ row: skill }">
+                    <div class="u-vigor-about">{{ skill._hit_endurance }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="_remarks" label="备注"></el-table-column>
+        </el-table>
+        <el-button
+            class="u-more"
+            v-show="hasNextPage"
+            type="primary"
+            @click="appendPage"
+            :loading="loading"
+            icon="el-icon-arrow-down"
+            >加载更多</el-button
+        >
+        <el-pagination
+            class="m-pages"
+            background
+            layout="total, prev, pager, next, jumper"
+            :hide-on-single-page="true"
+            :page-size="limit"
+            :total="total"
+            :current-page.sync="page"
+            @current-change="handleCurrentChange"
+        ></el-pagination>
+        <SkillForm ref="editAddon" @update="handleUpdate($event)" @close="close" />
     </div>
 </template>
 
@@ -81,24 +130,24 @@ export default {
             required: true,
         },
     },
-    data() {
-        return {
-            visible: false,
-            loading: false,
-            skills: [],
-            cost: 0, // 技能占用点数
-            type: 0, // 技能类型
-            color: 0, // 技能颜色
-            boss: "", // 技能所属BOSS 模糊查询
-            name: "", // 技能名称 模糊查询
-            keyword: "",
-            page: 1,
-            limit: 30,
-            total: 0,
-            headList: ["技能", "所属BOSS", "点数消耗", "技能CD", "精/耐消耗", "精/耐打击", "备注"],
-            staged: {},
-        };
-    },
+    data: () => ({
+        loading: false,
+        skills: [],
+        skillAddon: {},
+        allLevel: 5,
+
+        cost: 0, // 技能占用点数
+        type: 0, // 技能类型
+        color: 0, // 技能颜色
+        boss: "", // 技能所属BOSS 模糊查询
+        name: "", // 技能名称 模糊查询
+        keyword: "",
+        page: 1,
+        limit: 30,
+        total: 0,
+
+        addon_key: ["cooldown", "damage", "cost_vigor", "cost_endurance", "hit_vigor", "hit_endurance", "remarks"],
+    }),
     computed: {
         params() {
             return {
@@ -149,20 +198,15 @@ export default {
         },
     },
     methods: {
-        toEdit(item) {
-            this.staged = item;
-            this.visible = true;
+        changeAllLevel() {
+            for (let item of this.skills)
+                this.$set(item, "_select_level", Math.min(item?.InSkill?.MaxLevel ?? this.allLevel, this.allLevel));
+            this.applyAllAddon();
         },
-        handleUpdate(data) {
-            const index = this.skills.findIndex((item) => item.dwInSkillID === data.skill_id);
-            if (index !== -1) {
-                this.skills[index].extra = data;
-            } else {
-                this.skills.unshift({
-                    dwInSkillID: data.skill_id,
-                    extra: data,
-                });
-            }
+        toEdit(item) {
+            const { dwInSkillID: skill_id, _select_level: level } = item;
+            const addon = this.skillAddon[skill_id]?.[level];
+            this.$refs["editAddon"].open(addon ?? { skill_id: skill_id });
         },
         close() {
             this.visible = false;
@@ -170,31 +214,64 @@ export default {
         getColor(color) {
             return this.colors.find((item) => item.ID === color)?.TypeName || "";
         },
+        addAddon(addon) {
+            const { skill_id, level } = addon;
+            if (!this.skillAddon[skill_id]) this.skillAddon[skill_id] = {};
+            this.skillAddon[skill_id][level] = addon;
+        },
+        handleUpdate(data) {
+            this.addAddon(data);
+            const { skill_id } = data;
+            const skill = this.skills.find((s) => s.dwInSkillID == skill_id);
+            this.applyAddon(skill);
+        },
         load(isAppend = false) {
             const params = removeEmptyIncludeZero(this.params);
             const data = Object.assign(params, this.query);
             this.loading = true;
             getSkills(data)
                 .then((res) => {
-                    const list = res.data?.data?.list || [];
-                    const ids = list.map((item) => item.dwInSkillID).join(",");
-                    getSkillInfo({ ids: ids }).then((resInfo) => {
-                        const skillExtraList = resInfo.data?.data || [];
-                        const newList = list.map((item) => {
-                            item.extra = skillExtraList.find((extra) => extra.skill_id === item.dwInSkillID) || {};
-                            return item;
-                        });
-                        if (isAppend) {
-                            this.skills = this.skills.concat(newList);
-                        } else {
-                            this.skills = newList;
+                    // 搜索技能
+                    let list = res.data?.data?.list || [];
+                    for (let item of list) {
+                        for (let key of this.addon_key) {
+                            this.$set(item, `_${key}`, undefined);
                         }
-                        this.total = res.data?.data?.total || 0;
-                    });
+                    }
+                    if (isAppend) {
+                        this.skills = this.skills.concat(list);
+                    } else {
+                        this.skills = list;
+                    }
+                    this.total = res.data?.data?.total || 0;
+                    const ids = list.map((item) => item.dwInSkillID).join(",");
+                    return ids;
+                })
+                .then((ids) => {
+                    // 获取技能额外信息
+                    if (!ids) return;
+                    return getSkillInfo({ ids: ids });
+                })
+                .then((res) => {
+                    if (!res) return;
+                    const skillAddonList = res.data?.data || [];
+                    for (let addon of skillAddonList) this.addAddon(addon);
                 })
                 .finally(() => {
                     this.loading = false;
+                    this.changeAllLevel(10);
                 });
+        },
+        applyAllAddon() {
+            for (let skill of this.skills) this.applyAddon(skill);
+        },
+        applyAddon(skill) {
+            const { dwInSkillID: skill_id, _select_level: level } = skill;
+            const addon = this.skillAddon[skill_id]?.[level];
+            console.log(skill_id, level, addon);
+            for (let key of this.addon_key) {
+                this.$set(skill, `_${key}`, addon?.[key]);
+            }
         },
         handleCurrentChange() {
             this.load();

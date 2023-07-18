@@ -1,8 +1,8 @@
 <template>
     <app-layout slug="baizhan" className="p-baizhan-app">
         <div class="p-baizhan">
-            <LeftSidebar v-if="!isPhone()">
-                <!-- <Bosses :bosses="bosses" @update="updateBoss($event)"></Bosses> -->
+            <LeftSidebar class="m-baizhan-sidebar" v-if="!isPhone()">
+                <BTabs></BTabs>
             </LeftSidebar>
             <div class="m-content" :class="isPhone() && 'is-phone'">
                 <!-- <div class="m-btns">
@@ -25,7 +25,7 @@
 import { getBosses, getBossInfo, getTypes, getSkills, getSkillInfo, getEffects } from "@/service/baizhan";
 import Skills from "@/components/baizhan/Skills.vue";
 import BMap from "@/components/baizhan/BMap.vue";
-import Bosses from "@/components/baizhan/Bosses.vue";
+import BTabs from "@/components/baizhan/BTabs.vue";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import baizhanEffects from "@/assets/data/baizhan_effects.json";
 import { isPhone } from "@/utils";
@@ -36,7 +36,7 @@ export default {
     },
     components: {
         Skills,
-        // Bosses,
+        BTabs,
         BMap,
     },
     data() {

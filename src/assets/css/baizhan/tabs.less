@@ -1,0 +1,40 @@
+.m-tabs {
+    padding-left: 10px;
+    margin-top: 10px;
+    .m-tab-wrap {
+        padding: 20px;
+        box-sizing: border-box;
+        width: 312px;
+        // height: 235px;
+        background-color: @baizhan_tab_bg;
+        border-radius: 10px;
+    }
+    .u-tab-list {
+        .flex;
+        gap: 10px;
+        .u-tab {
+            width: 84px;
+            height: 115px;
+            color: @baizhan_active;
+            user-select: none;
+            cursor: pointer;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            .flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            &.is-active {
+                color: #fff;
+                background-color: @baizhan_active;
+            }
+        }
+    }
+    .u-map-time {
+        margin-top: 20px;
+        color: #fff;
+        font-weight: bold;
+    }
+}

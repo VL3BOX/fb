@@ -59,6 +59,7 @@
                 </div>
             </div>
         </div>
+        <img :src="canvas" alt="" />
     </div>
 </template>
 
@@ -105,6 +106,8 @@ export default {
             dampingFactor: 0.9, // 越小速度衰减的越快
             momentumMultiplier: 0, // 根据鼠标移动的距离动态计算惯性效果的远近
             containerBounds: null,
+
+            canvas: null,
         };
     },
     computed: {
@@ -309,21 +312,22 @@ export default {
                         newCanvas.height = canvas.height;
                         newCtx.drawImage(canvas, 0, 0);
                         newCtx.drawImage(waterCanvas, 0, 0);
+                        this.canvas = newCanvas.toDataURL();
                         // 创建一个虚拟链接
-                        const link = document.createElement("a");
-                        link.href = newCanvas.toDataURL(); // 将 Canvas 转换为 Data URL
-                        link.download = `魔盒百战${this.startDate}至${this.endDate}.png`; // 下载文件的名称
+                        // const link = document.createElement("a");
+                        // link.href = newCanvas.toDataURL(); // 将 Canvas 转换为 Data URL
+                        // link.download = `魔盒百战${this.startDate}至${this.endDate}.png`; // 下载文件的名称
 
-                        link.addEventListener("click", () => {
-                            setTimeout(() => {
-                                URL.revokeObjectURL(link.href); // 删除链接的资源
-                            }, 100); // 延迟删除以确保下载完成
+                        // link.addEventListener("click", () => {
+                        //     setTimeout(() => {
+                        //         URL.revokeObjectURL(link.href); // 删除链接的资源
+                        //     }, 100); // 延迟删除以确保下载完成
 
-                            link.removeEventListener("click", () => {}); // 移除事件监听器
-                            document.body.removeChild(link);
-                        });
-                        document.body.appendChild(link);
-                        link.click();
+                        //     link.removeEventListener("click", () => {}); // 移除事件监听器
+                        //     document.body.removeChild(link);
+                        // });
+                        // document.body.appendChild(link);
+                        // link.click();
                         this.loading = false;
                     });
                 })

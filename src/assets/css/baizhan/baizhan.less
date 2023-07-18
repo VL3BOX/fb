@@ -10,8 +10,21 @@
     width: 100%;
     background-color: @baizhan_bg;
     overflow: hidden;
-    .c-sidebar {
+    .m-baizhan-sidebar {
         padding: 0;
+        background-color: @baizhan_bg;
+        border-right: none;
+        width: 322px;
+        &.isopen {
+            .c-sidebar-left-toggle {
+                .none;
+            }
+        }
+        &:hover {
+            .c-sidebar-left-toggle {
+                .db;
+            }
+        }
     }
     .m-bosses {
         // width: 280px;

@@ -21,7 +21,7 @@
                     :class="[
                         floor.nEffectID ? 'is-effect' : '',
                         activeFloor === step * 10 + index + 1 ? 'is-active' : '',
-                        currentBoss === floor.boss.name ? 'is-current' : '',
+                        currentBoss === floor.bossName ? 'is-current' : '',
                     ]"
                     v-for="(floor, index) in item"
                     :key="index"
@@ -32,10 +32,10 @@
                             {{ step * 10 + index + 1 }}
                         </div>
                         <div class="u-img">
-                            <img :src="floor.boss.avatar" :alt="floor.boss.name || '未知'" />
+                            <img :src="getBossAvatar(floor.dwBossID)" :alt="floor.bossName || '未知'" />
                         </div>
-                        <div class="u-name" :class="currentBoss === floor.boss.name && 'is-current'">
-                            {{ floor.boss.name }}
+                        <div class="u-name" :class="currentBoss === floor.bossName && 'is-current'">
+                            {{ floor.bossName }}
                         </div>
                         <div class="u-desc">
                             <div v-if="getEffectInfo(floor.nEffectID, 'sketch').length" class="u-sketch">
@@ -59,13 +59,12 @@
                 </div>
             </div>
         </div>
-        <img :src="canvas" alt="" />
+        <!-- <img :src="canvas" alt="" /> -->
     </div>
 </template>
 
 <script>
 import User from "@jx3box/jx3box-common/js/user";
-import { getMap } from "@/service/baizhan";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 import { arr1to2, isPhone, isQQ, isWeChat } from "@/utils";
 import { getWeekStartDate, getWeekEndDate } from "@/utils/dateFormat";
@@ -74,7 +73,7 @@ import html2canvas from "html2canvas";
 export default {
     name: "BaizhanMap",
     inject: ["__imgRoot"],
-    props: ["bosses", "effects"],
+    props: ["bosses", "effects", "maps"],
     data() {
         return {
             loading: false,
@@ -107,7 +106,7 @@ export default {
             momentumMultiplier: 0, // 根据鼠标移动的距离动态计算惯性效果的远近
             containerBounds: null,
 
-            canvas: null,
+            // canvas: null,
         };
     },
     computed: {
@@ -123,6 +122,28 @@ export default {
         },
     },
     watch: {
+        maps: {
+            immediate: true,
+            deep: true,
+            handler(list) {
+                if (!list.length) return false;
+                this.setData(list);
+                this.$nextTick(() => {
+                    const map = this.$refs.map;
+                    map.addEventListener("wheel", this.handleScroll);
+
+                    this.containerBounds = this.$refs.container.getBoundingClientRect();
+                    window.addEventListener("resize", this.updateContainerBounds);
+
+                    const imgs = document.getElementsByTagName("img");
+                    [...imgs].forEach((img) => {
+                        img.addEventListener("dragstart", (event) => {
+                            event.preventDefault();
+                        });
+                    });
+                });
+            },
+        },
         activeFloor: {
             immediate: true,
             handler(index) {
@@ -232,26 +253,6 @@ export default {
             this.activeFloor = index;
         },
         iconLink,
-        async load() {
-            this.loading = true;
-            await getMap()
-                .then((res) => {
-                    const bosses = this.bosses;
-                    const effects = this.effects;
-                    const data = res.data?.data?.data || [];
-                    const list = data.map((item) => {
-                        return {
-                            ...item,
-                            boss: bosses.find((boss) => boss.id === item.dwBossID),
-                            effect: effects.find((effect) => effect.nID === item.nEffectID),
-                        };
-                    });
-                    this.setData(list);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
-        },
         setData(data) {
             const total = this.step * this.row;
             const point = cloneDeep(this.point);
@@ -303,31 +304,32 @@ export default {
                 useCORS: true,
                 width: map.offsetWidth,
                 height: map.offsetHeight,
+                scale: 2,
             })
                 .then((canvas) => {
                     this.createWatermark().then((waterCanvas) => {
                         const newCanvas = document.createElement("canvas");
                         const newCtx = newCanvas.getContext("2d");
-                        newCanvas.width = canvas.width;
-                        newCanvas.height = canvas.height;
+                        newCanvas.width = map.offsetWidth * 2;
+                        newCanvas.height = map.offsetHeight * 2;
                         newCtx.drawImage(canvas, 0, 0);
                         newCtx.drawImage(waterCanvas, 0, 0);
-                        this.canvas = newCanvas.toDataURL();
+                        // this.canvas = newCanvas.toDataURL();
                         // 创建一个虚拟链接
-                        // const link = document.createElement("a");
-                        // link.href = newCanvas.toDataURL(); // 将 Canvas 转换为 Data URL
-                        // link.download = `魔盒百战${this.startDate}至${this.endDate}.png`; // 下载文件的名称
+                        const link = document.createElement("a");
+                        link.href = newCanvas.toDataURL(); // 将 Canvas 转换为 Data URL
+                        link.download = `魔盒百战${this.startDate}至${this.endDate}.png`; // 下载文件的名称
 
-                        // link.addEventListener("click", () => {
-                        //     setTimeout(() => {
-                        //         URL.revokeObjectURL(link.href); // 删除链接的资源
-                        //     }, 100); // 延迟删除以确保下载完成
+                        link.addEventListener("click", () => {
+                            setTimeout(() => {
+                                URL.revokeObjectURL(link.href); // 删除链接的资源
+                            }, 100); // 延迟删除以确保下载完成
 
-                        //     link.removeEventListener("click", () => {}); // 移除事件监听器
-                        //     document.body.removeChild(link);
-                        // });
-                        // document.body.appendChild(link);
-                        // link.click();
+                            link.removeEventListener("click", () => {}); // 移除事件监听器
+                            document.body.removeChild(link);
+                        });
+                        document.body.appendChild(link);
+                        link.click();
                         this.loading = false;
                     });
                 })
@@ -340,19 +342,19 @@ export default {
             return new Promise((resolve) => {
                 const map = this.$refs.map;
                 const canvas = document.createElement("canvas");
-                canvas.width = map.offsetWidth;
-                canvas.height = map.offsetHeight;
+                canvas.width = map.offsetWidth * 2;
+                canvas.height = map.offsetHeight * 2;
                 const ctx = canvas.getContext("2d");
 
                 // 绘制顶部文字
-                ctx.font = `bold 24px Arial`;
+                ctx.font = `bold 48px Arial`;
                 ctx.fillStyle = "#deddd3";
                 ctx.textBaseline = "middle";
                 ctx.textAlign = "center"; // 设置居中对齐
 
                 const topTxt = `百战异闻录 ${this.startDate} 至 ${this.endDate}`;
                 const topTxtX = canvas.width / 2; // 居中位置
-                const topTxtY = 30; // 垂直位置
+                const topTxtY = 30 * 2; // 垂直位置
                 ctx.fillText(topTxt, topTxtX, topTxtY);
 
                 const bottomTxt = "By: 魔盒 (https://www.jx3box.com)";
@@ -382,7 +384,7 @@ export default {
                 image.src = require("@/assets/img/logo.svg");
                 image.onload = () => {
                     // 创建临时canvas用于处理图片
-                    const imageSize = 30;
+                    const imageSize = 30 * 2;
                     const tempCanvas = document.createElement("canvas");
                     tempCanvas.width = imageSize;
                     tempCanvas.height = imageSize;
@@ -402,34 +404,15 @@ export default {
                     }
 
                     // 将修改后的ImageData对象绘制到canvas中
-                    const textWidth = ctx.measureText(topTxt).width; // 顶部文字的宽度
-                    const padding = 5; // 图片与文字之间的间距
+                    const textWidth = ctx.measureText(topTxt).width * 2; // 顶部文字的宽度
+                    const padding = 10; // 图片与文字之间的间距
                     const imageX = topTxtX - textWidth - imageSize - padding;
-                    const imageY = imageSize / 2;
-                    ctx.putImageData(imageData, imageX, imageY);
+                    ctx.putImageData(imageData, imageX, 30);
 
                     resolve(canvas);
                 };
             });
         },
-    },
-    mounted() {
-        this.load().then(() => {
-            this.$nextTick(() => {
-                const map = this.$refs.map;
-                map.addEventListener("wheel", this.handleScroll);
-
-                this.containerBounds = this.$refs.container.getBoundingClientRect();
-                window.addEventListener("resize", this.updateContainerBounds);
-
-                const imgs = document.getElementsByTagName("img");
-                [...imgs].forEach((img) => {
-                    img.addEventListener("dragstart", (event) => {
-                        event.preventDefault();
-                    });
-                });
-            });
-        });
     },
     beforeDestroy() {
         window.removeEventListener("wheel", this.handleScroll);

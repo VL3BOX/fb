@@ -55,6 +55,7 @@ export default {
 <style lang="less">
 @import "~@/assets/css/list.less";
 .m-baizhan-breadcrumb {
+    padding: 10px 20px;
     background-color: @baizhan_bg;
     border-color: @baizhan_bg;
     .u-title {

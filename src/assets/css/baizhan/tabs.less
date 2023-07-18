@@ -1,11 +1,18 @@
 .m-tabs {
-    padding-left: 10px;
-    margin-top: 10px;
-    .m-tab-wrap {
+    position: relative;
+    padding-left: 20px;
+    margin-top: 20px;
+    .flex;
+    flex-direction: column;
+    gap: 30px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    .scrollbar(2px);
+    & > div {
         padding: 20px;
         box-sizing: border-box;
         width: 312px;
-        // height: 235px;
         background-color: @baizhan_tab_bg;
         border-radius: 10px;
     }
@@ -36,5 +43,102 @@
         margin-top: 20px;
         color: #fff;
         font-weight: bold;
+    }
+    .m-search {
+        .u-header {
+            .flex;
+            align-items: center;
+            gap: 8px;
+            h2 {
+                margin: 0;
+                font-size: 16px;
+                color: #c8c8c8;
+            }
+        }
+        .m-effects {
+            .u-title {
+                position: relative;
+                margin: 20px 0;
+                color: #f9f7e84d;
+                &::after {
+                    right: 0;
+                    top: 50%;
+                    position: absolute;
+                    display: block;
+                    width: 200px;
+                    height: 1px;
+                    background-color: #f9f7e84d;
+                    content: "";
+                }
+            }
+            .u-effect-list {
+                .flex;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+            .u-effect {
+                .flex;
+                align-items: center;
+                cursor: pointer;
+                gap: 5px;
+                width: 33.33%;
+                padding: 5px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                span {
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #c8c8c8;
+                }
+                &.is-active,
+                &:hover {
+                    background-color: @baizhan_active;
+                }
+            }
+        }
+        .m-tab-bosses {
+            .u-title {
+                position: relative;
+                margin: 20px 0;
+                color: #f9f7e84d;
+                &::after {
+                    right: 0;
+                    top: 50%;
+                    position: absolute;
+                    display: block;
+                    width: 200px;
+                    height: 1px;
+                    background-color: #f9f7e84d;
+                    content: "";
+                }
+            }
+            .u-boss-list {
+                .flex;
+                flex-direction: column;
+                width: 100%;
+            }
+            .u-tab-boss {
+                .flex;
+                align-items: center;
+                cursor: pointer;
+                gap: 5px;
+                width: 100%;
+                padding: 5px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                .u-avatar {
+                    width: 40px;
+                }
+                span {
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #c8c8c8;
+                }
+                &.is-active,
+                &:hover {
+                    background-color: @baizhan_active;
+                }
+            }
+        }
     }
 }

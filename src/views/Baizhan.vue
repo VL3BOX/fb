@@ -2,7 +2,7 @@
     <app-layout slug="baizhan" className="p-baizhan-app">
         <div class="p-baizhan">
             <LeftSidebar class="m-baizhan-sidebar" v-if="!isPhone()">
-                <BTabs></BTabs>
+                <BTabs :maps="maps"></BTabs>
             </LeftSidebar>
             <div class="m-content" :class="isPhone() && 'is-phone'">
                 <!-- <div class="m-btns">
@@ -14,7 +14,7 @@
                         >{{ item.label }}</el-button
                     >
                 </div> -->
-                <BMap v-if="activeTab === 0" :bosses="bosses" :effects="effects"></BMap>
+                <BMap v-if="activeTab === 0" :bosses="bosses" :effects="effects" :maps="maps"></BMap>
                 <Skills v-if="activeTab === 1" :types="types"></Skills>
             </div>
         </div>
@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import { getBosses, getBossInfo, getTypes, getSkills, getSkillInfo, getEffects } from "@/service/baizhan";
+import { getBosses, getBossInfo, getTypes, getSkills, getSkillInfo, getEffects, getMap } from "@/service/baizhan";
 import Skills from "@/components/baizhan/Skills.vue";
 import BMap from "@/components/baizhan/BMap.vue";
 import BTabs from "@/components/baizhan/BTabs.vue";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import baizhanEffects from "@/assets/data/baizhan_effects.json";
+import { baizhanEffects } from "@/assets/data/baizhan_effects.js";
 import { isPhone } from "@/utils";
 export default {
     name: "Baizhan",
@@ -46,6 +46,7 @@ export default {
             bosses: [],
             skills: [],
             effects: [],
+            maps: [],
             activeTab: 0,
             tabs: [
                 {
@@ -169,6 +170,22 @@ export default {
                 });
             });
         },
+        async loadMap() {
+            await getMap().then((res) => {
+                const bosses = this.bosses;
+                const effects = this.effects;
+                const data = res.data?.data?.data || [];
+                const list = data.map((item) => {
+                    return {
+                        ...item,
+                        boss: bosses.find((boss) => boss.id === item.dwBossID),
+                        bossName: bosses.find((boss) => boss.id === item.dwBossID)?.name,
+                        effect: effects.find((effect) => effect.nID === item.nEffectID),
+                    };
+                });
+                this.maps = list;
+            });
+        },
         load() {
             const proArr = [];
             const bossCache = sessionStorage.getItem(`baizhan-bosses`);
@@ -199,8 +216,10 @@ export default {
                 const effectPro = this.loadEffects();
                 proArr.push(effectPro);
             }
+
             this.loading = true;
             Promise.allSettled(proArr).then(() => {
+                this.loadMap();
                 this.loading = false;
             });
         },

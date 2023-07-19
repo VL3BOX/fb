@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import map from "@jx3box/jx3box-data/data/fb/fb_map.json";
 import origin_map from "@jx3box/jx3box-data/data/fb/fb_map_origin.json";
 import { default_zlp, default_fb } from "../../setting.json";
-
+import baizhan from "./modules/baizhan";
 Vue.use(Vuex);
 
 let store = {
@@ -29,8 +29,6 @@ let store = {
         maptree: "",
 
         isSuperAuthor: false,
-
-        baizhanBoss: "",
     },
     mutations: {
         switchClient: function (state, val) {
@@ -52,7 +50,9 @@ let store = {
         },
     },
     actions: {},
-    modules: {},
+    modules: {
+        baizhan,
+    },
 };
 
 export default new Vuex.Store(store);

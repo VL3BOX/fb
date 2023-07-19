@@ -10,7 +10,7 @@
 @baizhan_active: #7879d0;
 @baizhan_tab_bg: #111827;
 
-.scrollbar(@w:2px) {
+.scrollbar(@w:2px, @color:#0003, @bg: rgba(0, 0, 0, 0.1)) {
     &::-webkit-scrollbar {
         width: @w;
         height: @w;
@@ -18,10 +18,10 @@
     &::-webkit-scrollbar-track-piece {
         background-color: hsla(0, 0%, 87%, 0.2);
         border-radius: 6px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        -webkit-box-shadow: inset 0 0 6px @bg;
     }
     &::-webkit-scrollbar-thumb {
-        background-color: #0003;
+        background-color: @color;
         border-radius: 6px;
         transition: all 0.2s ease-in-out;
     }

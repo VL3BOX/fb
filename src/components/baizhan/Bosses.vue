@@ -66,9 +66,9 @@ export default {
     },
     methods: {
         setBoss(item) {
-            this.$store.commit("setState", {
-                key: "baizhanBoss",
-                val: item.name,
+            this.$store.commit("baizhan/setState", {
+                key: "currentBoss",
+                val: item,
             });
         },
         toEdit(item) {

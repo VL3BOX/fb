@@ -21,7 +21,7 @@
                     :class="[
                         floor.nEffectID ? 'is-effect' : '',
                         activeFloor === step * 10 + index + 1 ? 'is-active' : '',
-                        currentBoss === floor.bossName ? 'is-current' : '',
+                        currentBoss.dwBossID === floor.dwBossID ? 'is-current' : '',
                     ]"
                     v-for="(floor, index) in item"
                     :key="index"
@@ -38,24 +38,26 @@
                             {{ floor.bossName }}
                         </div>
                         <div class="u-desc">
-                            <div v-if="getEffectInfo(floor.nEffectID, 'sketch').length" class="u-sketch">
+                            <div v-if="getEffectInfo(effects, floor.nEffectID, 'sketch').length" class="u-sketch">
                                 <div
                                     class="u-sketch-info"
-                                    v-for="(sketch, si) in getEffectInfo(floor.nEffectID, 'sketch')"
+                                    v-for="(sketch, si) in getEffectInfo(effects, floor.nEffectID, 'sketch')"
                                     :key="si"
                                 >
                                     {{ sketch }}
                                 </div>
                             </div>
-                            <div v-if="getEffectInfo(floor.nEffectID, 'coin')" class="u-coin">
+                            <div v-if="getEffectInfo(effects, floor.nEffectID, 'coin')" class="u-coin">
                                 <img class="u-coin-img" src="@/assets/img/baizhan/coin.svg" svg-inline />
-                                <span>{{ getEffectInfo(floor.nEffectID, "coin") }}</span>
+                                <span>{{ getEffectInfo(effects, floor.nEffectID, "coin") }}</span>
                             </div>
                         </div>
                         <div v-if="floor.nEffectID" class="u-icon">
-                            <img :src="getEffectInfo(floor.nEffectID)" />
+                            <img :src="getEffectInfo(effects, floor.nEffectID)" />
                         </div>
                     </div>
+                    <i class="u-current-icon el-icon-arrow-up"></i>
+                    <i class="u-current-icon el-icon-arrow-down"></i>
                 </div>
             </div>
         </div>
@@ -64,16 +66,16 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import User from "@jx3box/jx3box-common/js/user";
-import { iconLink } from "@jx3box/jx3box-common/js/utils";
 import { arr1to2, isPhone, isQQ, isWeChat } from "@/utils";
 import { getWeekStartDate, getWeekEndDate } from "@/utils/dateFormat";
+import { getEffectInfo } from "@/assets/js/baizhan";
 import { cloneDeep } from "lodash";
 import html2canvas from "html2canvas";
 export default {
     name: "BaizhanMap",
     inject: ["__imgRoot"],
-    props: ["bosses", "effects", "maps"],
     data() {
         return {
             loading: false,
@@ -110,9 +112,12 @@ export default {
         };
     },
     computed: {
-        currentBoss() {
-            return this.$store.state.baizhanBoss;
-        },
+        ...mapState({
+            bosses: (state) => state.baizhan.bosses,
+            effects: (state) => state.baizhan.effects,
+            maps: (state) => state.baizhan.maps,
+            currentBoss: (state) => state.baizhan.currentBoss,
+        }),
         isEditor: function () {
             return User.isEditor();
         },
@@ -231,28 +236,10 @@ export default {
             const avatar = this.bosses.find((item) => item.id === id)?.avatar || `${this.__imgRoot}fbcdpanel02_51.png`;
             return avatar;
         },
-        getEffectInfo(id, type = "icon") {
-            const item = this.effects.find((item) => item.nID === id);
-            const iconId = item?.dwIconID || 18005;
-            let str = iconLink(iconId);
-            if (type === "name") {
-                str = item?.szName;
-            }
-            if (type === "desc") {
-                str = item?.szDescription;
-            }
-            if (type === "coin") {
-                str = item?.coin;
-            }
-            if (type === "sketch") {
-                str = item?.sketch.split("/")[0] ? item?.sketch.split("/") : [];
-            }
-            return str;
-        },
+        getEffectInfo,
         setFloor(index) {
             this.activeFloor = index;
         },
-        iconLink,
         setData(data) {
             const total = this.step * this.row;
             const point = cloneDeep(this.point);

@@ -49,12 +49,29 @@
                     <div
                         class="u-tab-boss"
                         :class="activeBossId === floor.dwBossID && 'is-active'"
-                        v-for="floor in maps"
+                        v-for="(floor, i) in maps"
                         :key="floor.dwBossID"
-                        @click="setBoss(boss)"
+                        @click="setBoss(floor)"
                     >
-                        <img class="u-avatar" :src="floor.boss.avatar" :alt="floor.bossName" />
+                        <i class="u-index">{{ i + 1 }}</i>
+                        <img class="u-avatar" :src="floor.bossAvatar" :alt="floor.bossName" />
                         <span>{{ floor.bossName }}</span>
+                        <a
+                            v-if="floor.bossLink"
+                            class="u-link"
+                            :title="`${floor.bossName}攻略`"
+                            :href="floor.bossLink"
+                            target="_blank"
+                            @click.stop
+                        >
+                            <i class="el-icon-link"></i>
+                        </a>
+                        <img
+                            v-if="activeTab === 'map' && floor.nEffectID"
+                            class="u-effect-img"
+                            :src="getEffectInfo(effects, floor.nEffectID)"
+                            :alt="getEffectInfo(effects, floor.nEffectID, 'name')"
+                        />
                     </div>
                 </div>
             </div>
@@ -65,14 +82,14 @@
 <script>
 import { getWeekStartDate, getWeekEndDate } from "@/utils/dateFormat";
 import { effectsFilter } from "@/assets/data/baizhan_effects.js";
+import { getEffectInfo } from "@/assets/js/baizhan";
+import { mapState } from "vuex";
 export default {
     name: "BTabs",
-    props: ["maps"],
     data() {
         return {
             activeTab: "map",
             activeEffectIndex: -1,
-            activeBossId: 0,
             tabs: [
                 {
                     label: "百战地图",
@@ -92,7 +109,18 @@ export default {
             effectsFilter,
         };
     },
+    computed: {
+        ...mapState({
+            effects: (state) => state.baizhan.effects,
+            maps: (state) => state.baizhan.maps,
+            currentBoss: (state) => state.baizhan.currentBoss,
+        }),
+        activeBossId() {
+            return this.currentBoss?.dwBossID || 0;
+        },
+    },
     methods: {
+        getEffectInfo,
         setEffect(i) {
             if (this.activeEffectIndex === i) {
                 this.activeEffectIndex = -1;
@@ -100,8 +128,15 @@ export default {
                 this.activeEffectIndex = i;
             }
         },
-        setBoss(boss) {
-            console.log(boss);
+        setBoss(floor) {
+            let val = floor;
+            if (floor.dwBossID === this.currentBoss.dwBossID) {
+                val = {};
+            }
+            this.$store.commit("baizhan/setState", {
+                key: "currentBoss",
+                val: val,
+            });
         },
     },
 };

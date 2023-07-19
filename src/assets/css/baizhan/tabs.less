@@ -5,9 +5,7 @@
     .flex;
     flex-direction: column;
     gap: 30px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: 100%;
+    overflow: hidden;
     .scrollbar(2px);
     & > div {
         padding: 20px;
@@ -45,6 +43,10 @@
         font-weight: bold;
     }
     .m-search {
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: calc(100vh - 400px);
+        .scrollbar(2px, #666);
         .u-header {
             .flex;
             align-items: center;
@@ -118,16 +120,37 @@
                 width: 100%;
             }
             .u-tab-boss {
+                position: relative;
                 .flex;
                 align-items: center;
                 cursor: pointer;
-                gap: 5px;
+                gap: 8px;
                 width: 100%;
                 padding: 5px;
                 box-sizing: border-box;
                 border-radius: 4px;
                 .u-avatar {
-                    width: 40px;
+                    width: 36px;
+                    height: 36px;
+                }
+                .u-effect-img {
+                    width: 20px;
+                    height: 20px;
+
+                    position: absolute;
+                    right: 5px;
+                }
+                .u-link {
+                    color: #c8c8c8;
+                    &:hover {
+                        color: #0366d6;
+                    }
+                }
+                .u-index {
+                    .dbi;
+                    width: 20px;
+                    font-size: 14px;
+                    color: #c8c8c8;
                 }
                 span {
                     font-size: 14px;

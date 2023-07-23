@@ -19,9 +19,12 @@
                 <div
                     class="u-floor"
                     :class="[
+                        hasCurrent ? 'is-gray' : '',
                         floor.nEffectID ? 'is-effect' : '',
                         activeFloor === step * 10 + index + 1 ? 'is-active' : '',
-                        currentBoss.dwBossID === floor.dwBossID ? 'is-current' : '',
+                        currentBoss.dwBossID === floor.dwBossID || currentEffectIds.includes(floor.nEffectID)
+                            ? 'is-current'
+                            : '',
                     ]"
                     v-for="(floor, index) in item"
                     :key="index"
@@ -117,7 +120,14 @@ export default {
             effects: (state) => state.baizhan.effects,
             maps: (state) => state.baizhan.maps,
             currentBoss: (state) => state.baizhan.currentBoss,
+            currentEffect: (state) => state.baizhan.currentEffect,
         }),
+        currentEffectIds() {
+            return this.currentEffect?.ids || [];
+        },
+        hasCurrent() {
+            return this.currentBoss?.bossName || this.currentEffect?.key;
+        },
         isEditor: function () {
             return User.isEditor();
         },
@@ -284,46 +294,59 @@ export default {
                 x: 0,
                 y: 0,
             };
-            map.style.transform = `translate(${this.position.x}px, ${this.position.y}px) scale(${this.scale})`;
+            // 重置样式
+            new Promise((resolve) => {
+                map.style.transform = `translate(${this.position.x}px, ${this.position.y}px) scale(${this.scale})`;
 
-            this.loading = true;
-            html2canvas(map, {
-                useCORS: true,
-                width: map.offsetWidth,
-                height: map.offsetHeight,
-                scale: 2,
-            })
-                .then((canvas) => {
-                    this.createWatermark().then((waterCanvas) => {
-                        const newCanvas = document.createElement("canvas");
-                        const newCtx = newCanvas.getContext("2d");
-                        newCanvas.width = map.offsetWidth * 2;
-                        newCanvas.height = map.offsetHeight * 2;
-                        newCtx.drawImage(canvas, 0, 0);
-                        newCtx.drawImage(waterCanvas, 0, 0);
-                        // this.canvas = newCanvas.toDataURL();
-                        // 创建一个虚拟链接
-                        const link = document.createElement("a");
-                        link.href = newCanvas.toDataURL(); // 将 Canvas 转换为 Data URL
-                        link.download = `魔盒百战${this.startDate}至${this.endDate}.png`; // 下载文件的名称
-
-                        link.addEventListener("click", () => {
-                            setTimeout(() => {
-                                URL.revokeObjectURL(link.href); // 删除链接的资源
-                            }, 100); // 延迟删除以确保下载完成
-
-                            link.removeEventListener("click", () => {}); // 移除事件监听器
-                            document.body.removeChild(link);
-                        });
-                        document.body.appendChild(link);
-                        link.click();
-                        this.loading = false;
-                    });
-                })
-                .catch((error) => {
-                    this.loading = false;
-                    console.error("导出图片出错:", error);
+                this.$store.commit("baizhan/setState", {
+                    key: "currentBoss",
+                    val: {},
                 });
+                this.$store.commit("baizhan/setState", {
+                    key: "currentEffect",
+                    val: {},
+                });
+                resolve(true);
+            }).then(() => {
+                this.loading = true;
+                html2canvas(map, {
+                    useCORS: true,
+                    width: map.offsetWidth,
+                    height: map.offsetHeight,
+                    scale: 2,
+                })
+                    .then((canvas) => {
+                        this.createWatermark().then((waterCanvas) => {
+                            const newCanvas = document.createElement("canvas");
+                            const newCtx = newCanvas.getContext("2d");
+                            newCanvas.width = map.offsetWidth * 2;
+                            newCanvas.height = map.offsetHeight * 2;
+                            newCtx.drawImage(canvas, 0, 0);
+                            newCtx.drawImage(waterCanvas, 0, 0);
+                            // this.canvas = newCanvas.toDataURL();
+                            // 创建一个虚拟链接
+                            const link = document.createElement("a");
+                            link.href = newCanvas.toDataURL(); // 将 Canvas 转换为 Data URL
+                            link.download = `魔盒百战${this.startDate}至${this.endDate}.png`; // 下载文件的名称
+
+                            link.addEventListener("click", () => {
+                                setTimeout(() => {
+                                    URL.revokeObjectURL(link.href); // 删除链接的资源
+                                }, 100); // 延迟删除以确保下载完成
+
+                                link.removeEventListener("click", () => {}); // 移除事件监听器
+                                document.body.removeChild(link);
+                            });
+                            document.body.appendChild(link);
+                            link.click();
+                            this.loading = false;
+                        });
+                    })
+                    .catch((error) => {
+                        this.loading = false;
+                        console.error("导出图片出错:", error);
+                    });
+            });
         },
         createWatermark() {
             return new Promise((resolve) => {

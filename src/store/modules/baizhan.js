@@ -5,6 +5,7 @@ import { baizhanEffects } from "@/assets/data/baizhan_effects.js";
 export default {
     namespaced: true,
     state: {
+        currentEffect: [],
         currentBoss: {},
         types: {},
         bosses: [],

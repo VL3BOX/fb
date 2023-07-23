@@ -28,15 +28,15 @@
                 <img src="@/assets/img/baizhan/filter.svg" svg-inline alt="筛选" />
                 <h2>筛选</h2>
             </div>
-            <div class="m-effects">
+            <div v-if="activeTab === 'map'" class="m-effects">
                 <div class="u-title">特殊效果</div>
                 <div class="u-effect-list">
                     <div
                         class="u-effect"
-                        :class="activeEffectIndex === i && 'is-active'"
-                        v-for="(effect, i) in effectsFilter"
+                        :class="activeEffectKey === effect.key && 'is-active'"
+                        v-for="effect in effectsFilter"
                         :key="effect.key"
-                        @click="setEffect(i)"
+                        @click="setEffect(effect)"
                     >
                         <img :src="require(`@/assets/img/baizhan/${effect.key}.svg`)" :alt="effect.text" />
                         <span>{{ effect.text }}</span>
@@ -89,7 +89,6 @@ export default {
     data() {
         return {
             activeTab: "map",
-            activeEffectIndex: -1,
             tabs: [
                 {
                     label: "百战地图",
@@ -114,19 +113,26 @@ export default {
             effects: (state) => state.baizhan.effects,
             maps: (state) => state.baizhan.maps,
             currentBoss: (state) => state.baizhan.currentBoss,
+            currentEffect: (state) => state.baizhan.currentEffect,
         }),
         activeBossId() {
             return this.currentBoss?.dwBossID || 0;
         },
+        activeEffectKey() {
+            return this.currentEffect?.key;
+        },
     },
     methods: {
         getEffectInfo,
-        setEffect(i) {
-            if (this.activeEffectIndex === i) {
-                this.activeEffectIndex = -1;
-            } else {
-                this.activeEffectIndex = i;
+        setEffect(effect) {
+            let val = effect;
+            if (effect.key === this.currentEffect.key) {
+                val = {};
             }
+            this.$store.commit("baizhan/setState", {
+                key: "currentEffect",
+                val: val,
+            });
         },
         setBoss(floor) {
             let val = floor;

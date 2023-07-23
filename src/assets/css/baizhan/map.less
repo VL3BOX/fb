@@ -90,6 +90,10 @@
             align-items: center;
             cursor: pointer;
             z-index: 2;
+            transition: height 0.2s ease-out;
+            &.is-gray {
+                opacity: 0.3;
+            }
             .u-floor-content {
                 .flex;
                 flex-direction: column;
@@ -115,6 +119,8 @@
                 right: -10px;
             }
             &.is-current {
+                height: 110px;
+                opacity: 1;
                 .u-current-icon {
                     .db;
                 }
@@ -209,6 +215,9 @@
             &:nth-of-type(10n).is-effect {
                 height: 150px;
                 // background-color: @baizhan_active;
+                &.is-current {
+                    height: 160px !important;
+                }
                 .u-floor-content {
                     justify-content: center;
                 }

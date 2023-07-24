@@ -51,6 +51,7 @@
                         :class="activeBossId === floor.dwBossID && 'is-active'"
                         v-for="(floor, i) in maps"
                         :key="floor.dwBossID"
+                        ref="floor"
                         @click="setBoss(floor, i)"
                     >
                         <i class="u-index">{{ i + 1 }}</i>
@@ -120,6 +121,22 @@ export default {
         },
         activeEffectKey() {
             return this.currentEffect?.key;
+        },
+    },
+    watch: {
+        currentBoss: {
+            deep: true,
+            handler(boss) {
+                const floor = ~~boss?.floor;
+                let index = 0;
+                if (floor > 10) {
+                    index = floor - 1;
+                }
+                this.$refs.floor[index].scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                });
+            },
         },
     },
     methods: {

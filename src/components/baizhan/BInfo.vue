@@ -1,15 +1,48 @@
 <template>
-    <div class="m-right-info">
-        <div v-if="currentBoss.dwBossID" class="u-boss-info">
+    <div v-if="current.dwBossID" class="m-right-info">
+        <div class="u-boss-info">
             <div class="u-name-wrap">
-                <img class="u-avatar" :src="currentBoss.bossAvatar" :alt="currentBoss.bossName" />
+                <img class="u-avatar" :src="current.bossAvatar" :alt="current.bossName" />
                 <div class="u-name-info">
-                    <div class="u-floor">第{{ currentBoss.floor }}层</div>
-                    <div class="u-name">{{ currentBoss.bossName }}</div>
+                    <div class="u-floor">
+                        <span>第{{ current.floor }}层</span>
+                        <a
+                            v-if="current.bossLink"
+                            class="u-link"
+                            :title="`${current.bossName}攻略`"
+                            :href="current.bossLink"
+                            target="_blank"
+                            @click.stop
+                        >
+                            攻略
+                        </a>
+                    </div>
+                    <div class="u-name">{{ current.bossName }}</div>
                 </div>
             </div>
-            <div class="u-effect-wrap">
-                <div class="u-title">层数效果</div>
+            <div v-if="current.nEffectID" class="u-effect-wrap">
+                <div class="u-header">层数效果</div>
+                <div class="u-title">
+                    <img class="u-effect-icon" :src="current.effectIcon" :alt="current.effectName" />
+                    <div class="u-name">{{ current.effectName }}</div>
+                </div>
+                <div class="u-desc" v-html="current.effectDesc"></div>
+            </div>
+            <div class="u-skill-wrap">
+                <div class="u-header">掉落</div>
+                <div class="u-skill-list">
+                    <a
+                        class="u-skill-item"
+                        :class="`u-skill-icon__${skill.skillColor}`"
+                        v-for="skill in current.skills"
+                        :key="skill.skillId"
+                        :href="getUrl(skill.skillId)"
+                        target="_blank"
+                    >
+                        <img class="u-skill-icon" :src="skill.skillIcon" :alt="skill.skillName" />
+                        <span>{{ skill.skillName }}</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -17,6 +50,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { iconLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "BInfo",
     props: {
@@ -28,8 +62,31 @@ export default {
     computed: {
         ...mapState({
             currentBoss: (state) => state.baizhan.currentBoss,
-            effects: (state) => state.baizhan.effects,
+            skills: (state) => state.baizhan.skills,
         }),
+        current() {
+            const skills = this.currentBoss?.boss?.skills || [];
+            return {
+                ...this.currentBoss,
+                effectIcon: iconLink(this.currentBoss.effect?.dwIconID || 18005),
+                effectName: this.currentBoss.effect?.szName,
+                effectDesc: this.currentBoss.effect?.szDescription,
+                skills: skills.map((skill) => {
+                    const skillObj = this.skills.find((item) => item.dwInSkillID === skill);
+                    return {
+                        skillId: skill,
+                        skillName: skillObj?.szSkillName,
+                        skillColor: skillObj?.nColor,
+                        skillIcon: iconLink(skillObj?.skillIconId || 13),
+                    };
+                }),
+            };
+        },
+    },
+    methods: {
+        getUrl(id) {
+            return `https://jx3box.com/app/database/?type=skill&query=${id}`;
+        },
     },
 };
 </script>

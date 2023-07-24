@@ -99,7 +99,9 @@ export default {
                     getSkillInfo({ ids: ids }).then((resInfo) => {
                         const skillExtraList = resInfo.data?.data || [];
                         const newList = list.map((item) => {
-                            item.extra = skillExtraList.find((extra) => extra.skill_id === item.dwInSkillID) || {};
+                            const extra = skillExtraList.find((extra) => extra.skill_id === item.dwInSkillID) || {};
+                            item.extra = extra;
+                            item.skillIconId = item?.Skill?.IconID;
                             return item;
                         });
                         commit("setState", {

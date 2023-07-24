@@ -16,19 +16,19 @@
         >
             <el-button class="u-download" icon="el-icon-download" @click="exportToImage"></el-button>
             <div class="u-step" v-for="(item, step) in list" :key="step">
+                <!-- activeFloor === step * 10 + index + 1 ? 'is-active' : '', -->
                 <div
                     class="u-floor"
                     :class="[
                         hasCurrent ? 'is-gray' : '',
                         floor.nEffectID ? 'is-effect' : '',
-                        activeFloor === step * 10 + index + 1 ? 'is-active' : '',
                         currentBoss.dwBossID === floor.dwBossID || currentEffectIds.includes(floor.nEffectID)
                             ? 'is-current'
                             : '',
                     ]"
                     v-for="(floor, index) in item"
                     :key="index"
-                    @click="setFloor(step * 10 + index + 1)"
+                    @click="setBoss(floor, step * 10 + index + 1)"
                 >
                     <div class="u-floor-content">
                         <div class="u-index" :class="floor.nEffectID && 'u-effect'">
@@ -92,12 +92,12 @@ export default {
             },
             step: 6,
             row: 10,
-            activeFloor: 1, // 当前层数 BOSS
-            currentFloor: {
-                level: 1,
-                boss: "",
-                effect: 0,
-            },
+            // activeFloor: 1, // 当前层数 BOSS
+            // currentFloor: {
+            //     level: 1,
+            //     boss: "",
+            //     effect: 0,
+            // },
             scale: 1,
 
             isDragging: false,
@@ -159,16 +159,16 @@ export default {
                 });
             },
         },
-        activeFloor: {
-            immediate: true,
-            handler(index) {
-                const point = cloneDeep(this.point);
-                const data = cloneDeep(this.data);
-                const floor = data?.[index - 1] || point;
-                floor.level = Math.ceil(index / this.row);
-                this.currentFloor = floor;
-            },
-        },
+        // activeFloor: {
+        //     immediate: true,
+        //     handler(index) {
+        //         const point = cloneDeep(this.point);
+        //         const data = cloneDeep(this.data);
+        //         const floor = data?.[index - 1] || point;
+        //         floor.level = Math.ceil(index / this.row);
+        //         this.currentFloor = floor;
+        //     },
+        // },
     },
     methods: {
         startDrag(event) {
@@ -232,23 +232,31 @@ export default {
                 event.stopPropagation();
             }
         },
-
-        switchFloor(index) {
-            if (this.activeFloor === this.data.length && index === 1) {
-                return (this.activeFloor = 1);
-            }
-            if (this.activeFloor === 1 && index === -1) {
-                return (this.activeFloor = this.data.length);
-            }
-            this.activeFloor += index;
-        },
+        // switchFloor(index) {
+        //     if (this.activeFloor === this.data.length && index === 1) {
+        //         return (this.activeFloor = 1);
+        //     }
+        //     if (this.activeFloor === 1 && index === -1) {
+        //         return (this.activeFloor = this.data.length);
+        //     }
+        //     this.activeFloor += index;
+        // },
         getBossAvatar(id) {
             const avatar = this.bosses.find((item) => item.id === id)?.avatar || `${this.__imgRoot}fbcdpanel02_51.png`;
             return avatar;
         },
         getEffectInfo,
-        setFloor(index) {
-            this.activeFloor = index;
+        setBoss(floor, i) {
+            let val = floor;
+            if (floor.dwBossID === this.currentBoss.dwBossID) {
+                val = {};
+            }
+            this.$store.commit("baizhan/setState", {
+                key: "currentBoss",
+                val: Object.assign(val, {
+                    floor: i + 1,
+                }),
+            });
         },
         setData(data) {
             const total = this.step * this.row;
@@ -259,7 +267,7 @@ export default {
             } else {
                 this.data = data;
             }
-            this.currentFloor = this.data[0];
+            // this.currentFloor = this.data[0];
         },
         handleScroll(event) {
             const delta = event.deltaY || event.detail || event.wheelDelta;

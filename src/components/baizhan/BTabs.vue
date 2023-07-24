@@ -51,7 +51,7 @@
                         :class="activeBossId === floor.dwBossID && 'is-active'"
                         v-for="(floor, i) in maps"
                         :key="floor.dwBossID"
-                        @click="setBoss(floor)"
+                        @click="setBoss(floor, i)"
                     >
                         <i class="u-index">{{ i + 1 }}</i>
                         <img class="u-avatar" :src="floor.bossAvatar" :alt="floor.bossName" />
@@ -134,14 +134,16 @@ export default {
                 val: val,
             });
         },
-        setBoss(floor) {
+        setBoss(floor, i) {
             let val = floor;
             if (floor.dwBossID === this.currentBoss.dwBossID) {
                 val = {};
             }
             this.$store.commit("baizhan/setState", {
                 key: "currentBoss",
-                val: val,
+                val: Object.assign(val, {
+                    floor: i + 1,
+                }),
             });
         },
     },

@@ -1,15 +1,12 @@
 .p-map {
-    flex: 1;
+    .flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
     width: 100%;
     height: 100%;
-    .flex;
-    gap: 40px;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
     .m-boss-list {
         position: relative;
-        padding: 30px;
         box-sizing: border-box;
         .flex;
         flex-direction: column;
@@ -18,6 +15,7 @@
         cursor: grab;
         background-color: @baizhan_bg;
         user-select: none;
+        padding: 30px;
         .u-watermark {
             display: none;
             position: absolute;

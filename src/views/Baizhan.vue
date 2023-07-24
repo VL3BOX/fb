@@ -14,8 +14,11 @@
                         >{{ item.label }}</el-button
                     >
                 </div> -->
-                <BMap v-if="activeTab === 0" :bosses="bosses" :effects="effects" :maps="maps"></BMap>
+                <BMap v-if="activeTab === 0"></BMap>
                 <Skills v-if="activeTab === 1" :types="types"></Skills>
+            </div>
+            <div class="m-right">
+                <BInfo :active="activeTab"></BInfo>
             </div>
         </div>
     </app-layout>
@@ -25,6 +28,7 @@
 import Skills from "@/components/baizhan/Skills.vue";
 import BMap from "@/components/baizhan/BMap.vue";
 import BTabs from "@/components/baizhan/BTabs.vue";
+import BInfo from "@/components/baizhan/BInfo.vue";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { isPhone } from "@/utils";
 import { mapState, mapActions } from "vuex";
@@ -37,6 +41,7 @@ export default {
         Skills,
         BTabs,
         BMap,
+        BInfo,
     },
     data() {
         return {

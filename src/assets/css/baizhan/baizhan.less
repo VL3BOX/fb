@@ -6,15 +6,16 @@
 }
 .p-baizhan {
     .flex;
-    gap: 20px;
+    justify-content: space-between;
     width: 100%;
+    height: calc(100vh - 64px - 48px - 60px);
     background-color: @baizhan_bg;
     overflow: hidden;
     .m-baizhan-sidebar {
         padding: 0;
         background-color: @baizhan_bg;
         border-right: none;
-        width: 332px;
+        width: @baizhan_left;
         .c-sidebar-left-inner {
             overflow: hidden;
         }
@@ -80,12 +81,10 @@
         }
     }
     .m-content {
-        margin-left: 280px;
+        margin-left: @baizhan_left;
         transition: 0.2s ease-in;
-        padding: 0 20px;
-        flex: none;
-        width: calc(100% - 320px);
-        min-height: calc(100vh - 170px);
+        flex: 1;
+        height: 100%;
         &.is-phone {
             margin-left: 0;
             width: calc(100% - 40px);
@@ -94,5 +93,9 @@
     .isclose + .m-content {
         margin-left: 0;
         width: calc(100% - 40px);
+    }
+    .m-right {
+        width: 292px;
+        margin-right: 20px;
     }
 }

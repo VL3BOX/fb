@@ -2,15 +2,50 @@
     flex: 1;
     .flex;
     flex-direction: column;
+    gap: 10px;
+    background-color: @baizhan_bg;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100vh;
+    overflow-y: auto;
+    .scrollbar(2px);
+    input {
+        background-color: @baizhan_tab_bg !important;
+        border-color: @baizhan_tab_bg !important;
+    }
     .m-search {
-        padding: 20px 0;
         .flex;
         gap: 10px;
     }
     .m-table {
         .flex;
         flex-direction: column;
-        min-width: 1200px;
+        flex: none;
+        // min-width: 1200px;
+        margin-bottom: 200px;
+        &::before {
+            background-color: transparent;
+        }
+        .is-scrolling-none {
+            background-color: @baizhan_bg !important;
+        }
+        tr {
+            background-color: @baizhan_bg;
+            th,
+            td {
+                background-color: @baizhan_bg !important;
+                border-bottom-color: @baizhan_tab_bg !important;
+                .cell {
+                    color: #c8c8c8;
+                }
+            }
+            &:hover {
+                td {
+                    background-color: @baizhan_tab_bg !important;
+                }
+            }
+        }
         .u-skill-cell {
             display: flex;
             align-items: center;
@@ -26,6 +61,7 @@
             width: 150px;
             gap: 10px;
             padding: 0;
+            color: #c8c8c8;
             .u-skill-icon {
                 .size(48px, 48px);
                 border: 2px solid transparent;
@@ -66,6 +102,7 @@
                 img {
                     .size(100%, 100%);
                     transform: scale(1.15);
+                    cursor: pointer;
                 }
             }
             .u-skill-popover {
@@ -94,18 +131,12 @@
             color: #0087d4;
             .bold;
         }
-        .u-more {
-            margin-top: 20px;
-        }
-        .m-pages {
-            margin-top: 20px;
-            text-align: center;
-        }
         .u-level-select-header {
             display: flex;
             align-items: center;
             padding: 0;
-            .el-select, .el-input {
+            .el-select,
+            .el-input {
                 padding: 0;
             }
         }

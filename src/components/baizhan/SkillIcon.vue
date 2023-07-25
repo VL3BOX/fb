@@ -9,7 +9,7 @@
         >
             <template slot="reference">
                 <div class="u-skill-icon" :class="`u-skill-icon__${source.nColor}`">
-                    <img :src="iconLink(iconId || data.IconID, client)" />
+                    <img :src="iconLink(iconId || data.IconID, client)" @click.stop="getUrl(data.SkillID)" />
                 </div>
             </template>
             <jx3-skill :data="data"></jx3-skill>
@@ -95,6 +95,9 @@ export default {
     },
     methods: {
         iconLink,
+        getUrl(id) {
+            window.open(`https://jx3box.com/app/database/?type=skill&query=${id}`, "_blank");
+        },
     },
 };
 </script>

@@ -1,24 +1,15 @@
 <template>
     <app-layout slug="baizhan" className="p-baizhan-app">
-        <div class="p-baizhan">
+        <div class="p-baizhan" v-loading="loading">
             <LeftSidebar class="m-baizhan-sidebar" v-if="!isPhone()">
                 <BTabs></BTabs>
             </LeftSidebar>
             <div class="m-content" :class="isPhone() && 'is-phone'">
-                <!-- <div class="m-btns">
-                    <el-button
-                        :type="item.value === activeTab ? 'primary' : 'default'"
-                        v-for="item in tabs"
-                        :key="item.value"
-                        @click="activeTab = item.value"
-                        >{{ item.label }}</el-button
-                    >
-                </div> -->
-                <BMap v-if="activeTab === 0"></BMap>
-                <Skills v-if="activeTab === 1" :types="types"></Skills>
+                <BMap v-if="activeTab === 'map'"></BMap>
+                <Skills v-if="activeTab === 'skill'"></Skills>
             </div>
-            <div class="m-right">
-                <BInfo :active="activeTab"></BInfo>
+            <div v-if="activeTab === 'map'" class="m-right">
+                <BInfo></BInfo>
             </div>
         </div>
     </app-layout>
@@ -46,17 +37,6 @@ export default {
     data() {
         return {
             loading: false,
-            activeTab: 0,
-            tabs: [
-                {
-                    value: 0,
-                    label: "百战地图",
-                },
-                {
-                    value: 1,
-                    label: "百战技能",
-                },
-            ],
         };
     },
     computed: {
@@ -66,6 +46,7 @@ export default {
             skills: (state) => state.baizhan.skills,
             effects: (state) => state.baizhan.effects,
             maps: (state) => state.baizhan.maps,
+            activeTab: (state) => state.baizhan.activeTab,
         }),
         bossList() {
             const skills = this.skills;

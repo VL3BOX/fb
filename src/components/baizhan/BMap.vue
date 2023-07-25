@@ -28,7 +28,7 @@
                     ]"
                     v-for="(floor, index) in item"
                     :key="index"
-                    @click="setBoss(floor, step * 10 + index + 1)"
+                    @click.prevent="setBoss(floor, step * 10 + index + 1)"
                 >
                     <div class="u-floor-content">
                         <div class="u-index" :class="floor.nEffectID && 'u-effect'">
@@ -185,6 +185,10 @@ export default {
         },
         drag(event) {
             if (this.isDragging) {
+                this.$store.commit("baizhan/setState", {
+                    key: "currentBoss",
+                    val: {},
+                });
                 const currentTime = Date.now();
                 const deltaTime = currentTime - this.lastTime;
 

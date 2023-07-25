@@ -23,7 +23,12 @@
             <div v-if="current.nEffectID" class="u-effect-wrap">
                 <div class="u-header">层数效果</div>
                 <div class="u-title">
-                    <img class="u-effect-icon" :src="current.effectIcon" :alt="current.effectName" />
+                    <img
+                        class="u-effect-icon"
+                        :src="current.effectIcon"
+                        :alt="current.effectName"
+                        @click.stop="toBuff(current)"
+                    />
                     <div class="u-name">{{ current.effectName }}</div>
                 </div>
                 <div class="u-desc" v-html="current.effectDesc"></div>
@@ -53,12 +58,6 @@ import { mapState } from "vuex";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "BInfo",
-    props: {
-        active: {
-            type: Number,
-            default: 0,
-        },
-    },
     computed: {
         ...mapState({
             currentBoss: (state) => state.baizhan.currentBoss,
@@ -86,6 +85,12 @@ export default {
     methods: {
         getUrl(id) {
             return `https://jx3box.com/app/database/?type=skill&query=${id}`;
+        },
+        toBuff(floor) {
+            window.open(
+                `https://jx3box.com/app/database/?type=buff&query=${floor.effect.buffID}&level=${floor.effect.buffLevel}`,
+                "_blank"
+            );
         },
     },
 };

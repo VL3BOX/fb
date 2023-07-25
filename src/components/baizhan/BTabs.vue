@@ -7,7 +7,7 @@
                     :class="tab.value === activeTab && 'is-active'"
                     v-for="tab in tabs"
                     :key="tab.value"
-                    @click="activeTab = tab.value"
+                    @click="setActiveTab(tab.value)"
                 >
                     <img
                         :src="
@@ -72,6 +72,7 @@
                             class="u-effect-img"
                             :src="getEffectInfo(effects, floor.nEffectID)"
                             :alt="getEffectInfo(effects, floor.nEffectID, 'name')"
+                            @click.stop="toBuff(floor)"
                         />
                     </div>
                 </div>
@@ -89,7 +90,6 @@ export default {
     name: "BTabs",
     data() {
         return {
-            activeTab: "map",
             tabs: [
                 {
                     label: "百战地图",
@@ -115,6 +115,7 @@ export default {
             maps: (state) => state.baizhan.maps,
             currentBoss: (state) => state.baizhan.currentBoss,
             currentEffect: (state) => state.baizhan.currentEffect,
+            activeTab: (state) => state.baizhan.activeTab,
         }),
         activeBossId() {
             return this.currentBoss?.dwBossID || 0;
@@ -140,6 +141,12 @@ export default {
         },
     },
     methods: {
+        setActiveTab(tab) {
+            this.$store.commit("baizhan/setState", {
+                key: "activeTab",
+                val: tab,
+            });
+        },
         getEffectInfo,
         setEffect(effect) {
             let val = effect;
@@ -162,6 +169,12 @@ export default {
                     floor: i + 1,
                 }),
             });
+        },
+        toBuff(floor) {
+            window.open(
+                `https://jx3box.com/app/database/?type=buff&query=${floor.effect.buffID}&level=${floor.effect.buffLevel}`,
+                "_blank"
+            );
         },
     },
 };

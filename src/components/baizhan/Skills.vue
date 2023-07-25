@@ -88,32 +88,12 @@
             </el-table-column>
             <el-table-column prop="_remarks" label="备注"></el-table-column>
         </el-table>
-        <el-button
-            class="u-more"
-            v-show="hasNextPage"
-            type="primary"
-            @click="appendPage"
-            :loading="loading"
-            icon="el-icon-arrow-down"
-            >加载更多</el-button
-        >
-        <el-pagination
-            class="m-pages"
-            background
-            layout="total, prev, pager, next, jumper"
-            :hide-on-single-page="true"
-            :page-size="limit"
-            :total="total"
-            :current-page.sync="page"
-            @current-change="handleCurrentChange"
-        ></el-pagination>
         <SkillForm ref="editAddon" @update="handleUpdate($event)" @close="close" />
     </div>
 </template>
 
 <script>
-import { getSkills, getSkillInfo } from "@/service/baizhan";
-import { removeEmptyIncludeZero } from "@/utils";
+import { mapState } from "vuex";
 import SkillIcon from "./SkillIcon.vue";
 import SkillForm from "./SkillForm.vue";
 import User from "@jx3box/jx3box-common/js/user";
@@ -123,12 +103,6 @@ export default {
     components: {
         SkillIcon,
         SkillForm,
-    },
-    props: {
-        types: {
-            type: Object,
-            required: true,
-        },
     },
     data: () => ({
         loading: false,
@@ -149,18 +123,18 @@ export default {
         addon_key: ["cooldown", "damage", "cost_vigor", "cost_endurance", "hit_vigor", "hit_endurance", "remarks"],
     }),
     computed: {
+        ...mapState({
+            types: (state) => state.baizhan.types,
+            skillList: (state) => state.baizhan.skills,
+            skillExtraList: (state) => state.baizhan.skillExtraList,
+        }),
         params() {
             return {
-                cost: this.cost,
-                type: this.type,
                 color: this.color,
+                cost: this.cost,
+                // name: this.name,
+                type: this.type,
                 keyword: this.keyword,
-            };
-        },
-        query() {
-            return {
-                page: this.page,
-                limit: this.limit,
             };
         },
         colors() {
@@ -189,11 +163,28 @@ export default {
                 this.keyword = boss;
             },
         },
+        skillList: {
+            immediate: true,
+            deep: true,
+            handler(list) {
+                this.skills = list;
+            },
+        },
         params: {
             deep: true,
-            handler() {
-                this.page = 1;
-                this.load();
+            handler(params) {
+                const { color, cost, type, keyword } = params;
+                if (!color && !cost && !keyword && !type) {
+                    return (this.skills = this.skillList);
+                }
+                this.skills = this.skillList.filter((item) => {
+                    return (
+                        (!color || item.nColor === color) &&
+                        (!cost || item.nCost === cost) &&
+                        (!type || item.szType.includes(type)) &&
+                        (!keyword || item?.szBossName?.indexOf(keyword) > -1 || item?.szSkillName?.indexOf(keyword) > -1)
+                    );
+                });
             },
         },
     },
@@ -225,42 +216,10 @@ export default {
             const skill = this.skills.find((s) => s.dwInSkillID == skill_id);
             this.applyAddon(skill);
         },
-        load(isAppend = false) {
-            const params = removeEmptyIncludeZero(this.params);
-            const data = Object.assign(params, this.query);
-            this.loading = true;
-            getSkills(data)
-                .then((res) => {
-                    // 搜索技能
-                    let list = res.data?.data?.list || [];
-                    for (let item of list) {
-                        for (let key of this.addon_key) {
-                            this.$set(item, `_${key}`, undefined);
-                        }
-                    }
-                    if (isAppend) {
-                        this.skills = this.skills.concat(list);
-                    } else {
-                        this.skills = list;
-                    }
-                    this.total = res.data?.data?.total || 0;
-                    const ids = list.map((item) => item.dwInSkillID).join(",");
-                    return ids;
-                })
-                .then((ids) => {
-                    // 获取技能额外信息
-                    if (!ids) return;
-                    return getSkillInfo({ ids: ids });
-                })
-                .then((res) => {
-                    if (!res) return;
-                    const skillAddonList = res.data?.data || [];
-                    for (let addon of skillAddonList) this.addAddon(addon);
-                })
-                .finally(() => {
-                    this.loading = false;
-                    this.changeAllLevel(10);
-                });
+        load() {
+            const skillAddonList = this.skillExtraList;
+            for (let addon of skillAddonList) this.addAddon(addon);
+            this.changeAllLevel();
         },
         applyAllAddon() {
             for (let skill of this.skills) this.applyAddon(skill);
@@ -268,17 +227,10 @@ export default {
         applyAddon(skill) {
             const { dwInSkillID: skill_id, _select_level: level } = skill;
             const addon = this.skillAddon[skill_id]?.[level];
-            console.log(skill_id, level, addon);
+            // console.log(skill_id, level, addon);
             for (let key of this.addon_key) {
                 this.$set(skill, `_${key}`, addon?.[key]);
             }
-        },
-        handleCurrentChange() {
-            this.load();
-        },
-        appendPage() {
-            this.page++;
-            this.load(true);
         },
     },
     mounted() {

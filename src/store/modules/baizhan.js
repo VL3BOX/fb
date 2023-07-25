@@ -10,8 +10,10 @@ export default {
         types: {},
         bosses: [],
         skills: [],
+        skillExtraList: [],
         effects: [],
         maps: [],
+        activeTab: "map",
     },
     mutations: {
         setState(state, val) {
@@ -86,11 +88,17 @@ export default {
         },
         async loadSkills({ commit }) {
             const cache = sessionStorage.getItem(`baizhan-skills`);
-            if (cache) {
+            const extraCache = sessionStorage.getItem(`baizhan-skillExtraList`);
+            if (cache && extraCache) {
                 const data = JSON.parse(cache);
                 commit("setState", {
                     key: "skills",
                     val: data,
+                });
+                const extraData = JSON.parse(extraCache);
+                commit("setState", {
+                    key: "skillExtraList",
+                    val: extraData,
                 });
             } else {
                 await getSkills().then((res) => {
@@ -108,7 +116,12 @@ export default {
                             key: "skills",
                             val: newList,
                         });
+                        commit("setState", {
+                            key: "skillExtraList",
+                            val: skillExtraList,
+                        });
                         sessionStorage.setItem(`baizhan-skills`, JSON.stringify(newList));
+                        sessionStorage.setItem(`baizhan-skillExtraList`, JSON.stringify(skillExtraList));
                     });
                 });
             }
@@ -131,12 +144,15 @@ export default {
                         szDescription: "",
                         coin: 0,
                         sketch: "",
+                        buffID: 24848,
                     });
                     const effects = list.map((item) => {
                         return {
                             ...item,
                             coin: baizhanEffects.find((effect) => effect.nID === item.nID)?.coin || 0,
                             sketch: baizhanEffects.find((effect) => effect.nID === item.nID)?.sketch || "",
+                            buffID: baizhanEffects.find((effect) => effect.nID === item.nID)?.buffID || 24848,
+                            buffLevel: baizhanEffects.find((effect) => effect.nID === item.nID)?.buffLevel || 1,
                         };
                     });
                     commit("setState", {

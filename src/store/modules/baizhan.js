@@ -13,7 +13,7 @@ export default {
         skillExtraList: [],
         effects: [],
         maps: [],
-        activeTab: "map",
+        activeTab: "boss",
     },
     mutations: {
         setState(state, val) {
@@ -21,6 +21,16 @@ export default {
         },
     },
     actions: {
+        resetCurrent({ commit }) {
+            commit("setState", {
+                key: "currentBoss",
+                val: {},
+            });
+            commit("setState", {
+                key: "currentEffect",
+                val: [],
+            });
+        },
         async loadTypes({ commit }) {
             const cache = sessionStorage.getItem(`baizhan-types`);
             if (cache) {
@@ -45,15 +55,16 @@ export default {
                 });
             }
         },
-        async loadBosses({ commit }) {
+        async loadBosses({ commit, dispatch }, payLoad) {
             const cache = sessionStorage.getItem(`baizhan-bosses`);
-            if (cache) {
+            if (!payLoad?.isForce && cache) {
                 const data = JSON.parse(cache);
                 commit("setState", {
                     key: "bosses",
                     val: data,
                 });
             } else {
+                // 手动强制替换 或没有存storage
                 await getBosses().then((res) => {
                     let list = res.data?.data || [];
                     list = list.map((item) => {
@@ -82,6 +93,9 @@ export default {
                             val: bosses,
                         });
                         sessionStorage.setItem(`baizhan-bosses`, JSON.stringify(bosses));
+                        if (payLoad?.isForce) {
+                            dispatch("loadMap");
+                        }
                     });
                 });
             }

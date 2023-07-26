@@ -10,15 +10,24 @@
     height: 100vh;
     overflow-y: auto;
     .scrollbar(2px);
-    input {
-        background-color: @baizhan_tab_bg !important;
-        border-color: @baizhan_tab_bg !important;
-    }
     .m-search {
         .flex;
         gap: 10px;
+        input {
+            background-color: @baizhan_tab_bg !important;
+            border-color: @baizhan_tab_bg !important;
+            color: @baizhan_color;
+            &::placeholder {
+                color: #494949;
+            }
+        }
     }
     .m-table {
+        input {
+            background-color: @baizhan_tab_bg !important;
+            border-color: @baizhan_tab_bg !important;
+            color: @baizhan_color;
+        }
         .flex;
         flex-direction: column;
         flex: none;
@@ -37,7 +46,7 @@
                 background-color: @baizhan_bg !important;
                 border-bottom-color: @baizhan_tab_bg !important;
                 .cell {
-                    color: #c8c8c8;
+                    color: @baizhan_color;
                 }
             }
             &:hover {
@@ -61,7 +70,7 @@
             width: 150px;
             gap: 10px;
             padding: 0;
-            color: #c8c8c8;
+            color: @baizhan_color;
             .u-skill-icon {
                 .size(48px, 48px);
                 border: 2px solid transparent;

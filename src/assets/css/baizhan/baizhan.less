@@ -85,6 +85,7 @@
         transition: 0.2s ease-in;
         flex: 1;
         height: 100%;
+        width: calc(100% - 40px);
         &.is-phone {
             margin-left: 0;
             width: calc(100% - 40px);
@@ -93,6 +94,9 @@
     .isclose + .m-content {
         margin-left: 0;
         width: calc(100% - 40px);
+    }
+    .isopen + .m-content {
+        width: calc(100% - @baizhan_left - 40px);
     }
     .m-right {
         position: absolute;

@@ -7,6 +7,7 @@
             <div class="m-content" :class="isPhone() && 'is-phone'">
                 <BMap v-if="activeTab === 'map'"></BMap>
                 <Skills v-if="activeTab === 'skill'"></Skills>
+                <Bosses v-if="activeTab === 'boss'"></Bosses>
             </div>
             <div v-if="activeTab === 'map'" class="m-right">
                 <BInfo></BInfo>
@@ -20,6 +21,7 @@ import Skills from "@/components/baizhan/Skills.vue";
 import BMap from "@/components/baizhan/BMap.vue";
 import BTabs from "@/components/baizhan/BTabs.vue";
 import BInfo from "@/components/baizhan/BInfo.vue";
+import Bosses from "@/components/baizhan/Bosses.vue";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { isPhone } from "@/utils";
 import { mapState, mapActions } from "vuex";
@@ -33,6 +35,7 @@ export default {
         BTabs,
         BMap,
         BInfo,
+        Bosses,
     },
     data() {
         return {
@@ -69,10 +72,7 @@ export default {
     },
     watch: {
         activeTab() {
-            this.$store.commit("baizhan/setState", {
-                key: "currentBoss",
-                val: {},
-            });
+            this.resetCurrent();
         },
     },
     methods: {
@@ -82,6 +82,7 @@ export default {
             loadSkills: "baizhan/loadSkills",
             loadEffects: "baizhan/loadEffects",
             loadMap: "baizhan/loadMap",
+            resetCurrent: "baizhan/resetCurrent",
         }),
         isPhone,
         load() {

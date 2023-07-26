@@ -31,7 +31,7 @@
 
 <script>
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
-import { getSkill } from "@/service/baizhan.js";
+// import { getSkill } from "@/service/baizhan.js";
 import Jx3Skill from "./Skill.vue";
 export default {
     name: "SkillIcon",
@@ -49,27 +49,28 @@ export default {
             immediate: true,
             deep: true,
             handler(source) {
-                let { client, id, level } = this.params;
-                // 读取本地数据
-                const cache = sessionStorage.getItem(`skill-${client}-${id}-${level}`);
-                if (cache) {
-                    this.data = JSON.parse(cache);
-                    // 没有缓存则发起请求获取数据
-                } else {
-                    const data = source?.InSkill || {};
-                    if (data.IconID) {
-                        // 将数据放入 sessionStorage
-                        sessionStorage.setItem(`skill-${client}-${id}-${level}`, JSON.stringify(data));
-                    } else {
-                        id &&
-                            getSkill(this.params).then((res) => {
-                                let newData = res.data?.list?.[0] || {};
-                                this.data = newData;
-                                // 将数据放入 sessionStorage
-                                sessionStorage.setItem(`skill-${client}-${id}-${level}`, JSON.stringify(newData));
-                            });
-                    }
-                }
+                this.data = source.Skill;
+                // let { client, id, level } = this.params;
+                // // 读取本地数据
+                // const cache = sessionStorage.getItem(`skill-${client}-${id}-${level}`);
+                // if (cache) {
+                //     this.data = JSON.parse(cache);
+                //     // 没有缓存则发起请求获取数据
+                // } else {
+                //     const data = source?.InSkill || {};
+                //     if (data.IconID) {
+                //         // 将数据放入 sessionStorage
+                //         sessionStorage.setItem(`skill-${client}-${id}-${level}`, JSON.stringify(data));
+                //     } else {
+                //         id &&
+                //             getSkill(this.params).then((res) => {
+                //                 let newData = res.data?.list?.[0] || {};
+                //                 this.data = newData;
+                //                 // 将数据放入 sessionStorage
+                //                 sessionStorage.setItem(`skill-${client}-${id}-${level}`, JSON.stringify(newData));
+                //             });
+                //     }
+                // }
             },
         },
     },

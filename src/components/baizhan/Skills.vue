@@ -88,7 +88,7 @@
             </el-table-column>
             <el-table-column prop="_remarks" label="备注"></el-table-column>
         </el-table>
-        <SkillForm ref="editAddon" @update="handleUpdate($event)" @close="close" />
+        <SkillForm ref="editAddon" :staged="staged" @update="handleUpdate($event)" @close="close" />
     </div>
 </template>
 
@@ -97,6 +97,8 @@ import { mapState } from "vuex";
 import SkillIcon from "./SkillIcon.vue";
 import SkillForm from "./SkillForm.vue";
 import User from "@jx3box/jx3box-common/js/user";
+
+import { getAppID } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Skills",
     inject: ["__imgRoot"],
@@ -105,10 +107,12 @@ export default {
         SkillForm,
     },
     data: () => ({
+        id: getAppID(),
         loading: false,
         skills: [],
         skillAddon: {},
         allLevel: 5,
+        staged: {},
 
         cost: 0, // 技能占用点数
         type: 0, // 技能类型
@@ -116,9 +120,6 @@ export default {
         boss: "", // 技能所属BOSS 模糊查询
         name: "", // 技能名称 模糊查询
         keyword: "",
-        page: 1,
-        limit: 30,
-        total: 0,
 
         addon_key: ["cooldown", "damage", "cost_vigor", "cost_endurance", "hit_vigor", "hit_endurance", "remarks"],
     }),
@@ -127,6 +128,7 @@ export default {
             types: (state) => state.baizhan.types,
             skillList: (state) => state.baizhan.skills,
             skillExtraList: (state) => state.baizhan.skillExtraList,
+            currentBoss: (state) => state.baizhan.currentBoss,
         }),
         params() {
             return {
@@ -146,21 +148,15 @@ export default {
         szTypes() {
             return this.types.szTypes;
         },
-        hasNextPage() {
-            return this.page < this.total / this.limit;
-        },
-        currentBoss() {
-            return this.$store.state.baizhanBoss;
-        },
         isEditor: function () {
             return User.isEditor();
         },
     },
     watch: {
         currentBoss: {
-            immediate: true,
+            deep: true,
             handler(boss) {
-                this.keyword = boss;
+                this.keyword = boss.bossName;
             },
         },
         skillList: {
@@ -182,7 +178,9 @@ export default {
                         (!color || item.nColor === color) &&
                         (!cost || item.nCost === cost) &&
                         (!type || item.szType.includes(type)) &&
-                        (!keyword || item?.szBossName?.indexOf(keyword) > -1 || item?.szSkillName?.indexOf(keyword) > -1)
+                        (!keyword ||
+                            item?.szBossName?.indexOf(keyword) > -1 ||
+                            item?.szSkillName?.indexOf(keyword) > -1)
                     );
                 });
             },
@@ -195,6 +193,7 @@ export default {
             this.applyAllAddon();
         },
         toEdit(item) {
+            this.staged = item;
             const { dwInSkillID: skill_id, _select_level: level } = item;
             const addon = this.skillAddon[skill_id]?.[level];
             this.$refs["editAddon"].open(addon ?? { skill_id: skill_id });
@@ -214,7 +213,22 @@ export default {
             this.addAddon(data);
             const { skill_id } = data;
             const skill = this.skills.find((s) => s.dwInSkillID == skill_id);
+            skill.extra = {
+                ...skill.extra,
+                ...data,
+            };
             this.applyAddon(skill);
+            sessionStorage.setItem(`baizhan-skills`, JSON.stringify(this.skills));
+            const skillExtraList = this.skillExtraList.map((item) => {
+                if (item.skill_id === skill_id) {
+                    item = {
+                        ...item,
+                        ...data,
+                    };
+                }
+                return item;
+            });
+            sessionStorage.setItem(`baizhan-skillExtraList`, JSON.stringify(skillExtraList));
         },
         load() {
             const skillAddonList = this.skillExtraList;

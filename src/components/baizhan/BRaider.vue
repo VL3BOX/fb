@@ -1,0 +1,188 @@
+<template>
+    <div class="m-raiders">
+        <div class="u-header">
+            <div class="u-title">百战攻略</div>
+            <el-input placeholder="请输入搜索内容" v-model.trim.lazy="search" clearable></el-input>
+        </div>
+        <div class="m-archive-list" v-if="data && data.length">
+            <ul class="u-list">
+                <list-item
+                    v-for="(item, i) in data"
+                    :key="i + item"
+                    :item="item"
+                    :order="order"
+                    :reporter="{ aggregate, client }"
+                />
+            </ul>
+        </div>
+        <!-- 空 -->
+        <el-alert
+            v-else
+            effect="dark"
+            class="m-archive-null"
+            title="没有找到相关条目"
+            type="info"
+            center
+            show-icon
+        ></el-alert>
+
+        <!-- 下一页 -->
+        <el-button
+            class="m-archive-more"
+            v-show="hasNextPage"
+            type="primary"
+            @click="appendPage"
+            :loading="loading"
+            icon="el-icon-arrow-down"
+        >
+            加载更多
+        </el-button>
+
+        <!-- 分页 -->
+        <el-pagination
+            class="m-archive-pages"
+            background
+            layout="total, prev, pager, next, jumper"
+            :hide-on-single-page="true"
+            :page-size="per"
+            :total="total"
+            :current-page.sync="page"
+            @current-change="changePage"
+        ></el-pagination>
+    </div>
+</template>
+
+<script>
+import { appKey } from "@/../setting.json";
+import listItem from "@/components/list/list_item.vue";
+import { getPosts } from "@/service/post";
+export default {
+    name: "BRaiders",
+    props: {
+        topic: {
+            type: String,
+            default: "",
+        },
+    },
+    components: {
+        listItem,
+    },
+    data() {
+        return {
+            loading: false, //加载状态
+            data: [], //数据列表
+
+            search: "", //搜索字串
+            order: "update",
+            subtype: "百战异闻录",
+            client: "std",
+
+            page: 1, //当前页数
+            per: 10, //每页条目
+            total: 1, //总条目数
+            pages: 1, //总页数
+        };
+    },
+    computed: {
+        hasNextPage() {
+            return this.pages > 1 && this.page < this.total;
+        },
+        query() {
+            return {
+                subtype: this.subtype,
+                order: this.order,
+                client: this.client,
+                topic: this.topic,
+            };
+        },
+        pageQuery() {
+            return {
+                page: this.page,
+                per: this.per,
+            };
+        },
+        aggregate() {
+            return this.data.map((item) => this.postLink(item.ID));
+        },
+    },
+    watch: {
+        topic: {
+            handler() {
+                this.page = 1;
+                this.loadData();
+            },
+        },
+        search: {
+            handler() {
+                this.page = 1;
+                this.loadData();
+            },
+        },
+    },
+    methods: {
+        postLink: function (val) {
+            return `/${appKey}/` + val;
+        },
+        // 构建最终请求参数
+        buildQuery: function (appendMode) {
+            if (appendMode) {
+                this.page += 1;
+            }
+            let _query = {
+                per: this.per,
+                page: this.page,
+            };
+
+            for (let key in this.query) {
+                if (this.query[key] !== undefined && this.query[key] !== "" && this.query[key] !== null) {
+                    if (key == "search") {
+                        _query.search = this.query.search.trim();
+                    } else {
+                        _query[key] = this.query[key];
+                    }
+                }
+            }
+            // 当指定子类别时启用置顶
+            if (_query.subtype) {
+                _query.sticky = 1;
+            }
+
+            if (this.search) {
+                _query.search = this.search.trim();
+            }
+
+            return _query;
+        },
+        loadData(appendMode = false) {
+            let query = this.buildQuery(appendMode);
+            this.loading = true;
+            return getPosts(query)
+                .then((res) => {
+                    if (appendMode) {
+                        this.data = this.data.concat(res.data?.data?.list);
+                    } else {
+                        this.data = res.data?.data?.list;
+                    }
+                    this.total = res.data?.data?.total;
+                    this.pages = res.data?.data?.pages;
+                    this.$forceUpdate();
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
+        // 翻页加载
+        changePage: function (i) {
+            this.loadData();
+            this.replaceRoute({ page: i });
+        },
+        // 追加加载
+        appendPage: function () {
+            this.loadData(true);
+        },
+    },
+    mounted() {
+        this.loadData();
+    },
+};
+</script>

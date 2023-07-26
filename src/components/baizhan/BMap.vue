@@ -310,14 +310,8 @@ export default {
             new Promise((resolve) => {
                 map.style.transform = `translate(${this.position.x}px, ${this.position.y}px) scale(${this.scale})`;
 
-                this.$store.commit("baizhan/setState", {
-                    key: "currentBoss",
-                    val: {},
-                });
-                this.$store.commit("baizhan/setState", {
-                    key: "currentEffect",
-                    val: {},
-                });
+                this.$store.dispatch("baizhan/resetCurrent");
+
                 resolve(true);
             }).then(() => {
                 this.loading = true;

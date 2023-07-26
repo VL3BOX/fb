@@ -21,7 +21,7 @@
                     <div class="u-name">{{ tab.label }}</div>
                 </div>
             </div>
-            <div v-if="activeTab === 'map'" class="u-map-time">{{ startDate }} ~ {{ endDate }}</div>
+            <div class="u-map-time">{{ startDate }} ~ {{ endDate }}</div>
         </div>
         <div class="m-search">
             <div class="u-header">

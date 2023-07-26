@@ -1,5 +1,5 @@
 <template>
-    <el-dialog class="m-skill-dialog" :visible.sync="show" title="百战技能数据维护" :before-close="close">
+    <el-dialog class="m-skill-dialog" :visible.sync="show" :title="title" :before-close="close">
         <el-form class="m-skill-form" ref="form" :model="form" :rules="rules" label-width="100px">
             <el-form-item label="技能等级" prop="level">
                 <el-select v-model="form.level" placeholder="请选择技能重数" style="width: 100%">
@@ -46,7 +46,6 @@
 </template>
 <script>
 import { addSkillInfo } from "@/service/baizhan";
-import { removeEmptyIncludeZero } from "@/utils";
 import { cloneDeep } from "lodash";
 
 const form = {
@@ -73,11 +72,11 @@ export default {
         rules: {},
     }),
     computed: {
-        title() {
-            return "百战技能编辑";
-        },
         maxLevel() {
             return ~~this.staged?.InSkill?.MaxLevel || 5;
+        },
+        title() {
+            return `百战技能数据维护/${this.staged.szSkillName}/${this.staged.szBossName}`;
         },
     },
     watch: {

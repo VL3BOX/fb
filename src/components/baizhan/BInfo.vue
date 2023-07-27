@@ -56,6 +56,7 @@
 <script>
 import { mapState } from "vuex";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
+import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "BInfo",
     computed: {
@@ -84,13 +85,13 @@ export default {
     },
     methods: {
         getUrl(id) {
-            return `https://jx3box.com/app/database/?type=skill&query=${id}`;
+            const domain = process.env.NODE_ENV === "development" ? __Root : location.origin + "/";
+            return domain + `app/database/?type=skill&query=${id}`;
         },
         toBuff(floor) {
-            window.open(
-                `https://jx3box.com/app/database/?type=buff&query=${floor.effect.buffID}&level=${floor.effect.buffLevel}`,
-                "_blank"
-            );
+            const domain = process.env.NODE_ENV === "development" ? __Root : location.origin + "/";
+            const url = domain + `app/database/?type=buff&query=${floor.effect.buffID}&level=${floor.effect.buffLevel}`;
+            window.open(url, "_blank");
         },
     },
 };

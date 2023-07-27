@@ -33,6 +33,7 @@
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 // import { getSkill } from "@/service/baizhan.js";
 import Jx3Skill from "./Skill.vue";
+import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "SkillIcon",
     props: {
@@ -97,7 +98,9 @@ export default {
     methods: {
         iconLink,
         getUrl(id) {
-            window.open(`https://jx3box.com/app/database/?type=skill&query=${id}`, "_blank");
+            const domain = process.env.NODE_ENV === "development" ? __Root : location.origin + "/";
+            const url = domain + `app/database/?type=skill&query=${id}`;
+            window.open(url, "_blank");
         },
     },
 };

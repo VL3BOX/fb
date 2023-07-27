@@ -85,6 +85,7 @@
 import { getWeekStartDate, getWeekEndDate } from "@/utils/dateFormat";
 import { effectsFilter } from "@/assets/data/baizhan_effects.js";
 import { getEffectInfo } from "@/assets/js/baizhan";
+import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 import { mapState } from "vuex";
 export default {
     name: "BTabs",
@@ -171,10 +172,9 @@ export default {
             });
         },
         toBuff(floor) {
-            window.open(
-                `https://jx3box.com/app/database/?type=buff&query=${floor.effect.buffID}&level=${floor.effect.buffLevel}`,
-                "_blank"
-            );
+            const domain = process.env.NODE_ENV === "development" ? __Root : location.origin + "/";
+            const url = domain + `app/database/?type=buff&query=${floor.effect.buffID}&level=${floor.effect.buffLevel}`;
+            window.open(url, "_blank");
         },
     },
 };

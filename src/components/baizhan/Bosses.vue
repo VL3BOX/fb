@@ -58,6 +58,12 @@ export default {
             handler(query) {
                 const { topic } = query;
                 this.topic = topic === "全部" ? "" : topic;
+                if (topic === "全部" || !topic) {
+                    this.$store.commit("baizhan/setState", {
+                        key: "currentBoss",
+                        val: {},
+                    });
+                }
             },
         },
         bosses: {
@@ -89,6 +95,10 @@ export default {
                         };
                     });
             },
+        },
+        currentBoss(boss) {
+            const { bossName } = boss;
+            this.setBoss({ name: bossName });
         },
     },
     methods: {

@@ -87,13 +87,120 @@
             .m-boss-info {
                 background-color: @baizhan_tab_bg;
                 width: 100%;
-                height: 200px;
+                min-height: 200px;
                 border-radius: 10px;
                 padding: 10px;
                 box-sizing: border-box;
+                .u-header {
+                    .flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    a {
+                        cursor: pointer;
+                    }
+                    .u-btn {
+                        .flex;
+                        gap: 10px;
+                    }
+                }
                 .u-skills {
                     .flex;
                     gap: 10px;
+                    .u-skill-item {
+                        position: relative;
+                        &.is-active {
+                            &::after {
+                                position: absolute;
+                                top: -15px;
+                                left: 0;
+                                width: 100%;
+                                text-align: center;
+                                height: 1px;
+                                content: "◈";
+                                font-size: 14px;
+                                display: block;
+                                color: @baizhan_active;
+                            }
+                        }
+                    }
+                    .u-skill {
+                        .size(47px, 47px);
+                        border-radius: 5px;
+                        overflow: hidden;
+                        box-sizing: border-box;
+                        img {
+                            transform: scale(1.15);
+                            cursor: pointer;
+                        }
+                    }
+                }
+                .u-bottom {
+                    .flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    margin-top: 10px;
+                    padding: 10px;
+                    border-radius: 10px;
+                    min-height: 120px;
+                    box-sizing: border-box;
+                    background-image: linear-gradient(to right, @baizhan_bg, @baizhan_tab_bg);
+                    border: 2px solid @baizhan_bg;
+                    &.u-skill-bg__1 {
+                        // 白色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_1, 0.5));
+                        border: 2px solid @skill_1;
+                    }
+                    &.u-skill-bg__2 {
+                        // 黄色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_2, 0.5));
+                        border: 2px solid @skill_2;
+                    }
+                    &.u-skill-bg__3 {
+                        // 蓝色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_3, 0.5));
+                        border: 2px solid @skill_3;
+                    }
+                    &.u-skill-bg__4 {
+                        // 绿色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_4, 0.5));
+                        border: 2px solid @skill_4;
+                    }
+                    &.u-skill-bg__5 {
+                        // 红色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_5, 0.5));
+                        border: 2px solid @skill_5;
+                    }
+                    &.u-skill-bg__6 {
+                        // 紫色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_6, 0.5));
+                        border: 2px solid @skill_6;
+                    }
+                    &.u-skill-bg__7 {
+                        // 黑色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_7, 0.5));
+                        border: 2px solid @skill_7;
+                    }
+                    .u-name {
+                        .flex;
+                        align-items: flex-end;
+                        gap: 10px;
+                        font-weight: bold;
+                        a {
+                            color: @baizhan_color;
+                            &:hover {
+                                color: #0366d6;
+                            }
+                        }
+                    }
+                    .u-id {
+                        .flex;
+                        align-items: flex-end;
+                        cursor: pointer;
+                        font-size: 12px;
+                    }
+                    .u-desc {
+                        font-size: 12px;
+                    }
                 }
             }
         }

@@ -3,6 +3,7 @@
         <div class="u-header">
             <div class="u-title">百战攻略</div>
             <el-input placeholder="请输入搜索内容" v-model.trim.lazy="search" clearable></el-input>
+            <a class="u-publish el-button el-button--primary" target="_blank" :href="publish_link">+ 发布攻略</a>
         </div>
         <div class="m-archive-list" v-if="data && data.length">
             <ul class="u-list">
@@ -55,6 +56,7 @@
 <script>
 import { appKey } from "@/../setting.json";
 import listItem from "@/components/list/list_item.vue";
+import { publishLink } from "@jx3box/jx3box-common/js/utils";
 import { getPosts } from "@/service/post";
 export default {
     name: "BRaiders",
@@ -84,6 +86,10 @@ export default {
         };
     },
     computed: {
+        // 发布按钮链接
+        publish_link: function () {
+            return publishLink(appKey);
+        },
         hasNextPage() {
             return this.pages > 1 && this.page < this.total;
         },

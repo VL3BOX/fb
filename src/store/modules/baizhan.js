@@ -13,7 +13,7 @@ export default {
         skillExtraList: [],
         effects: [],
         maps: [],
-        activeTab: "boss",
+        activeTab: "map",
     },
     mutations: {
         setState(state, val) {

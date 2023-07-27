@@ -8,6 +8,7 @@
         @mouseup="stopDrag"
         @mouseleave="stopDrag"
     >
+        <el-button class="u-phone-download" icon="el-icon-download" @click="exportToImage">下载</el-button>
         <div
             class="m-boss-list"
             ref="map"
@@ -171,6 +172,7 @@ export default {
         // },
     },
     methods: {
+        isPhone,
         startDrag(event) {
             this.isDragging = true;
             this.startPosition.x = event.clientX;
@@ -429,6 +431,11 @@ export default {
                 };
             });
         },
+    },
+    mounted() {
+        if (this.isPhone()) {
+            this.scale = 0.35;
+        }
     },
     beforeDestroy() {
         window.removeEventListener("wheel", this.handleScroll);

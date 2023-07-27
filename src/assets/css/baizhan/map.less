@@ -6,6 +6,19 @@
     width: 100%;
     height: 100%;
     margin-top: -30px;
+    .u-phone-download {
+        .none;
+    }
+    @media screen and (max-width: @phone) {
+        flex-direction: column;
+        align-items: center;
+        .u-phone-download {
+            position: absolute;
+            top: 0;
+            .db;
+            width: 80%;
+        }
+    }
     .m-boss-list {
         position: relative;
         box-sizing: border-box;

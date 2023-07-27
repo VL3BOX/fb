@@ -1,0 +1,169 @@
+.m-tabs {
+    position: relative;
+    padding-left: 20px;
+    .flex;
+    flex-direction: column;
+    gap: 30px;
+    overflow: hidden;
+    .scrollbar(2px);
+    & > div {
+        padding: 20px;
+        box-sizing: border-box;
+        width: 312px;
+        background-color: @baizhan_tab_bg;
+        border-radius: 10px;
+        // &.m-tab-wrap {
+        //     height: 196px;
+        // }
+    }
+    .u-tab-list {
+        .flex;
+        gap: 10px;
+        .u-tab {
+            width: 84px;
+            height: 115px;
+            color: @baizhan_active;
+            user-select: none;
+            cursor: pointer;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            .flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            &.is-active {
+                color: #fff;
+                background-color: @baizhan_active;
+            }
+        }
+    }
+    .u-map-time {
+        margin-top: 20px;
+        color: #fff;
+        font-weight: bold;
+    }
+    .m-search {
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: calc(100vh - 400px);
+        .scrollbar(2px, #666);
+        .u-header {
+            .flex;
+            align-items: center;
+            gap: 8px;
+            h2 {
+                margin: 0;
+                font-size: 16px;
+                color: @baizhan_color;
+            }
+        }
+        .m-effects {
+            .u-title {
+                position: relative;
+                margin: 20px 0;
+                color: #f9f7e84d;
+                &::after {
+                    right: 0;
+                    top: 50%;
+                    position: absolute;
+                    display: block;
+                    width: 200px;
+                    height: 1px;
+                    background-color: #f9f7e84d;
+                    content: "";
+                }
+            }
+            .u-effect-list {
+                .flex;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+            .u-effect {
+                .flex;
+                align-items: center;
+                cursor: pointer;
+                gap: 5px;
+                width: 33%;
+                padding: 5px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                span {
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: @baizhan_color;
+                }
+                &.is-active,
+                &:hover {
+                    background-color: @baizhan_active;
+                }
+            }
+        }
+        .m-tab-bosses {
+            .u-title {
+                position: relative;
+                margin: 20px 0;
+                color: #f9f7e84d;
+                &::after {
+                    right: 0;
+                    top: 50%;
+                    position: absolute;
+                    display: block;
+                    width: 200px;
+                    height: 1px;
+                    background-color: #f9f7e84d;
+                    content: "";
+                }
+            }
+            .u-boss-list {
+                .flex;
+                flex-direction: column;
+                width: 100%;
+            }
+            .u-tab-boss {
+                position: relative;
+                .flex;
+                align-items: center;
+                cursor: pointer;
+                gap: 8px;
+                width: 100%;
+                padding: 5px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                .u-avatar {
+                    width: 36px;
+                    height: 36px;
+                }
+                .u-effect-img {
+                    width: 20px;
+                    height: 20px;
+
+                    position: absolute;
+                    right: 5px;
+                }
+                .u-link {
+                    color: @baizhan_color;
+                    &:hover {
+                        color: #0366d6;
+                    }
+                }
+                .u-index {
+                    .dbi;
+                    width: 20px;
+                    font-size: 14px;
+                    color: @baizhan_color;
+                }
+                span {
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: @baizhan_color;
+                }
+                &.is-active,
+                &:hover {
+                    background-color: @baizhan_active;
+                }
+            }
+        }
+    }
+}

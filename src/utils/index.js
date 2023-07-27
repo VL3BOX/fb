@@ -20,6 +20,14 @@ export function isPhone() {
     return mobile !== null;
 }
 
+export function isWeChat() {
+    return /MicroMessenger/i.test(navigator.userAgent);
+}
+
+export function isQQ() {
+    return /QQ/i.test(navigator.userAgent);
+}
+
 export function arr1to2(arr, number) {
     const arr2 = [];
     let len = arr.length;

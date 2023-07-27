@@ -2,15 +2,59 @@
     flex: 1;
     .flex;
     flex-direction: column;
+    gap: 10px;
+    background-color: @baizhan_bg;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100vh;
+    overflow-y: auto;
+    .scrollbar(2px);
     .m-search {
-        padding: 20px 0;
         .flex;
         gap: 10px;
+        input {
+            background-color: @baizhan_tab_bg !important;
+            border-color: @baizhan_tab_bg !important;
+            color: @baizhan_color;
+            &::placeholder {
+                color: #494949;
+            }
+        }
     }
     .m-table {
+        input {
+            background-color: @baizhan_tab_bg !important;
+            border-color: @baizhan_tab_bg !important;
+            color: @baizhan_color;
+        }
         .flex;
         flex-direction: column;
-        min-width: 1200px;
+        flex: none;
+        // min-width: 1200px;
+        margin-bottom: 200px;
+        &::before {
+            background-color: transparent;
+        }
+        .is-scrolling-none {
+            background-color: @baizhan_bg !important;
+        }
+        tr {
+            background-color: @baizhan_bg;
+            th,
+            td {
+                background-color: @baizhan_bg !important;
+                border-bottom-color: @baizhan_tab_bg !important;
+                .cell {
+                    color: @baizhan_color;
+                }
+            }
+            &:hover {
+                td {
+                    background-color: @baizhan_tab_bg !important;
+                }
+            }
+        }
         .u-skill-cell {
             display: flex;
             align-items: center;
@@ -26,6 +70,7 @@
             width: 150px;
             gap: 10px;
             padding: 0;
+            color: @baizhan_color;
             .u-skill-icon {
                 .size(48px, 48px);
                 border: 2px solid transparent;
@@ -37,35 +82,36 @@
                 align-items: center;
                 &.u-skill-icon__1 {
                     // 白色
-                    border-color: @skill_white;
+                    border-color: @skill_1;
                 }
                 &.u-skill-icon__2 {
                     // 黄色
-                    border-color: @skill_yellow;
+                    border-color: @skill_2;
                 }
                 &.u-skill-icon__3 {
                     // 蓝色
-                    border-color: @skill_blue;
+                    border-color: @skill_3;
                 }
                 &.u-skill-icon__4 {
                     // 绿色
-                    border-color: @skill_green;
+                    border-color: @skill_4;
                 }
                 &.u-skill-icon__5 {
                     // 红色
-                    border-color: @skill_red;
+                    border-color: @skill_5;
                 }
                 &.u-skill-icon__6 {
                     // 紫色
-                    border-color: @skill_purple;
+                    border-color: @skill_6;
                 }
                 &.u-skill-icon__7 {
                     // 黑色
-                    border-color: @skill_black;
+                    border-color: @skill_7;
                 }
                 img {
                     .size(100%, 100%);
                     transform: scale(1.15);
+                    cursor: pointer;
                 }
             }
             .u-skill-popover {
@@ -94,18 +140,12 @@
             color: #0087d4;
             .bold;
         }
-        .u-more {
-            margin-top: 20px;
-        }
-        .m-pages {
-            margin-top: 20px;
-            text-align: center;
-        }
         .u-level-select-header {
             display: flex;
             align-items: center;
             padding: 0;
-            .el-select, .el-input {
+            .el-select,
+            .el-input {
                 padding: 0;
             }
         }
@@ -116,38 +156,38 @@
     padding: 2px;
     &.u-skill__popup__1 {
         // 白色
-        background: @skill_white;
-        border-color: @skill_white;
+        background: @skill_1;
+        border-color: @skill_1;
     }
     &.u-skill__popup__2 {
         // 黄色
-        background: @skill_yellow;
-        border-color: @skill_yellow;
+        background: @skill_2;
+        border-color: @skill_2;
     }
     &.u-skill__popup__3 {
         // 蓝色
-        background: @skill_blue;
-        border-color: @skill_blue;
+        background: @skill_3;
+        border-color: @skill_3;
     }
     &.u-skill__popup__4 {
         // 绿色
-        background: @skill_green;
-        border-color: @skill_green;
+        background: @skill_4;
+        border-color: @skill_4;
     }
     &.u-skill__popup__5 {
         // 红色
-        background: @skill_red;
-        border-color: @skill_red;
+        background: @skill_5;
+        border-color: @skill_5;
     }
     &.u-skill__popup__6 {
         // 紫色
-        background: @skill_purple;
-        border-color: @skill_purple;
+        background: @skill_6;
+        border-color: @skill_6;
     }
     &.u-skill__popup__7 {
         // 黑色
-        background: @skill_black;
-        border-color: @skill_black;
+        background: @skill_7;
+        border-color: @skill_7;
     }
 }
 

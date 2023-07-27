@@ -1,152 +1,88 @@
 <template>
-    <div class="p-map" v-loading="loading">
-        <div class="m-left">
-            <div class="m-title">
-                <div class="u-title"></div>
-                <div class="u-date">
-                    <div class="u-time">{{ startDate }}</div>
-                    <div>|</div>
-                    <div class="u-time">{{ endDate }}</div>
-                </div>
-                <div class="u-btns">
-                    <el-button @click="visible = true">往期地图</el-button>
-                    <el-button v-if="isEditor" @click="toSetLastData">应用上次数据</el-button>
-                    <el-button
-                        class="u-edit"
-                        v-if="isEditor"
-                        :icon="!editStatus ? 'el-icon-edit-outline' : ''"
-                        :loading="btnLoading"
-                        @click="toOperate"
-                        >{{ editStatus ? "立即上传" : "编辑" }}</el-button
-                    >
-                </div>
-            </div>
-            <div class="m-boss-list">
-                <div class="u-step" v-for="(item, step) in list" :key="step">
-                    <div
-                        class="u-floor"
-                        :class="[
-                            activeFloor === step * 10 + index + 1 ? 'is-active' : '',
-                            currentBoss === floor.boss ? 'is-current' : '',
-                        ]"
-                        v-for="(floor, index) in item"
-                        :key="index"
-                        @click="setFloor(step * 10 + index + 1)"
-                    >
-                        <div class="u-img">
-                            <img :src="getBossAvatar(floor.boss)" :alt="floor.boss || '未知'" />
-                        </div>
-
-                        <div class="u-index" :class="floor.effect && 'u-effect'">
+    <div
+        class="p-map"
+        v-loading="loading"
+        ref="container"
+        @mousedown="startDrag"
+        @mousemove="drag"
+        @mouseup="stopDrag"
+        @mouseleave="stopDrag"
+    >
+        <div
+            class="m-boss-list"
+            ref="map"
+            :style="{ transform: `translate(${position.x}px, ${position.y}px) scale(${scale})` }"
+            @click="preventClick"
+        >
+            <el-button class="u-download" icon="el-icon-download" @click="exportToImage"></el-button>
+            <div class="u-step" v-for="(item, step) in list" :key="step">
+                <!-- activeFloor === step * 10 + index + 1 ? 'is-active' : '', -->
+                <div
+                    class="u-floor"
+                    :class="[
+                        hasCurrent ? 'is-gray' : '',
+                        floor.nEffectID ? 'is-effect' : '',
+                        currentBoss.dwBossID === floor.dwBossID || currentEffectIds.includes(floor.nEffectID)
+                            ? 'is-current'
+                            : '',
+                    ]"
+                    v-for="(floor, index) in item"
+                    :key="index"
+                    @click.prevent="setBoss(floor, step * 10 + index + 1)"
+                >
+                    <div class="u-floor-content">
+                        <div class="u-index" :class="floor.nEffectID && 'u-effect'">
                             {{ step * 10 + index + 1 }}
                         </div>
-                        <div class="u-icon">
-                            <img :src="getEffectInfo(floor.effect)" />
+                        <div class="u-img">
+                            <img :src="getBossAvatar(floor.dwBossID)" :alt="floor.bossName || '未知'" />
                         </div>
-                        <div class="u-name" :class="currentBoss === floor.boss && 'is-current'">{{ floor.boss }}</div>
+                        <div class="u-name" :class="currentBoss === floor.bossName && 'is-current'">
+                            {{ floor.bossName }}
+                        </div>
+                        <div class="u-desc">
+                            <div v-if="getEffectInfo(effects, floor.nEffectID, 'sketch').length" class="u-sketch">
+                                <div
+                                    class="u-sketch-info"
+                                    v-for="(sketch, si) in getEffectInfo(effects, floor.nEffectID, 'sketch')"
+                                    :key="si"
+                                >
+                                    {{ sketch }}
+                                </div>
+                            </div>
+                            <div v-if="getEffectInfo(effects, floor.nEffectID, 'coin')" class="u-coin">
+                                <img class="u-coin-img" src="@/assets/img/baizhan/coin.svg" svg-inline />
+                                <span>{{ getEffectInfo(effects, floor.nEffectID, "coin") }}</span>
+                            </div>
+                        </div>
+                        <div v-if="floor.nEffectID" class="u-icon">
+                            <img :src="getEffectInfo(effects, floor.nEffectID)" />
+                        </div>
                     </div>
+                    <i class="u-current-icon el-icon-arrow-up"></i>
+                    <i class="u-current-icon el-icon-arrow-down"></i>
                 </div>
             </div>
         </div>
-        <div class="m-right">
-            <div v-if="editStatus" class="m-edit-wrap">
-                <div class="m-header">
-                    <div class="u-title">{{ activeFloor }}</div>
-                </div>
-                <div class="m-form">
-                    <el-select v-model="currentFloor.level" disabled placeholder="请选择BOSS级别">
-                        <el-option v-for="level in step" :key="level" :value="level" :label="`${level}阶`"></el-option>
-                    </el-select>
-                    <el-select v-model="currentFloor.boss" placeholder="请选择BOSS">
-                        <el-option v-for="boss in bosses" :key="boss.name" :value="boss.name" :label="boss.name">
-                            <div class="u-effect-option">
-                                <img :src="boss.avatar" :alt="boss.name" />
-                                <span>{{ boss.name }}</span>
-                            </div>
-                        </el-option>
-                    </el-select>
-                    <el-select v-model="currentFloor.effect" placeholder="请选择层数效果">
-                        <el-option
-                            v-for="effect in effects"
-                            :key="effect.nID"
-                            :value="effect.nID"
-                            :label="effect.szName"
-                        >
-                            <div class="u-effect-option">
-                                <img :src="iconLink(effect.dwIconID)" :alt="effect.szName" />
-                                <span>{{ effect.szName }}</span>
-                            </div>
-                        </el-option>
-                    </el-select>
-                    <div class="u-btns">
-                        <el-button @click="save">保存</el-button>
-                        <el-button @click="editStatus = false">返回</el-button>
-                        <el-button @click="switchFloor(-1)">上一层</el-button>
-                        <el-button @click="switchFloor(1)">下一层</el-button>
-                    </div>
-                </div>
-            </div>
-            <div v-else class="m-show-wrap">
-                <div class="m-header">
-                    <div class="u-title">{{ activeFloor }}</div>
-                    <div class="u-boss-name">{{ currentFloor.boss || "未知" }}</div>
-                    <div class="u-avatar">
-                        <img :src="getBossAvatar(currentFloor.boss)" :alt="currentFloor.boss || '未知'" />
-                    </div>
-                    <template v-if="currentFloor.effect">
-                        <div class="u-effect-icon">
-                            <img :src="getEffectInfo(currentFloor.effect)" />
-                        </div>
-                        <div class="u-effect-info">
-                            <div class="u-effect-name">{{ getEffectInfo(currentFloor.effect, "name") }}</div>
-                            <div class="u-effect-desc">{{ getEffectInfo(currentFloor.effect, "desc") }}</div>
-                        </div>
-                    </template>
-                </div>
-                <div v-if="getRewardList().length" class="m-reward">
-                    <div class="u-title"></div>
-                    <div class="u-rewards">
-                        <SkillIcon
-                            class="u-reward"
-                            :source="{
-                                dwInSkillID: skill,
-                            }"
-                            v-for="skill in getRewardList()"
-                            :key="skill"
-                        ></SkillIcon>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <MapList v-if="visible" :visible="visible" @update="handleUpdate($event)" @close="close"></MapList>
+        <!-- <img :src="canvas" alt="" /> -->
     </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import User from "@jx3box/jx3box-common/js/user";
-import { getBuffs, getEffects, getMap, addMap, getMaps } from "@/service/baizhan";
-import { iconLink } from "@jx3box/jx3box-common/js/utils";
-import { arr1to2 } from "@/utils";
+import { arr1to2, isPhone, isQQ, isWeChat } from "@/utils";
 import { getWeekStartDate, getWeekEndDate } from "@/utils/dateFormat";
+import { getEffectInfo } from "@/assets/js/baizhan";
 import { cloneDeep } from "lodash";
-import SkillIcon from "./SkillIcon.vue";
-import MapList from "./MapList.vue";
+import html2canvas from "html2canvas";
 export default {
     name: "BaizhanMap",
     inject: ["__imgRoot"],
-    props: ["bosses"],
-    components: {
-        SkillIcon,
-        MapList,
-    },
     data() {
         return {
-            visible: false,
             loading: false,
-            btnLoading: false,
-            editStatus: false,
             data: [],
-            effects: [],
             startDate: getWeekStartDate(),
             endDate: getWeekEndDate(),
             point: {
@@ -156,17 +92,41 @@ export default {
             },
             step: 6,
             row: 10,
-            activeFloor: 1, // 当前层数 BOSS
-            currentFloor: {
-                level: 1,
-                boss: "",
-                effect: 0,
-            },
+            // activeFloor: 1, // 当前层数 BOSS
+            // currentFloor: {
+            //     level: 1,
+            //     boss: "",
+            //     effect: 0,
+            // },
+            scale: 1,
+
+            isDragging: false,
+            startPosition: { x: 0, y: 0 },
+            offset: { x: 0, y: 0 },
+            position: { x: 0, y: 0 },
+            velocity: { x: 0, y: 0 },
+            lastPosition: { x: 0, y: 0 },
+            lastTime: 0,
+            dampingFactor: 0.9, // 越小速度衰减的越快
+            momentumMultiplier: 0, // 根据鼠标移动的距离动态计算惯性效果的远近
+            containerBounds: null,
+
+            // canvas: null,
         };
     },
     computed: {
-        currentBoss() {
-            return this.$store.state.baizhanBoss;
+        ...mapState({
+            bosses: (state) => state.baizhan.bosses,
+            effects: (state) => state.baizhan.effects,
+            maps: (state) => state.baizhan.maps,
+            currentBoss: (state) => state.baizhan.currentBoss,
+            currentEffect: (state) => state.baizhan.currentEffect,
+        }),
+        currentEffectIds() {
+            return this.currentEffect?.ids || [];
+        },
+        hasCurrent() {
+            return this.currentBoss?.bossName || this.currentEffect?.key;
         },
         isEditor: function () {
             return User.isEditor();
@@ -177,139 +137,130 @@ export default {
         },
     },
     watch: {
-        activeFloor: {
+        maps: {
             immediate: true,
-            handler(index) {
-                const point = cloneDeep(this.point);
-                const data = cloneDeep(this.data);
-                const floor = data?.[index - 1] || point;
-                floor.level = Math.ceil(index / this.row);
-                this.currentFloor = floor;
+            deep: true,
+            handler(list) {
+                if (!list.length) return false;
+                this.setData(list);
+                this.$nextTick(() => {
+                    const map = this.$refs.map;
+                    map.addEventListener("wheel", this.handleScroll);
+
+                    this.containerBounds = this.$refs.container.getBoundingClientRect();
+                    window.addEventListener("resize", this.updateContainerBounds);
+
+                    const imgs = document.getElementsByTagName("img");
+                    [...imgs].forEach((img) => {
+                        img.addEventListener("dragstart", (event) => {
+                            event.preventDefault();
+                        });
+                    });
+                });
             },
         },
+        // activeFloor: {
+        //     immediate: true,
+        //     handler(index) {
+        //         const point = cloneDeep(this.point);
+        //         const data = cloneDeep(this.data);
+        //         const floor = data?.[index - 1] || point;
+        //         floor.level = Math.ceil(index / this.row);
+        //         this.currentFloor = floor;
+        //     },
+        // },
     },
     methods: {
-        handleUpdate(data) {
-            this.setData(data);
-            this.close();
-            this.editStatus = true;
+        startDrag(event) {
+            this.isDragging = true;
+            this.startPosition.x = event.clientX;
+            this.startPosition.y = event.clientY;
+            this.offset.x = event.clientX - this.position.x;
+            this.offset.y = event.clientY - this.position.y;
+            this.velocity.x = 0;
+            this.velocity.y = 0;
+            this.lastTime = Date.now();
+            this.lastPosition.x = event.clientX;
+            this.lastPosition.y = event.clientY;
         },
-        close() {
-            this.visible = false;
-        },
-        toSetLastData() {
-            this.$confirm("确定应用上一次数据？", "温馨提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                type: "warning",
-            })
-                .then(() => {
-                    getMaps().then((res) => {
-                        const list = res.data?.data || [];
-                        if (!list.length) {
-                            this.$message({
-                                type: "warning",
-                                message: "暂无临时数据",
-                            });
-                        } else {
-                            const data = list[0]?.data || [];
-                            this.setData(data);
-                            this.editStatus = true;
-                        }
-                    });
-                })
-                .catch(() => {});
-        },
-        switchFloor(index) {
-            if (this.activeFloor === this.data.length && index === 1) {
-                return (this.activeFloor = 1);
+        drag(event) {
+            if (this.isDragging) {
+                this.$store.commit("baizhan/setState", {
+                    key: "currentBoss",
+                    val: {},
+                });
+                const currentTime = Date.now();
+                const deltaTime = currentTime - this.lastTime;
+
+                this.velocity.x = (event.clientX - this.lastPosition.x) / deltaTime;
+                this.velocity.y = (event.clientY - this.lastPosition.y) / deltaTime;
+
+                this.position.x = event.clientX - this.offset.x;
+                this.position.y = event.clientY - this.offset.y;
+                this.lastTime = currentTime;
+                this.lastPosition.x = event.clientX;
+                this.lastPosition.y = event.clientY;
+
+                this.updateMomentumMultiplier(event.clientX, event.clientY);
             }
-            if (this.activeFloor === 1 && index === -1) {
-                return (this.activeFloor = this.data.length);
+        },
+        stopDrag() {
+            this.isDragging = false;
+            this.applyMomentum();
+        },
+        updateMomentumMultiplier(currentX, currentY) {
+            const distance = Math.sqrt(
+                Math.pow(currentX - this.startPosition.x, 2) + Math.pow(currentY - this.startPosition.y, 2)
+            );
+            this.momentumMultiplier = distance * 0.01;
+        },
+        applyMomentum() {
+            const momentumAnimation = () => {
+                this.position.x += this.velocity.x * this.momentumMultiplier;
+                this.position.y += this.velocity.y * this.momentumMultiplier;
+
+                if (Math.abs(this.velocity.x) > 0.1 || Math.abs(this.velocity.y) > 0.1) {
+                    this.velocity.x *= this.dampingFactor;
+                    this.velocity.y *= this.dampingFactor;
+                    requestAnimationFrame(momentumAnimation);
+                }
+            };
+
+            requestAnimationFrame(momentumAnimation);
+        },
+        updateContainerBounds() {
+            this.containerBounds = this.$refs.container.getBoundingClientRect();
+        },
+        preventClick(event) {
+            if (this.isDragging) {
+                event.stopPropagation();
             }
-            this.activeFloor += index;
         },
-        getRewardList() {
-            const boss_name = this.currentFloor.boss;
-            return this.bosses.find((item) => item.name === boss_name)?.skills || [];
-        },
-        getBossAvatar(name) {
-            const avatar =
-                this.bosses.find((item) => item.name === name)?.avatar || `${this.__imgRoot}fbcdpanel02_51.png`;
+        // switchFloor(index) {
+        //     if (this.activeFloor === this.data.length && index === 1) {
+        //         return (this.activeFloor = 1);
+        //     }
+        //     if (this.activeFloor === 1 && index === -1) {
+        //         return (this.activeFloor = this.data.length);
+        //     }
+        //     this.activeFloor += index;
+        // },
+        getBossAvatar(id) {
+            const avatar = this.bosses.find((item) => item.id === id)?.avatar || `${this.__imgRoot}fbcdpanel02_51.png`;
             return avatar;
         },
-        getEffectInfo(id, type = "icon") {
-            const item = this.effects.find((item) => item.nID === id);
-            const iconId = item?.dwIconID || 18005;
-            let str = iconLink(iconId);
-            if (type === "name") {
-                str = item?.szName;
+        getEffectInfo,
+        setBoss(floor, i) {
+            let val = floor;
+            if (floor.dwBossID === this.currentBoss.dwBossID) {
+                val = {};
             }
-            if (type === "desc") {
-                str = item?.szDescription;
-            }
-            return str;
-        },
-        save() {
-            const currentFloor = cloneDeep(this.currentFloor);
-            this.$set(this.data, this.activeFloor - 1, currentFloor);
-            this.$notify({
-                message: `第${this.activeFloor}层保存成功！`,
-                type: "success",
+            this.$store.commit("baizhan/setState", {
+                key: "currentBoss",
+                val: Object.assign(val, {
+                    floor: i + 1,
+                }),
             });
-        },
-        toOperate() {
-            if (this.editStatus) {
-                // 编辑状态 保存
-                if (this.btnLoading) return;
-                const isAll = this.data.every((item) => item.boss);
-                const message = isAll ? "确认是否上传？" : "数据尚未添加完整，确认是否临时保存？";
-                this.$confirm(message, "温馨提示", {
-                    confirmButtonText: "确定",
-                    cancelButtonText: "取消",
-                    type: "warning",
-                })
-                    .then(() => {
-                        this.addMap().then(() => {
-                            this.editStatus = false;
-                        });
-                    })
-                    .catch(() => {});
-            } else {
-                // 去编辑
-                this.editStatus = true;
-            }
-        },
-        setFloor(index) {
-            this.activeFloor = index;
-        },
-        iconLink,
-        async addMap() {
-            this.btnLoading = true;
-            const isAll = this.data.every((item) => item.boss);
-            const formData = {
-                start: this.startDate + " 14:00",
-                data: this.data,
-                enable: ~~isAll,
-            };
-            await addMap(formData)
-                .then((res) => {
-                    console.log(res);
-                })
-                .finally(() => {
-                    this.btnLoading = false;
-                });
-        },
-        load() {
-            this.loading = true;
-            getMap()
-                .then((res) => {
-                    const data = res.data?.data?.data;
-                    this.setData(data);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
         },
         setData(data) {
             const total = this.step * this.row;
@@ -320,30 +271,168 @@ export default {
             } else {
                 this.data = data;
             }
-            this.currentFloor = this.data[0];
+            // this.currentFloor = this.data[0];
         },
-        loadBuffs() {
-            getBuffs().then((res) => {
-                // console.log(res.data?.data);
+        handleScroll(event) {
+            const delta = event.deltaY || event.detail || event.wheelDelta;
+
+            let scaleNum = 0.05;
+            if (delta < 0) {
+                // 向上滚动，放大元素
+                this.scale += scaleNum;
+                if (this.scale > 1.8) {
+                    this.scale = 1.8;
+                }
+            } else {
+                // 向下滚动，缩小元素
+                this.scale -= scaleNum;
+                if (this.scale < 0.2) {
+                    this.scale = 0.2;
+                }
+            }
+
+            event.preventDefault();
+        },
+        exportToImage() {
+            if (isPhone() && (isWeChat() || isQQ())) {
+                return this.$message({
+                    message: "请在游览器中打开",
+                    type: "warning",
+                });
+            }
+            const map = this.$refs.map;
+            this.scale = 1;
+            this.position = {
+                x: 0,
+                y: 0,
+            };
+            // 重置样式
+            new Promise((resolve) => {
+                map.style.transform = `translate(${this.position.x}px, ${this.position.y}px) scale(${this.scale})`;
+
+                this.$store.dispatch("baizhan/resetCurrent");
+
+                resolve(true);
+            }).then(() => {
+                this.loading = true;
+                html2canvas(map, {
+                    useCORS: true,
+                    width: map.offsetWidth,
+                    height: map.offsetHeight,
+                    scale: 2,
+                })
+                    .then((canvas) => {
+                        this.createWatermark().then((waterCanvas) => {
+                            const newCanvas = document.createElement("canvas");
+                            const newCtx = newCanvas.getContext("2d");
+                            newCanvas.width = map.offsetWidth * 2;
+                            newCanvas.height = map.offsetHeight * 2;
+                            newCtx.drawImage(canvas, 0, 0);
+                            newCtx.drawImage(waterCanvas, 0, 0);
+                            // this.canvas = newCanvas.toDataURL();
+                            // 创建一个虚拟链接
+                            const link = document.createElement("a");
+                            link.href = newCanvas.toDataURL(); // 将 Canvas 转换为 Data URL
+                            link.download = `魔盒百战${this.startDate}至${this.endDate}.png`; // 下载文件的名称
+
+                            link.addEventListener("click", () => {
+                                setTimeout(() => {
+                                    URL.revokeObjectURL(link.href); // 删除链接的资源
+                                }, 100); // 延迟删除以确保下载完成
+
+                                link.removeEventListener("click", () => {}); // 移除事件监听器
+                                document.body.removeChild(link);
+                            });
+                            document.body.appendChild(link);
+                            link.click();
+                            this.loading = false;
+                        });
+                    })
+                    .catch((error) => {
+                        this.loading = false;
+                        console.error("导出图片出错:", error);
+                    });
             });
         },
-        loadEffects() {
-            getEffects().then((res) => {
-                const list = res.data?.data || [];
-                list.unshift({
-                    nID: 0,
-                    dwIconID: 18505,
-                    szName: "无",
-                    szDescription: "",
-                });
-                this.effects = list;
+        createWatermark() {
+            return new Promise((resolve) => {
+                const map = this.$refs.map;
+                const canvas = document.createElement("canvas");
+                canvas.width = map.offsetWidth * 2;
+                canvas.height = map.offsetHeight * 2;
+                const ctx = canvas.getContext("2d");
+
+                // 绘制顶部文字
+                ctx.font = `bold 48px Arial`;
+                ctx.fillStyle = "#deddd3";
+                ctx.textBaseline = "middle";
+                ctx.textAlign = "center"; // 设置居中对齐
+
+                const topTxt = `百战异闻录 ${this.startDate} 至 ${this.endDate}`;
+                const topTxtX = canvas.width / 2; // 居中位置
+                const topTxtY = 30 * 2; // 垂直位置
+                ctx.fillText(topTxt, topTxtX, topTxtY);
+
+                const bottomTxt = "By: 魔盒 (https://www.jx3box.com)";
+                const bottomTxtX = canvas.width / 2; // 居中位置
+                const bottomTxtY = canvas.height - topTxtY; // 垂直位置
+                ctx.fillText(bottomTxt, bottomTxtX, bottomTxtY);
+
+                // 绘制文字水印
+                const txt = "JX3BOX";
+                const txtHeight = canvas.height / 6;
+                const txtWidth = ctx.measureText(txt).width;
+                const txtRepeat = Math.ceil(canvas.width / (txtWidth + 20)) * 2; // 添加间隔距离
+                const txtRows = Math.ceil(canvas.height / (txtHeight + 20)) * 2; // 添加间隔距离
+                ctx.font = `bold 12px Arial`;
+                ctx.fillStyle = "#deddd31a";
+                ctx.transform(1, 0.5, -0.5, 1, 0, -canvas.height / 2);
+                for (let i = 0; i < txtRows; i++) {
+                    for (let j = 0; j < txtRepeat; j++) {
+                        const x = j * (txtWidth + 20); // 添加间隔距离
+                        const y = i * (txtHeight + 20); // 添加间隔距离
+                        ctx.fillText(txt, x, y);
+                    }
+                }
+
+                // 加载本地图片
+                const image = new Image();
+                image.src = require("@/assets/img/logo.svg");
+                image.onload = () => {
+                    // 创建临时canvas用于处理图片
+                    const imageSize = 30 * 2;
+                    const tempCanvas = document.createElement("canvas");
+                    tempCanvas.width = imageSize;
+                    tempCanvas.height = imageSize;
+                    const tempCtx = tempCanvas.getContext("2d");
+                    tempCtx.drawImage(image, 0, 0, imageSize, imageSize);
+
+                    // 获取图片的ImageData对象
+                    const imageData = tempCtx.getImageData(0, 0, imageSize, imageSize);
+
+                    // 修改图片颜色
+                    const pixels = imageData.data;
+                    for (let i = 0; i < pixels.length; i += 4) {
+                        // 修改RGBA颜色值
+                        pixels[i] = 255 - pixels[i]; // R
+                        pixels[i + 1] = 255 - pixels[i + 1]; // G
+                        pixels[i + 2] = 255 - pixels[i + 2]; // B
+                    }
+
+                    // 将修改后的ImageData对象绘制到canvas中
+                    const textWidth = ctx.measureText(topTxt).width * 2; // 顶部文字的宽度
+                    const padding = 10; // 图片与文字之间的间距
+                    const imageX = topTxtX - textWidth - imageSize - padding;
+                    ctx.putImageData(imageData, imageX, 30);
+
+                    resolve(canvas);
+                };
             });
         },
     },
-    mounted() {
-        this.load();
-        // this.loadBuffs();
-        this.loadEffects();
+    beforeDestroy() {
+        window.removeEventListener("wheel", this.handleScroll);
+        window.removeEventListener("resize", this.updateContainerBounds);
     },
 };
 </script>

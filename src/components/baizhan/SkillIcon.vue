@@ -9,7 +9,7 @@
         >
             <template slot="reference">
                 <div class="u-skill-icon" :class="`u-skill-icon__${source.nColor}`">
-                    <img :src="iconLink(iconId || data.IconID, client)" />
+                    <img :src="iconLink(iconId || data.IconID, client)" @click.stop="getUrl(data.SkillID)" />
                 </div>
             </template>
             <jx3-skill :data="data"></jx3-skill>
@@ -31,8 +31,9 @@
 
 <script>
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
-import { getSkill } from "@/service/baizhan.js";
+// import { getSkill } from "@/service/baizhan.js";
 import Jx3Skill from "./Skill.vue";
+import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "SkillIcon",
     props: {
@@ -49,27 +50,28 @@ export default {
             immediate: true,
             deep: true,
             handler(source) {
-                let { client, id, level } = this.params;
-                // 读取本地数据
-                const cache = sessionStorage.getItem(`skill-${client}-${id}-${level}`);
-                if (cache) {
-                    this.data = JSON.parse(cache);
-                    // 没有缓存则发起请求获取数据
-                } else {
-                    const data = source?.InSkill || {};
-                    if (data.IconID) {
-                        // 将数据放入 sessionStorage
-                        sessionStorage.setItem(`skill-${client}-${id}-${level}`, JSON.stringify(data));
-                    } else {
-                        id &&
-                            getSkill(this.params).then((res) => {
-                                let newData = res.data?.list?.[0] || {};
-                                this.data = newData;
-                                // 将数据放入 sessionStorage
-                                sessionStorage.setItem(`skill-${client}-${id}-${level}`, JSON.stringify(newData));
-                            });
-                    }
-                }
+                this.data = source.Skill;
+                // let { client, id, level } = this.params;
+                // // 读取本地数据
+                // const cache = sessionStorage.getItem(`skill-${client}-${id}-${level}`);
+                // if (cache) {
+                //     this.data = JSON.parse(cache);
+                //     // 没有缓存则发起请求获取数据
+                // } else {
+                //     const data = source?.InSkill || {};
+                //     if (data.IconID) {
+                //         // 将数据放入 sessionStorage
+                //         sessionStorage.setItem(`skill-${client}-${id}-${level}`, JSON.stringify(data));
+                //     } else {
+                //         id &&
+                //             getSkill(this.params).then((res) => {
+                //                 let newData = res.data?.list?.[0] || {};
+                //                 this.data = newData;
+                //                 // 将数据放入 sessionStorage
+                //                 sessionStorage.setItem(`skill-${client}-${id}-${level}`, JSON.stringify(newData));
+                //             });
+                //     }
+                // }
             },
         },
     },
@@ -95,6 +97,11 @@ export default {
     },
     methods: {
         iconLink,
+        getUrl(id) {
+            const domain = process.env.NODE_ENV === "development" ? __Root : location.origin + "/";
+            const url = domain + `app/database/?type=skill&query=${id}`;
+            window.open(url, "_blank");
+        },
     },
 };
 </script>

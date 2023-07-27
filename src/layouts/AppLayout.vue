@@ -1,7 +1,14 @@
 <template>
     <div>
         <Header></Header>
-        <Breadcrumb :name="title" :slug="slug" :root="root" :feedbackEnable="true" :crumbEnable="false">
+        <Breadcrumb
+            :class="`m-${slug}-breadcrumb`"
+            :name="title"
+            :slug="slug"
+            :root="root"
+            :feedbackEnable="true"
+            :crumbEnable="false"
+        >
             <img slot="logo" svg-inline :src="logo" />
         </Breadcrumb>
         <Main :class="className" :withoutRight="true" :withoutLeft="true">
@@ -47,4 +54,21 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/list.less";
+.m-baizhan-breadcrumb {
+    padding: 10px 20px;
+    background-color: @baizhan_bg;
+    border-color: @baizhan_bg;
+    .u-title {
+        color: #c8c8c8 !important;
+    }
+    @media screen and (max-width: @ipad) {
+        .u-title {
+            margin-left: 20px;
+        }
+    }
+    img,
+    svg {
+        filter: invert(78%) sepia(61%) saturate(1%) hue-rotate(314deg) brightness(96%) contrast(83%);
+    }
+}
 </style>

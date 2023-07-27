@@ -1,0 +1,302 @@
+.p-bosses {
+    flex: 1;
+    .flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: @baizhan_bg;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100vh;
+    overflow-y: auto;
+    color: @baizhan_color;
+    .scrollbar(6px, #666);
+    .m-boss-wrap {
+        .flex;
+        gap: 10px;
+        transition: width 0.2s ease-out;
+        .m-boss-list {
+            .flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            width: 100%;
+            position: relative;
+            .u-boss {
+                .flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                flex: none;
+                gap: 8px;
+                width: 95px;
+                height: 95px;
+                .r(10px);
+                border: 2px solid @baizhan_bg;
+                background-color: @baizhan_tab_bg;
+                box-sizing: border-box;
+                cursor: pointer;
+                user-select: none;
+                transition: width 0.2s ease-out;
+                .u-avatar {
+                    width: 50px;
+                    height: 50px;
+                    transition: all 0.2s ease-out;
+                }
+                .u-name {
+                    font-size: 12px;
+                    font-weight: 700;
+                }
+                &.is-active,
+                &:hover {
+                    background-color: rgba(@baizhan_tab_bg, 0.5);
+                    border-color: @baizhan_active;
+                    .u-name {
+                        color: @baizhan_active;
+                    }
+                    .u-avatar {
+                        transform: scale(1.1);
+                    }
+                }
+                &.is-active {
+                    .u-name {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+        .m-boss-info {
+            width: 0;
+            overflow: hidden;
+        }
+        &.is-info {
+            .m-boss-list {
+                flex-wrap: nowrap;
+                width: 100px;
+                gap: 0;
+                .u-boss:not(.is-active) {
+                    width: 0;
+                    overflow: hidden;
+                    box-sizing: border-box;
+                    border: none;
+                    .u-avatar,
+                    .u-name {
+                        .none;
+                    }
+                }
+            }
+            .m-boss-info {
+                background-color: @baizhan_tab_bg;
+                width: 100%;
+                min-height: 200px;
+                border-radius: 10px;
+                padding: 10px;
+                box-sizing: border-box;
+                .u-header {
+                    .flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    a {
+                        cursor: pointer;
+                    }
+                    .u-btn {
+                        .flex;
+                        gap: 10px;
+                    }
+                }
+                .u-skills {
+                    .flex;
+                    gap: 10px;
+                    .u-skill-item {
+                        position: relative;
+                        &.is-active {
+                            &::after {
+                                position: absolute;
+                                top: -15px;
+                                left: 0;
+                                width: 100%;
+                                text-align: center;
+                                height: 1px;
+                                content: "◈";
+                                font-size: 14px;
+                                display: block;
+                                color: @baizhan_active;
+                            }
+                        }
+                    }
+                    .u-skill {
+                        .size(47px, 47px);
+                        border-radius: 5px;
+                        overflow: hidden;
+                        box-sizing: border-box;
+                        img {
+                            transform: scale(1.15);
+                            cursor: pointer;
+                        }
+                    }
+                }
+                .u-bottom {
+                    .flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    margin-top: 10px;
+                    padding: 10px;
+                    border-radius: 10px;
+                    min-height: 120px;
+                    box-sizing: border-box;
+                    background-image: linear-gradient(to right, @baizhan_bg, @baizhan_tab_bg);
+                    border: 2px solid @baizhan_bg;
+                    &.u-skill-bg__1 {
+                        // 白色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_1, 0.5));
+                        border: 2px solid @skill_1;
+                    }
+                    &.u-skill-bg__2 {
+                        // 黄色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_2, 0.5));
+                        border: 2px solid @skill_2;
+                    }
+                    &.u-skill-bg__3 {
+                        // 蓝色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_3, 0.5));
+                        border: 2px solid @skill_3;
+                    }
+                    &.u-skill-bg__4 {
+                        // 绿色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_4, 0.5));
+                        border: 2px solid @skill_4;
+                    }
+                    &.u-skill-bg__5 {
+                        // 红色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_5, 0.5));
+                        border: 2px solid @skill_5;
+                    }
+                    &.u-skill-bg__6 {
+                        // 紫色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_6, 0.5));
+                        border: 2px solid @skill_6;
+                    }
+                    &.u-skill-bg__7 {
+                        // 黑色
+                        background-image: linear-gradient(to right, @baizhan_tab_bg, rgba(@skill_7, 0.5));
+                        border: 2px solid @skill_7;
+                    }
+                    .u-name {
+                        .flex;
+                        align-items: flex-end;
+                        gap: 10px;
+                        font-weight: bold;
+                        a {
+                            color: @baizhan_color;
+                            &:hover {
+                                color: #0366d6;
+                            }
+                        }
+                    }
+                    .u-id {
+                        .flex;
+                        align-items: flex-end;
+                        cursor: pointer;
+                        font-size: 12px;
+                    }
+                    .u-desc {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+    @media screen and (max-width: @phone) {
+        .m-boss-wrap {
+            flex-wrap: wrap;
+            &.is-info {
+                .m-boss-list {
+                    width: 100% !important;
+                    .u-boss.is-active {
+                        width: 100% !important;
+                    }
+                }
+            }
+        }
+        .m-boss-list {
+            justify-content: space-around;
+        }
+    }
+    .m-raiders {
+        margin-top: 18px;
+        margin-bottom: 200px;
+        .u-header {
+            .flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            gap: 25px;
+            width: 100%;
+            .el-input {
+                flex: 1;
+                input {
+                    background-color: @baizhan_tab_bg !important;
+                    border-color: @baizhan_tab_bg !important;
+                    color: @baizhan_color;
+                    &::placeholder {
+                        color: #494949;
+                    }
+                }
+            }
+
+            .u-title {
+                font-size: 20px;
+                font-weight: 700;
+            }
+        }
+        .m-archive-null {
+            margin-top: 20px;
+            i {
+                margin-top: 2px;
+            }
+            .el-alert__icon {
+                margin-top: 5px;
+            }
+        }
+        .m-archive-list {
+            margin-top: 20px;
+            .u-metalist em,
+            .u-author-name,
+            .u-date {
+                color: @baizhan_color;
+            }
+        }
+        .m-fb-item {
+            border-color: @baizhan_tab_bg;
+            .u-banner {
+                border: none;
+            }
+            .u-boss-list,
+            .u-metalist {
+                b {
+                    color: @baizhan_color;
+                    &:hover {
+                        color: #0366d6;
+                    }
+                    &:not(:last-of-type):after {
+                        content: " ／ ";
+                        color: @baizhan_color;
+                    }
+                }
+                strong {
+                    color: @baizhan_color;
+                    background-color: @baizhan_tab_bg;
+                }
+            }
+        }
+        .u-post {
+            svg {
+                fill: @baizhan_color;
+            }
+            .u-title {
+                color: @baizhan_color;
+                &:hover {
+                    color: #0366d6;
+                }
+            }
+        }
+    }
+}

@@ -88,35 +88,17 @@
             </el-table-column>
             <el-table-column prop="_remarks" label="备注"></el-table-column>
         </el-table>
-        <el-button
-            class="u-more"
-            v-show="hasNextPage"
-            type="primary"
-            @click="appendPage"
-            :loading="loading"
-            icon="el-icon-arrow-down"
-            >加载更多</el-button
-        >
-        <el-pagination
-            class="m-pages"
-            background
-            layout="total, prev, pager, next, jumper"
-            :hide-on-single-page="true"
-            :page-size="limit"
-            :total="total"
-            :current-page.sync="page"
-            @current-change="handleCurrentChange"
-        ></el-pagination>
-        <SkillForm ref="editAddon" @update="handleUpdate($event)" @close="close" />
+        <SkillForm ref="editAddon" :staged="staged" @update="handleUpdate($event)" @close="close" />
     </div>
 </template>
 
 <script>
-import { getSkills, getSkillInfo } from "@/service/baizhan";
-import { removeEmptyIncludeZero } from "@/utils";
+import { mapState } from "vuex";
 import SkillIcon from "./SkillIcon.vue";
 import SkillForm from "./SkillForm.vue";
 import User from "@jx3box/jx3box-common/js/user";
+
+import { getAppID } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Skills",
     inject: ["__imgRoot"],
@@ -124,17 +106,13 @@ export default {
         SkillIcon,
         SkillForm,
     },
-    props: {
-        types: {
-            type: Object,
-            required: true,
-        },
-    },
     data: () => ({
+        id: getAppID(),
         loading: false,
         skills: [],
         skillAddon: {},
         allLevel: 5,
+        staged: {},
 
         cost: 0, // 技能占用点数
         type: 0, // 技能类型
@@ -142,25 +120,23 @@ export default {
         boss: "", // 技能所属BOSS 模糊查询
         name: "", // 技能名称 模糊查询
         keyword: "",
-        page: 1,
-        limit: 30,
-        total: 0,
 
         addon_key: ["cooldown", "damage", "cost_vigor", "cost_endurance", "hit_vigor", "hit_endurance", "remarks"],
     }),
     computed: {
+        ...mapState({
+            types: (state) => state.baizhan.types,
+            skillList: (state) => state.baizhan.skills,
+            skillExtraList: (state) => state.baizhan.skillExtraList,
+            currentBoss: (state) => state.baizhan.currentBoss,
+        }),
         params() {
             return {
-                cost: this.cost,
-                type: this.type,
                 color: this.color,
+                cost: this.cost,
+                // name: this.name,
+                type: this.type,
                 keyword: this.keyword,
-            };
-        },
-        query() {
-            return {
-                page: this.page,
-                limit: this.limit,
             };
         },
         colors() {
@@ -172,28 +148,41 @@ export default {
         szTypes() {
             return this.types.szTypes;
         },
-        hasNextPage() {
-            return this.page < this.total / this.limit;
-        },
-        currentBoss() {
-            return this.$store.state.baizhanBoss;
-        },
         isEditor: function () {
             return User.isEditor();
         },
     },
     watch: {
         currentBoss: {
-            immediate: true,
+            deep: true,
             handler(boss) {
-                this.keyword = boss;
+                this.keyword = boss.bossName;
+            },
+        },
+        skillList: {
+            immediate: true,
+            deep: true,
+            handler(list) {
+                this.skills = list;
             },
         },
         params: {
             deep: true,
-            handler() {
-                this.page = 1;
-                this.load();
+            handler(params) {
+                const { color, cost, type, keyword } = params;
+                if (!color && !cost && !keyword && !type) {
+                    return (this.skills = this.skillList);
+                }
+                this.skills = this.skillList.filter((item) => {
+                    return (
+                        (!color || item.nColor === color) &&
+                        (!cost || item.nCost === cost) &&
+                        (!type || item.szType.includes(type)) &&
+                        (!keyword ||
+                            item?.szBossName?.indexOf(keyword) > -1 ||
+                            item?.szSkillName?.indexOf(keyword) > -1)
+                    );
+                });
             },
         },
     },
@@ -204,6 +193,7 @@ export default {
             this.applyAllAddon();
         },
         toEdit(item) {
+            this.staged = item;
             const { dwInSkillID: skill_id, _select_level: level } = item;
             const addon = this.skillAddon[skill_id]?.[level];
             this.$refs["editAddon"].open(addon ?? { skill_id: skill_id });
@@ -223,44 +213,27 @@ export default {
             this.addAddon(data);
             const { skill_id } = data;
             const skill = this.skills.find((s) => s.dwInSkillID == skill_id);
+            skill.extra = {
+                ...skill.extra,
+                ...data,
+            };
             this.applyAddon(skill);
+            sessionStorage.setItem(`baizhan-skills`, JSON.stringify(this.skills));
+            const skillExtraList = this.skillExtraList.map((item) => {
+                if (item.skill_id === skill_id) {
+                    item = {
+                        ...item,
+                        ...data,
+                    };
+                }
+                return item;
+            });
+            sessionStorage.setItem(`baizhan-skillExtraList`, JSON.stringify(skillExtraList));
         },
-        load(isAppend = false) {
-            const params = removeEmptyIncludeZero(this.params);
-            const data = Object.assign(params, this.query);
-            this.loading = true;
-            getSkills(data)
-                .then((res) => {
-                    // 搜索技能
-                    let list = res.data?.data?.list || [];
-                    for (let item of list) {
-                        for (let key of this.addon_key) {
-                            this.$set(item, `_${key}`, undefined);
-                        }
-                    }
-                    if (isAppend) {
-                        this.skills = this.skills.concat(list);
-                    } else {
-                        this.skills = list;
-                    }
-                    this.total = res.data?.data?.total || 0;
-                    const ids = list.map((item) => item.dwInSkillID).join(",");
-                    return ids;
-                })
-                .then((ids) => {
-                    // 获取技能额外信息
-                    if (!ids) return;
-                    return getSkillInfo({ ids: ids });
-                })
-                .then((res) => {
-                    if (!res) return;
-                    const skillAddonList = res.data?.data || [];
-                    for (let addon of skillAddonList) this.addAddon(addon);
-                })
-                .finally(() => {
-                    this.loading = false;
-                    this.changeAllLevel(10);
-                });
+        load() {
+            const skillAddonList = this.skillExtraList;
+            for (let addon of skillAddonList) this.addAddon(addon);
+            this.changeAllLevel();
         },
         applyAllAddon() {
             for (let skill of this.skills) this.applyAddon(skill);
@@ -268,17 +241,10 @@ export default {
         applyAddon(skill) {
             const { dwInSkillID: skill_id, _select_level: level } = skill;
             const addon = this.skillAddon[skill_id]?.[level];
-            console.log(skill_id, level, addon);
+            // console.log(skill_id, level, addon);
             for (let key of this.addon_key) {
                 this.$set(skill, `_${key}`, addon?.[key]);
             }
-        },
-        handleCurrentChange() {
-            this.load();
-        },
-        appendPage() {
-            this.page++;
-            this.load(true);
         },
     },
     mounted() {

@@ -1,179 +1,292 @@
 .p-map {
-    flex: 1;
-    padding: 20px 0;
     .flex;
-    flex-wrap: wrap;
-    gap: 40px;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
-    .m-left {
-        position: relative;
-        .flex;
-        align-items: flex-start;
-        padding: 20px 40px 40px 20px;
-        border-radius: 10px;
-        background-color: #2d524a;
-        flex: none;
-        .m-title {
-            .flex;
-            flex-direction: column;
-            gap: 40px;
-            align-items: center;
-        }
-        .u-title {
-            background-image: url("@{baizhan_img_path}baizhan1_11.png");
-            width: 192px;
-            height: 380px;
-        }
-        .u-date {
-            .flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            font-weight: bold;
-            color: #fff;
-            .u-time {
-                font-style: italic;
-            }
-        }
-        .u-btns {
-            .flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-            .el-button + .el-button {
-                margin-left: 0;
-            }
-        }
-    }
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin-top: -30px;
     .m-boss-list {
+        position: relative;
+        box-sizing: border-box;
         .flex;
         flex-direction: column;
         box-sizing: border-box;
-        gap: 30px;
+        transition: transform 0.2s ease-out;
+        cursor: grab;
+        background-color: @baizhan_bg;
+        user-select: none;
+        padding: 30px;
+        .u-watermark {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            .u-title {
+                .flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                color: #deddd3;
+                margin: 0;
+                padding-top: 5px;
+                font-size: 18px;
+                svg {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+            .u-bottom-title {
+                position: absolute;
+                bottom: 10px;
+                width: 100%;
+                text-align: center;
+            }
+            .u-watermark-content {
+                position: absolute;
+                top: 10%;
+                left: 10%;
+                width: 90%;
+                height: 80%;
+                box-sizing: border-box;
+                z-index: 0;
+                overflow: hidden;
+                .flex;
+                flex-wrap: wrap;
+                gap: 100px;
+                .u-title {
+                    opacity: 0.1;
+                    color: #deddd3;
+                    transform: rotate(30deg);
+                }
+            }
+        }
+        .u-download {
+            position: absolute;
+            right: -30px;
+            top: 55px;
+            display: none;
+            z-index: 2;
+        }
+        &:hover {
+            .u-download {
+                display: block;
+            }
+        }
         .u-floor {
             position: relative;
             flex: none;
-            width: 107px;
-            height: 112px;
-            background-image: url("@{baizhan_img_path}fbcdpanel01_5.png");
-            background-size: cover;
-            text-align: center;
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            background: #373f5f;
+            // background: rgba(#7879d0, 0.2);
             .flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: all 0.2s ease-in;
+            z-index: 2;
+            transition: height 0.2s ease-out;
+            &.is-gray {
+                opacity: 0.3;
+            }
+            .u-floor-content {
+                .flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+                width: 100%;
+                height: 100%;
+            }
+            .u-current-icon {
+                .none;
+                position: absolute;
+                transform: rotate(134deg);
+                color: @baizhan_active;
+                font-weight: bold;
+            }
+            .el-icon-arrow-down {
+                top: -10px;
+                left: -10px;
+            }
+            .el-icon-arrow-up {
+                bottom: -10px;
+                right: -10px;
+            }
             &.is-current {
-                transform: scale(1.1);
+                height: 110px;
+                opacity: 1;
+                .u-current-icon {
+                    .db;
+                }
             }
             .u-img {
-                .size(85px);
-                position: relative;
+                width: 40px;
+                height: 40px;
                 border-radius: 50%;
-                // background-image: url("@{baizhan_img_path}fbcdpanel02_51.png");
-                // background-size: cover;
+                user-select: none;
+                img {
+                    user-select: none;
+                }
             }
             .u-index {
                 position: absolute;
-                top: 0;
-                .fz(16px, 22px);
+                left: 4px;
+                top: 4px;
+                font-size: 12px;
                 color: #fff;
                 font-weight: bold;
-                .size(22px, 22px);
-                border-radius: 50%;
-                &.u-effect {
-                    background: url("@{baizhan_img_path}baizhan_41.png");
-                    background-size: cover;
+                color: @baizhan_active;
+            }
+            .u-name {
+                color: #9597ff80;
+                font-size: 14px;
+                font-weight: bold;
+            }
+            .u-desc {
+                .u-coin {
+                    .flex;
+                    justify-content: center;
+                    align-items: center;
                 }
             }
             .u-icon {
                 position: absolute;
-                bottom: -6px;
-                .size(36px);
+                bottom: 4px;
+                right: 4px;
+                width: 15px;
+                height: 15px;
                 border-radius: 50%;
                 overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 img {
                     .size(100%, 100%);
                     border-radius: 50%;
-                    transform: scale(1.1);
-                }
-            }
-            .u-name {
-                position: absolute;
-                bottom: -20px;
-                color: #fff;
-                .bold;
-                .fz(14px);
-                &.is-current {
-                    color: @skill_yellow;
-                    font-weight: bold;
+                    transform: scale(1.2);
+                    user-select: none;
                 }
             }
             &::after {
                 position: absolute;
-                right: -28px;
-                width: 35px;
-                height: 2px;
+                right: -8px;
+                width: 8px;
+                height: 4px;
                 display: block;
-                background-color: #44756d;
+                background-color: #373f5f;
                 content: "";
             }
-            &:nth-of-type(10n) {
-                &::after {
-                    right: unset;
-                    bottom: -32px;
-                    width: 2px;
-                    height: 32px;
+            &.is-effect {
+                background-color: @baizhan_active;
+                color: #deddd3;
+                .u-floor-content {
+                    justify-content: flex-start;
+                }
+                .u-img {
+                    position: absolute;
+                    top: -20px;
+                    border: 2px solid @baizhan_active;
+                    box-sizing: border-box;
+                    user-select: none;
                 }
                 .u-name {
-                    bottom: unset;
-                    right: -20px;
-                    writing-mode: vertical-lr;
+                    margin-top: 20px;
+                    font-size: 16px;
+                    color: #deddd3;
+                }
+                .u-index {
+                    color: #deddd3;
+                }
+                .u-desc {
+                    font-size: 12px;
+                    text-align: center;
                 }
             }
             &.is-active,
             &:hover {
-                background-image: url("@{baizhan_img_path}fbcdpanel01_4.png");
-                .u-effect {
-                    background-image: url("@{baizhan_img_path}baizhan_43.png");
+            }
+            &:nth-of-type(10n),
+            &:nth-of-type(10n).is-effect {
+                height: 150px;
+                // background-color: @baizhan_active;
+                &.is-current {
+                    height: 160px !important;
+                }
+                .u-floor-content {
+                    justify-content: center;
+                }
+                .u-name {
+                    margin-top: 0;
+                }
+                .u-img {
+                    position: relative !important;
+                    top: unset !important;
+                    box-sizing: border-box;
+                    border: 4px solid #deddd3;
+                    width: 50px;
+                    height: 50px;
+                    user-select: none;
+                }
+                &::after {
+                    right: unset;
+                    bottom: -25px;
+                    width: 4px;
+                    height: 25px;
                 }
             }
         }
         .u-step {
             .flex;
             justify-content: center;
-            gap: 20px;
+            align-items: center;
+            gap: 8px;
+            height: 150px;
             &:nth-of-type(even) {
                 flex-direction: row-reverse;
                 .u-floor {
                     &::after {
                         position: absolute;
                         right: unset;
-                        left: -28px;
-                        width: 35px;
-                        height: 2px;
+                        left: -8px;
+                        width: 8px;
+                        height: 4px;
                         display: block;
-                        background-color: #44756d;
+                        background-color: #373f5f;
                         content: "";
                     }
-                    &:nth-of-type(10n) {
-                        &::after {
-                            left: unset;
-                            bottom: -32px;
-                            width: 2px;
-                            height: 32px;
+                    &:nth-of-type(10n),
+                    &:nth-of-type(10n).is-effect {
+                        height: 150px;
+                        // background-color: @baizhan_active;
+                        .u-floor-content {
+                            justify-content: center;
                         }
                         .u-name {
-                            right: unset;
-                            left: -20px;
-                            writing-mode: vertical-lr;
+                            margin-top: 0;
+                        }
+                        .u-img {
+                            position: relative !important;
+                            top: unset !important;
+                            box-sizing: border-box;
+                            border: 4px solid #deddd3;
+                            width: 50px;
+                            height: 50px;
+                        }
+                        &::after {
+                            left: unset;
+                            bottom: -25px;
+                            width: 4px;
+                            height: 25px;
                         }
                     }
                 }
             }
-            &:last-of-type {
+            &:nth-of-type(6) {
                 .u-floor {
                     &:last-of-type {
                         &::after {
@@ -184,6 +297,7 @@
             }
         }
     }
+
     .m-right {
         flex: none;
         padding: 40px 100px 40px 40px;
@@ -244,7 +358,7 @@
             .u-effect-desc {
                 font-size: 12px;
                 max-width: 200px;
-                color: @skill_yellow;
+                color: @skill_2;
             }
         }
         .m-reward {

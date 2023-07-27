@@ -40,12 +40,7 @@
                         </el-tabs>
                     </div>
                     <div class="u-drops" v-if="droplist && droplist.length">
-                        <div
-                            class="u-item-wrapper"
-                            v-for="drop in droplist"
-                            :key="drop.ItemName"
-                            v-show="isVisible(drop)"
-                        >
+                        <div class="u-item-wrapper" v-for="drop in droplist" :key="drop.id" v-show="isVisible(drop)">
                             <el-popover
                                 placement="right-end"
                                 popper-class="u-drop-popup"
@@ -92,6 +87,8 @@ import schoolmap from "@jx3box/jx3box-data/data/xf/schoolid.json";
 import Item from "@jx3box/jx3box-editor/src/Item.vue";
 import { getResource } from "@/service/drop";
 // import drop_item from "../components/drop_item";
+
+import lodash from "lodash";
 
 export default {
     name: "DropV2",
@@ -171,12 +168,12 @@ export default {
                     for (let drop of drops) {
                         if (drop.jx3_item_id == item.id) {
                             drop.jx3_item = item;
-                            break;
                         }
                     }
                 }
 
                 this.droplist = drops;
+                window.d = lodash.cloneDeep(drops);
             } catch (e) {
                 this.$message.error("数据获取失败，请稍后再试");
                 this.boss = old;
@@ -205,6 +202,8 @@ export default {
             let schoolIsVisible = !~~this.school || drop.schools?.includes(this.school);
             // let categoryIsVisible = !~~this.droptype || drop.ItemType == this.droptype; 要根据具体物品判断
             let categoryIsVisible = false;
+            // 以防万一 找不到对应物品直接不显示
+            if (!drop.jx3_item) return false;
             if (this.droptype == 5) {
                 if (drop.jx3_item.Source == "other") categoryIsVisible = true;
                 if (drop.jx3_item.Source == "trinket" && [5, 20, 22].includes(~~drop.jx3_item.AucGenre))

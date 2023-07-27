@@ -1,7 +1,7 @@
 <template>
     <app-layout slug="baizhan" className="p-baizhan-app">
         <div class="p-baizhan" v-loading="loading">
-            <LeftSidebar class="m-baizhan-sidebar" v-if="!isPhone()">
+            <LeftSidebar class="m-baizhan-sidebar">
                 <BTabs></BTabs>
             </LeftSidebar>
             <div class="m-content" :class="isPhone() && 'is-phone'">

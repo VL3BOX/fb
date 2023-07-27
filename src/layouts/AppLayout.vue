@@ -61,6 +61,11 @@ export default {
     .u-title {
         color: #c8c8c8 !important;
     }
+    @media screen and (max-width: @ipad) {
+        .u-title {
+            margin-left: 20px;
+        }
+    }
     img,
     svg {
         filter: invert(78%) sepia(61%) saturate(1%) hue-rotate(314deg) brightness(96%) contrast(83%);

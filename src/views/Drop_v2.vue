@@ -88,8 +88,6 @@ import Item from "@jx3box/jx3box-editor/src/Item.vue";
 import { getResource } from "@/service/drop";
 // import drop_item from "../components/drop_item";
 
-import lodash from "lodash";
-
 export default {
     name: "DropV2",
     props: [],
@@ -152,6 +150,7 @@ export default {
                 this.loading = true;
                 let drops = await getDropV2(this.mapid, this.params);
                 drops = drops?.data;
+            
                 let item_ids = drops.map((drop) => this.getDropItemID(drop));
                 let items = await getResource("item_merged", this.client, {
                     ids: item_ids,
@@ -162,6 +161,7 @@ export default {
                     drop.schools = drop?.ApplicableSchoolIDs?.split("|");
                     drop.jx3_item_id = this.getDropItemID(drop);
                 }
+
                 for (let item of items) {
                     let cacheKey = `item-${this.client}-${item.id}`;
                     sessionStorage.setItem(cacheKey, JSON.stringify(item));
@@ -173,7 +173,6 @@ export default {
                 }
 
                 this.droplist = drops;
-                window.d = lodash.cloneDeep(drops);
             } catch (e) {
                 this.$message.error("数据获取失败，请稍后再试");
                 this.boss = old;

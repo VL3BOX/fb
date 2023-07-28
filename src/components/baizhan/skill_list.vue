@@ -94,7 +94,7 @@
 
 <script>
 import { mapState } from "vuex";
-import SkillIcon from "./SkillIcon.vue";
+import SkillIcon from "./skill_icon.vue";
 import SkillForm from "./SkillForm.vue";
 import User from "@jx3box/jx3box-common/js/user";
 

@@ -22,8 +22,8 @@
 <script>
 import { mapState } from "vuex";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
-import BRaider from "./BRaider.vue";
-import BossInfo from "./BossInfo.vue";
+import BRaider from "./boss_raider.vue";
+import BossInfo from "./boss_info.vue";
 export default {
     name: "Bosses",
     data() {

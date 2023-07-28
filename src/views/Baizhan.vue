@@ -1,15 +1,18 @@
 <template>
     <app-layout slug="baizhan" className="p-baizhan-app">
         <div class="p-baizhan" v-loading="loading">
-            <LeftSidebar class="m-baizhan-sidebar">
-                <BTabs></BTabs>
-            </LeftSidebar>
-            <div class="m-content" :class="isPhone() && 'is-phone'">
+            <div class="m-baizhan-left">
+                <main-tabs></main-tabs>
+                <keep-alive>
+                    <component :is="leftComponent"></component>
+                </keep-alive>
+            </div>
+            <div class="m-baizhan-center" :class="isPhone() && 'is-phone'">
                 <BMap v-if="activeTab === 'map'"></BMap>
                 <Skills v-if="activeTab === 'skill'"></Skills>
                 <Bosses v-if="activeTab === 'boss'"></Bosses>
             </div>
-            <div v-if="activeTab === 'map'" class="m-right">
+            <div class="m-baizhan-right" v-if="activeTab === 'map'">
                 <BInfo></BInfo>
             </div>
         </div>
@@ -17,11 +20,14 @@
 </template>
 
 <script>
-import Skills from "@/components/baizhan/Skills.vue";
-import BMap from "@/components/baizhan/BMap.vue";
-import BTabs from "@/components/baizhan/BTabs.vue";
-import BInfo from "@/components/baizhan/BInfo.vue";
-import Bosses from "@/components/baizhan/Bosses.vue";
+import MainTabs from "@/components/baizhan/main_tabs.vue";
+import MapFilter from "@/components/baizhan/map_filter.vue";
+
+import Skills from "@/components/baizhan/skill_list.vue";
+import BMap from "@/components/baizhan/map_index.vue";
+
+import BInfo from "@/components/baizhan/map_level_info.vue";
+import Bosses from "@/components/baizhan/boss_index.vue";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { isPhone } from "@/utils";
 import { mapState, mapActions } from "vuex";
@@ -31,8 +37,10 @@ export default {
         __imgRoot: __imgPath + "pve/baizhan/",
     },
     components: {
+        MainTabs,
+        MapFilter,
+
         Skills,
-        BTabs,
         BMap,
         BInfo,
         Bosses,
@@ -51,6 +59,12 @@ export default {
             maps: (state) => state.baizhan.maps,
             activeTab: (state) => state.baizhan.activeTab,
         }),
+        leftComponent() {
+            if (this.activeTab === "map") {
+                return MapFilter;
+            }
+            return null;
+        },
         bossList() {
             const skills = this.skills;
             return this.bosses.map((boss) => {

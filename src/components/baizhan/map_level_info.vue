@@ -98,5 +98,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "~@/assets/css/baizhan/info.less";
+@import "~@/assets/css/baizhan/map_level_info.less";
 </style>

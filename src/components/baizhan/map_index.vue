@@ -56,9 +56,9 @@
                                 <span>{{ getEffectInfo(effects, floor.nEffectID, "coin") }}</span>
                             </div>
                         </div>
-                        <div v-if="floor.nEffectID" class="u-icon">
+                        <!-- <div v-if="floor.nEffectID" class="u-icon">
                             <img :src="getEffectInfo(effects, floor.nEffectID)" />
-                        </div>
+                        </div> -->
                     </div>
                     <i class="u-current-icon el-icon-arrow-up"></i>
                     <i class="u-current-icon el-icon-arrow-down"></i>

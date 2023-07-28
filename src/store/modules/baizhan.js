@@ -5,6 +5,9 @@ import { baizhanEffects } from "@/assets/data/baizhan_effects.js";
 export default {
     namespaced: true,
     state: {
+        // 当前页面
+        activeTab: "map",
+
         currentEffect: [],
         currentBoss: {},
         types: {},
@@ -12,8 +15,9 @@ export default {
         skills: [],
         skillExtraList: [],
         effects: [],
+
+        map: "",
         maps: [],
-        activeTab: "map",
     },
     mutations: {
         setState(state, val) {
@@ -179,6 +183,9 @@ export default {
         },
         async loadMap({ commit, state }) {
             await getMap().then((res) => {
+                if (res.data?.code !== 0) return;
+                state.map = res.data?.data || "";
+                
                 const bosses = state.bosses;
                 const effects = state.effects;
                 const data = res.data?.data?.data || [];

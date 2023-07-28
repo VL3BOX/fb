@@ -1,3 +1,5 @@
+@import "./widgets.less";
+
 .c-main {
     margin-left: 0 !important;
     &.p-baizhan-app {
@@ -6,12 +8,34 @@
 }
 .p-baizhan {
     .flex;
+    box-sizing: border-box;
     justify-content: space-between;
     width: 100%;
-    height: calc(100vh - 64px - 48px - 60px);
     background-color: @baizhan_bg;
     overflow: hidden;
-    .m-baizhan-sidebar {
+    padding: 0 20px;
+    max-height: calc(100vh - 180px);
+
+    .m-baizhan-left {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        width: @baizhan_left;
+    }
+
+    .m-baizhan-center {
+        flex-grow: 1;
+        transition: 0.2s ease-in;
+
+        &.is-phone {
+            margin-left: 0;
+            width: calc(100% - 40px);
+        }
+    }
+
+    .m-baizhan-right {
+        flex-shrink: 0;
         padding: 0;
         background-color: @baizhan_bg;
         border-right: none;
@@ -30,9 +54,8 @@
             }
         }
     }
+
     .m-bosses {
-        // width: 280px;
-        // height: 100%;
         .flex;
         flex-direction: column;
         .scrollbar();
@@ -80,17 +103,7 @@
             }
         }
     }
-    .m-content {
-        margin-left: @baizhan_left;
-        transition: 0.2s ease-in;
-        flex: 1;
-        height: 100%;
-        width: calc(100% - 40px);
-        &.is-phone {
-            margin-left: 0;
-            width: calc(100% - 40px);
-        }
-    }
+
     .isclose + .m-content {
         margin-left: 0;
         width: calc(100% - 40px);

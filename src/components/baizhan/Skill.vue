@@ -6,7 +6,6 @@
                 <span class="w-skill-name">{{ data.Name }}</span>
                 <span class="w-skill-desc">{{ data.Desc }}</span>
                 <span class="w-skill-meta">ID : {{ data.SkillID }}</span>
-                <!-- <span class="w-skill-meta">Level : {{ data.Level }}</span> -->
             </div>
         </div>
     </div>

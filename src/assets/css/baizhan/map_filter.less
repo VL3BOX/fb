@@ -1,0 +1,105 @@
+@section-title-color: rgba(249, 247, 232, 0.3);
+
+.m-map-filter {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: calc(100vh - 400px);
+    .scrollbar(2px, #666);
+
+    .m-section-title {
+        .w(100%);
+        position: relative;
+        color: @section-title-color;
+        &::after {
+            .pa;
+            .db;
+            .w(200px);
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background-color: @section-title-color;
+            content: "";
+        }
+    }
+
+    .m-filter-list {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 5px;
+        grid-row-gap: 18px;
+    }
+
+    .u-effect {
+        width: fit-content;
+        display: inline-flex;
+        align-items: center;
+        .pointer;
+        .r(4px);
+        padding: 2px;
+        gap: 5px;
+        box-sizing: border-box;
+
+        span {
+            .fz(14px);
+            font-weight: 400;
+            color: @baizhan_color;
+        }
+        &.is-active,
+        &:hover {
+            background-color: @baizhan_active;
+        }
+    }
+
+    .m-filter-boss {
+        width: 100%;
+        .u-boss-list {
+            .flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .u-tab-boss {
+            position: relative;
+            .flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 8px;
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            .u-avatar {
+                width: 36px;
+                height: 36px;
+            }
+            .u-effect-img {
+                width: 20px;
+                height: 20px;
+
+                position: absolute;
+                right: 5px;
+            }
+            .u-link {
+                color: @baizhan_color;
+                &:hover {
+                    color: #0366d6;
+                }
+            }
+            .u-index {
+                .dbi;
+                width: 20px;
+                font-size: 14px;
+                color: @baizhan_color;
+            }
+            span {
+                font-size: 14px;
+                font-weight: 400;
+                color: @baizhan_color;
+            }
+            &.is-active,
+            &:hover {
+                background-color: @baizhan_active;
+            }
+        }
+    }
+}

@@ -1,7 +1,7 @@
 <template>
     <app-layout slug="baizhan" className="p-baizhan-app">
         <div class="p-baizhan" v-loading="loading">
-            <div class="m-baizhan-left">
+            <div class="m-baizhan-left" v-if="!isPhone()">
                 <main-tabs></main-tabs>
                 <keep-alive>
                     <component :is="leftComponent"></component>
@@ -12,7 +12,7 @@
                 <Skills v-if="activeTab === 'skill'"></Skills>
                 <Bosses v-if="activeTab === 'boss'"></Bosses>
             </div>
-            <div class="m-baizhan-right" v-if="activeTab === 'map'">
+            <div class="m-baizhan-right" v-if="activeTab === 'map' && !isPhone()">
                 <BInfo></BInfo>
             </div>
         </div>

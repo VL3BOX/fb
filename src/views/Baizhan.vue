@@ -52,7 +52,6 @@ export default {
     },
     computed: {
         ...mapState({
-            types: (state) => state.baizhan.types,
             bosses: (state) => state.baizhan.bosses,
             skills: (state) => state.baizhan.skills,
             effects: (state) => state.baizhan.effects,
@@ -60,10 +59,7 @@ export default {
             activeTab: (state) => state.baizhan.activeTab,
         }),
         leftComponent() {
-            if (this.activeTab === "map") {
-                return MapFilter;
-            }
-            return null;
+            return MapFilter;
         },
         bossList() {
             const skills = this.skills;
@@ -91,7 +87,6 @@ export default {
     },
     methods: {
         ...mapActions({
-            loadTypes: "baizhan/loadTypes",
             loadBosses: "baizhan/loadBosses",
             loadSkills: "baizhan/loadSkills",
             loadEffects: "baizhan/loadEffects",
@@ -107,9 +102,6 @@ export default {
 
             const skillPro = this.loadSkills();
             proArr.push(skillPro);
-
-            const typePro = this.loadTypes();
-            proArr.push(typePro);
 
             const effectPro = this.loadEffects();
             proArr.push(effectPro);

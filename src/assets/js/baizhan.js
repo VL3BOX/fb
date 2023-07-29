@@ -10,11 +10,11 @@ export function getEffectInfo(effects, id, type = "icon") {
     if (type === "desc") {
         str = item?.szDescription;
     }
-    if (type === "coin") {
-        str = item?.coin;
+    if (type === "reward") {
+        str = item?.reward;
     }
-    if (type === "sketch") {
-        str = item?.sketch.split("/")[0] ? item?.sketch.split("/") : [];
+    if (type === "tags") {
+        str = item?.tags;
     }
     return str;
 }

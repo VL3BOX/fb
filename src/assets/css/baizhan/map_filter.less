@@ -5,46 +5,48 @@
     overflow-y: auto;
     height: calc(100vh - 400px);
     .scrollbar(2px, #666);
-
+    padding: 20px 24px !important;
     .m-section-title {
         .w(100%);
         position: relative;
         color: @section-title-color;
+        font-size: 12px;
         &::after {
             .pa;
             .db;
-            .w(200px);
+            .w(230px);
             right: 0;
             top: 50%;
             height: 1px;
             background-color: @section-title-color;
             content: "";
         }
+        &.m-boss-title {
+            &::after {
+                .w(253px);
+            }
+        }
     }
 
     .m-filter-list {
         width: 100%;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 5px;
-        grid-row-gap: 18px;
+        .flex;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
-    .u-effect {
-        width: fit-content;
-        display: inline-flex;
-        align-items: center;
+    .u-filter {
         .pointer;
         .r(4px);
-        padding: 2px;
-        gap: 5px;
+        padding: 2px 4px;
+        .size(81px, 22px);
         box-sizing: border-box;
-
-        span {
-            .fz(14px);
-            font-weight: 400;
-            color: @baizhan_color;
-        }
+        .fz(14px);
+        font-weight: 400;
+        color: @baizhan_color;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         &.is-active,
         &:hover {
             background-color: @baizhan_active;

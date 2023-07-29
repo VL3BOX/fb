@@ -1,5 +1,5 @@
 <template>
-    <div class="m-map-filter w-card">
+    <div class="w-card m-map-filter">
         <div class="w-card-title">
             <img src="@/assets/img/baizhan/filter.svg" alt="筛选" />
             <span>筛选</span>
@@ -7,48 +7,25 @@
         <div class="m-section-title">特殊效果</div>
         <div class="m-filter-list">
             <div
-                class="u-effect"
+                class="u-filter"
                 :class="activeEffectKey === effect.key && 'is-active'"
                 v-for="(effect, index) in effectsFilter"
                 :key="index"
                 @click="setEffect(effect)"
             >
-                <img :src="require(`@/assets/img/baizhan/effect/${effect.key}.svg`)" :alt="effect.text" />
-                <span>{{ effect.text }}</span>
+                {{ effect.text }}
             </div>
         </div>
-        <div class="m-section-title">首领筛选</div>
-        <div class="m-filter-boss">
-            <div class="u-boss-list">
-                <div
-                    class="u-tab-boss"
-                    :class="activeBossId === floor.dwBossID && 'is-active'"
-                    v-for="(floor, i) in maps"
-                    :key="floor.dwBossID"
-                    ref="floor"
-                    @click="setBoss(floor, i)"
-                >
-                    <i class="u-index">{{ i + 1 }}</i>
-                    <img class="u-avatar" :src="floor.bossAvatar" :alt="floor.bossName" />
-                    <span>{{ floor.bossName }}</span>
-                    <a
-                        v-if="floor.bossLink"
-                        class="u-link"
-                        :title="`${floor.bossName}攻略`"
-                        :href="floor.bossLink"
-                        target="_blank"
-                        @click.stop
-                    >
-                        <i class="el-icon-link"></i>
-                    </a>
-                    <img
-                        v-if="activeTab === 'map' && floor.nEffectID"
-                        class="u-effect-img"
-                        :src="getEffectInfo(effects, floor.nEffectID)"
-                        :alt="getEffectInfo(effects, floor.nEffectID, 'name')"
-                        @click.stop="toBuff(floor)"
-                    />
-                </div>
+        <div class="m-section-title m-boss-title">首领</div>
+        <div class="m-filter-list">
+            <div
+                class="u-filter"
+                :class="currentBossName === bossName && 'is-active'"
+                v-for="(bossName, index) in bossNames"
+                :key="index"
+                @click="setBoss(bossName)"
+            >
+                {{ bossName }}
             </div>
         </div>
     </div>
@@ -85,12 +62,13 @@ export default {
     },
     computed: {
         ...mapState({
-            effects: (state) => state.baizhan.effects,
-            maps: (state) => state.baizhan.maps,
-            currentBoss: (state) => state.baizhan.currentBoss,
             currentEffect: (state) => state.baizhan.currentEffect,
             activeTab: (state) => state.baizhan.activeTab,
+            currentBossName: (state) => state.baizhan.currentBossName,
         }),
+        bossNames() {
+            return this.$store.getters["baizhan/bossNames"];
+        },
         activeBossId() {
             return this.currentBoss?.dwBossID || 0;
         },
@@ -132,22 +110,15 @@ export default {
                 val: val,
             });
         },
-        setBoss(floor, i) {
-            let val = floor;
-            if (floor.dwBossID === this.currentBoss.dwBossID) {
-                val = {};
+        setBoss(bossName) {
+            let val = bossName;
+            if (bossName === this.currentBossName) {
+                val = "";
             }
             this.$store.commit("baizhan/setState", {
-                key: "currentBoss",
-                val: Object.assign(val, {
-                    floor: i + 1,
-                }),
+                key: "currentBossName",
+                val: val,
             });
-        },
-        toBuff(floor) {
-            const domain = process.env.NODE_ENV === "development" ? __Root : location.origin + "/";
-            const url = domain + `app/database/?type=buff&query=${floor.effect.buffID}&level=${floor.effect.buffLevel}`;
-            window.open(url, "_blank");
         },
     },
 };

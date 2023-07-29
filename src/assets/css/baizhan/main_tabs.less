@@ -8,6 +8,8 @@
 
     .u-tab-list {
         .flex;
+        justify-content: space-between;
+        width: 100%;
         gap: 10px;
     }
 
@@ -36,6 +38,31 @@
         color: #fdfcf5;
         .fz(12px, normal);
         font-weight: 400;
+        width: 100%;
+        .u-map-duration {
+            .flex;
+            justify-content: space-between;
+            width: 100%;
+            .u-download {
+                .flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+                .size(74px, 20px);
+                font-size: 12px;
+                background-color: @tab-bg-active;
+                color: #fff;
+                .r(2px);
+                cursor: pointer;
+                img {
+                    .size(12px, 12px);
+                }
+                &.is-disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+            }
+        }
     }
 
     .u-title-icon {

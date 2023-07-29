@@ -18,7 +18,18 @@
                 <span>地图信息</span>
             </div>
             <div class="u-map-update">更新时间：{{ update_time }}</div>
-            <div class="u-map-duration">持续时间：{{ duration.start }} ~ {{ duration.end }}</div>
+            <div class="u-map-duration">
+                <span>持续时间：{{ duration.start }} ~ {{ duration.end }}</span>
+                <a
+                    v-if="activeTab === 'map'"
+                    class="u-download"
+                    :class="down_disabled && 'is-disabled'"
+                    @click.prevent="toDownImg"
+                >
+                    <img src="@/assets/img/baizhan/export.svg" svg-inline />
+                    <span>{{ downLoading ? "导出中..." : "导出图片" }}</span>
+                </a>
+            </div>
         </div>
     </div>
 </template>
@@ -56,7 +67,12 @@ export default {
     computed: {
         ...mapState({
             activeTab: (state) => state.baizhan.activeTab,
+            maps: (state) => state.baizhan.maps,
+            downLoading: (state) => state.baizhan.downLoading,
         }),
+        down_disabled() {
+            return !this.maps.length || this.downLoading;
+        },
         update_moment() {
             return moment(this.$store.state.baizhan.map.updated_at);
         },
@@ -72,9 +88,20 @@ export default {
     },
     methods: {
         setActiveTab(tab) {
+            if (tab === "boss")
+                return this.$message({
+                    type: "info",
+                    message: "完善中",
+                });
             this.$store.commit("baizhan/setState", {
                 key: "activeTab",
                 val: tab,
+            });
+        },
+        toDownImg() {
+            this.$store.commit("baizhan/setState", {
+                key: "downLoading",
+                val: true,
             });
         },
     },

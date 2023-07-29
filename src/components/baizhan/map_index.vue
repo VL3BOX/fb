@@ -15,7 +15,7 @@
             :style="{ transform: `translate(${position.x}px, ${position.y}px) scale(${scale})` }"
             @click="preventClick"
         >
-            <el-button class="u-download" icon="el-icon-download" @click="exportToImage"></el-button>
+            <!-- <el-button class="u-download" icon="el-icon-download" @click="exportToImage"></el-button> -->
             <div class="u-step" v-for="(item, step) in list" :key="step">
                 <!-- activeFloor === step * 10 + index + 1 ? 'is-active' : '', -->
                 <div
@@ -23,9 +23,8 @@
                     :class="[
                         hasCurrent ? 'is-gray' : '',
                         floor.nEffectID ? 'is-effect' : '',
-                        currentBoss.dwBossID === floor.dwBossID || currentEffectIds.includes(floor.nEffectID)
-                            ? 'is-current'
-                            : '',
+                        floor.dwBossID === currentBoss.dwBossID ? 'is-info' : '',
+                        getCurrentStyle(floor, step * 10 + index + 1),
                     ]"
                     v-for="(floor, index) in item"
                     :key="index"
@@ -38,30 +37,36 @@
                         <div class="u-img">
                             <img :src="getBossAvatar(floor.dwBossID)" :alt="floor.bossName || '未知'" />
                         </div>
-                        <div class="u-name" :class="currentBoss === floor.bossName && 'is-current'">
+                        <div class="u-name" :class="currentBossName === floor.bossName && 'is-current'">
                             {{ floor.bossName }}
                         </div>
-                        <div class="u-desc">
-                            <div v-if="getEffectInfo(effects, floor.nEffectID, 'sketch').length" class="u-sketch">
+                        <div
+                            v-if="
+                                getEffectInfo(effects, floor.nEffectID, 'tags').length ||
+                                getEffectInfo(effects, floor.nEffectID, 'reward')
+                            "
+                            class="u-desc"
+                        >
+                            <div v-if="getEffectInfo(effects, floor.nEffectID, 'tags').length" class="u-sketch">
                                 <div
                                     class="u-sketch-info"
-                                    v-for="(sketch, si) in getEffectInfo(effects, floor.nEffectID, 'sketch')"
+                                    v-for="(tag, si) in getEffectInfo(effects, floor.nEffectID, 'tags')"
                                     :key="si"
                                 >
-                                    {{ sketch }}
+                                    {{ tag }}
                                 </div>
                             </div>
-                            <div v-if="getEffectInfo(effects, floor.nEffectID, 'coin')" class="u-coin">
+                            <div v-if="getEffectInfo(effects, floor.nEffectID, 'reward')" class="u-coin">
                                 <img class="u-coin-img" src="@/assets/img/baizhan/coin.svg" svg-inline />
-                                <span>{{ getEffectInfo(effects, floor.nEffectID, "coin") }}</span>
+                                <span>{{ getEffectInfo(effects, floor.nEffectID, "reward") }}</span>
                             </div>
                         </div>
                         <!-- <div v-if="floor.nEffectID" class="u-icon">
                             <img :src="getEffectInfo(effects, floor.nEffectID)" />
                         </div> -->
                     </div>
-                    <i class="u-current-icon el-icon-arrow-up"></i>
-                    <i class="u-current-icon el-icon-arrow-down"></i>
+                    <i class="u-info-icon el-icon-arrow-up"></i>
+                    <i class="u-info-icon el-icon-arrow-down"></i>
                 </div>
             </div>
         </div>
@@ -73,10 +78,11 @@
 import { mapState } from "vuex";
 import User from "@jx3box/jx3box-common/js/user";
 import { arr1to2, isPhone, isQQ, isWeChat } from "@/utils";
-import { getWeekStartDate, getWeekEndDate } from "@/utils/dateFormat";
+// import { getWeekStartDate, getWeekEndDate } from "@/utils/dateFormat";
 import { getEffectInfo } from "@/assets/js/baizhan";
 import { cloneDeep } from "lodash";
 import html2canvas from "html2canvas";
+import { moment } from "@jx3box/jx3box-common/js/moment";
 export default {
     name: "BaizhanMap",
     inject: ["__imgRoot"],
@@ -84,8 +90,8 @@ export default {
         return {
             loading: false,
             data: [],
-            startDate: getWeekStartDate(),
-            endDate: getWeekEndDate(),
+            // startDate: getWeekStartDate(),
+            // endDate: getWeekEndDate(),
             point: {
                 level: 1,
                 boss: "",
@@ -93,12 +99,6 @@ export default {
             },
             step: 6,
             row: 10,
-            // activeFloor: 1, // 当前层数 BOSS
-            // currentFloor: {
-            //     level: 1,
-            //     boss: "",
-            //     effect: 0,
-            // },
             scale: 1,
 
             isDragging: false,
@@ -121,13 +121,15 @@ export default {
             effects: (state) => state.baizhan.effects,
             maps: (state) => state.baizhan.maps,
             currentBoss: (state) => state.baizhan.currentBoss,
+            currentBossName: (state) => state.baizhan.currentBossName,
             currentEffect: (state) => state.baizhan.currentEffect,
+            downLoading: (state) => state.baizhan.downLoading,
         }),
         currentEffectIds() {
             return this.currentEffect?.ids || [];
         },
         hasCurrent() {
-            return this.currentBoss?.bossName || this.currentEffect?.key;
+            return this.currentBossName || this.currentEffect?.key;
         },
         isEditor: function () {
             return User.isEditor();
@@ -135,6 +137,15 @@ export default {
         list() {
             const data = cloneDeep(this.data);
             return arr1to2(data, this.row);
+        },
+        update_moment() {
+            return moment(this.$store.state.baizhan.map.updated_at);
+        },
+        duration() {
+            return {
+                start: this.update_moment.startOf("week").format("MM/DD"),
+                end: this.update_moment.endOf("week").format("MM/DD"),
+            };
         },
     },
     watch: {
@@ -160,18 +171,21 @@ export default {
                 });
             },
         },
-        // activeFloor: {
-        //     immediate: true,
-        //     handler(index) {
-        //         const point = cloneDeep(this.point);
-        //         const data = cloneDeep(this.data);
-        //         const floor = data?.[index - 1] || point;
-        //         floor.level = Math.ceil(index / this.row);
-        //         this.currentFloor = floor;
-        //     },
-        // },
+        downLoading(bol) {
+            if (bol) {
+                this.exportToImage();
+            }
+        },
     },
     methods: {
+        getCurrentStyle(floor, index) {
+            const indexes = [10, 20, 30, 40, 50, 60];
+            return (this.currentBossName === "精英首领"
+                ? indexes.includes(index)
+                : this.currentBossName === floor.bossName) || this.currentEffectIds.includes(floor.nEffectID)
+                ? "is-current"
+                : "";
+        },
         isPhone,
         startDrag(event) {
             this.isDragging = true;
@@ -187,10 +201,7 @@ export default {
         },
         drag(event) {
             if (this.isDragging) {
-                this.$store.commit("baizhan/setState", {
-                    key: "currentBoss",
-                    val: {},
-                });
+                // this.$store.dispatch("baizhan/resetCurrent");
                 const currentTime = Date.now();
                 const deltaTime = currentTime - this.lastTime;
 
@@ -254,13 +265,13 @@ export default {
         getEffectInfo,
         setBoss(floor, i) {
             let val = floor;
-            if (floor.dwBossID === this.currentBoss.dwBossID) {
+            if (floor.dwBossID === this.currentBoss?.dwBossID) {
                 val = {};
             }
             this.$store.commit("baizhan/setState", {
                 key: "currentBoss",
                 val: Object.assign(val, {
-                    floor: i + 1,
+                    floor: i,
                 }),
             });
         },
@@ -335,7 +346,7 @@ export default {
                             // 创建一个虚拟链接
                             const link = document.createElement("a");
                             link.href = newCanvas.toDataURL(); // 将 Canvas 转换为 Data URL
-                            link.download = `魔盒百战${this.startDate}至${this.endDate}.png`; // 下载文件的名称
+                            link.download = `魔盒百战${this.duration.start}至${this.duration.end}.png`; // 下载文件的名称
 
                             link.addEventListener("click", () => {
                                 setTimeout(() => {
@@ -348,10 +359,18 @@ export default {
                             document.body.appendChild(link);
                             link.click();
                             this.loading = false;
+                            this.$store.commit("baizhan/setState", {
+                                key: "downLoading",
+                                val: false,
+                            });
                         });
                     })
                     .catch((error) => {
                         this.loading = false;
+                        this.$store.commit("baizhan/setState", {
+                            key: "downLoading",
+                            val: false,
+                        });
                         console.error("导出图片出错:", error);
                     });
             });
@@ -370,18 +389,19 @@ export default {
                 ctx.textBaseline = "middle";
                 ctx.textAlign = "center"; // 设置居中对齐
 
-                const topTxt = `百战异闻录 ${this.startDate} 至 ${this.endDate}`;
+                const topTxt = `百战异闻录 ${this.duration.start} 至 ${this.duration.end}`;
                 const topTxtX = canvas.width / 2; // 居中位置
-                const topTxtY = 30 * 2; // 垂直位置
+                const topTxtY = 30 * 1.5; // 垂直位置
                 ctx.fillText(topTxt, topTxtX, topTxtY);
 
-                const bottomTxt = "By: 魔盒 (https://www.jx3box.com)";
-                const bottomTxtX = canvas.width / 2; // 居中位置
-                const bottomTxtY = canvas.height - topTxtY; // 垂直位置
-                ctx.fillText(bottomTxt, bottomTxtX, bottomTxtY);
+                // const bottomTxt = "By: 魔盒 (https://www.jx3box.com)";
+                // const bottomTxtX = canvas.width / 2; // 居中位置
+                // const bottomTxtY = canvas.height - topTxtY; // 垂直位置
+                // ctx.fillText(bottomTxt, bottomTxtX, bottomTxtY);
 
                 // 绘制文字水印
-                const txt = "JX3BOX";
+                // const txt = "JX3BOX";
+                const txt = "";
                 const txtHeight = canvas.height / 6;
                 const txtWidth = ctx.measureText(txt).width;
                 const txtRepeat = Math.ceil(canvas.width / (txtWidth + 20)) * 2; // 添加间隔距离
@@ -425,7 +445,7 @@ export default {
                     const textWidth = ctx.measureText(topTxt).width * 2; // 顶部文字的宽度
                     const padding = 10; // 图片与文字之间的间距
                     const imageX = topTxtX - textWidth - imageSize - padding;
-                    ctx.putImageData(imageData, imageX, 30);
+                    ctx.putImageData(imageData, imageX, 15);
 
                     resolve(canvas);
                 };

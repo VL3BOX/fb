@@ -1,70 +1,9 @@
-export const baizhanEffects = [
-    {
-        nID: 1,
-        coin: 300,
-        sketch: "",
-        buffID: 24899,
-        buffLevel: 1,
-    },
-    {
-        nID: 2,
-        coin: 80,
-        sketch: "秒杀",
-        buffID: 24900,
-        buffLevel: 1,
-    },
-    {
-        nID: 3,
-        coin: 80,
-        sketch: "稀有提高",
-        buffID: 24901,
-        buffLevel: 1,
-    },
-    {
-        nID: 4,
-        coin: 80,
-        sketch: "免消耗",
-        buffID: 24902,
-        buffLevel: 1,
-    },
-    {
-        nID: 5,
-        coin: 50,
-        sketch: "后退6步/骰子翻倍",
-        buffID: 24903,
-        buffLevel: 1,
-    },
-    {
-        nID: 6,
-        coin: 50,
-        sketch: "前进6步/骰子减半",
-        buffID: 24904,
-        buffLevel: 1,
-    },
-    {
-        nID: 7,
-        coin: 100,
-        sketch: "",
-        buffID: 24905,
-        buffLevel: 1,
-    },
-    {
-        nID: 8,
-        coin: 100,
-        sketch: "后退3步",
-        buffID: 24906,
-        buffLevel: 1,
-    },
-    {
-        nID: 9,
-        coin: 0,
-        sketch: "逆向前进",
-        buffID: 26257,
-        buffLevel: 0,
-    },
-];
-
 export const effectsFilter = [
+    {
+        text: "全部效果",
+        key: "all",
+        ids: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    },
     {
         text: "额外奖励",
         key: "reward",
@@ -77,7 +16,7 @@ export const effectsFilter = [
     },
     {
         text: "骰子减弱",
-        key: "dice",
+        key: "dice_1",
         ids: [6],
     },
     {
@@ -102,7 +41,7 @@ export const effectsFilter = [
     },
     {
         text: "稀有提高",
-        key: "reward",
+        key: "reward_1",
         ids: [3],
     },
 ];
@@ -232,6 +171,8 @@ export const effects = [
         desc: "击败首领额外获取300个修罗之印。",
         reward: 300,
         tags: [],
+        buffID: 24899,
+        buffLevel: 1,
     },
     {
         id: 2,
@@ -240,6 +181,8 @@ export const effects = [
         desc: "直接获得80个修罗之印，并在下次与首领的战斗中直接击败首领。",
         reward: 80,
         tags: ["秒杀首领"],
+        buffID: 24900,
+        buffLevel: 1,
     },
     {
         id: 3,
@@ -248,6 +191,8 @@ export const effects = [
         desc: "本层稀有招式要诀出现率提高，击败首领额外获得80个修罗之印。",
         reward: 80,
         tags: ["稀有提高"],
+        buffID: 24901,
+        buffLevel: 1,
     },
     {
         id: 4,
@@ -256,6 +201,8 @@ export const effects = [
         desc: "获得一个随机前进次数，直接获得80个修罗之印。",
         reward: 80,
         tags: ["随机次数"],
+        buffID: 24902,
+        buffLevel: 1,
     },
     {
         id: 5,
@@ -264,6 +211,8 @@ export const effects = [
         desc: "后跃六步，下一次随机前进上限翻倍，直接获得50个修罗之印。",
         reward: 50,
         tags: ["后跃六步", "骰子翻倍"],
+        buffID: 24903,
+        buffLevel: 1,
     },
     {
         id: 6,
@@ -272,6 +221,8 @@ export const effects = [
         desc: "前跃六步，下一次随机前进上限减半，直接获得50个修罗之印。",
         reward: 50,
         tags: ["前跃六步", "骰子减半"],
+        buffID: 24904,
+        buffLevel: 1,
     },
     {
         id: 7,
@@ -280,6 +231,8 @@ export const effects = [
         desc: "击败首领额外获得100个修罗之印。",
         reward: 100,
         tags: [],
+        buffID: 24905,
+        buffLevel: 1,
     },
     {
         id: 8,
@@ -288,6 +241,8 @@ export const effects = [
         desc: "后跃三步，击败首领额外获得100个修罗之印。",
         reward: 100,
         tags: ["后跃三步"],
+        buffID: 24906,
+        buffLevel: 1,
     },
     {
         id: 9,
@@ -296,5 +251,7 @@ export const effects = [
         desc: "获得逆向前进的机会。",
         reward: 0,
         tags: ["逆向前进"],
+        buffID: 26257,
+        buffLevel: 0,
     },
 ];

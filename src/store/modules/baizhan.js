@@ -1,6 +1,12 @@
 import { getBosses, getBossInfo, getTypes, getSkills, getSkillInfo, getEffects, getMap } from "@/service/baizhan";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { baizhanEffects } from "@/assets/data/baizhan_effects.js";
+import {
+    effects as baizhanEffects,
+    skill_costs,
+    skill_types,
+    skill_colors,
+    effectsFilter,
+} from "@/assets/data/baizhan_effects.js";
 
 export default {
     namespaced: true,
@@ -8,9 +14,14 @@ export default {
         // 当前页面
         activeTab: "map",
 
-        currentEffect: [],
+        currentEffect: effectsFilter[0],
         currentBoss: {},
-        types: {},
+        currentBossName: "精英首领",
+        types: {
+            skill_colors: skill_colors,
+            skill_costs: skill_costs,
+            skill_types: skill_types,
+        },
         bosses: [],
         skills: [],
         skillExtraList: [],
@@ -18,6 +29,15 @@ export default {
 
         map: "",
         maps: [],
+
+        downLoading: false,
+    },
+    getters: {
+        bossNames(state) {
+            return ["精英首领"].concat(
+                Array.from(new Set(state.bosses.map((item) => item.name))).filter((item) => item !== "精英首领")
+            );
+        },
     },
     mutations: {
         setState(state, val) {
@@ -32,32 +52,12 @@ export default {
             });
             commit("setState", {
                 key: "currentEffect",
-                val: [],
+                val: effectsFilter[0],
             });
-        },
-        async loadTypes({ commit }) {
-            const cache = sessionStorage.getItem(`baizhan-types`);
-            if (cache) {
-                const data = JSON.parse(cache);
-                commit("setState", {
-                    key: "types",
-                    val: data,
-                });
-            } else {
-                await getTypes().then((res) => {
-                    const data = res.data?.data || {};
-                    const types = {
-                        szTypes: data?.[1] || [],
-                        costs: data?.[2] || [],
-                        colors: data?.[3] || [],
-                    };
-                    commit("setState", {
-                        key: "types",
-                        val: types,
-                    });
-                    sessionStorage.setItem(`baizhan-types`, JSON.stringify(types));
-                });
-            }
+            commit("setState", {
+                key: "currentBossName",
+                val: "精英首领",
+            });
         },
         async loadBosses({ commit, dispatch }, payLoad) {
             const cache = sessionStorage.getItem(`baizhan-bosses`);
@@ -160,17 +160,17 @@ export default {
                         dwIconID: 18505,
                         szName: "无",
                         szDescription: "",
-                        coin: 0,
-                        sketch: "",
+                        reward: 0,
+                        tags: "",
                         buffID: 24848,
                     });
                     const effects = list.map((item) => {
                         return {
                             ...item,
-                            coin: baizhanEffects.find((effect) => effect.nID === item.nID)?.coin || 0,
-                            sketch: baizhanEffects.find((effect) => effect.nID === item.nID)?.sketch || "",
-                            buffID: baizhanEffects.find((effect) => effect.nID === item.nID)?.buffID || 24848,
-                            buffLevel: baizhanEffects.find((effect) => effect.nID === item.nID)?.buffLevel || 1,
+                            reward: baizhanEffects.find((effect) => effect.id === item.nID)?.reward || 0,
+                            tags: baizhanEffects.find((effect) => effect.id === item.nID)?.tags || [],
+                            buffID: baizhanEffects.find((effect) => effect.id === item.nID)?.buffID || 24848,
+                            buffLevel: baizhanEffects.find((effect) => effect.id === item.nID)?.buffLevel || 1,
                         };
                     });
                     commit("setState", {
@@ -185,7 +185,7 @@ export default {
             await getMap().then((res) => {
                 if (res.data?.code !== 0) return;
                 state.map = res.data?.data || "";
-                
+
                 const bosses = state.bosses;
                 const effects = state.effects;
                 const data = res.data?.data?.data || [];
@@ -202,6 +202,10 @@ export default {
                 commit("setState", {
                     key: "maps",
                     val: list,
+                });
+                commit("setState", {
+                    key: "currentBoss",
+                    val: list[0],
                 });
             });
         },

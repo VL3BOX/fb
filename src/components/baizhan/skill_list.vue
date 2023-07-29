@@ -2,13 +2,13 @@
     <div class="p-skills">
         <div class="m-search">
             <el-select v-model="type" placeholder="技能效果">
-                <el-option v-for="item in szTypes" :key="item.ID" :value="item.ID" :label="item.TypeName"></el-option>
+                <el-option v-for="item in skillTypes" :key="item.id" :value="item.id" :label="item.name"></el-option>
             </el-select>
             <el-select v-model="color" placeholder="技能颜色">
-                <el-option v-for="item in colors" :key="item.ID" :value="item.ID" :label="item.TypeName"></el-option>
+                <el-option v-for="item in skillColors" :key="item.id" :value="item.id" :label="item.name"></el-option>
             </el-select>
             <el-select v-model="cost" placeholder="点数消耗">
-                <el-option v-for="item in costs" :key="item.ID" :value="item.ID" :label="item.TypeName"></el-option>
+                <el-option v-for="item in skillCosts" :key="item.id" :value="item.id" :label="item.name"></el-option>
             </el-select>
             <el-input v-model="keyword" placeholder="请输入技能名称或BOSS名称" clearable></el-input>
         </div>
@@ -139,14 +139,14 @@ export default {
                 keyword: this.keyword,
             };
         },
-        colors() {
-            return this.types.colors;
+        skillColors() {
+            return this.types.skill_colors;
         },
-        costs() {
-            return this.types.costs;
+        skillCosts() {
+            return this.types.skill_costs;
         },
-        szTypes() {
-            return this.types.szTypes;
+        skillTypes() {
+            return this.types.skill_types;
         },
         isEditor: function () {
             return User.isEditor();

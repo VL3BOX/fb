@@ -71,6 +71,7 @@ export default {
             effects: (state) => state.baizhan.effects,
             maps: (state) => state.baizhan.maps,
             activeTab: (state) => state.baizhan.activeTab,
+            currentBoss: (state) => state.baizhan.currentBoss,
         }),
         leftComponent() {
             if (this.activeTab === "map") {
@@ -100,7 +101,7 @@ export default {
             });
         },
         hasRight() {
-            return this.activeTab === "map" && !isPhone();
+            return this.activeTab === "map" && this.currentBoss?.dwBossID && !isPhone();
         },
     },
     watch: {

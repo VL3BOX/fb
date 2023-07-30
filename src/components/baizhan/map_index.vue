@@ -363,6 +363,8 @@ export default {
                                 key: "downLoading",
                                 val: false,
                             });
+                            // 初始化地图右侧信息
+                            this.$store.dispatch("baizhan/resetCurrent", true);
                         });
                     })
                     .catch((error) => {

@@ -8,7 +8,10 @@
             :popper-class="`u-skill__popup__${source.nColor}`"
         >
             <template slot="reference">
-                <div class="u-skill-icon" :class="`u-skill-icon__${source.nColor}`">
+                <div
+                    class="u-skill-icon"
+                    :class="[!!~~data.IsPassiveSkill ? 'is-passive' : '', `u-skill-icon__${source.nColor}`]"
+                >
                     <img :src="iconLink(iconId || data.IconID, client)" @click.stop="getUrl(data.SkillID)" />
                 </div>
             </template>

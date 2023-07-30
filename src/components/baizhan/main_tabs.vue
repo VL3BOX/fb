@@ -15,7 +15,7 @@
         <div class="u-map-info">
             <div class="u-map-title">
                 <img class="u-title-icon" src="@/assets/img/baizhan/tabs/map_active.svg" alt="" />
-                <span>地图信息</span>
+                <span>{{ activeTab === "map" ? "地图" : "数据" }}信息</span>
             </div>
             <div class="u-map-update">更新时间：{{ update_time }}</div>
             <div class="u-map-duration">

@@ -47,7 +47,12 @@
                         :href="getUrl(skill.skillId)"
                         target="_blank"
                     >
-                        <img class="u-skill-icon" :src="skill.skillIcon" :alt="skill.skillName" />
+                        <img
+                            class="u-skill-icon"
+                            :class="skill.isPassive && 'is-passive'"
+                            :src="skill.skillIcon"
+                            :alt="skill.skillName"
+                        />
                         <span>{{ skill.skillName }}</span>
                     </a>
                 </div>
@@ -81,6 +86,7 @@ export default {
                         skillName: skillObj?.szSkillName,
                         skillColor: skillObj?.nColor,
                         skillIcon: iconLink(skillObj?.skillIconId || 13),
+                        isPassive: !!~~skillObj?.Skill?.IsPassiveSkill,
                     };
                 }),
             };

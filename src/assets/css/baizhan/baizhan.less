@@ -44,6 +44,21 @@
         &:hover {
             .c-sidebar-left-toggle {
                 .db;
+                background-color: @baizhan_tab_bg;
+                border-color: @baizhan_tab_bg;
+                color: @baizhan_color;
+            }
+        }
+        @media screen and (max-width: @ipad) {
+            background-color: @baizhan_tab_bg;
+
+            .c-sidebar-left-toggle {
+                .none;
+            }
+            &:hover {
+                .c-sidebar-left-toggle {
+                    .none;
+                }
             }
         }
         .m-baizhan-left {
@@ -91,6 +106,9 @@
         &:hover {
             .c-sidebar-right-toggle {
                 .db;
+                background-color: #101827;
+                border-color: #101827;
+                color: @baizhan_color;
             }
         }
         &.is-close {

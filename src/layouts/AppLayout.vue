@@ -62,8 +62,15 @@ export default {
         color: #c8c8c8 !important;
     }
     @media screen and (max-width: @ipad) {
-        .u-title {
-            margin-left: 20px;
+        .u-menu {
+            .db !important;
+        }
+        .u-channel-logo {
+            width: 0;
+            padding-left: 10px;
+            img {
+                .none !important;
+            }
         }
     }
     img,

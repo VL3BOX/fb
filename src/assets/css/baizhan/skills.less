@@ -8,8 +8,7 @@
     width: 100%;
     box-sizing: border-box;
     height: 100vh;
-    overflow-y: auto;
-    .scrollbar(2px);
+    overflow-y: hidden;
     .m-search {
         .flex;
         gap: 10px;
@@ -23,6 +22,9 @@
         }
     }
     .m-table {
+        .el-table__body-wrapper {
+            .scrollbar(2px, #666);
+        }
         input {
             background-color: @baizhan_tab_bg !important;
             border-color: @baizhan_tab_bg !important;

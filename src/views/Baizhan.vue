@@ -1,19 +1,28 @@
 <template>
     <app-layout slug="baizhan" className="p-baizhan-app">
         <div class="p-baizhan" v-loading="loading">
-            <div class="m-baizhan-left" v-if="!isPhone()">
-                <main-tabs></main-tabs>
-                <keep-alive>
-                    <component :is="leftComponent"></component>
-                </keep-alive>
-            </div>
-            <div class="m-baizhan-center" :class="isPhone() && 'is-phone'">
+            <LeftSidebar class="m-baizhan-sidebar">
+                <div class="m-baizhan-left" v-if="!isPhone()">
+                    <main-tabs></main-tabs>
+                    <keep-alive>
+                        <component :is="leftComponent"></component>
+                    </keep-alive>
+                </div>
+            </LeftSidebar>
+            <div
+                class="m-baizhan-center"
+                :class="[isPhone() ? 'is-phone' : '', hasRight && rightOpen ? '' : 'is-right-close']"
+            >
                 <BMap v-if="activeTab === 'map'"></BMap>
                 <Skills v-if="activeTab === 'skill'"></Skills>
                 <Bosses v-if="activeTab === 'boss'"></Bosses>
             </div>
-            <div class="m-baizhan-right" v-if="activeTab === 'map' && !isPhone()">
+            <div class="m-baizhan-right" :class="rightOpen ? 'is-open' : 'is-close'" v-if="hasRight">
                 <BInfo></BInfo>
+                <BComment></BComment>
+                <span class="c-sidebar-right-toggle" @click="rightOpen = !rightOpen">
+                    <i :class="rightOpen ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i>
+                </span>
             </div>
         </div>
     </app-layout>
@@ -22,11 +31,13 @@
 <script>
 import MainTabs from "@/components/baizhan/main_tabs.vue";
 import MapFilter from "@/components/baizhan/map_filter.vue";
+import SkillFilter from "@/components/baizhan/skill_filter.vue";
 
 import Skills from "@/components/baizhan/skill_list.vue";
 import BMap from "@/components/baizhan/map_index.vue";
 
 import BInfo from "@/components/baizhan/map_level_info.vue";
+import BComment from "@/components/baizhan/baizhan_comment.vue";
 import Bosses from "@/components/baizhan/boss_index.vue";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { isPhone } from "@/utils";
@@ -39,15 +50,18 @@ export default {
     components: {
         MainTabs,
         MapFilter,
+        SkillFilter,
 
         Skills,
         BMap,
         BInfo,
         Bosses,
+        BComment,
     },
     data() {
         return {
             loading: false,
+            rightOpen: true,
         };
     },
     computed: {
@@ -59,7 +73,13 @@ export default {
             activeTab: (state) => state.baizhan.activeTab,
         }),
         leftComponent() {
-            return MapFilter;
+            if (this.activeTab === "map") {
+                return MapFilter;
+            }
+            if (this.activeTab === "skill") {
+                return SkillFilter;
+            }
+            return null;
         },
         bossList() {
             const skills = this.skills;
@@ -79,10 +99,13 @@ export default {
                 };
             });
         },
+        hasRight() {
+            return this.activeTab === "map" && !isPhone();
+        },
     },
     watch: {
         activeTab() {
-            this.resetCurrent();
+            this.resetCurrent(true);
         },
     },
     methods: {

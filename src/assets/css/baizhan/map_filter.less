@@ -1,11 +1,12 @@
 @section-title-color: rgba(249, 247, 232, 0.3);
 
 .m-map-filter {
+    position: relative;
     overflow-x: hidden;
     overflow-y: auto;
-    height: calc(100vh - 400px);
+    height: calc(100vh - 457px);
     .scrollbar(2px, #666);
-    padding: 20px 24px !important;
+    padding: 0 24px 20px !important;
     .m-section-title {
         .w(100%);
         position: relative;
@@ -14,17 +15,38 @@
         &::after {
             .pa;
             .db;
-            .w(230px);
+            .w(80%);
             right: 0;
             top: 50%;
             height: 1px;
             background-color: @section-title-color;
             content: "";
         }
-        &.m-boss-title {
+        &.m-two-title {
             &::after {
-                .w(253px);
+                .w(89%);
             }
+        }
+    }
+    .first-section {
+        margin-top: 60px;
+    }
+    .w-card-title {
+        background-color: @baizhan_tab_bg;
+        position: fixed;
+        width: calc(100% - 60px);
+        .flex;
+        justify-content: flex-start;
+        padding: 20px 0;
+        box-sizing: border-box;
+        z-index: 2;
+    }
+    .m-search {
+        width: 100%;
+        input {
+            background-color: #1f2937 !important;
+            border-color: #1f2937 !important;
+            color: #c8c8c8;
         }
     }
 

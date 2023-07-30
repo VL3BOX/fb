@@ -12,7 +12,7 @@ export default {
     namespaced: true,
     state: {
         // 当前页面
-        activeTab: "map",
+        activeTab: "skill",
 
         currentEffect: effectsFilter[0],
         currentBoss: {},
@@ -26,6 +26,7 @@ export default {
         skills: [],
         skillExtraList: [],
         effects: [],
+        skillParams: {},
 
         map: "",
         maps: [],
@@ -45,10 +46,10 @@ export default {
         },
     },
     actions: {
-        resetCurrent({ commit }) {
+        resetCurrent({ commit, state }, isInitBoss = false) {
             commit("setState", {
                 key: "currentBoss",
-                val: {},
+                val: isInitBoss ? state.maps?.[0] || {} : {},
             });
             commit("setState", {
                 key: "currentEffect",

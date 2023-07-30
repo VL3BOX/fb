@@ -265,9 +265,9 @@ export default {
         getEffectInfo,
         setBoss(floor, i) {
             let val = floor;
-            if (floor.dwBossID === this.currentBoss?.dwBossID) {
-                val = {};
-            }
+            // if (floor.dwBossID === this.currentBoss?.dwBossID) {
+            //     val = {};
+            // }
             this.$store.commit("baizhan/setState", {
                 key: "currentBoss",
                 val: Object.assign(val, {

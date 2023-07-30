@@ -13,7 +13,7 @@
         </Breadcrumb>
         <Main :class="className" :withoutRight="true" :withoutLeft="true">
             <slot></slot>
-            <Footer></Footer>
+            <Footer v-if="slug !== 'baizhan'"></Footer>
         </Main>
     </div>
 </template>

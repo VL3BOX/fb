@@ -4,7 +4,7 @@
             <img src="@/assets/img/baizhan/filter.svg" alt="筛选" />
             <span>筛选</span>
         </div>
-        <div class="m-section-title">特殊效果</div>
+        <div class="m-section-title first-section">特殊效果</div>
         <div class="m-filter-list">
             <div
                 class="u-filter"
@@ -16,13 +16,14 @@
                 {{ effect.text }}
             </div>
         </div>
-        <div class="m-section-title m-boss-title">首领</div>
+        <div class="m-section-title m-two-title">首领</div>
         <div class="m-filter-list">
             <div
                 class="u-filter"
                 :class="currentBossName === bossName && 'is-active'"
                 v-for="(bossName, index) in bossNames"
                 :key="index"
+                :title="bossName"
                 @click="setBoss(bossName)"
             >
                 {{ bossName }}

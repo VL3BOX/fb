@@ -56,7 +56,7 @@ export default {
                     icon_active: require("@/assets/img/baizhan/tabs/skill_active.svg"),
                 },
                 {
-                    label: "首领信息",
+                    label: "即将上线",
                     value: "boss",
                     icon: require("@/assets/img/baizhan/tabs/boss.svg"),
                     icon_active: require("@/assets/img/baizhan/tabs/boss_active.svg"),

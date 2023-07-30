@@ -1,25 +1,13 @@
 <template>
     <div class="p-skills">
-        <div class="m-search">
-            <el-select v-model="type" placeholder="技能效果">
-                <el-option v-for="item in skillTypes" :key="item.id" :value="item.id" :label="item.name"></el-option>
-            </el-select>
-            <el-select v-model="color" placeholder="技能颜色">
-                <el-option v-for="item in skillColors" :key="item.id" :value="item.id" :label="item.name"></el-option>
-            </el-select>
-            <el-select v-model="cost" placeholder="点数消耗">
-                <el-option v-for="item in skillCosts" :key="item.id" :value="item.id" :label="item.name"></el-option>
-            </el-select>
-            <el-input v-model="keyword" placeholder="请输入技能名称或BOSS名称" clearable></el-input>
-        </div>
-        <el-table ref="table" class="m-table" :data="skills">
+        <el-table ref="table" class="m-table" :data="skills" height="86vh">
             <el-table-column label="技能" width="200">
                 <template #default="{ row: skill }">
                     <div class="u-skill-cell">
                         <SkillIcon :source="skill"></SkillIcon>
-                        <a v-if="isEditor" class="u-edit" @click.stop="toEdit(skill)">
+                        <!-- <a v-if="isEditor" class="u-edit" @click.stop="toEdit(skill)">
                             <i class="el-icon-edit-outline"></i>
-                        </a>
+                        </a> -->
                     </div>
                 </template>
             </el-table-column>
@@ -114,13 +102,6 @@ export default {
         allLevel: 5,
         staged: {},
 
-        cost: 0, // 技能占用点数
-        type: 0, // 技能类型
-        color: 0, // 技能颜色
-        boss: "", // 技能所属BOSS 模糊查询
-        name: "", // 技能名称 模糊查询
-        keyword: "",
-
         addon_key: ["cooldown", "damage", "cost_vigor", "cost_endurance", "hit_vigor", "hit_endurance", "remarks"],
     }),
     computed: {
@@ -129,16 +110,8 @@ export default {
             skillList: (state) => state.baizhan.skills,
             skillExtraList: (state) => state.baizhan.skillExtraList,
             currentBoss: (state) => state.baizhan.currentBoss,
+            params: (state) => state.baizhan.skillParams,
         }),
-        params() {
-            return {
-                color: this.color,
-                cost: this.cost,
-                // name: this.name,
-                type: this.type,
-                keyword: this.keyword,
-            };
-        },
         skillColors() {
             return this.types.skill_colors;
         },
@@ -153,12 +126,6 @@ export default {
         },
     },
     watch: {
-        currentBoss: {
-            deep: true,
-            handler(boss) {
-                this.keyword = boss.bossName;
-            },
-        },
         skillList: {
             immediate: true,
             deep: true,
@@ -169,20 +136,28 @@ export default {
         params: {
             deep: true,
             handler(params) {
-                const { color, cost, type, keyword } = params;
-                if (!color && !cost && !keyword && !type) {
+                const { color, cost, type, name, bossName } = params;
+                if (!color && !cost && !name && !type && !bossName) {
                     return (this.skills = this.skillList);
                 }
                 this.skills = this.skillList.filter((item) => {
                     return (
                         (!color || item.nColor === color) &&
                         (!cost || item.nCost === cost) &&
+                        (!bossName || item.szBossName === bossName) &&
                         (!type || item.szType.includes(type)) &&
-                        (!keyword ||
-                            item?.szBossName?.indexOf(keyword) > -1 ||
-                            item?.szSkillName?.indexOf(keyword) > -1)
+                        (!name || item?.szSkillName?.indexOf(name) > -1)
                     );
                 });
+            },
+        },
+        skillExtraList: {
+            immediate: true,
+            deep: true,
+            handler(list) {
+                if (list.length) {
+                    this.load();
+                }
             },
         },
     },
@@ -246,9 +221,6 @@ export default {
                 this.$set(skill, `_${key}`, addon?.[key]);
             }
         },
-    },
-    mounted() {
-        this.load();
     },
 };
 </script>

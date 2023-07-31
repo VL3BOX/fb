@@ -204,17 +204,17 @@
                 .u-img {
                     position: absolute;
                     top: -20px;
-                    border: 2px solid @baizhan_active;
+                    border: 2px solid @baizhan_map_bg;
                     box-sizing: border-box;
                     user-select: none;
                 }
                 .u-name {
                     margin-top: 20px;
                     font-size: 16px;
-                    color: @baizhan_map_select_color;
+                    color: @baizhan_map_color;
                 }
                 .u-index {
-                    color: @baizhan_map_select_color;
+                    color: @baizhan_map_color;
                 }
                 .u-desc {
                     font-size: 12px;
@@ -231,6 +231,15 @@
                 // opacity: 1;
                 background-color: @baizhan_active !important;
                 color: @baizhan_map_select_color !important;
+                &.is-effect {
+                    .u-img {
+                        border-color: @baizhan_active;
+                    }
+                    .u-name,
+                    .u-index {
+                        color: @baizhan_map_select_color;
+                    }
+                }
             }
             &.is-info {
                 .u-info-icon {

@@ -69,6 +69,9 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        &.is-long {
+            .w(150px);
+        }
         &.is-active,
         &:hover {
             background-color: @baizhan_active;

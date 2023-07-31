@@ -39,6 +39,9 @@ export default {
                 Array.from(new Set(state.bosses.map((item) => item.name))).filter((item) => item !== "精英首领")
             );
         },
+        mapFilterInit(state) {
+            return state.currentEffect?.key === "all" && state.currentBossName === "精英首领" ? "init" : "";
+        },
     },
     mutations: {
         setState(state, val) {
@@ -46,11 +49,14 @@ export default {
         },
     },
     actions: {
-        resetCurrent({ commit, state }, isInitBoss = false) {
+        resetCurrent({ commit, state, dispatch }, isInitBoss = false) {
             commit("setState", {
                 key: "currentBoss",
                 val: isInitBoss ? state.maps?.[0] || {} : {},
             });
+            dispatch("setInitMapFilter");
+        },
+        setInitMapFilter({ commit }) {
             commit("setState", {
                 key: "currentEffect",
                 val: effectsFilter[0],

@@ -21,7 +21,6 @@
                 <div
                     class="u-floor"
                     :class="[
-                        hasCurrent ? 'is-gray' : '',
                         floor.nEffectID ? 'is-effect' : '',
                         floor.dwBossID === currentBoss.dwBossID ? 'is-info' : '',
                         getCurrentStyle(floor, step * 10 + index + 1),
@@ -76,7 +75,6 @@
 
 <script>
 import { mapState } from "vuex";
-import User from "@jx3box/jx3box-common/js/user";
 import { arr1to2, isPhone, isQQ, isWeChat } from "@/utils";
 // import { getWeekStartDate, getWeekEndDate } from "@/utils/dateFormat";
 import { getEffectInfo } from "@/assets/js/baizhan";
@@ -125,14 +123,11 @@ export default {
             currentEffect: (state) => state.baizhan.currentEffect,
             downLoading: (state) => state.baizhan.downLoading,
         }),
+        mapFilterInit() {
+            return this.$store.getters["baizhan/mapFilterInit"];
+        },
         currentEffectIds() {
             return this.currentEffect?.ids || [];
-        },
-        hasCurrent() {
-            return this.currentBossName || this.currentEffect?.key;
-        },
-        isEditor: function () {
-            return User.isEditor();
         },
         list() {
             const data = cloneDeep(this.data);
@@ -180,11 +175,30 @@ export default {
     methods: {
         getCurrentStyle(floor, index) {
             const indexes = [10, 20, 30, 40, 50, 60];
-            return (this.currentBossName === "精英首领"
-                ? indexes.includes(index)
-                : this.currentBossName === floor.bossName) || this.currentEffectIds.includes(floor.nEffectID)
-                ? "is-current"
-                : "";
+            if (this.mapFilterInit === "init") {
+                return (this.currentBossName === "精英首领"
+                    ? indexes.includes(index)
+                    : this.currentBossName === floor.bossName) || this.currentEffectIds.includes(floor.nEffectID)
+                    ? "is-current"
+                    : "";
+            } else {
+                if (this.currentBossName && this.currentEffectIds.length) {
+                    return (this.currentBossName === "精英首领"
+                        ? indexes.includes(index)
+                        : this.currentBossName === floor.bossName) && this.currentEffectIds.includes(floor.nEffectID)
+                        ? "is-current"
+                        : "";
+                }
+                return (
+                    (!this.currentBossName && this.currentEffectIds.includes(floor.nEffectID) ? "is-current" : "") ||
+                    (!this.currentEffectIds.length &&
+                    (this.currentBossName === "精英首领"
+                        ? indexes.includes(index)
+                        : this.currentBossName === floor.bossName)
+                        ? "is-current"
+                        : "")
+                );
+            }
         },
         isPhone,
         startDrag(event) {

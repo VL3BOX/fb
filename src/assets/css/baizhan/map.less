@@ -219,6 +219,14 @@
                 .u-desc {
                     font-size: 12px;
                     text-align: center;
+                    .u-coin-img {
+                        width: 10px;
+                        height: 12px;
+                        .none;
+                        &.u-img-no-current {
+                            .dbi;
+                        }
+                    }
                 }
             }
             &.is-gray {
@@ -238,6 +246,14 @@
                     .u-name,
                     .u-index {
                         color: @baizhan_map_select_color;
+                    }
+                    .u-desc {
+                        .u-img-no-current {
+                            .none;
+                        }
+                        .u-img-current {
+                            .dbi;
+                        }
                     }
                 }
             }

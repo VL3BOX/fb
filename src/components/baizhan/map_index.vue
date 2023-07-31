@@ -56,7 +56,12 @@
                                 </div>
                             </div>
                             <div v-if="getEffectInfo(effects, floor.nEffectID, 'reward')" class="u-coin">
-                                <img class="u-coin-img" src="@/assets/img/baizhan/coin.svg" svg-inline />
+                                <img class="u-coin-img u-img-current" src="@/assets/img/baizhan/coin.svg" svg-inline />
+                                <img
+                                    class="u-coin-img u-img-no-current"
+                                    src="@/assets/img/baizhan/tabs/skill.svg"
+                                    svg-inline
+                                />
                                 <span>{{ getEffectInfo(effects, floor.nEffectID, "reward") }}</span>
                             </div>
                         </div>

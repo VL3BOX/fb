@@ -248,6 +248,12 @@
                 }
             }
             &.is-info {
+                background-color: @baizhan_active !important;
+                color: @baizhan_map_select_color !important;
+                .u-name,
+                .u-index {
+                    color: @baizhan_map_select_color;
+                }
                 .u-info-icon {
                     .db;
                 }
@@ -289,6 +295,14 @@
             gap: 8px;
             height: 150px;
             color: @baizhan_map_color;
+            &.has-info {
+                .u-floor {
+                    opacity: 0.2;
+                    &.is-info {
+                        opacity: 1;
+                    }
+                }
+            }
             &:nth-of-type(even) {
                 flex-direction: row-reverse;
                 .u-floor {

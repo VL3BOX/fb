@@ -23,11 +23,12 @@
     width: 100%;
     background-color: @baizhan_bg;
     overflow: hidden;
-    padding: 0 20px;
-    height: calc(100vh - 113px);
+    padding: 15px 20px 0;
+    height: calc(100vh - 112px);
 
     .m-baizhan-sidebar {
         padding: 0;
+        top: calc(112px + 20px);
         padding-left: 20px;
         background-color: transparent;
         border-right: none;
@@ -43,7 +44,8 @@
         }
         &:hover {
             .c-sidebar-left-toggle {
-                .db;
+                // .db;
+                .none;
                 background-color: @baizhan_tab_bg;
                 border-color: @baizhan_tab_bg;
                 color: @baizhan_color;
@@ -94,22 +96,36 @@
         background-color: @baizhan_bg;
         border-right: none;
         width: 292px;
-        height: calc(100vh - 64px - 48px - 32px);
+        height: calc(100vh - 125px);
         background: #111827;
         margin-right: 20px;
         transition: 0.2s ease-in-out;
         transform: translateX(0);
         .r(10px);
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        .m-right-wrap {
+            .size(100%, 100%);
+            overflow-x: hidden;
+            overflow-y: auto;
+            .scrollbar(2px, #666);
+        }
+        .c-sidebar-right-toggle {
+            background-color: #101827;
+            border-color: #101827;
+            color: @baizhan_color;
+        }
         .c-sidebar-right-toggle {
             .none;
+            border-radius: 0;
         }
         &:hover {
             .c-sidebar-right-toggle {
                 .db;
-                background-color: #101827;
-                border-color: #101827;
-                color: @baizhan_color;
             }
+        }
+        &.is-no {
+            transform: translateX(calc(100% + 20px));
         }
         &.is-close {
             transform: translateX(calc(100% + 20px));

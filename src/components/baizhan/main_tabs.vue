@@ -3,7 +3,7 @@
         <div class="u-tab-list">
             <div
                 class="u-tab"
-                :class="tab.value === activeTab && 'is-active'"
+                :class="[tab.value === activeTab ? 'is-active' : '', tab.value === 'boss' ? 'is-gray' : '']"
                 v-for="tab in tabs"
                 :key="tab.value"
                 @click="setActiveTab(tab.value)"
@@ -56,7 +56,7 @@ export default {
                     icon_active: require("@/assets/img/baizhan/tabs/skill_active.svg"),
                 },
                 {
-                    label: "即将上线",
+                    label: "首领数据",
                     value: "boss",
                     icon: require("@/assets/img/baizhan/tabs/boss.svg"),
                     icon_active: require("@/assets/img/baizhan/tabs/boss_active.svg"),

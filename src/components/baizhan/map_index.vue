@@ -16,7 +16,12 @@
             @click="preventClick"
         >
             <!-- <el-button class="u-download" icon="el-icon-download" @click="exportToImage"></el-button> -->
-            <div class="u-step" v-for="(item, step) in list" :key="step">
+            <div
+                class="u-step"
+                :class="currentBoss.dwBossID ? 'has-info' : ''"
+                v-for="(item, step) in list"
+                :key="step"
+            >
                 <!-- activeFloor === step * 10 + index + 1 ? 'is-active' : '', -->
                 <div
                     class="u-floor"
@@ -274,9 +279,9 @@ export default {
         getEffectInfo,
         setBoss(floor, i) {
             let val = floor;
-            // if (floor.dwBossID === this.currentBoss?.dwBossID) {
-            //     val = {};
-            // }
+            if (floor.dwBossID === this.currentBoss?.dwBossID) {
+                val = {};
+            }
             this.$store.commit("baizhan/setState", {
                 key: "currentBoss",
                 val: Object.assign(val, {
@@ -373,7 +378,7 @@ export default {
                                 val: false,
                             });
                             // 初始化地图右侧信息
-                            this.$store.dispatch("baizhan/resetCurrent", true);
+                            // this.$store.dispatch("baizhan/resetCurrent", true);
                         });
                     })
                     .catch((error) => {
@@ -405,10 +410,12 @@ export default {
                 const topTxtY = 30 * 1.5; // 垂直位置
                 ctx.fillText(topTxt, topTxtX, topTxtY);
 
-                // const bottomTxt = "By: 魔盒 (https://www.jx3box.com)";
-                // const bottomTxtX = canvas.width / 2; // 居中位置
-                // const bottomTxtY = canvas.height - topTxtY; // 垂直位置
-                // ctx.fillText(bottomTxt, bottomTxtX, bottomTxtY);
+                const bottomTxt = "魔盒·百战查询 https://www.jx3box.com/fb/baizhan";
+                ctx.font = `bold 30px Arial`;
+                const txtBottomWidth = ctx.measureText(bottomTxt).width;
+                const bottomTxtX = canvas.width - txtBottomWidth / 2 - 30 * 2;
+                const bottomTxtY = canvas.height - topTxtY; // 垂直位置
+                ctx.fillText(bottomTxt, bottomTxtX, bottomTxtY);
 
                 // 绘制文字水印
                 // const txt = "JX3BOX";

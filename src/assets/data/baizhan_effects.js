@@ -200,7 +200,7 @@ export const effects = [
         name: "因陀罗的护佑",
         desc: "获得一个随机前进次数，直接获得80个修罗之印。",
         reward: 80,
-        tags: ["随机次数"],
+        tags: ["随机前进"],
         buffID: 24902,
         buffLevel: 1,
     },

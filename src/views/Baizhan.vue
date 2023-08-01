@@ -17,9 +17,12 @@
                 <Skills v-if="activeTab === 'skill'"></Skills>
                 <Bosses v-if="activeTab === 'boss'"></Bosses>
             </div>
-            <div class="m-baizhan-right" :class="rightOpen ? 'is-open' : 'is-close'" v-if="hasRight">
-                <BInfo></BInfo>
-                <BComment></BComment>
+            <!-- v-if="hasRight" -->
+            <div class="m-baizhan-right" :class="[rightOpen ? 'is-open' : 'is-close', hasRight ? 'is-has' : 'is-no']">
+                <div class="m-right-wrap">
+                    <BInfo></BInfo>
+                    <BComment v-if="hasRight"></BComment>
+                </div>
                 <span class="c-sidebar-right-toggle" @click="rightOpen = !rightOpen">
                     <i :class="rightOpen ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i>
                 </span>

@@ -50,6 +50,7 @@ export default {
         resetCurrent({ commit, state }, isInitBoss = false) {
             commit("setState", {
                 key: "currentBoss",
+                // val: isInitBoss ? state.maps?.[0] || {} : {},
                 val: isInitBoss ? state.maps?.[0] || {} : {},
             });
             commit("setState", {
@@ -205,10 +206,10 @@ export default {
                     key: "maps",
                     val: list,
                 });
-                commit("setState", {
-                    key: "currentBoss",
-                    val: list[0],
-                });
+                // commit("setState", {
+                //     key: "currentBoss",
+                //     val: list[0],
+                // });
             });
         },
     },

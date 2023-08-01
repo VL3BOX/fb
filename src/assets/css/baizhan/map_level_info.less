@@ -40,6 +40,9 @@
         .u-header {
             font-weight: 700;
         }
+        .u-effect-desc {
+            height: 78px;
+        }
         .u-title {
             .flex;
             align-items: center;
@@ -49,6 +52,12 @@
                 .size(30px,30px);
                 cursor: pointer;
             }
+        }
+        .u-no-effect {
+            .flex;
+            align-items: center;
+            justify-content: center;
+            height: 78px;
         }
     }
     .u-skill-wrap {
@@ -68,20 +77,41 @@
                 height: 30px;
                 .flex;
                 gap: 10px;
+                justify-content: space-between;
                 align-items: center;
                 background-color: #000;
                 color: @baizhan_color;
                 cursor: pointer;
                 &:hover {
-                    color: @skill_active;
+                    .u-skill-left {
+                        color: @skill_active;
+                    }
+                }
+                .u-skill-left {
+                    .flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+                .u-skill-right {
+                    font-size: 12px;
+                    color: @baizhan_active;
                 }
                 .u-skill-icon {
+                    transform: scale(1.15);
+                }
+                .u-img-wrap {
+                    .flex;
+                    justify-content: center;
+                    align-items: center;
+                    overflow: hidden;
                     .size(30px, 30px);
                     &.is-passive {
-                        .size(26px, 26px);
-                        margin-right: 2px;
-                        margin-left: 2px;
-                        border-radius: 50%;
+                        background-color: @baizhan_map_bg;
+                        .u-skill-icon {
+                            .size(24px, 24px);
+                            border-radius: 50%;
+                            transform: scale(1);
+                        }
                     }
                 }
                 &.u-skill-icon__1 {

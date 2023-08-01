@@ -22,7 +22,7 @@
             </div>
             <div class="u-effect-wrap">
                 <div class="u-header">层数效果</div>
-                <template v-if="current.nEffectID">
+                <div class="u-effect-desc" v-if="current.nEffectID">
                     <div class="u-title">
                         <img
                             class="u-effect-icon"
@@ -33,11 +33,11 @@
                         <div class="u-name">{{ current.effectName }}</div>
                     </div>
                     <div class="u-desc" v-html="current.effectDesc"></div>
-                </template>
-                <div v-else class="u-title">当前层没有特殊效果</div>
+                </div>
+                <div v-else class="u-no-effect">当前层没有特殊效果</div>
             </div>
             <div class="u-skill-wrap">
-                <div class="u-header">掉落</div>
+                <div class="u-header">技能掉落</div>
                 <div class="u-skill-list">
                     <a
                         class="u-skill-item"
@@ -47,13 +47,15 @@
                         :href="getUrl(skill.skillId)"
                         target="_blank"
                     >
-                        <img
-                            class="u-skill-icon"
-                            :class="skill.isPassive && 'is-passive'"
-                            :src="skill.skillIcon"
-                            :alt="skill.skillName"
-                        />
-                        <span>{{ skill.skillName }}</span>
+                        <div class="u-skill-left">
+                            <div class="u-img-wrap" :class="skill.isPassive && 'is-passive'">
+                                <img class="u-skill-icon" :src="skill.skillIcon" :alt="skill.skillName" />
+                            </div>
+                            <span>{{ skill.skillName }}</span>
+                        </div>
+                        <div class="u-skill-right">
+                            <span v-if="skill.isPassive">被动技能</span>
+                        </div>
                     </a>
                 </div>
             </div>

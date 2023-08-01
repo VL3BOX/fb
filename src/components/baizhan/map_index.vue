@@ -56,12 +56,7 @@
                                 </div>
                             </div>
                             <div v-if="getEffectInfo(effects, floor.nEffectID, 'reward')" class="u-coin">
-                                <img class="u-coin-img u-img-current" src="@/assets/img/baizhan/coin.svg" svg-inline />
-                                <img
-                                    class="u-coin-img u-img-no-current"
-                                    src="@/assets/img/baizhan/tabs/skill.svg"
-                                    svg-inline
-                                />
+                                <img class="u-coin-img" src="@/assets/img/baizhan/coin.svg" svg-inline />
                                 <span>{{ getEffectInfo(effects, floor.nEffectID, "reward") }}</span>
                             </div>
                         </div>
@@ -86,6 +81,7 @@ import { getEffectInfo } from "@/assets/js/baizhan";
 import { cloneDeep } from "lodash";
 import html2canvas from "html2canvas";
 import { moment } from "@jx3box/jx3box-common/js/moment";
+import { effectsFilter } from "@/assets/data/baizhan_effects.js";
 export default {
     name: "BaizhanMap",
     inject: ["__imgRoot"],
@@ -127,10 +123,8 @@ export default {
             currentBossName: (state) => state.baizhan.currentBossName,
             currentEffect: (state) => state.baizhan.currentEffect,
             downLoading: (state) => state.baizhan.downLoading,
+            mapFilterInit: (state) => state.baizhan.mapFilterInit,
         }),
-        mapFilterInit() {
-            return this.$store.getters["baizhan/mapFilterInit"];
-        },
         currentEffectIds() {
             return this.currentEffect?.ids || [];
         },
@@ -181,11 +175,7 @@ export default {
         getCurrentStyle(floor, index) {
             const indexes = [10, 20, 30, 40, 50, 60];
             if (this.mapFilterInit === "init") {
-                return (this.currentBossName === "精英首领"
-                    ? indexes.includes(index)
-                    : this.currentBossName === floor.bossName) || this.currentEffectIds.includes(floor.nEffectID)
-                    ? "is-current"
-                    : "";
+                return indexes.includes(index) || effectsFilter[0].ids.includes(floor.nEffectID) ? "is-current" : "";
             } else {
                 if (this.currentBossName && this.currentEffectIds.length) {
                     return (this.currentBossName === "精英首领"

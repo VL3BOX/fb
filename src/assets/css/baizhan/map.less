@@ -146,7 +146,7 @@
                 color: @baizhan_active;
             }
             .u-name {
-                color: @baizhan_map_color;
+                color: @baizhan_active;
                 font-size: 14px;
                 font-weight: bold;
                 width: 80px;
@@ -161,6 +161,7 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
+                color: @baizhan_active;
                 .u-coin {
                     .flex;
                     justify-content: center;
@@ -211,21 +212,12 @@
                 .u-name {
                     margin-top: 20px;
                     font-size: 16px;
-                    color: @baizhan_map_color;
-                }
-                .u-index {
-                    color: @baizhan_map_color;
                 }
                 .u-desc {
                     font-size: 12px;
                     text-align: center;
                     .u-coin-img {
-                        width: 10px;
-                        height: 12px;
-                        .none;
-                        &.u-img-no-current {
-                            .dbi;
-                        }
+                        filter: invert(50%) sepia(74%) saturate(353%) hue-rotate(201deg) brightness(86%) contrast(92%);
                     }
                 }
             }
@@ -239,20 +231,18 @@
                 // opacity: 1;
                 background-color: @baizhan_active !important;
                 color: @baizhan_map_select_color !important;
+                .u-name,
+                .u-index {
+                    color: @baizhan_map_select_color;
+                }
                 &.is-effect {
                     .u-img {
                         border-color: @baizhan_active;
                     }
-                    .u-name,
-                    .u-index {
-                        color: @baizhan_map_select_color;
-                    }
                     .u-desc {
-                        .u-img-no-current {
-                            .none;
-                        }
-                        .u-img-current {
-                            .dbi;
+                        color: @baizhan_map_select_color;
+                        .u-coin-img {
+                            filter: none;
                         }
                     }
                 }

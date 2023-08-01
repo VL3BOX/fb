@@ -86,12 +86,10 @@ export default {
             currentEffect: (state) => state.baizhan.currentEffect,
             activeTab: (state) => state.baizhan.activeTab,
             currentBossName: (state) => state.baizhan.currentBossName,
+            mapFilterInit: (state) => state.baizhan.mapFilterInit,
         }),
         bossNames() {
             return this.$store.getters["baizhan/bossNames"];
-        },
-        mapFilterInit() {
-            return this.$store.getters["baizhan/mapFilterInit"];
         },
         activeBossId() {
             return this.currentBoss?.dwBossID || 0;
@@ -100,22 +98,6 @@ export default {
             return this.currentEffect?.key;
         },
     },
-    // watch: {
-        // currentBoss: {
-        //     deep: true,
-        //     handler(boss) {
-        //         const floor = ~~boss?.floor;
-        //         let index = 0;
-        //         if (floor > 10) {
-        //             index = floor - 1;
-        //         }
-        //         this.$refs.floor[index].scrollIntoView({
-        //             behavior: "smooth",
-        //             block: "center",
-        //         });
-        //     },
-        // },
-    // },
     methods: {
         setActiveTab(tab) {
             this.$store.commit("baizhan/setState", {
@@ -127,6 +109,15 @@ export default {
         setNormal(normal) {
             if (this.mapFilterInit === normal) {
                 this.$store.commit("baizhan/setState", {
+                    key: "mapFilterInit",
+                    val: "",
+                });
+            } else {
+                this.$store.commit("baizhan/setState", {
+                    key: "mapFilterInit",
+                    val: "init",
+                });
+                this.$store.commit("baizhan/setState", {
                     key: "currentEffect",
                     val: {},
                 });
@@ -134,8 +125,6 @@ export default {
                     key: "currentBossName",
                     val: "",
                 });
-            } else {
-                this.$store.dispatch("baizhan/setInitMapFilter");
             }
         },
         setEffect(effect) {
@@ -147,6 +136,10 @@ export default {
                 key: "currentEffect",
                 val: val,
             });
+            this.$store.commit("baizhan/setState", {
+                key: "mapFilterInit",
+                val: "",
+            });
         },
         setBoss(bossName) {
             let val = bossName;
@@ -156,6 +149,10 @@ export default {
             this.$store.commit("baizhan/setState", {
                 key: "currentBossName",
                 val: val,
+            });
+            this.$store.commit("baizhan/setState", {
+                key: "mapFilterInit",
+                val: "",
             });
         },
     },

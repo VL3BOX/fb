@@ -109,7 +109,7 @@ export default {
     },
     watch: {
         activeTab() {
-            this.resetCurrent(true);
+            this.resetCurrent();
         },
     },
     methods: {

@@ -24,7 +24,7 @@
 <script>
 import Nav from "@/components/list/list_nav.vue";
 import tabs from "@/components/tabs.vue";
-import Side from "@/components/list/list_side.vue";
+import Side from "@/components/baizhan/map_side.vue";
 export default {
     name: "App",
     data: function () {

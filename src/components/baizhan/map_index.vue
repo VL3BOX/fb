@@ -93,8 +93,6 @@ export default {
         return {
             loading: false,
             data: [],
-            // startDate: getWeekStartDate(),
-            // endDate: getWeekEndDate(),
             point: {
                 level: 1,
                 boss: "",

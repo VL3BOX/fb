@@ -232,7 +232,7 @@ export default {
         },
         drag(event) {
             if (this.isDragging) {
-                this.$store.dispatch("baizhan/setInit");
+                // this.$store.dispatch("baizhan/setInit");
                 const currentTime = Date.now();
                 const deltaTime = currentTime - this.lastTime;
 

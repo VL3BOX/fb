@@ -17,7 +17,8 @@
             <div class="m-baizhan-right" :class="[rightOpen ? 'is-open' : 'is-close']">
                 <div v-if="hasRight" class="m-right-wrap">
                     <BInfo></BInfo>
-                    <BComment></BComment>
+                    <MapRaider></MapRaider>
+                    <!-- <BComment></BComment> -->
                 </div>
                 <img v-else src="@/assets/img/baizhan/right_default.svg" svg-inline />
                 <span class="c-sidebar-right-toggle" @click="rightOpen = !rightOpen">
@@ -37,7 +38,8 @@ import Skills from "@/components/baizhan/skill_list.vue";
 import BMap from "@/components/baizhan/map_index.vue";
 
 import BInfo from "@/components/baizhan/map_level_info.vue";
-import BComment from "@/components/baizhan/baizhan_comment.vue";
+// import BComment from "@/components/baizhan/baizhan_comment.vue";
+import MapRaider from "@/components/baizhan/map_raider.vue";
 import Bosses from "@/components/baizhan/boss_index.vue";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { isPhone } from "@/utils";
@@ -56,7 +58,8 @@ export default {
         BMap,
         BInfo,
         Bosses,
-        BComment,
+        MapRaider,
+        // BComment,
     },
     data() {
         return {

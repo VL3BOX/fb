@@ -6,16 +6,6 @@
                 <div class="u-name-info">
                     <div class="u-floor">
                         <span>第{{ current.floor }}层</span>
-                        <!-- <a
-                            v-if="current.bossLink"
-                            class="u-link"
-                            :title="`${current.bossName}攻略`"
-                            :href="current.bossLink"
-                            target="_blank"
-                            @click.stop
-                        >
-                            攻略
-                        </a> -->
                     </div>
                     <div class="u-name">{{ current.bossName }}</div>
                 </div>

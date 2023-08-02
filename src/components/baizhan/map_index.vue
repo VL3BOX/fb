@@ -22,7 +22,6 @@
                 v-for="(item, step) in list"
                 :key="step"
             >
-                <!-- activeFloor === step * 10 + index + 1 ? 'is-active' : '', -->
                 <div
                     class="u-floor"
                     :class="[
@@ -32,7 +31,7 @@
                     ]"
                     v-for="(floor, index) in item"
                     :key="index"
-                    @click.prevent="setBoss(floor, step * 10 + index + 1)"
+                    @click.prevent="setBossHandler(step * 10 + index + 1)"
                 >
                     <div class="u-floor-content">
                         <div class="u-index" :class="floor.nEffectID && 'u-effect'">
@@ -146,6 +145,12 @@ export default {
                 end: this.update_moment.endOf("week").format("MM/DD"),
             };
         },
+        initQuery() {
+            return {
+                maps: this.maps,
+                index: ~~this.$route.query?.floor,
+            };
+        },
     },
     watch: {
         maps: {
@@ -174,6 +179,18 @@ export default {
             if (bol) {
                 this.exportToImage();
             }
+        },
+        initQuery: {
+            immediate: true,
+            deep: true,
+            handler(query) {
+                const i = query.index;
+                const maps = query.maps;
+                if (i > 0 && maps.length && i <= maps.length) {
+                    const boss = maps[i - 1];
+                    this.setBoss(boss, i);
+                }
+            },
         },
     },
     methods: {
@@ -268,9 +285,17 @@ export default {
             return avatar;
         },
         getEffectInfo,
+        setBossHandler(i) {
+            if (i === this.initQuery.index) {
+                this.$store.dispatch("baizhan/setInit", {});
+                return this.$router.push({ query: {} });
+            }
+            this.$router.push({ query: { floor: i } });
+        },
         setBoss(floor, i) {
             let val = floor;
             if (floor.dwBossID === this.currentBoss?.dwBossID) {
+                console.log(123);
                 val = {};
             } else {
                 val = Object.assign(floor, {

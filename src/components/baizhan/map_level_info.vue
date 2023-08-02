@@ -73,7 +73,7 @@ export default {
             const skills = this.currentBoss?.boss?.skills || [];
             return {
                 ...this.currentBoss,
-                effectIcon: iconLink(this.currentBoss.effect?.dwIconID || 18005),
+                effectIcon: iconLink(this.currentBoss.effect?.dwIconID || 18505),
                 effectName: this.currentBoss.effect?.szName,
                 effectDesc: this.currentBoss.effect?.szDescription,
                 skills: skills.map((skill) => {

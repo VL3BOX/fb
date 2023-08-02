@@ -1,8 +1,15 @@
 <template>
     <div>
         <Header></Header>
-        <Breadcrumb name="副本专栏" slug="fb" root="/fb" :publishEnable="true" :adminEnable="false" :feedbackEnable="true"
-            :crumbEnable="true">
+        <Breadcrumb
+            name="副本专栏"
+            slug="fb"
+            root="/fb"
+            :publishEnable="true"
+            :adminEnable="false"
+            :feedbackEnable="true"
+            :crumbEnable="true"
+        >
             <!-- <Info /> -->
         </Breadcrumb>
         <LeftSidebar>
@@ -13,7 +20,7 @@
                 <tabs />
                 <router-view />
             </div>
-            <RightSidebar>
+            <RightSidebar class="m-fb-right-side">
                 <Side class="m-extend" />
             </RightSidebar>
             <Footer></Footer>
@@ -29,7 +36,7 @@ export default {
     name: "App",
     data: function () {
         return {
-            withoutRight: false
+            withoutRight: false,
         };
     },
     components: {
@@ -43,12 +50,17 @@ export default {
             immediate: true,
             handler: function (to, from) {
                 this.withoutRight = to?.meta?.withoutRight;
-            }
-        }
+            },
+        },
     },
 };
 </script>
 
 <style lang="less">
+.m-fb-right-side {
+    &.c-sidebar-right.is-close {
+        transform: translateX(0) !important;
+    }
+}
 @import "~@/assets/css/list.less";
 </style>

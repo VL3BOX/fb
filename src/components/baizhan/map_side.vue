@@ -1,37 +1,48 @@
 <template>
     <div class="m-list-side">
-        <div class="m-header">
-            <img src="@/assets/img/baizhan/baizhan_purple.svg" svg-inline />
-            <div class="u-title">百战异闻录</div>
-        </div>
-        <div class="u-time">最后更新时间: {{ update_time }}</div>
-        <div class="u-tabs" v-if="maps.length">
-            <div
-                class="u-tab"
-                :class="activeIndex === i && 'is-active'"
-                v-for="i in base"
-                :key="i"
-                @click="activeIndex = i"
-            >
-                {{ (i - 1) * per + 1 }}~{{ i * per }}
+        <!-- 群号 -->
+        <RightSideMsg>
+            <em>全服团长交流群</em> :
+            <strong @click="onQQClick" class="u-link" title="点击复制">
+                <a>{{ qq }}</a>
+            </strong>
+        </RightSideMsg>
+        <div class="m-map-side">
+            <div class="m-header">
+                <img src="@/assets/img/baizhan/baizhan_purple.svg" svg-inline />
+                <div class="u-title">百战异闻录</div>
             </div>
-        </div>
-        <div class="u-list" v-if="maps.length">
-            <div
-                class="u-item"
-                :class="getSpecialStyle(index)"
-                v-for="(item, index) in mapList[activeIndex - 1]"
-                :key="item.dwBossID"
-                @click="toMap(index)"
-            >
-                <div class="u-item-left">
-                    <div class="u-index">{{ (activeIndex - 1) * per + index + 1 }}</div>
-                    <div class="u-avatar">
-                        <img :src="item.bossAvatar" :alt="item.bossName" />
-                    </div>
-                    <div class="u-name">{{ item.bossName }}</div>
+            <div class="u-time">最后更新时间: {{ update_time }}</div>
+            <div class="u-tabs" v-if="maps.length">
+                <div
+                    class="u-tab"
+                    :class="activeIndex === i && 'is-active'"
+                    v-for="i in base"
+                    :key="i"
+                    @click="activeIndex = i"
+                >
+                    {{ (i - 1) * per + 1 }}~{{ i * per }}
                 </div>
-                <div class="u-item-right"></div>
+            </div>
+            <div class="u-list" v-if="maps.length">
+                <div
+                    class="u-item"
+                    :class="getSpecialStyle(index)"
+                    v-for="(item, index) in mapList[activeIndex - 1]"
+                    :key="item.dwBossID"
+                    @click="toMap(index)"
+                >
+                    <div class="u-item-left">
+                        <div class="u-index">{{ (activeIndex - 1) * per + index + 1 }}</div>
+                        <div class="u-avatar">
+                            <img :src="item.bossAvatar" :alt="item.bossName" />
+                        </div>
+                        <div class="u-name">{{ item.bossName }}</div>
+                    </div>
+                    <div v-if="item.nEffectID" class="u-item-right">
+                        <img :src="iconLink(item.effect.dwIconID)" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -41,13 +52,15 @@
 import { mapState, mapActions } from "vuex";
 import { moment } from "@jx3box/jx3box-common/js/moment";
 import { cloneDeep } from "lodash";
+import { iconLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "MapSide",
     data() {
         return {
             loading: false,
-            base: 3,
+            base: 4,
             activeIndex: 1,
+            qq: "785597424",
         };
     },
     computed: {
@@ -82,6 +95,7 @@ export default {
             loadEffects: "baizhan/loadEffects",
             loadMap: "baizhan/loadMap",
         }),
+        iconLink,
         getSpecialStyle(i) {
             const index = (this.activeIndex - 1) * this.per + i + 1;
             return !(index % 10) ? "is-special" : "";
@@ -105,6 +119,15 @@ export default {
             Promise.allSettled(proArr).then(() => {
                 this.loadMap();
                 this.loading = false;
+            });
+        },
+        onQQClick() {
+            navigator.clipboard.writeText(this.qq).then(() => {
+                this.$notify({
+                    title: "复制成功",
+                    message: "内容：" + this.qq,
+                    type: "success",
+                });
             });
         },
     },

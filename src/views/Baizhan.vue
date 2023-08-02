@@ -9,20 +9,17 @@
                     </keep-alive>
                 </div>
             </LeftSidebar>
-            <div
-                class="m-baizhan-center"
-                :class="[isPhone() ? 'is-phone' : '', hasRight && rightOpen ? '' : 'is-right-close']"
-            >
+            <div class="m-baizhan-center" :class="[isPhone() ? 'is-phone' : '', rightOpen ? '' : 'is-right-close']">
                 <BMap v-if="activeTab === 'map'"></BMap>
                 <Skills v-if="activeTab === 'skill'"></Skills>
                 <Bosses v-if="activeTab === 'boss'"></Bosses>
             </div>
-            <!-- v-if="hasRight" -->
-            <div class="m-baizhan-right" :class="[rightOpen ? 'is-open' : 'is-close', hasRight ? 'is-has' : 'is-no']">
-                <div class="m-right-wrap">
+            <div class="m-baizhan-right" :class="[rightOpen ? 'is-open' : 'is-close']">
+                <div v-if="hasRight" class="m-right-wrap">
                     <BInfo></BInfo>
-                    <BComment v-if="hasRight"></BComment>
+                    <BComment></BComment>
                 </div>
+                <img v-else src="@/assets/img/baizhan/right_default.svg" svg-inline />
                 <span class="c-sidebar-right-toggle" @click="rightOpen = !rightOpen">
                     <i :class="rightOpen ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i>
                 </span>
@@ -109,7 +106,7 @@ export default {
     },
     watch: {
         activeTab() {
-            this.resetCurrent();
+            this.setInit();
         },
     },
     methods: {
@@ -118,7 +115,7 @@ export default {
             loadSkills: "baizhan/loadSkills",
             loadEffects: "baizhan/loadEffects",
             loadMap: "baizhan/loadMap",
-            resetCurrent: "baizhan/resetCurrent",
+            setInit: "baizhan/setInit",
         }),
         isPhone,
         load() {

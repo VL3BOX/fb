@@ -215,7 +215,7 @@ export default {
         },
         drag(event) {
             if (this.isDragging) {
-                // this.$store.dispatch("baizhan/resetCurrent");
+                this.$store.dispatch("baizhan/setInit");
                 const currentTime = Date.now();
                 const deltaTime = currentTime - this.lastTime;
 
@@ -263,15 +263,6 @@ export default {
                 event.stopPropagation();
             }
         },
-        // switchFloor(index) {
-        //     if (this.activeFloor === this.data.length && index === 1) {
-        //         return (this.activeFloor = 1);
-        //     }
-        //     if (this.activeFloor === 1 && index === -1) {
-        //         return (this.activeFloor = this.data.length);
-        //     }
-        //     this.activeFloor += index;
-        // },
         getBossAvatar(id) {
             const avatar = this.bosses.find((item) => item.id === id)?.avatar || `${this.__imgRoot}fbcdpanel02_51.png`;
             return avatar;
@@ -281,13 +272,12 @@ export default {
             let val = floor;
             if (floor.dwBossID === this.currentBoss?.dwBossID) {
                 val = {};
-            }
-            this.$store.commit("baizhan/setState", {
-                key: "currentBoss",
-                val: Object.assign(val, {
+            } else {
+                val = Object.assign(floor, {
                     floor: i,
-                }),
-            });
+                });
+            }
+            this.$store.dispatch("baizhan/setInit", val);
         },
         setData(data) {
             const total = this.step * this.row;
@@ -337,7 +327,7 @@ export default {
             new Promise((resolve) => {
                 map.style.transform = `translate(${this.position.x}px, ${this.position.y}px) scale(${this.scale})`;
 
-                this.$store.dispatch("baizhan/resetCurrent");
+                this.$store.dispatch("baizhan/setInit");
 
                 resolve(true);
             }).then(() => {
@@ -377,8 +367,6 @@ export default {
                                 key: "downLoading",
                                 val: false,
                             });
-                            // 初始化地图右侧信息
-                            // this.$store.dispatch("baizhan/resetCurrent", true);
                         });
                     })
                     .catch((error) => {

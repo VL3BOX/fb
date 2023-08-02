@@ -54,7 +54,12 @@
                             <span>{{ skill.skillName }}</span>
                         </div>
                         <div class="u-skill-right">
-                            <span v-if="skill.isPassive">被动技能</span>
+                            <img v-if="skill.isPassive" src="@/assets/img/baizhan/passive.svg" svg-inline />
+                            <img
+                                v-if="skill.skillColor === 0 && !skill.isPassive"
+                                src="@/assets/img/baizhan/other_skill.svg"
+                                svg-inline
+                            />
                         </div>
                     </a>
                 </div>

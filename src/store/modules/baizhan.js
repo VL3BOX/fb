@@ -47,19 +47,22 @@ export default {
         },
     },
     actions: {
-        resetCurrent({ commit, state }, isInitBoss = false) {
+        setInit({ commit }, currentBoss = {}) {
             commit("setState", {
-                key: "currentBoss",
-                // val: isInitBoss ? state.maps?.[0] || {} : {},
-                val: isInitBoss ? state.maps?.[0] || {} : {},
+                key: "mapFilterInit",
+                val: "init",
             });
             commit("setState", {
                 key: "currentEffect",
-                val: effectsFilter[0],
+                val: {},
             });
             commit("setState", {
                 key: "currentBossName",
-                val: "精英首领",
+                val: "",
+            });
+            commit("setState", {
+                key: "currentBoss",
+                val: currentBoss,
             });
         },
         async loadBosses({ commit, dispatch }, payLoad) {

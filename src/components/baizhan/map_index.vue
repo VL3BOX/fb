@@ -302,7 +302,11 @@ export default {
                     floor: i,
                 });
             }
-            this.$store.dispatch("baizhan/setInit", val);
+            // this.$store.dispatch("baizhan/setInit", val);
+            this.$store.commit("baizhan/setState", {
+                key: "currentBoss",
+                val,
+            });
         },
         setData(data) {
             const total = this.step * this.row;

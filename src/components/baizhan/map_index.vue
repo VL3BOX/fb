@@ -285,7 +285,11 @@ export default {
         getEffectInfo,
         setBossHandler(i) {
             if (i === this.initQuery.index) {
-                this.$store.dispatch("baizhan/setInit", {});
+                // this.$store.dispatch("baizhan/setInit", {});
+                this.$store.commit("baizhan/setState", {
+                    key: "currentBoss",
+                    val: {},
+                });
                 return this.$router.push({ query: {} });
             }
             this.$router.push({ query: { floor: i } });

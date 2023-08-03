@@ -27,13 +27,15 @@
             <div class="u-list" v-if="maps.length">
                 <div
                     class="u-item"
+                    ref="mapItem"
                     :class="getSpecialStyle(index)"
-                    v-for="(item, index) in mapList[activeIndex - 1]"
+                    v-for="(item, index) in maps"
                     :key="item.dwBossID"
                     @click="toMap(index)"
                 >
                     <div class="u-item-left">
-                        <div class="u-index">{{ (activeIndex - 1) * per + index + 1 }}</div>
+                        <!-- <div class="u-index">{{ (activeIndex - 1) * per + index + 1 }}</div> -->
+                        <div class="u-index">{{ index + 1 }}</div>
                         <div class="u-avatar">
                             <img :src="item.bossAvatar" :alt="item.bossName" />
                         </div>
@@ -86,6 +88,15 @@ export default {
                 list.push(maps.slice(i * per, (i + 1) * per));
             }
             return list;
+        },
+    },
+    watch: {
+        activeIndex(index) {
+            const refIndex = (index - 1) * 15 ? (index - 1) * 15 - 1 : 0;
+            this.$refs.mapItem[refIndex].scrollIntoView({
+                behavior: "smooth",
+                block: refIndex ? "start" : "center",
+            });
         },
     },
     methods: {

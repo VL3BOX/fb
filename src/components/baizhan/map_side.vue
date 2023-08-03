@@ -108,7 +108,8 @@ export default {
         }),
         iconLink,
         getSpecialStyle(i) {
-            const index = (this.activeIndex - 1) * this.per + i + 1;
+            // const index = (this.activeIndex - 1) * this.per + i + 1;
+            const index = i + 1;
             return !(index % 10) ? "is-special" : "";
         },
         toMap(i) {

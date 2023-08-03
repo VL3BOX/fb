@@ -110,7 +110,7 @@ export default {
             if (val && val.length) {
                 return val;
             } else {
-                return ["全部"];
+                return ["-"];
             }
         },
         addTopic(c) {

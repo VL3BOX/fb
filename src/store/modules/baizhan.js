@@ -12,7 +12,7 @@ export default {
     namespaced: true,
     state: {
         // 当前页面
-        activeTab: "skill",
+        activeTab: "map",
 
         currentEffect: {},
         currentBoss: {},

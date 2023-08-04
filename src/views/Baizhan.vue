@@ -14,8 +14,8 @@
                 <Skills v-if="activeTab === 'skill'"></Skills>
                 <Bosses v-if="activeTab === 'boss'"></Bosses>
             </div>
-            <div class="m-baizhan-right" :class="[rightOpen ? 'is-open' : 'is-close']">
-                <div v-if="hasRight" class="m-right-wrap">
+            <div v-if="hasRight" class="m-baizhan-right" :class="[rightOpen ? 'is-open' : 'is-close']">
+                <div v-if="hasInfo" class="m-right-wrap">
                     <BInfo></BInfo>
                     <MapRaider></MapRaider>
                     <!-- <BComment></BComment> -->
@@ -104,7 +104,10 @@ export default {
             });
         },
         hasRight() {
-            return this.activeTab === "map" && this.currentBoss?.dwBossID && !isPhone();
+            return !isPhone();
+        },
+        hasInfo() {
+            return this.activeTab === "map" && this.currentBoss?.dwBossID;
         },
     },
     watch: {

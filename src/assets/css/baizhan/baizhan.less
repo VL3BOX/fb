@@ -189,6 +189,9 @@
         width: calc(100% - 40px);
     }
     .isopen + .m-baizhan-center {
-        width: calc(100% - @baizhan_left - 40px);
+        width: calc(100% - @baizhan_left - @baizhan_right);
+        &.is-right-close {
+            width: calc(100% - @baizhan_left - 40px);
+        }
     }
 }

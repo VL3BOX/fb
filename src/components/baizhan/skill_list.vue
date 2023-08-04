@@ -1,7 +1,7 @@
 <template>
     <div class="p-skills">
         <el-table ref="table" class="m-table" :data="skills" height="86vh">
-            <el-table-column label="技能" width="200">
+            <el-table-column label="技能">
                 <template #default="{ row: skill }">
                     <div class="u-skill-cell">
                         <SkillIcon :source="skill"></SkillIcon>
@@ -11,70 +11,78 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="szBossName" label="所属Boss" sortable> </el-table-column>
-            <el-table-column prop="nCost" label="点数" align="center" sortable width="80">
-                <template #default="{ row: skill }">
-                    <div class="u-points">
-                        <img v-for="point in skill.nCost" :key="point" :src="`${__imgRoot}baizhan_6.png`" />
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="select_level" label="等级" align="center" width="120">
-                <template #header>
-                    <div class="u-level-select-header">
-                        <el-select size="mini" v-model="allLevel" placeholder="重数" @change="changeAllLevel">
-                            <el-option v-for="item in 6" :key="item" :value="item" :label="`第 ${item} 重`"></el-option>
-                        </el-select>
-                    </div>
-                </template>
-                <template #default="{ row: skill }">
-                    <div v-if="skill.InSkill">
-                        <el-select
-                            v-model="skill._select_level"
-                            size="mini"
-                            placeholder="重数"
-                            @change="applyAddon(skill)"
-                        >
-                            <el-option
-                                v-for="item in Number(skill.InSkill.MaxLevel)"
-                                :key="item"
-                                :value="item"
-                                :label="`第 ${item} 重`"
-                            ></el-option>
-                        </el-select>
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="_cooldown" label="冷却时间" sortable>
-                <template #default="{ row: skill }">
-                    <div v-if="skill._cooldown == 60" class="u-cooldown-60">三级 - 60s</div>
-                    <div v-if="skill._cooldown == 30" class="u-cooldown-30">二级 - 30s</div>
-                    <div v-if="skill._cooldown == 10" class="u-cooldown-10">一级 - 10s</div>
-                    <div v-if="skill._cooldown == 0" class="u-cooldown-0">被动技能</div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="_damage" label="伤害" sortable></el-table-column>
-            <el-table-column prop="_cost_vigor" label="精力消耗" sortable>
-                <template #default="{ row: skill }">
-                    <div class="u-vigor-about">{{ skill._cost_vigor }}</div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="_cost_endurance" label="耐力消耗" sortable>
-                <template #default="{ row: skill }">
-                    <div class="u-endurance-about">{{ skill._cost_endurance }}</div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="_hit_vigor" label="精力打击" sortable>
-                <template #default="{ row: skill }">
-                    <div class="u-vigor-about">{{ skill._hit_vigor }}</div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="_hit_endurance" label="耐力打击" sortable>
-                <template #default="{ row: skill }">
-                    <div class="u-vigor-about">{{ skill._hit_endurance }}</div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="_remarks" label="备注"></el-table-column>
+             <!-- v-if="isPhone()" -->
+            <template>
+                <el-table-column prop="szBossName" label="所属Boss" sortable> </el-table-column>
+                <el-table-column prop="nCost" label="点数" align="center" sortable width="80">
+                    <template #default="{ row: skill }">
+                        <div class="u-points">
+                            <img v-for="point in skill.nCost" :key="point" :src="`${__imgRoot}baizhan_6.png`" />
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="select_level" label="等级" align="center" width="120">
+                    <template #header>
+                        <div class="u-level-select-header">
+                            <el-select size="mini" v-model="allLevel" placeholder="重数" @change="changeAllLevel">
+                                <el-option
+                                    v-for="item in 6"
+                                    :key="item"
+                                    :value="item"
+                                    :label="`第 ${item} 重`"
+                                ></el-option>
+                            </el-select>
+                        </div>
+                    </template>
+                    <template #default="{ row: skill }">
+                        <div v-if="skill.InSkill">
+                            <el-select
+                                v-model="skill._select_level"
+                                size="mini"
+                                placeholder="重数"
+                                @change="applyAddon(skill)"
+                            >
+                                <el-option
+                                    v-for="item in Number(skill.InSkill.MaxLevel)"
+                                    :key="item"
+                                    :value="item"
+                                    :label="`第 ${item} 重`"
+                                ></el-option>
+                            </el-select>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="_cooldown" label="冷却时间" sortable>
+                    <template #default="{ row: skill }">
+                        <div v-if="skill._cooldown == 60" class="u-cooldown-60">三级 - 60s</div>
+                        <div v-if="skill._cooldown == 30" class="u-cooldown-30">二级 - 30s</div>
+                        <div v-if="skill._cooldown == 10" class="u-cooldown-10">一级 - 10s</div>
+                        <div v-if="skill._cooldown == 0" class="u-cooldown-0">被动技能</div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="_damage" label="伤害" sortable></el-table-column>
+                <el-table-column prop="_cost_vigor" label="精力消耗" sortable>
+                    <template #default="{ row: skill }">
+                        <div class="u-vigor-about">{{ skill._cost_vigor }}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="_cost_endurance" label="耐力消耗" sortable>
+                    <template #default="{ row: skill }">
+                        <div class="u-endurance-about">{{ skill._cost_endurance }}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="_hit_vigor" label="精力打击" sortable>
+                    <template #default="{ row: skill }">
+                        <div class="u-vigor-about">{{ skill._hit_vigor }}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="_hit_endurance" label="耐力打击" sortable>
+                    <template #default="{ row: skill }">
+                        <div class="u-vigor-about">{{ skill._hit_endurance }}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="_remarks" label="备注"></el-table-column>
+            </template>
         </el-table>
         <SkillForm ref="editAddon" :staged="staged" @update="handleUpdate($event)" @close="close" />
     </div>
@@ -85,6 +93,7 @@ import { mapState } from "vuex";
 import SkillIcon from "./skill_icon.vue";
 import SkillForm from "./SkillForm.vue";
 import User from "@jx3box/jx3box-common/js/user";
+import { isPhone } from "@/utils";
 
 import { getAppID } from "@jx3box/jx3box-common/js/utils";
 export default {
@@ -162,6 +171,7 @@ export default {
         },
     },
     methods: {
+        isPhone,
         changeAllLevel() {
             for (let item of this.skills)
                 this.$set(item, "_select_level", Math.min(item?.InSkill?.MaxLevel ?? this.allLevel, this.allLevel));

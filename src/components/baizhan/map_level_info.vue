@@ -36,6 +36,7 @@
                         :key="skill.skillId"
                         :href="getUrl(skill.skillId)"
                         target="_blank"
+                        @click.prevent="toSkill(skill)"
                     >
                         <div class="u-skill-left">
                             <div class="u-img-wrap" :class="skill.isPassive && 'is-passive'">
@@ -93,6 +94,18 @@ export default {
         getUrl(id) {
             const domain = process.env.NODE_ENV === "development" ? __Root : location.origin + "/";
             return domain + `app/database/?type=skill&query=${id}`;
+        },
+        toSkill(skill) {
+            this.$store.commit("baizhan/setState", {
+                key: "currentSkill",
+                val: this.skills.find((item) => item.dwInSkillID === skill.skillId),
+            });
+            this.$store.commit("baizhan/setState", {
+                key: "activeTab",
+                val: "skill",
+            });
+            console.log(skill);
+            this.$router.push({ query: { skill: skill.skillName } });
         },
         toBuff(floor) {
             const domain = process.env.NODE_ENV === "development" ? __Root : location.origin + "/";

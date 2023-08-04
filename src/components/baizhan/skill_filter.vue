@@ -143,6 +143,15 @@ export default {
                 val: removeEmptyIncludeZero(params),
             });
         },
+        "$route.query": {
+            immediate: true,
+            deep: true,
+            handler(query) {
+                if (query.skill) {
+                    this.name = query.skill;
+                }
+            },
+        },
     },
     methods: {
         setSkill(id, type) {

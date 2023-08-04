@@ -1,13 +1,41 @@
 <template>
-    <div class="w-card m-map-filter">
+    <div class="w-card m-skill-filter">
         <div class="w-card-title">
             <img src="@/assets/img/baizhan/filter.svg" alt="筛选" />
             <span>筛选</span>
         </div>
-        <div class="m-search first-section">
-            <el-input v-model="name" placeholder="请输入技能名称" clearable></el-input>
+        <div class="m-skill-search first-section">
+            <el-input v-model="name" placeholder="请输入技能名称" clearable>
+                <i slot="prefix" class="el-input__icon el-icon-search"></i>
+            </el-input>
+            <div class="m-selects">
+                <el-select v-model="currentType">
+                    <el-option
+                        v-for="type in skillTypes"
+                        :key="type.id"
+                        :value="type.id"
+                        :label="type.name"
+                    ></el-option>
+                </el-select>
+                <el-select v-model="currentColor">
+                    <el-option
+                        v-for="color in skillColors"
+                        :key="color.id"
+                        :value="color.id"
+                        :label="color.name"
+                    ></el-option>
+                </el-select>
+                <el-select v-model="currentCost">
+                    <el-option
+                        v-for="cost in skillCosts"
+                        :key="cost.id"
+                        :value="cost.id"
+                        :label="cost.name"
+                    ></el-option>
+                </el-select>
+            </div>
         </div>
-        <div class="m-section-title m-two-title">效果</div>
+        <!-- <div class="m-section-title m-two-title">效果</div>
         <div class="m-filter-list">
             <div
                 class="u-filter"
@@ -45,7 +73,7 @@
             >
                 {{ cost.name }}
             </div>
-        </div>
+        </div> -->
         <div class="m-section-title m-two-title">首领</div>
         <div class="m-filter-list">
             <div

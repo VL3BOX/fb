@@ -12,7 +12,7 @@
                 <div class="u-name">{{ tab.label }}</div>
             </div>
         </div>
-        <div class="u-map-info">
+        <div class="u-map-info" v-if="activeTab === 'map'">
             <div class="u-map-title">
                 <img class="u-title-icon" src="@/assets/img/baizhan/tabs/map_active.svg" alt="" />
                 <span>{{ activeTab === "map" ? "地图" : "数据" }}信息</span>
@@ -30,6 +30,9 @@
                     <span>{{ downLoading ? "导出中..." : "导出图片" }}</span>
                 </a>
             </div>
+        </div>
+        <div class="u-map-info" v-if="activeTab === 'skill'">
+            <img class="u-skill-tab-img" src="@/assets/img/baizhan/baizhan_tab_default.svg" />
         </div>
     </div>
 </template>

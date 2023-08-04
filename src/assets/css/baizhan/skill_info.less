@@ -1,0 +1,142 @@
+.m-skill-info {
+    padding: 14px;
+    color: @baizhan_color;
+    font-size: 14px;
+    .flex;
+    flex-direction: column;
+    gap: 20px;
+    .u-skill-header {
+        .flex;
+        align-items: center;
+        gap: 10px;
+        .u-skill-img {
+            .flex;
+            justify-content: center;
+            align-items: center;
+            .size(60px, 60px);
+            border-radius: 5px;
+            background: #313956;
+            .u-img-wrap {
+                .size(50px, 50px);
+                border-radius: 50%;
+                overflow: hidden;
+                img {
+                    transform: scale(1.25);
+                }
+            }
+        }
+        .u-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+    }
+    .u-skill-item {
+        .u-item-title {
+            .flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: 700;
+            img {
+                cursor: pointer;
+            }
+        }
+        .u-item-content {
+            .flex;
+            align-items: center;
+            gap: 10px;
+            .u-avatar {
+                .size(30px, 30px);
+                .r(50%);
+            }
+        }
+        .u-list {
+            .flex;
+            gap: 20px;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            .u-info {
+                flex: 1;
+                .flex;
+                gap: 5px;
+                align-items: center;
+                justify-content: center;
+                padding: 3px 10px;
+                height: 25px;
+                .r(100px);
+                background-color: #000;
+                font-size: 12px;
+                font-weight: 700;
+                box-sizing: border-box;
+                .u-color {
+                    width: 30px;
+                    height: 6px;
+                    border-radius: 100px;
+                    &.u-color__1 {
+                        // 白色
+                        background-color: @skill_1;
+                    }
+                    &.u-color__2 {
+                        // 黄色
+                        background-color: @skill_2;
+                    }
+                    &.u-color__3 {
+                        // 蓝色
+                        background-color: @skill_3;
+                    }
+                    &.u-color__4 {
+                        // 绿色
+                        background-color: @skill_4;
+                    }
+                    &.u-color__5 {
+                        // 红色
+                        background-color: @skill_5;
+                    }
+                    &.u-color__6 {
+                        // 紫色
+                        background-color: @skill_6;
+                    }
+                    &.u-color__7 {
+                        // 黑色
+                        background-color: @skill_7;
+                    }
+                }
+            }
+            &:last-of-type {
+                flex-wrap: wrap;
+                margin-top: 15px;
+                gap: 15px;
+                .u-info {
+                    flex: none;
+                    width: 124.5px;
+                    height: 25px;
+                }
+            }
+        }
+        .u-skill-desc {
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #000;
+            .r(5px);
+            .is-hidden {
+                color: #313956;
+            }
+            .is-show {
+                color: #fbff47;
+            }
+        }
+    }
+    .u-skill-btn {
+        background-color: #313956;
+        .r(5px);
+        padding: 9px 8px 10px;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        cursor: pointer;
+        color: #fff;
+        &:hover {
+            background-color: @baizhan_active;
+        }
+    }
+}

@@ -15,10 +15,12 @@
                 <Bosses v-if="activeTab === 'boss'"></Bosses>
             </div>
             <div v-if="hasRight" class="m-baizhan-right" :class="[rightOpen ? 'is-open' : 'is-close']">
-                <div v-if="hasInfo" class="m-right-wrap">
-                    <BInfo></BInfo>
-                    <MapRaider></MapRaider>
-                    <!-- <BComment></BComment> -->
+                <div v-if="hasInfo || hasSkill" class="m-right-wrap">
+                    <template v-if="hasInfo">
+                        <BInfo></BInfo>
+                        <MapRaider></MapRaider>
+                    </template>
+                    <SkillInfo v-if="hasSkill"></SkillInfo>
                 </div>
                 <img v-else src="@/assets/img/baizhan/right_default.svg" svg-inline />
                 <span class="c-sidebar-right-toggle" @click="rightOpen = !rightOpen">
@@ -38,6 +40,7 @@ import Skills from "@/components/baizhan/skill_list.vue";
 import BMap from "@/components/baizhan/map_index.vue";
 
 import BInfo from "@/components/baizhan/map_level_info.vue";
+import SkillInfo from "@/components/baizhan/skill_info.vue";
 // import BComment from "@/components/baizhan/baizhan_comment.vue";
 import MapRaider from "@/components/baizhan/map_raider.vue";
 import Bosses from "@/components/baizhan/boss_index.vue";
@@ -59,6 +62,7 @@ export default {
         BInfo,
         Bosses,
         MapRaider,
+        SkillInfo,
         // BComment,
     },
     data() {
@@ -75,6 +79,7 @@ export default {
             maps: (state) => state.baizhan.maps,
             activeTab: (state) => state.baizhan.activeTab,
             currentBoss: (state) => state.baizhan.currentBoss,
+            currentSkill: (state) => state.baizhan.currentSkill,
         }),
         leftComponent() {
             if (this.activeTab === "map") {
@@ -108,6 +113,9 @@ export default {
         },
         hasInfo() {
             return this.activeTab === "map" && this.currentBoss?.dwBossID;
+        },
+        hasSkill() {
+            return this.activeTab === "skill" && this.currentSkill?.dwInSkillID;
         },
     },
     watch: {

@@ -12,7 +12,7 @@ export default {
     namespaced: true,
     state: {
         // 当前页面
-        activeTab: "map",
+        activeTab: "skill",
 
         currentEffect: {},
         currentBoss: {},
@@ -33,6 +33,8 @@ export default {
         maps: [],
 
         downLoading: false,
+
+        currentSkill: {},
     },
     getters: {
         bossNames(state) {
@@ -119,6 +121,10 @@ export default {
                     key: "skills",
                     val: data,
                 });
+                commit("setState", {
+                    key: "currentSkill",
+                    val: data?.[0] || {},
+                });
                 const extraData = JSON.parse(extraCache);
                 commit("setState", {
                     key: "skillExtraList",
@@ -134,11 +140,18 @@ export default {
                             const extra = skillExtraList.find((extra) => extra.skill_id === item.dwInSkillID) || {};
                             item.extra = extra;
                             item.skillIconId = item?.Skill?.IconID;
+                            if (item.szBossName === "钱宗龙杜姬欣") {
+                                item.szBossName = "钱宗龙";
+                            }
                             return item;
                         });
                         commit("setState", {
                             key: "skills",
                             val: newList,
+                        });
+                        commit("setState", {
+                            key: "currentSkill",
+                            val: newList?.[0] || {},
                         });
                         commit("setState", {
                             key: "skillExtraList",

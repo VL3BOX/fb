@@ -1,125 +1,72 @@
 <template>
     <div class="p-skills">
-        <el-table ref="table" class="m-table" :data="skills" height="86vh">
-            <el-table-column label="技能">
+        <el-table
+            ref="table"
+            class="m-table"
+            :data="skills"
+            height="86vh"
+            :row-class-name="getRowClassName"
+            @cell-mouse-enter="onMouse"
+            @row-click="onClick"
+        >
+            <el-table-column label="技能" min-width="150">
                 <template #default="{ row: skill }">
                     <div class="u-skill-cell">
-                        <SkillIcon :source="skill"></SkillIcon>
-                        <!-- <a v-if="isEditor" class="u-edit" @click.stop="toEdit(skill)">
-                            <i class="el-icon-edit-outline"></i>
-                        </a> -->
+                        <div class="u-skill-img">
+                            <img :src="iconLink(skill.skillIconId)" />
+                        </div>
+                        <span>{{ skill.szSkillName }}</span>
                     </div>
                 </template>
             </el-table-column>
-             <!-- v-if="isPhone()" -->
-            <template>
-                <el-table-column prop="szBossName" label="所属Boss" sortable> </el-table-column>
-                <el-table-column prop="nCost" label="点数" align="center" sortable width="80">
-                    <template #default="{ row: skill }">
-                        <div class="u-points">
-                            <img v-for="point in skill.nCost" :key="point" :src="`${__imgRoot}baizhan_6.png`" />
-                        </div>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="select_level" label="等级" align="center" width="120">
-                    <template #header>
-                        <div class="u-level-select-header">
-                            <el-select size="mini" v-model="allLevel" placeholder="重数" @change="changeAllLevel">
-                                <el-option
-                                    v-for="item in 6"
-                                    :key="item"
-                                    :value="item"
-                                    :label="`第 ${item} 重`"
-                                ></el-option>
-                            </el-select>
-                        </div>
-                    </template>
-                    <template #default="{ row: skill }">
-                        <div v-if="skill.InSkill">
-                            <el-select
-                                v-model="skill._select_level"
-                                size="mini"
-                                placeholder="重数"
-                                @change="applyAddon(skill)"
-                            >
-                                <el-option
-                                    v-for="item in Number(skill.InSkill.MaxLevel)"
-                                    :key="item"
-                                    :value="item"
-                                    :label="`第 ${item} 重`"
-                                ></el-option>
-                            </el-select>
-                        </div>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="_cooldown" label="冷却时间" sortable>
-                    <template #default="{ row: skill }">
-                        <div v-if="skill._cooldown == 60" class="u-cooldown-60">三级 - 60s</div>
-                        <div v-if="skill._cooldown == 30" class="u-cooldown-30">二级 - 30s</div>
-                        <div v-if="skill._cooldown == 10" class="u-cooldown-10">一级 - 10s</div>
-                        <div v-if="skill._cooldown == 0" class="u-cooldown-0">被动技能</div>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="_damage" label="伤害" sortable></el-table-column>
-                <el-table-column prop="_cost_vigor" label="精力消耗" sortable>
-                    <template #default="{ row: skill }">
-                        <div class="u-vigor-about">{{ skill._cost_vigor }}</div>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="_cost_endurance" label="耐力消耗" sortable>
-                    <template #default="{ row: skill }">
-                        <div class="u-endurance-about">{{ skill._cost_endurance }}</div>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="_hit_vigor" label="精力打击" sortable>
-                    <template #default="{ row: skill }">
-                        <div class="u-vigor-about">{{ skill._hit_vigor }}</div>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="_hit_endurance" label="耐力打击" sortable>
-                    <template #default="{ row: skill }">
-                        <div class="u-vigor-about">{{ skill._hit_endurance }}</div>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="_remarks" label="备注"></el-table-column>
-            </template>
+            <el-table-column prop="szBossName" label="首领" sortable min-width="150"></el-table-column>
+            <el-table-column prop="nCost" label="占用" sortable min-width="150">
+                <template #default="{ row: skill }">
+                    <div class="u-points">
+                        <img v-for="point in skill.nCost" :key="point" :src="`${__imgRoot}baizhan_6.png`" />
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="nColor" label="破绽" sortable min-width="150">
+                <template #default="{ row }">
+                    {{ getColor(row.nColor) }}
+                </template>
+            </el-table-column>
+            <el-table-column prop="szType" label="效果" min-width="150">
+                <template #default="{ row }">
+                    <div class="u-types">
+                        <div class="u-type" v-for="item in getType(row.szType)" :key="item" v-html="item"></div>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column min-width="150">
+                <template #default="{ row }">
+                    <div class="u-detail-btn" @click="toDetail(row.dwInSkillID)">详细数据</div>
+                </template>
+            </el-table-column>
         </el-table>
-        <SkillForm ref="editAddon" :staged="staged" @update="handleUpdate($event)" @close="close" />
     </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import SkillIcon from "./skill_icon.vue";
-import SkillForm from "./SkillForm.vue";
-import User from "@jx3box/jx3box-common/js/user";
+import { iconLink } from "@jx3box/jx3box-common/js/utils";
 import { isPhone } from "@/utils";
+import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 
-import { getAppID } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Skills",
     inject: ["__imgRoot"],
-    components: {
-        SkillIcon,
-        SkillForm,
-    },
     data: () => ({
-        id: getAppID(),
-        loading: false,
         skills: [],
-        skillAddon: {},
-        allLevel: 5,
-        staged: {},
-
-        addon_key: ["cooldown", "damage", "cost_vigor", "cost_endurance", "hit_vigor", "hit_endurance", "remarks"],
+        isPin: false,
     }),
     computed: {
         ...mapState({
             types: (state) => state.baizhan.types,
             skillList: (state) => state.baizhan.skills,
-            skillExtraList: (state) => state.baizhan.skillExtraList,
-            currentBoss: (state) => state.baizhan.currentBoss,
             params: (state) => state.baizhan.skillParams,
+            currentSkill: (state) => state.baizhan.currentSkill,
         }),
         skillColors() {
             return this.types.skill_colors;
@@ -129,9 +76,6 @@ export default {
         },
         skillTypes() {
             return this.types.skill_types;
-        },
-        isEditor: function () {
-            return User.isEditor();
         },
     },
     watch: {
@@ -160,76 +104,46 @@ export default {
                 });
             },
         },
-        skillExtraList: {
-            immediate: true,
-            deep: true,
-            handler(list) {
-                if (list.length) {
-                    this.load();
-                }
-            },
-        },
     },
     methods: {
+        iconLink,
         isPhone,
-        changeAllLevel() {
-            for (let item of this.skills)
-                this.$set(item, "_select_level", Math.min(item?.InSkill?.MaxLevel ?? this.allLevel, this.allLevel));
-            this.applyAllAddon();
+        getColor(nColor) {
+            return nColor ? this.skillColors.find((item) => item.id === nColor)?.name : "-";
         },
-        toEdit(item) {
-            this.staged = item;
-            const { dwInSkillID: skill_id, _select_level: level } = item;
-            const addon = this.skillAddon[skill_id]?.[level];
-            this.$refs["editAddon"].open(addon ?? { skill_id: skill_id });
-        },
-        close() {
-            this.visible = false;
-        },
-        getColor(color) {
-            return this.colors.find((item) => item.ID === color)?.TypeName || "";
-        },
-        addAddon(addon) {
-            const { skill_id, level } = addon;
-            if (!this.skillAddon[skill_id]) this.skillAddon[skill_id] = {};
-            this.skillAddon[skill_id][level] = addon;
-        },
-        handleUpdate(data) {
-            this.addAddon(data);
-            const { skill_id } = data;
-            const skill = this.skills.find((s) => s.dwInSkillID == skill_id);
-            skill.extra = {
-                ...skill.extra,
-                ...data,
-            };
-            this.applyAddon(skill);
-            sessionStorage.setItem(`baizhan-skills`, JSON.stringify(this.skills));
-            const skillExtraList = this.skillExtraList.map((item) => {
-                if (item.skill_id === skill_id) {
-                    item = {
-                        ...item,
-                        ...data,
-                    };
-                }
-                return item;
+        getType(types) {
+            const arr = types.map((type) => {
+                return this.skillTypes.find((item) => item.id === type)?.name;
             });
-            sessionStorage.setItem(`baizhan-skillExtraList`, JSON.stringify(skillExtraList));
-        },
-        load() {
-            const skillAddonList = this.skillExtraList;
-            for (let addon of skillAddonList) this.addAddon(addon);
-            this.changeAllLevel();
-        },
-        applyAllAddon() {
-            for (let skill of this.skills) this.applyAddon(skill);
-        },
-        applyAddon(skill) {
-            const { dwInSkillID: skill_id, _select_level: level } = skill;
-            const addon = this.skillAddon[skill_id]?.[level];
-            // console.log(skill_id, level, addon);
-            for (let key of this.addon_key) {
-                this.$set(skill, `_${key}`, addon?.[key]);
+            const len = arr.length;
+            if (len > 2) {
+                return [arr[0], `其他 <b>${arr.length - 1}</b> 个效果`];
             }
+            return arr;
+        },
+        toDetail(id) {
+            const domain = process.env.NODE_ENV === "development" ? __Root : location.origin + "/";
+            const url = domain + `app/database/?type=skill&query=${id}`;
+            window.open(url, "_blank");
+        },
+        onMouse(row) {
+            if (this.isPin) return;
+            this.$store.commit("baizhan/setState", {
+                key: "currentSkill",
+                val: row,
+            });
+        },
+        onClick(row) {
+            if (this.isPin) {
+                if (row.dwInSkillID === this.currentSkill.dwInSkillID) {
+                    this.isPin = false;
+                }
+            } else {
+                this.isPin = true;
+            }
+        },
+        getRowClassName({ row }) {
+            return row.dwInSkillID === this.currentSkill.dwInSkillID ? "is-active" : "";
         },
     },
 };

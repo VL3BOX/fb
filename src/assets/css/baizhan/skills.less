@@ -22,6 +22,31 @@
         }
     }
     .m-table {
+        .u-detail-btn {
+            .none;
+            background: #313956;
+            color: #fff;
+            padding: 9px 25px 10px;
+            .r(5px);
+            .size(106px, 37px);
+            cursor: pointer;
+            &:hover {
+                background-color: @baizhan_active;
+            }
+        }
+        .el-table__row {
+            &.is-active {
+                tr,
+                td {
+                    background-color: #101827 !important;
+                }
+            }
+            &:hover {
+                .u-detail-btn {
+                    .db;
+                }
+            }
+        }
         .el-table__body-wrapper {
             .scrollbar(2px, #666);
         }
@@ -63,7 +88,15 @@
         .u-skill-cell {
             display: flex;
             align-items: center;
-
+            gap: 10px;
+            .u-skill-img {
+                overflow: hidden;
+                .size(50px, 50px);
+                border-radius: 4px;
+                img {
+                    transform: scale(1.25);
+                }
+            }
             .u-edit {
                 .pointer;
             }

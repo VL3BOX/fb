@@ -1,6 +1,7 @@
 @section-title-color: rgba(249, 247, 232, 0.3);
 
-.m-map-filter {
+.m-map-filter,
+.m-skill-filter {
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
@@ -49,6 +50,26 @@
             background-color: #1f2937 !important;
             border-color: #1f2937 !important;
             color: #c8c8c8;
+        }
+    }
+    .m-skill-search {
+        width: 100%;
+        input {
+            background-color: #000 !important;
+            border-color: #000 !important;
+            color: #c8c8c8;
+        }
+        .m-selects {
+            margin-top: 10px;
+            .el-select {
+                width: 100%;
+                margin-bottom: 4px;
+                input {
+                    background-color: #1f2937 !important;
+                    border-color: #1f2937 !important;
+                    color: #c8c8c8;
+                }
+            }
         }
     }
 

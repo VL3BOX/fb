@@ -398,6 +398,9 @@ export default {
                                 key: "downLoading",
                                 val: false,
                             });
+                            if (this.isPhone()) {
+                                this.scale = 0.35;
+                            }
                         });
                     })
                     .catch((error) => {

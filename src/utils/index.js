@@ -17,6 +17,14 @@ export function isPhone() {
     return document.documentElement.clientWidth <= 768;
 }
 
+export function isIpad() {
+    return document.documentElement.clientWidth <= 1132;
+}
+
+export function isNoteBook() {
+    return document.documentElement.clientWidth <= 1440;
+}
+
 export function isWeChat() {
     return /MicroMessenger/i.test(navigator.userAgent);
 }

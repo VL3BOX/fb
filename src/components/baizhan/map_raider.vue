@@ -40,6 +40,10 @@ export default {
 
             page: 1, //当前页数
             per: 2, //每页条目
+            topicObj: {
+                恶战日轮山城: "恶战·日轮山城",
+                恶战灵霄峡: "恶战·灵霄峡",
+            },
         };
     },
     computed: {
@@ -51,7 +55,7 @@ export default {
                 subtype: this.subtype,
                 order: this.order,
                 client: this.client,
-                topic: this.topic === "武逸青" ? "萧沙/胡鞑/武逸青" : this.topic,
+                topic: this.topicObj[this.topic] ? this.topicObj[this.topic] : this.topic,
             };
         },
         pageQuery() {
@@ -81,7 +85,7 @@ export default {
     methods: {
         getLink() {
             const domain = process.env.NODE_ENV === "development" ? __Root : location.origin + "/";
-            const currentBossName = this.topic === "武逸青" ? "萧沙/胡鞑/武逸青" : this.topic;
+            const currentBossName = this.topicObj[this.topic] ? this.topicObj[this.topic] : this.topic;
             const url = domain + `fb/?fb_name=百战异闻录&topic=${currentBossName}`;
             return url;
         },

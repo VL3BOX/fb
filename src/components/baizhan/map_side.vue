@@ -60,7 +60,7 @@ export default {
     data() {
         return {
             loading: false,
-            base: 4,
+            base: 3,
             activeIndex: 1,
             qq: "785597424",
         };
@@ -92,7 +92,8 @@ export default {
     },
     watch: {
         activeIndex(index) {
-            const refIndex = (index - 1) * 15 ? (index - 1) * 15 - 1 : 0;
+            const baseIndex = this.maps.length / this.base;
+            const refIndex = (index - 1) * baseIndex ? (index - 1) * baseIndex - 1 : 0;
             this.$refs.mapItem[refIndex].scrollIntoView({
                 behavior: "smooth",
                 block: refIndex ? "start" : "center",

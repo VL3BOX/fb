@@ -12,22 +12,26 @@
             <el-table-column label="技能" min-width="150">
                 <template #default="{ row: skill }">
                     <div class="u-skill-cell">
-                        <div class="u-skill-img">
+                        <div class="u-skill-img" :class="`u-skill-icon__${skill.nColor}`">
                             <img :src="iconLink(skill.skillIconId)" />
                         </div>
                         <span>{{ skill.szSkillName }}</span>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="szBossName" label="首领" sortable min-width="150"></el-table-column>
-            <el-table-column prop="nCost" label="占用" sortable min-width="150">
+            <el-table-column v-if="!isIpad()" prop="szBossName" label="首领" sortable min-width="150">
+                <template #default="{ row }">
+                    {{ row.szBossName || "-" }}
+                </template>
+            </el-table-column>
+            <el-table-column v-if="!isIpad()" prop="nCost" label="占用" sortable min-width="150">
                 <template #default="{ row: skill }">
                     <div class="u-points">
                         <img v-for="point in skill.nCost" :key="point" :src="`${__imgRoot}baizhan_6.png`" />
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="nColor" label="破绽" sortable min-width="150">
+            <el-table-column v-if="!isIpad()" prop="nColor" label="破绽" sortable min-width="150">
                 <template #default="{ row }">
                     {{ getColor(row.nColor) }}
                 </template>
@@ -39,7 +43,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column min-width="150">
+            <el-table-column v-if="!isNoteBook()" min-width="150">
                 <template #default="{ row }">
                     <div class="u-detail-btn" @click="toDetail(row.dwInSkillID)">详细数据</div>
                 </template>
@@ -51,7 +55,7 @@
 <script>
 import { mapState } from "vuex";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
-import { isPhone } from "@/utils";
+import { isPhone, isIpad, isNoteBook } from "@/utils";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 
 export default {
@@ -97,10 +101,14 @@ export default {
                     return (
                         (!color || item.nColor === color) &&
                         (!cost || item.nCost === cost) &&
-                        (!bossName || item.szBossName === bossName) &&
+                        (!bossName || item.szBossName === bossName || (bossName === "未知" && !item.szBossName)) &&
                         (!type || item.szType.includes(type)) &&
                         (!name || item?.szSkillName?.indexOf(name) > -1)
                     );
+                });
+                this.$store.commit("baizhan/setState", {
+                    key: "currentSkill",
+                    val: this.skills?.[0] || {},
                 });
             },
         },
@@ -108,6 +116,8 @@ export default {
     methods: {
         iconLink,
         isPhone,
+        isIpad,
+        isNoteBook,
         getColor(nColor) {
             return nColor ? this.skillColors.find((item) => item.id === nColor)?.name : "-";
         },
@@ -127,7 +137,7 @@ export default {
             window.open(url, "_blank");
         },
         onMouse(row) {
-            if (this.isPin) return;
+            // if (this.isPin) return;
             this.$store.commit("baizhan/setState", {
                 key: "currentSkill",
                 val: row,

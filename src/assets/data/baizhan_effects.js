@@ -53,7 +53,7 @@ export const skill_colors = [
     },
     {
         id: 1,
-        name: "白色",
+        name: "无颜色招式",
     },
     {
         id: 2,

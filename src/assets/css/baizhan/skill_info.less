@@ -9,21 +9,40 @@
         .flex;
         align-items: center;
         gap: 10px;
-        .u-skill-img {
+        .u-skill-passive {
             .flex;
             justify-content: center;
             align-items: center;
             .size(60px, 60px);
             border-radius: 5px;
+            overflow: hidden;
             background: #313956;
             .u-img-wrap {
                 .size(50px, 50px);
                 border-radius: 50%;
                 overflow: hidden;
+                .flex;
+                align-items: center;
+                justify-content: center;
+                background-color: red;
                 img {
-                    transform: scale(1.25);
+                    border-radius: 5px;
+                    transform: scale(1.5);
                 }
             }
+        }
+        .u-skill-img {
+            .size(60px, 60px);
+            border-radius: 5px;
+            overflow: hidden;
+            img {
+                .size(60px, 60px);
+                border-radius: 5px;
+            }
+        }
+        .u-id {
+            font-size: 12px;
+            color: @baizhan_active;
         }
         .u-title {
             font-size: 20px;
@@ -40,6 +59,9 @@
             img {
                 cursor: pointer;
             }
+            &.u-skill-title {
+                margin-bottom: 10px;
+            }
         }
         .u-item-content {
             .flex;
@@ -49,16 +71,21 @@
                 .size(30px, 30px);
                 .r(50%);
             }
+            .u-no-name {
+                height: 30px;
+                line-height: 30px;
+                width: 100%;
+                text-align: center;
+            }
         }
         .u-list {
             .flex;
-            gap: 20px;
+            gap: 10px;
             flex-wrap: nowrap;
-            justify-content: space-between;
+            justify-content: flex-start;
             .u-info {
-                flex: 1;
                 .flex;
-                gap: 5px;
+                gap: 4px;
                 align-items: center;
                 justify-content: center;
                 padding: 3px 10px;
@@ -68,6 +95,24 @@
                 font-size: 12px;
                 font-weight: 700;
                 box-sizing: border-box;
+                &.u-cost {
+                    width: 78px;
+                    .u-cost-list {
+                        width: 30px;
+                        .flex;
+                        align-content: center;
+                        justify-content: center;
+                        img {
+                            .size(10px, 10px);
+                        }
+                    }
+                }
+                &.u-pz {
+                    width: 78px;
+                }
+                &.u-jn {
+                    width: 86px;
+                }
                 .u-color {
                     width: 30px;
                     height: 6px;
@@ -103,9 +148,10 @@
                 }
             }
             &:last-of-type {
+                justify-content: space-between;
                 flex-wrap: wrap;
                 margin-top: 15px;
-                gap: 15px;
+                gap: 13px;
                 .u-info {
                     flex: none;
                     width: 124.5px;
@@ -127,6 +173,7 @@
         }
     }
     .u-skill-btn {
+        margin-top: -10px;
         background-color: #313956;
         .r(5px);
         padding: 9px 8px 10px;

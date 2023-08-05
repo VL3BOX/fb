@@ -119,12 +119,15 @@ export default {
             return this.types.skill_types;
         },
         bossNames() {
-            return this.$store.getters["baizhan/bossNames"].map((item) => {
-                if (item === "精英首领") {
-                    item = "全部首领";
-                }
-                return item;
-            });
+            return [
+                ...this.$store.getters["baizhan/bossNames"].map((item) => {
+                    if (item === "精英首领") {
+                        item = "全部首领";
+                    }
+                    return item;
+                }),
+                "未知",
+            ];
         },
         params() {
             return {

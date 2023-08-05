@@ -89,6 +89,20 @@ export default {
             };
         },
     },
+    watch: {
+        "$route.query": {
+            immediate: true,
+            deep: true,
+            handler(query) {
+                if (query?.skill) {
+                    this.$store.commit("baizhan/setState", {
+                        key: "activeTab",
+                        val: "skill",
+                    });
+                }
+            },
+        },
+    },
     methods: {
         setActiveTab(tab) {
             if (tab === "boss")

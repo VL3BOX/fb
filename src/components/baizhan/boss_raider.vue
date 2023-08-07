@@ -1,10 +1,5 @@
 <template>
     <div class="m-raiders">
-        <div class="u-header">
-            <div class="u-title">百战攻略</div>
-            <el-input placeholder="请输入搜索内容" v-model.trim.lazy="search" clearable></el-input>
-            <a class="u-publish el-button el-button--primary" target="_blank" :href="publish_link">+ 发布攻略</a>
-        </div>
         <div class="m-archive-list" v-if="data && data.length">
             <ul class="u-list">
                 <list-item
@@ -54,18 +49,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { appKey } from "@/../setting.json";
 import listItem from "@/components/list/list_item.vue";
-import { publishLink } from "@jx3box/jx3box-common/js/utils";
 import { getPosts } from "@/service/post";
 export default {
     name: "BRaiders",
-    props: {
-        topic: {
-            type: String,
-            default: "",
-        },
-    },
     components: {
         listItem,
     },
@@ -74,7 +63,6 @@ export default {
             loading: false, //加载状态
             data: [], //数据列表
 
-            search: "", //搜索字串
             order: "update",
             subtype: "百战异闻录",
             client: "std",
@@ -86,10 +74,10 @@ export default {
         };
     },
     computed: {
-        // 发布按钮链接
-        publish_link: function () {
-            return publishLink(appKey);
-        },
+        ...mapState({
+            topic: (state) => state.baizhan.currentBossName,
+            search: (state) => state.baizhan.search,
+        }),
         hasNextPage() {
             return this.pages > 1 && this.page < this.total;
         },

@@ -7,7 +7,7 @@
                     <div class="u-floor">
                         <span>第{{ current.floor }}层</span>
                     </div>
-                    <div class="u-name">{{ current.bossName }}</div>
+                    <div class="u-name" @click="toBoss(current.bossName)">{{ current.bossName }}</div>
                 </div>
             </div>
             <div class="u-effect-wrap">
@@ -26,35 +26,7 @@
                 </div>
                 <div v-else class="u-no-effect">当前层没有特殊效果</div>
             </div>
-            <div class="u-skill-wrap">
-                <div class="u-header">技能掉落</div>
-                <div class="u-skill-list">
-                    <a
-                        class="u-skill-item"
-                        :class="`u-skill-icon__${skill.skillColor}`"
-                        v-for="skill in current.skills"
-                        :key="skill.skillId"
-                        :href="getUrl(skill.skillId)"
-                        target="_blank"
-                        @click.prevent="toSkill(skill)"
-                    >
-                        <div class="u-skill-left">
-                            <div class="u-img-wrap" :class="skill.isPassive && 'is-passive'">
-                                <img class="u-skill-icon" :src="skill.skillIcon" :alt="skill.skillName" />
-                            </div>
-                            <span>{{ skill.skillName }}</span>
-                        </div>
-                        <div class="u-skill-right">
-                            <img v-if="skill.isPassive" src="@/assets/img/baizhan/passive.svg" svg-inline />
-                            <img
-                                v-if="skill.skillColor === 0 && !skill.isPassive"
-                                src="@/assets/img/baizhan/other_skill.svg"
-                                svg-inline
-                            />
-                        </div>
-                    </a>
-                </div>
-            </div>
+            <SkillReward :skills="current.skills"></SkillReward>
         </div>
     </div>
 </template>
@@ -63,8 +35,12 @@
 import { mapState } from "vuex";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import SkillReward from "@/components/baizhan/skill_reward.vue";
 export default {
     name: "BInfo",
+    components: {
+        SkillReward,
+    },
     computed: {
         ...mapState({
             currentBoss: (state) => state.baizhan.currentBoss,
@@ -91,21 +67,16 @@ export default {
         },
     },
     methods: {
-        getUrl(id) {
-            const domain = process.env.NODE_ENV === "development" ? __Root : location.origin + "/";
-            return domain + `app/database/?type=skill&query=${id}`;
-        },
-        toSkill(skill) {
+        toBoss(bossName) {
             this.$store.commit("baizhan/setState", {
-                key: "currentSkill",
-                val: this.skills.find((item) => item.dwInSkillID === skill.skillId),
+                key: "currentBossName",
+                val: bossName,
             });
             this.$store.commit("baizhan/setState", {
                 key: "activeTab",
-                val: "skill",
+                val: "boss",
             });
-            console.log(skill);
-            this.$router.push({ query: { skill: skill.skillName } });
+            this.$router.push({ query: { boss: bossName } });
         },
         toBuff(floor) {
             const domain = process.env.NODE_ENV === "development" ? __Root : location.origin + "/";
@@ -118,4 +89,5 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/baizhan/map_level_info.less";
+@import "~@/assets/css/baizhan/skill_reward.less";
 </style>

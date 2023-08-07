@@ -29,12 +29,15 @@ export default {
         skillParams: {},
         mapFilterInit: "init",
 
+        step: 6,
+        row: 10,
         map: "",
         maps: [],
 
         downLoading: false,
 
         currentSkill: {},
+        search: "", // BOSS攻略查询
     },
     getters: {
         bossNames(state) {

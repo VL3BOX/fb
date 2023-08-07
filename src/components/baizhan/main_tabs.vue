@@ -3,7 +3,7 @@
         <div class="u-tab-list">
             <div
                 class="u-tab"
-                :class="[tab.value === activeTab ? 'is-active' : '', tab.value === 'boss' ? 'is-gray' : '']"
+                :class="[tab.value === activeTab ? 'is-active' : '']"
                 v-for="tab in tabs"
                 :key="tab.value"
                 @click="setActiveTab(tab.value)"
@@ -31,7 +31,7 @@
                 </a>
             </div>
         </div>
-        <div class="u-map-info" v-if="activeTab === 'skill'">
+        <div class="u-map-info" v-if="activeTab !== 'map'">
             <img class="u-skill-tab-img" src="@/assets/img/baizhan/baizhan_tab_default.svg" />
         </div>
     </div>
@@ -94,22 +94,20 @@ export default {
             immediate: true,
             deep: true,
             handler(query) {
+                if (query?.floor) {
+                    this.setActiveTab("map");
+                }
                 if (query?.skill) {
-                    this.$store.commit("baizhan/setState", {
-                        key: "activeTab",
-                        val: "skill",
-                    });
+                    this.setActiveTab("skill");
+                }
+                if (query?.boss) {
+                    this.setActiveTab("boss");
                 }
             },
         },
     },
     methods: {
         setActiveTab(tab) {
-            if (tab === "boss")
-                return this.$message({
-                    type: "info",
-                    message: "完善中",
-                });
             this.$store.commit("baizhan/setState", {
                 key: "activeTab",
                 val: tab,

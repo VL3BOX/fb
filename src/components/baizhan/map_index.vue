@@ -19,23 +19,23 @@
             <div
                 class="u-step"
                 :class="currentBoss.dwBossID ? 'has-info' : ''"
-                v-for="(item, step) in list"
-                :key="step"
+                v-for="(item, stepIndex) in list"
+                :key="stepIndex"
             >
                 <div
                     class="u-floor"
                     :class="[
                         floor.nEffectID ? 'is-effect' : '',
                         floor.dwBossID === currentBoss.dwBossID ? 'is-info' : '',
-                        getCurrentStyle(floor, step * 10 + index + 1),
+                        getCurrentStyle(floor, stepIndex * row + index + 1),
                     ]"
                     v-for="(floor, index) in item"
                     :key="index"
-                    @click.prevent="setBossHandler(step * 10 + index + 1)"
+                    @click.prevent="setBossHandler(stepIndex * row + index + 1)"
                 >
                     <div class="u-floor-content">
                         <div class="u-index" :class="floor.nEffectID && 'u-effect'">
-                            {{ step * 10 + index + 1 }}
+                            {{ stepIndex * row + index + 1 }}
                         </div>
                         <div class="u-img">
                             <img :src="getBossAvatar(floor.dwBossID)" :alt="floor.bossName || '未知'" />
@@ -98,8 +98,6 @@ export default {
                 boss: "",
                 effect: 0,
             },
-            step: 6,
-            row: 10,
             scale: 1,
 
             isDragging: false,
@@ -118,6 +116,8 @@ export default {
     },
     computed: {
         ...mapState({
+            step: (state) => state.baizhan.step,
+            row: (state) => state.baizhan.row,
             bosses: (state) => state.baizhan.bosses,
             effects: (state) => state.baizhan.effects,
             maps: (state) => state.baizhan.maps,

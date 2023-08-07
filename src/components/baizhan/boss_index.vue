@@ -1,128 +1,85 @@
 <template>
-    <div class="p-bosses">
-        <div class="m-boss-wrap" :class="isInfo ? 'is-info' : ''">
-            <div class="m-boss-list">
-                <div
-                    class="u-boss"
-                    :class="topic === item.name && 'is-active'"
-                    v-for="item in bossList"
-                    :key="item.id"
-                    @click="setBoss(item)"
-                >
-                    <img class="u-avatar" :src="item.avatar" :alt="item.name" />
-                    <div class="u-name">{{ item.name }}</div>
+    <div class="p-boss-info">
+        <div class="m-boss-info" :class="!topic && 'is-no-data'">
+            <img class="u-default" v-if="!topic" src="@/assets/img/baizhan/right_default.svg" svg-inline />
+            <template v-else>
+                <div class="m-boss">
+                    <div class="u-boss-info">
+                        <img class="u-boss-avatar" :src="current.avatar" />
+                        <div class="u-name-info">
+                            <div class="u-label">首领</div>
+                            <div class="u-name">{{ topic }}</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <BossInfo :boss="current"></BossInfo>
+                <SkillReward :skills="current.skills"></SkillReward>
+                <MapSimple></MapSimple>
+            </template>
         </div>
-        <BRaider :topic="topic"></BRaider>
+        <div class="m-boss-raider" :class="!topic && 'no-boss'">
+            <div class="u-header">
+                <div class="u-title">相关攻略</div>
+                <a :href="getLink()" target="_blank">查看全部</a>
+            </div>
+            <BossRaider></BossRaider>
+        </div>
     </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
-import BRaider from "./boss_raider.vue";
-import BossInfo from "./boss_info.vue";
+import topicObj from "@/assets/data/baizhan_topic.json";
+import BossRaider from "./boss_raider.vue";
+import SkillReward from "./skill_reward.vue";
+import MapSimple from "./map_simple.vue";
 export default {
-    name: "Bosses",
+    name: "BossInfo",
+    components: {
+        BossRaider,
+        SkillReward,
+        MapSimple,
+    },
     data() {
         return {
-            bossList: [],
-            bossNames: [],
-            topic: "",
+            topicObj,
         };
-    },
-    components: {
-        BRaider,
-        BossInfo,
     },
     computed: {
         ...mapState({
             bosses: (state) => state.baizhan.bosses,
-            currentBoss: (state) => state.baizhan.currentBoss,
+            topic: (state) => state.baizhan.currentBossName,
             skills: (state) => state.baizhan.skills,
         }),
-        isInfo() {
-            return this.bossNames.includes(this.topic);
-        },
         current() {
-            const currentName = this.isInfo ? this.topic : "";
-            return this.bossList.find((item) => item.name === currentName) || {};
+            const currentBoss = this.bosses.find((item) => item.name === this.topic) || {};
+            const skills = currentBoss.skills || [];
+            return {
+                ...currentBoss,
+                skills: skills.map((skill) => {
+                    const skillObj = this.skills.find((item) => item.dwInSkillID === skill);
+                    return {
+                        skillId: skill,
+                        skillName: skillObj?.szSkillName,
+                        skillColor: skillObj?.nColor,
+                        skillIcon: iconLink(skillObj?.skillIconId || 13),
+                        isPassive: !!~~skillObj?.Skill?.IsPassiveSkill,
+                    };
+                }),
+            };
         },
     },
-    watch: {
-        "$route.query": {
-            deep: true,
-            immediate: true,
-            handler(query) {
-                const { topic } = query;
-                this.topic = topic === "全部" ? "" : topic;
-                if (topic === "全部" || !topic) {
-                    this.$store.commit("baizhan/setState", {
-                        key: "currentBoss",
-                        val: {},
-                    });
-                }
-            },
-        },
-        bosses: {
-            immediate: true,
-            deep: true,
-            handler(list) {
-                const bossNames = Array.from(new Set(list.map((item) => item.name)));
-                this.bossNames = bossNames;
-                this.bossList = bossNames
-                    .map((name) => {
-                        return {
-                            name,
-                            ...list.find((item) => item.name === name),
-                        };
-                    })
-                    .map((boss) => {
-                        const skills = boss?.skills || [];
-                        return {
-                            ...boss,
-                            skills: skills.map((skill) => {
-                                const skillObj = this.skills.find((item) => item.dwInSkillID === skill);
-                                return {
-                                    skillId: skill,
-                                    skillName: skillObj?.szSkillName,
-                                    skillColor: skillObj?.nColor,
-                                    skillIcon: iconLink(skillObj?.skillIconId || 13),
-                                };
-                            }),
-                        };
-                    });
-            },
-        },
-        currentBoss(boss) {
-            const { bossName } = boss;
-            this.setBoss({ name: bossName });
-        },
-    },
+    watch: {},
     methods: {
-        iconLink,
-        setBoss(item) {
-            let { name } = item;
-            if (name === this.topic) {
-                name = "";
-            }
-            this.$router.push({
-                query: name
-                    ? {
-                          topic: name,
-                      }
-                    : {},
-            });
+        getLink() {
+            const domain = process.env.NODE_ENV === "development" ? __Root : location.origin + "/";
+            const url = domain + `fb/?fb_name=百战异闻录`;
+            return url;
         },
-    },
-    beforeDestroy() {
-        this.$router.push({ query: {} });
     },
 };
 </script>
 <style lang="less">
-@import "~@/assets/css/list.less";
-@import "~@/assets/css/baizhan/bosses.less";
+@import "~@/assets/css/baizhan/boss_info.less";
 </style>

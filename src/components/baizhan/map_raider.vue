@@ -23,6 +23,7 @@ import { appKey } from "@/../setting.json";
 import listItem from "./list_item.vue";
 import { getPosts } from "@/service/post";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import topicObj from "@/assets/data/baizhan_topic.json";
 export default {
     name: "MapRaiders",
     components: {
@@ -40,10 +41,7 @@ export default {
 
             page: 1, //当前页数
             per: 2, //每页条目
-            topicObj: {
-                恶战日轮山城: "恶战·日轮山城",
-                恶战灵霄峡: "恶战·灵霄峡",
-            },
+            topicObj,
         };
     },
     computed: {

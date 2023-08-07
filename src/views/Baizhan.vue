@@ -9,10 +9,13 @@
                     </keep-alive>
                 </div>
             </LeftSidebar>
-            <div class="m-baizhan-center" :class="[isPhone() ? 'is-phone' : '', rightOpen ? '' : 'is-right-close']">
+            <div
+                class="m-baizhan-center"
+                :class="[isPhone() ? 'is-phone' : '', activeTab !== 'boss' && rightOpen ? '' : 'is-right-close']"
+            >
                 <BMap v-if="activeTab === 'map'"></BMap>
                 <Skills v-if="activeTab === 'skill'"></Skills>
-                <Bosses v-if="activeTab === 'boss'"></Bosses>
+                <Boss v-if="activeTab === 'boss'"></Boss>
             </div>
             <div v-if="hasRight" class="m-baizhan-right" :class="[rightOpen ? 'is-open' : 'is-close']">
                 <div v-if="hasInfo || hasSkill" class="m-right-wrap">
@@ -35,6 +38,7 @@
 import MainTabs from "@/components/baizhan/main_tabs.vue";
 import MapFilter from "@/components/baizhan/map_filter.vue";
 import SkillFilter from "@/components/baizhan/skill_filter.vue";
+import BossFilter from "@/components/baizhan/boss_filter.vue";
 
 import Skills from "@/components/baizhan/skill_list.vue";
 import BMap from "@/components/baizhan/map_index.vue";
@@ -43,7 +47,7 @@ import BInfo from "@/components/baizhan/map_level_info.vue";
 import SkillInfo from "@/components/baizhan/skill_info.vue";
 // import BComment from "@/components/baizhan/baizhan_comment.vue";
 import MapRaider from "@/components/baizhan/map_raider.vue";
-import Bosses from "@/components/baizhan/boss_index.vue";
+import Boss from "@/components/baizhan/boss_index.vue";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { isPhone } from "@/utils";
 import { mapState, mapActions } from "vuex";
@@ -56,11 +60,12 @@ export default {
         MainTabs,
         MapFilter,
         SkillFilter,
+        BossFilter,
 
         Skills,
         BMap,
         BInfo,
-        Bosses,
+        Boss,
         MapRaider,
         SkillInfo,
         // BComment,
@@ -75,8 +80,8 @@ export default {
         ...mapState({
             bosses: (state) => state.baizhan.bosses,
             skills: (state) => state.baizhan.skills,
-            effects: (state) => state.baizhan.effects,
-            maps: (state) => state.baizhan.maps,
+            // effects: (state) => state.baizhan.effects,
+            // maps: (state) => state.baizhan.maps,
             activeTab: (state) => state.baizhan.activeTab,
             currentBoss: (state) => state.baizhan.currentBoss,
             currentSkill: (state) => state.baizhan.currentSkill,
@@ -87,6 +92,9 @@ export default {
             }
             if (this.activeTab === "skill") {
                 return SkillFilter;
+            }
+            if (this.activeTab === "boss") {
+                return BossFilter;
             }
             return null;
         },
@@ -109,7 +117,7 @@ export default {
             });
         },
         hasRight() {
-            return !isPhone();
+            return !isPhone() && this.activeTab !== "boss";
         },
         hasInfo() {
             return this.activeTab === "map" && this.currentBoss?.dwBossID;

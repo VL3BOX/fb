@@ -53,6 +53,7 @@ import { mapState } from "vuex";
 import { appKey } from "@/../setting.json";
 import listItem from "@/components/list/list_item.vue";
 import { getPosts } from "@/service/post";
+import topicObj from "@/assets/data/baizhan_topic.json";
 export default {
     name: "BRaiders",
     components: {
@@ -71,6 +72,7 @@ export default {
             per: 10, //每页条目
             total: 1, //总条目数
             pages: 1, //总页数
+            topicObj,
         };
     },
     computed: {
@@ -86,7 +88,7 @@ export default {
                 subtype: this.subtype,
                 order: this.order,
                 client: this.client,
-                topic: this.topic,
+                topic: this.topicObj[this.topic] ? this.topicObj[this.topic] : this.topic,
             };
         },
         pageQuery() {

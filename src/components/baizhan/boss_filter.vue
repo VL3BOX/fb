@@ -41,7 +41,9 @@ export default {
             currentBossName: (state) => state.baizhan.currentBossName,
         }),
         bossNames() {
-            return this.$store.getters["baizhan/bossNames"].filter((item) => item !== "精英首领");
+            const list = this.$store.getters["baizhan/bossNames"].filter((item) => item !== "精英首领");
+            list.unshift("通用");
+            return list;
         },
     },
     watch: {

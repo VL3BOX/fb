@@ -1,13 +1,18 @@
 <template>
     <div class="p-boss-info">
         <div class="m-boss-info" :class="!topic && 'is-no-data'">
-            <img class="u-default" v-if="!topic" src="@/assets/img/baizhan/right_default.svg" svg-inline />
+            <img
+                class="u-default"
+                v-if="!topic || topic === '通用'"
+                src="@/assets/img/baizhan/right_default.svg"
+                svg-inline
+            />
             <template v-else>
                 <div class="m-boss">
                     <div class="u-boss-info">
                         <img class="u-boss-avatar" :src="current.avatar" />
                         <div class="u-name-info">
-                            <div class="u-label">首领</div>
+                            <div class="u-label">{{ isImportant ? "精英首领" : "首领" }}</div>
                             <div class="u-name">{{ topic }}</div>
                         </div>
                     </div>
@@ -51,7 +56,20 @@ export default {
             bosses: (state) => state.baizhan.bosses,
             topic: (state) => state.baizhan.currentBossName,
             skills: (state) => state.baizhan.skills,
+            maps: (state) => state.baizhan.maps,
         }),
+        indexes() {
+            const indexes = [];
+            this.maps.forEach((item, index) => {
+                if (item.bossName === this.topic) {
+                    indexes.push(index + 1);
+                }
+            });
+            return indexes;
+        },
+        isImportant() {
+            return this.indexes.some((i) => i % 10 === 0);
+        },
         current() {
             const currentBoss = this.bosses.find((item) => item.name === this.topic) || {};
             const skills = currentBoss.skills || [];

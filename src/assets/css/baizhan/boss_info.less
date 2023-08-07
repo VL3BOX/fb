@@ -1,10 +1,11 @@
 .p-boss-info {
     .flex;
+    align-items: flex-start;
     gap: 20px;
     font-size: 14px;
     color: @baizhan_color;
     .m-boss-info {
-        flex-shrink: 0;
+        flex: none;
         .w(294px);
         // min-height: 562px;
         background-color: @baizhan_tab_bg;
@@ -15,7 +16,7 @@
         flex-direction: column;
         gap: 20px;
         .u-default {
-            .size(100%, 100%);
+            .size(266px, 522px);
         }
         .m-boss {
             .u-boss-info {
@@ -55,6 +56,7 @@
         }
     }
     .m-boss-raider {
+        flex: 1;
         width: 100%;
         height: calc(100vh - 138px);
         border-radius: 10px;

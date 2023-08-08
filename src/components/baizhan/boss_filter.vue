@@ -13,7 +13,7 @@
         <div class="m-filter-list">
             <div
                 class="u-filter"
-                :class="currentBossName === bossName && 'is-active'"
+                :class="[currentBossName === bossName ? 'is-active' : '', bossName === search ? 'is-search' : '']"
                 v-for="(bossName, index) in bossNames"
                 :key="index"
                 :title="bossName"
@@ -47,12 +47,12 @@ export default {
         },
     },
     watch: {
-        search(search) {
-            this.$store.commit("baizhan/setState", {
-                key: "search",
-                val: search,
-            });
-        },
+        // search(search) {
+        //     this.$store.commit("baizhan/setState", {
+        //         key: "search",
+        //         val: search,
+        //     });
+        // },
         "$route.query": {
             immediate: true,
             deep: true,

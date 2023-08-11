@@ -30,7 +30,7 @@
         <!-- 列表 -->
         <div class="m-archive-list" v-if="data && data.length">
             <ul class="u-list">
-                <list-item v-for="(item, i) in data" :key="i + item" :item="item" :order="order" :reporter="{ aggregate, client }" />
+                <list-item v-for="(item, i) in data" :key="i + item" :item="item" :order="order" caller="fb_index_click" />
             </ul>
         </div>
 
@@ -66,6 +66,7 @@ import { appKey } from "@/../setting.json";
 import listItem from "@/components/list/list_item.vue";
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
 import { getPosts } from "@/service/post";
+import { reportNow } from "@jx3box/jx3box-common/js/reporter";
 export default {
     name: "Index",
     props: [],
@@ -126,6 +127,10 @@ export default {
         postLink: function (val) {
             return `/${appKey}/` + val;
         },
+        reporterLink: function (val) {
+            const prefix = this.client === 'std' ? 'www' : 'origin'
+            return`${prefix}:/${appKey}/` + val;
+        },
         onSearch() {
             this.page = 1;
             this.loadData();
@@ -175,6 +180,14 @@ export default {
                     }
                     this.total = res.data?.data?.total;
                     this.pages = res.data?.data?.pages;
+
+                    reportNow({
+                        caller: 'fb_index_load',
+                        data: {
+                            aggregate: res.data?.data?.list.map(item => this.reporterLink(item.ID)),
+                        }
+                    })
+
                     this.$forceUpdate();
                 })
                 .finally(() => {

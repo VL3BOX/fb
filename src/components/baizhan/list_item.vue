@@ -4,13 +4,6 @@
             class="u-banner"
             :href="item.ID | postLink"
             :target="target"
-            v-reporter="{
-                data: {
-                    href: reporterLink(item.ID),
-                    ...reporter,
-                },
-                caller: 'fb_index',
-            }"
             ><img :src="getBanner(item)" :key="item.ID"
         /></a>
 
@@ -20,13 +13,6 @@
             :style="item.color | showHighlight"
             :href="item.ID | postLink"
             :target="target"
-            v-reporter="{
-                data: {
-                    href: reporterLink(item.ID),
-                    ...reporter,
-                },
-                caller: 'fb_index',
-            }"
             >{{ item.post_title || "无标题" }}</a
         >
         <!-- 作者 -->

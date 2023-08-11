@@ -8,9 +8,8 @@
             v-reporter="{
                 data: {
                     href: reporterLink(item.ID),
-                    ...reporter,
                 },
-                caller: 'fb_index',
+                caller,
             }"
             ><img :src="getBanner(item)" :key="item.ID"
         /></a>
@@ -29,9 +28,8 @@
                 v-reporter="{
                     data: {
                         href: reporterLink(item.ID),
-                        ...reporter,
                     },
-                    caller: 'fb_index',
+                    caller,
                 }"
                 >{{ item.post_title || "无标题" }}</a
             >
@@ -81,14 +79,18 @@ import { cms as mark_map } from "@jx3box/jx3box-common/data/mark.json";
 import { showDate } from "@jx3box/jx3box-common/js/moment.js";
 export default {
     name: "ListItem",
-    props: ["item", "order", "reporter"],
+    props: ["item", "order", "caller"],
     components: {},
     data: function () {
         return {
             target: buildTarget(),
         };
     },
-    computed: {},
+    computed: {
+        client() {
+            return this.item?.client;
+        },
+    },
     watch: {},
     methods: {
         getBanner: function (item) {
@@ -121,7 +123,8 @@ export default {
             });
         },
         reporterLink: function (val) {
-            return `/${appKey}/` + val;
+            const prefix = this.client === 'std' ? 'www' : 'origin'
+            return`${prefix}:/${appKey}/` + val;
         },
     },
     filters: {

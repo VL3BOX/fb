@@ -7,7 +7,6 @@
                     :key="i + item"
                     :item="item"
                     :order="order"
-                    :reporter="{ aggregate, client }"
                 />
             </ul>
         </div>

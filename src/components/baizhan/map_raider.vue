@@ -10,7 +10,6 @@
                 :key="i + item"
                 :item="item"
                 :order="order"
-                :reporter="{ aggregate, client }"
             />
         </div>
         <!-- 空 -->

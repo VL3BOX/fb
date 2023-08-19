@@ -7,7 +7,7 @@
                 <a>{{ qq }}</a>
             </strong>
         </RightSideMsg>
-        <div class="m-map-side">
+        <div class="m-map-side" v-if="client == 'std'">
             <div class="m-header">
                 <img src="@/assets/img/baizhan/baizhan_purple.svg" svg-inline />
                 <div class="u-title">百战异闻录</div>
@@ -88,6 +88,9 @@ export default {
                 list.push(maps.slice(i * per, (i + 1) * per));
             }
             return list;
+        },
+        client() {
+            return this.$store.state.client;
         },
     },
     watch: {

@@ -9,8 +9,10 @@
         </RightSideMsg>
         <div class="m-map-side" v-if="client == 'std'">
             <div class="m-header">
-                <img src="@/assets/img/baizhan/baizhan_purple.svg" svg-inline />
-                <div class="u-title">百战异闻录</div>
+                <a href="javascript:;" @click="toMap">
+                    <img src="@/assets/img/baizhan/baizhan_purple.svg" svg-inline />
+                    <span class="u-title">百战异闻录</span>
+                </a>
             </div>
             <div class="u-time">最后更新时间: {{ update_time }}</div>
             <div class="u-tabs" v-if="maps.length">
@@ -117,7 +119,10 @@ export default {
             return !(index % 10) ? "is-special" : "";
         },
         toMap(i) {
-            const url = `${location.origin}/fb/baizhan?floor=${i + 1}`;
+            let url = `${location.origin}/fb/baizhan`;
+            if (!isNaN(i)) {
+                url += `?floor=${i + 1}`;
+            }
             window.open(url, "_blank");
         },
         load() {

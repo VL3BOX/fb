@@ -59,7 +59,7 @@ export default {
             } else {
                 let zlp = item.post_meta?.fb_zlp || item.zlp || this.$store.state.default_zlp;
                 let fb = item.post_subtype || this.$store.state.default_fb;
-                let img = this.$store.state.map?.[zlp]?.dungeon?.[fb].icon;
+                let img = this.$store.state.map?.[zlp]?.dungeon?.[fb]?.icon;
                 if (img) {
                     return __imgPath + img;
                 } else {

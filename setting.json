@@ -3,12 +3,12 @@
     "keys": "剑三副本,副本攻略,副本数据,副本掉落,副本NPC",
     "desc": "剑三副本大全，最新攻略和数据，掉落列表，全貌地图",
     "default_zlp": {
-        "std": "群侠万变",
-        "origin": "日月明尊"
+        "std": "万灵当歌",
+        "origin": "安史之乱"
     },
     "default_fb": {
         "std": "武狱黑牢",
-        "origin": "烛龙殿"
+        "origin": "战宝军械库"
     },
     "appKey": "fb"
 }

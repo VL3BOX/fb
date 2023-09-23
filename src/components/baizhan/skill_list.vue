@@ -12,9 +12,10 @@
             <el-table-column label="技能" min-width="150">
                 <template #default="{ row: skill }">
                     <div class="u-skill-cell">
-                        <div class="u-skill-img" :class="`u-skill-icon__${skill.nColor}`">
+                        <!--  <div class="u-skill-img" :class="`u-skill-icon__${skill.nColor}`">
                             <img :src="iconLink(skill.skillIconId)" />
-                        </div>
+                        </div> -->
+                        <skill_icon :source="skill"></skill_icon>
                         <span>{{ skill.szSkillName }}</span>
                     </div>
                 </template>
@@ -57,9 +58,13 @@ import { mapState } from "vuex";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 import { isPhone, isIpad, isNoteBook } from "@/utils";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import skill_icon from "./skill_icon.vue";
 
 export default {
     name: "Skills",
+    components: {
+        skill_icon,
+    },
     inject: ["__imgRoot"],
     data: () => ({
         skills: [],

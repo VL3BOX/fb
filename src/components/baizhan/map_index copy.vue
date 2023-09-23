@@ -1,7 +1,20 @@
 <template>
-    <div class="p-map" v-loading="loading" ref="container">
+    <div
+        class="p-map"
+        v-loading="loading"
+        ref="container"
+        @mousedown="startDrag"
+        @mousemove="drag"
+        @mouseup="stopDrag"
+        @mouseleave="stopDrag"
+    >
         <el-button class="u-phone-download" icon="el-icon-download" @click="exportToImage">下载</el-button>
-        <div class="m-boss-list" ref="map" @click="cancelClick">
+        <div
+            class="m-boss-list"
+            ref="map"
+            :style="{ transform: `translate(${position.x}px, ${position.y}px) scale(${scale})` }"
+            @click="preventClick"
+        >
             <!-- <el-button class="u-download" icon="el-icon-download" @click="exportToImage"></el-button> -->
             <div
                 class="u-step"
@@ -18,7 +31,7 @@
                     ]"
                     v-for="(floor, index) in item"
                     :key="index"
-                    @click.stop="setBossHandler(stepIndex * row + index + 1)"
+                    @click.prevent="setBossHandler(stepIndex * row + index + 1)"
                 >
                     <div class="u-floor-content">
                         <div class="u-index" :class="floor.nEffectID && 'u-effect'">
@@ -86,6 +99,19 @@ export default {
                 effect: 0,
             },
             scale: 1,
+
+            isDragging: false,
+            startPosition: { x: 0, y: 0 },
+            offset: { x: 0, y: 0 },
+            position: { x: 0, y: 0 },
+            velocity: { x: 0, y: 0 },
+            lastPosition: { x: 0, y: 0 },
+            lastTime: 0,
+            dampingFactor: 0.9, // 越小速度衰减的越快
+            momentumMultiplier: 0, // 根据鼠标移动的距离动态计算惯性效果的远近
+            containerBounds: null,
+
+            // canvas: null,
         };
     },
     computed: {
@@ -131,6 +157,20 @@ export default {
             handler(list) {
                 if (!list.length) return false;
                 this.setData(list);
+                this.$nextTick(() => {
+                    const map = this.$refs.map;
+                    map.addEventListener("wheel", this.handleScroll);
+
+                    this.containerBounds = this.$refs.container.getBoundingClientRect();
+                    window.addEventListener("resize", this.updateContainerBounds);
+
+                    const imgs = document.getElementsByTagName("img");
+                    [...imgs].forEach((img) => {
+                        img.addEventListener("dragstart", (event) => {
+                            event.preventDefault();
+                        });
+                    });
+                });
             },
         },
         downLoading(bol) {
@@ -176,12 +216,67 @@ export default {
             }
         },
         isPhone,
-        cancelClick(event) {
-            this.$store.commit("baizhan/setState", {
-                key: "currentBoss",
-                val: {},
-            });
-            return this.$router.push({ query: {} });
+        startDrag(event) {
+            this.isDragging = true;
+            this.startPosition.x = event.clientX;
+            this.startPosition.y = event.clientY;
+            this.offset.x = event.clientX - this.position.x;
+            this.offset.y = event.clientY - this.position.y;
+            this.velocity.x = 0;
+            this.velocity.y = 0;
+            this.lastTime = Date.now();
+            this.lastPosition.x = event.clientX;
+            this.lastPosition.y = event.clientY;
+        },
+        drag(event) {
+            if (this.isDragging) {
+                // this.$store.dispatch("baizhan/setInit");
+                const currentTime = Date.now();
+                const deltaTime = currentTime - this.lastTime;
+
+                this.velocity.x = (event.clientX - this.lastPosition.x) / deltaTime;
+                this.velocity.y = (event.clientY - this.lastPosition.y) / deltaTime;
+
+                this.position.x = event.clientX - this.offset.x;
+                this.position.y = event.clientY - this.offset.y;
+                this.lastTime = currentTime;
+                this.lastPosition.x = event.clientX;
+                this.lastPosition.y = event.clientY;
+
+                this.updateMomentumMultiplier(event.clientX, event.clientY);
+            }
+        },
+        stopDrag() {
+            this.isDragging = false;
+            this.applyMomentum();
+        },
+        updateMomentumMultiplier(currentX, currentY) {
+            const distance = Math.sqrt(
+                Math.pow(currentX - this.startPosition.x, 2) + Math.pow(currentY - this.startPosition.y, 2)
+            );
+            this.momentumMultiplier = distance * 0.01;
+        },
+        applyMomentum() {
+            const momentumAnimation = () => {
+                this.position.x += this.velocity.x * this.momentumMultiplier;
+                this.position.y += this.velocity.y * this.momentumMultiplier;
+
+                if (Math.abs(this.velocity.x) > 0.1 || Math.abs(this.velocity.y) > 0.1) {
+                    this.velocity.x *= this.dampingFactor;
+                    this.velocity.y *= this.dampingFactor;
+                    requestAnimationFrame(momentumAnimation);
+                }
+            };
+
+            requestAnimationFrame(momentumAnimation);
+        },
+        updateContainerBounds() {
+            this.containerBounds = this.$refs.container.getBoundingClientRect();
+        },
+        preventClick(event) {
+            if (this.isDragging) {
+                event.stopPropagation();
+            }
         },
         getBossAvatar(id) {
             const avatar = this.bosses.find((item) => item.id === id)?.avatar || `${this.__imgRoot}fbcdpanel02_51.png`;
@@ -226,6 +321,26 @@ export default {
             }
             // this.currentFloor = this.data[0];
         },
+        handleScroll(event) {
+            const delta = event.deltaY || event.detail || event.wheelDelta;
+
+            let scaleNum = 0.05;
+            if (delta < 0) {
+                // 向上滚动，放大元素
+                this.scale += scaleNum;
+                if (this.scale > 1.8) {
+                    this.scale = 1.8;
+                }
+            } else {
+                // 向下滚动，缩小元素
+                this.scale -= scaleNum;
+                if (this.scale < 0.2) {
+                    this.scale = 0.2;
+                }
+            }
+
+            event.preventDefault();
+        },
         exportToImage() {
             if (isPhone() && (isWeChat() || isQQ())) {
                 return this.$message({
@@ -234,52 +349,69 @@ export default {
                 });
             }
             const map = this.$refs.map;
-            this.loading = true;
-            html2canvas(map, {
-                useCORS: true,
-                width: map.offsetWidth,
-                height: map.offsetHeight,
-                scale: 2,
-            })
-                .then((canvas) => {
-                    this.createWatermark().then((waterCanvas) => {
-                        const newCanvas = document.createElement("canvas");
-                        const newCtx = newCanvas.getContext("2d");
-                        newCanvas.width = map.offsetWidth * 2;
-                        newCanvas.height = map.offsetHeight * 2;
-                        newCtx.drawImage(canvas, 0, 0);
-                        newCtx.drawImage(waterCanvas, 0, 0);
-                        // this.canvas = newCanvas.toDataURL();
-                        // 创建一个虚拟链接
-                        const link = document.createElement("a");
-                        link.href = newCanvas.toDataURL(); // 将 Canvas 转换为 Data URL
-                        link.download = `魔盒百战${this.duration.start}至${this.duration.end}.png`; // 下载文件的名称
+            this.scale = 1;
+            this.position = {
+                x: 0,
+                y: 0,
+            };
+            // 重置样式
+            new Promise((resolve) => {
+                map.style.transform = `translate(${this.position.x}px, ${this.position.y}px) scale(${this.scale})`;
 
-                        link.addEventListener("click", () => {
-                            setTimeout(() => {
-                                URL.revokeObjectURL(link.href); // 删除链接的资源
-                            }, 100); // 延迟删除以确保下载完成
+                this.$store.dispatch("baizhan/setInit");
 
-                            link.removeEventListener("click", () => {}); // 移除事件监听器
-                            document.body.removeChild(link);
+                resolve(true);
+            }).then(() => {
+                this.loading = true;
+                html2canvas(map, {
+                    useCORS: true,
+                    width: map.offsetWidth,
+                    height: map.offsetHeight,
+                    scale: 2,
+                })
+                    .then((canvas) => {
+                        this.createWatermark().then((waterCanvas) => {
+                            const newCanvas = document.createElement("canvas");
+                            const newCtx = newCanvas.getContext("2d");
+                            newCanvas.width = map.offsetWidth * 2;
+                            newCanvas.height = map.offsetHeight * 2;
+                            newCtx.drawImage(canvas, 0, 0);
+                            newCtx.drawImage(waterCanvas, 0, 0);
+                            // this.canvas = newCanvas.toDataURL();
+                            // 创建一个虚拟链接
+                            const link = document.createElement("a");
+                            link.href = newCanvas.toDataURL(); // 将 Canvas 转换为 Data URL
+                            link.download = `魔盒百战${this.duration.start}至${this.duration.end}.png`; // 下载文件的名称
+
+                            link.addEventListener("click", () => {
+                                setTimeout(() => {
+                                    URL.revokeObjectURL(link.href); // 删除链接的资源
+                                }, 100); // 延迟删除以确保下载完成
+
+                                link.removeEventListener("click", () => {}); // 移除事件监听器
+                                document.body.removeChild(link);
+                            });
+                            document.body.appendChild(link);
+                            link.click();
+                            this.loading = false;
+                            this.$store.commit("baizhan/setState", {
+                                key: "downLoading",
+                                val: false,
+                            });
+                            if (this.isPhone()) {
+                                this.scale = 0.35;
+                            }
                         });
-                        document.body.appendChild(link);
-                        link.click();
+                    })
+                    .catch((error) => {
                         this.loading = false;
                         this.$store.commit("baizhan/setState", {
                             key: "downLoading",
                             val: false,
                         });
+                        console.error("导出图片出错:", error);
                     });
-                })
-                .catch((error) => {
-                    this.loading = false;
-                    this.$store.commit("baizhan/setState", {
-                        key: "downLoading",
-                        val: false,
-                    });
-                    console.error("导出图片出错:", error);
-                });
+            });
         },
         createWatermark() {
             return new Promise((resolve) => {
@@ -360,6 +492,15 @@ export default {
                 };
             });
         },
+    },
+    mounted() {
+        if (this.isPhone()) {
+            this.scale = 0.35;
+        }
+    },
+    beforeDestroy() {
+        window.removeEventListener("wheel", this.handleScroll);
+        window.removeEventListener("resize", this.updateContainerBounds);
     },
 };
 </script>

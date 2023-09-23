@@ -133,6 +133,10 @@ export default {
                 val = {};
             }
             this.$store.commit("baizhan/setState", {
+                key: "currentBossName",
+                val: "",
+            });
+            this.$store.commit("baizhan/setState", {
                 key: "currentEffect",
                 val: val,
             });
@@ -146,6 +150,10 @@ export default {
             if (bossName === this.currentBossName) {
                 val = "";
             }
+            this.$store.commit("baizhan/setState", {
+                key: "currentEffect",
+                val: {},
+            });
             this.$store.commit("baizhan/setState", {
                 key: "currentBossName",
                 val: val,

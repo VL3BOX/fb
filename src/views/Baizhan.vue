@@ -1,6 +1,6 @@
 <template>
     <app-layout slug="baizhan" className="p-baizhan-app">
-        <div class="p-baizhan" v-loading="loading">
+        <div class="p-baizhan" v-loading="loading" @click="cancelClick">
             <LeftSidebar class="m-baizhan-sidebar">
                 <div class="m-baizhan-left">
                     <main-tabs></main-tabs>
@@ -73,7 +73,7 @@ export default {
     data() {
         return {
             loading: false,
-            rightOpen: true,
+            rightOpen: false,
         };
     },
     computed: {
@@ -128,7 +128,14 @@ export default {
     },
     watch: {
         activeTab() {
+            this.rightOpen = this.activeTab === "skill";
             this.setInit();
+        },
+        "$route.query": {
+            immediate: true,
+            handler(query) {
+                this.activeTab === "map" && (this.rightOpen = !!query.floor);
+            },
         },
     },
     methods: {
@@ -156,6 +163,13 @@ export default {
                 this.loadMap();
                 this.loading = false;
             });
+        },
+        cancelClick() {
+            this.$store.commit("baizhan/setState", {
+                key: "currentBoss",
+                val: {},
+            });
+            return this.$router.push({ query: {} });
         },
     },
     mounted() {

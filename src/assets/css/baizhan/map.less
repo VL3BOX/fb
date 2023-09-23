@@ -1,11 +1,14 @@
 .p-map {
     .flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: flex-start;
-    overflow: hidden;
+    // overflow: hidden;
+    overflow: auto;
     width: 100%;
     height: 100%;
-    margin-top: -25px;
+    // margin-top: -25px;
+    box-sizing: border-box;
+    .scrollbar(12px);
     .u-phone-download {
         .none;
     }
@@ -26,10 +29,11 @@
         flex-direction: column;
         box-sizing: border-box;
         transition: transform 0.2s ease-out;
-        cursor: grab;
+        // cursor: grab;
         background-color: @baizhan_bg;
         user-select: none;
-        padding: 30px;
+        // padding: 30px;
+        padding-bottom: 30px;
         .u-watermark {
             display: none;
             position: absolute;

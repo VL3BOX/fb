@@ -4,7 +4,7 @@
             ref="table"
             class="m-table"
             :data="skills"
-            height="86vh"
+            height="83vh"
             :row-class-name="getRowClassName"
             @cell-mouse-enter="onMouse"
             @row-click="onClick"
@@ -16,7 +16,7 @@
                             <img :src="iconLink(skill.skillIconId)" />
                         </div> -->
                         <skill_icon :source="skill"></skill_icon>
-                        <span>{{ skill.szSkillName }}</span>
+                        <!-- <span>{{ skill.szSkillName }}</span> -->
                     </div>
                 </template>
             </el-table-column>

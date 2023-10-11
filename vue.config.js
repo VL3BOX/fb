@@ -4,74 +4,74 @@ const { JX3BOX, SEO } = require("@jx3box/jx3box-common");
 const Setting = require("./setting.json");
 
 module.exports = {
-
     //❤️ Multiple pages ~
-    pages:{
-        index : {
-            title : '副本专栏 - JX3BOX',
-            entry:'src/main.js',
-            template : 'public/index.html',
-            filename:'index.html',
+    pages: {
+        index: {
+            title: "副本专栏 - JX3BOX",
+            entry: "src/main.js",
+            template: "public/index.html",
+            filename: "index.html",
         },
     },
 
     devServer: {
         proxy: {
             "/api/inspire": {
-                "target": "https://pay.jx3box.com",
-                "onProxyReq": function (request) {
+                target: "https://pay.jx3box.com",
+                onProxyReq: function (request) {
                     request.setHeader("origin", "");
-                }
+                },
             },
             "/api/vip": {
-                "target": "https://pay.jx3box.com",
-                "onProxyReq": function (request) {
+                target: "https://pay.jx3box.com",
+                onProxyReq: function (request) {
                     request.setHeader("origin", "");
-                }
+                },
             },
             "/api/summary": {
-                "target": "https://next2.jx3box.com",
-                "onProxyReq": function (request) {
+                target: "https://next2.jx3box.com",
+                onProxyReq: function (request) {
                     request.setHeader("origin", "");
-                }
+                },
             },
             "/api/comment": {
-                "target": "https://next2.jx3box.com",
-                "onProxyReq": function (request) {
+                target: "https://next2.jx3box.com",
+                onProxyReq: function (request) {
                     request.setHeader("origin", "");
-                }
+                },
             },
             "/api/cms": {
-                "target": process.env["DEV_SERVER"] == "true" ? "http://localhost:5120" : "https://cms.jx3box.com",
+                target: process.env["DEV_SERVER"] == "true" ? "http://localhost:5120" : "https://cms.jx3box.com",
             },
             "/api/team": {
                 target: "https://team.api.jx3box.com",
-                onProxyReq: function(request) {
+                onProxyReq: function (request) {
                     request.setHeader("origin", "");
                 },
             },
             "/api/cny": {
                 target: "https://pay.jx3box.com/",
-                onProxyReq: function(request) {
+                onProxyReq: function (request) {
                     request.setHeader("origin", "");
                 },
             },
             "/api/lua": {
                 target: "https://lua.jx3box.com",
-                onProxyReq: function(request) {
+                onProxyReq: function (request) {
                     request.setHeader("origin", "");
                 },
             },
             "/api": {
                 target: "https://next2.jx3box.com",
-                onProxyReq: function(request) {
+                onProxyReq: function (request) {
                     request.setHeader("origin", "");
                 },
             },
-
         },
-        disableHostCheck: true
+        disableHostCheck: true,
     },
+
+    outputDir: process.env["BUILD_MODE"] == "preview" ? path.resolve(__dirname, pkg.name) : "dist", // 指定构建输出的目录
 
     //webpack配置
     // configureWebpack: (config) => {
@@ -117,17 +117,13 @@ module.exports = {
         //FOR Localhost => development
         (process.env.NODE_ENV === "development" && "/") ||
         //BY origin
-        (process.env.STATIC_PATH === "origin" &&
-            `${JX3BOX.__staticPath["origin"]}${pkg.name}/`) ||
+        (process.env.STATIC_PATH === "origin" && `${JX3BOX.__staticPath["origin"]}${pkg.name}/`) ||
         //BY github
-        (process.env.STATIC_PATH === "github" &&
-            `${JX3BOX.__staticPath["github"]}${pkg.name}/`) ||
+        (process.env.STATIC_PATH === "github" && `${JX3BOX.__staticPath["github"]}${pkg.name}/`) ||
         //BY jsdelivr
-        (process.env.STATIC_PATH === "jsdelivr" &&
-            `${JX3BOX.__staticPath["jsdelivr"]}${pkg.name}@gh-pages/`) ||
+        (process.env.STATIC_PATH === "jsdelivr" && `${JX3BOX.__staticPath["jsdelivr"]}${pkg.name}@gh-pages/`) ||
         //BY OSS=>CDN
-        (process.env.STATIC_PATH === "mirror" &&
-            `${JX3BOX.__staticPath["mirror"]}${pkg.name}/`) ||
+        (process.env.STATIC_PATH === "mirror" && `${JX3BOX.__staticPath["mirror"]}${pkg.name}/`) ||
         //BY relative path
         (process.env.STATIC_PATH === "repo" && `/${pkg.name}/`) ||
         //BY root path or bind a domain
@@ -156,31 +152,21 @@ module.exports = {
             .tap((options) => Object.assign(options, { limit: 10240 }));
 
         //💝 in-line svg imgs ~
-        config.module
-            .rule("vue")
-            .use("vue-svg-inline-loader")
-            .loader("vue-svg-inline-loader");
+        config.module.rule("vue").use("vue-svg-inline-loader").loader("vue-svg-inline-loader");
 
         //💖 import common less var * mixin ~
         const types = ["vue-modules", "vue", "normal-modules", "normal"];
         var preload_styles = [];
         preload_styles.push(
             path.resolve(__dirname, "./node_modules/csslab/base.less"),
-            path.resolve(
-                __dirname,
-                "./node_modules/@jx3box/jx3box-common/css/var.less"
-            ),
+            path.resolve(__dirname, "./node_modules/@jx3box/jx3box-common/css/var.less"),
             path.resolve(__dirname, "./src/assets/css/var.less")
         );
         function addStyleResource(rule) {
-            rule.use("style-resource")
-                .loader("style-resources-loader")
-                .options({
-                    patterns: preload_styles,
-                });
+            rule.use("style-resource").loader("style-resources-loader").options({
+                patterns: preload_styles,
+            });
         }
-        types.forEach((type) =>
-            addStyleResource(config.module.rule("less").oneOf(type))
-        );
+        types.forEach((type) => addStyleResource(config.module.rule("less").oneOf(type)));
     },
 };

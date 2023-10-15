@@ -2,7 +2,12 @@
     <div class="m-fb-nav m-fb-list-nav">
         <div class="m-nav-info">
             <div class="m-nav-info__preview">
-                <img class="u-img" :src="getMap(fbDetail.icon)" @click="onMapBgClick" />
+                <img
+                    class="u-img"
+                    :src="getMap(fbDetail.icon)"
+                    @click="onMapBgClick"
+                    onerror="this.src='https://img.jx3box.com/image/fb_map_thumbnail/undefined.png'"
+                />
                 <div class="u-name">{{ fbName }}</div>
             </div>
             <div class="m-nav-search" @click.stop>

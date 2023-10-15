@@ -54,7 +54,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="技能数据" name="skill" v-if="isSuperAuthor">
+        <el-tab-pane label="技能数据" name="skill" v-if="isSuperAuthor && client == 'std'">
             <span slot="label">
                 <i class="el-icon-key"></i>
                 <b>技能数据</b>
@@ -102,7 +102,7 @@ export default {
         return {
             view: "index",
             isEditor: User.isEditor(),
-            links: ['rank', 'team'],
+            links: ["rank", "team"],
         };
     },
     watch: {
@@ -118,8 +118,8 @@ export default {
             return this.$store.state.client;
         },
         isSuperAuthor: function () {
-            return this.$store.state.isSuperAuthor || false
-        }
+            return this.$store.state.isSuperAuthor || false;
+        },
     },
     methods: {
         changeView: function (tab) {
@@ -134,10 +134,11 @@ export default {
         },
     },
     mounted: function () {
-        User.isLogin() && User.isSuperAuthor().then((data) => {
-            this.$store.state.isSuperAuthor = data;
-        });
-    }
+        User.isLogin() &&
+            User.isSuperAuthor().then((data) => {
+                this.$store.state.isSuperAuthor = data;
+            });
+    },
 };
 </script>
 

@@ -9,7 +9,7 @@ function getBread(key) {
 }
 
 function getSkillGroups(key) {
-    return $cms({ mute: true }).get(`/api/cms/bps/pvp/specialskill`, {
+    return $cms({ mute: true }).get(`/api/cms/pvp/special-skill`, {
         params: {
             group: key,
         },

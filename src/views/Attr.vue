@@ -4,7 +4,7 @@
             <el-divider content-position="left">穿透</el-divider>
             <div class="u-desc" v-html="chuantou['desc']"></div>
             <ul class="u-content">
-                <li v-for="(item, i) in chuantou['list']" :key="i">
+                <li v-for="(item, i) in chuantou['skills']" :key="i">
                     <a :href="item.link" target="_blank">
                         <img :src="item.icon | iconLink" />
                         {{ item.name }}
@@ -15,7 +15,7 @@
             <el-divider content-position="left">穿刺</el-divider>
             <div class="u-desc" v-html="chuanci['desc']"></div>
             <ul class="u-content">
-                <li v-for="(item, i) in chuanci['list']" :key="i">
+                <li v-for="(item, i) in chuanci['skills']" :key="i">
                     <a :href="item.link" target="_blank" :title="item.meta_1">
                         <img :src="item.icon | iconLink" />
                         {{ item.name }}
@@ -27,7 +27,7 @@
         <el-divider content-position="left">贯体</el-divider>
         <div class="u-desc" v-html="guanti['desc']"></div>
         <ul class="u-content">
-            <li v-for="(item, i) in guanti['list']" :key="i">
+            <li v-for="(item, i) in guanti['skills']" :key="i">
                 <a :href="item.link" target="_blank" :title="item.meta_1">
                     <img :src="item.icon | iconLink" />
                     {{ item.name }}
@@ -51,15 +51,15 @@ export default {
         return {
             loading: false,
             chuantou: {
-                list: [],
+                skills: [],
                 desc: "",
             },
             chuanci: {
-                list: [],
+                skills: [],
                 desc: "",
             },
             guanti: {
-                list: [],
+                skills: [],
                 desc: "",
             },
         };
@@ -78,11 +78,9 @@ export default {
             let params = this.client == "origin" ? ["guanti", "origin"] : ["chuantou,chuanci,guanti", "std"];
             getSkillGroups(...params)
                 .then((res) => {
-                    let data = groupBy(res.data.data, 'group')
-                    for (let key in data) {
-                        this[key]["list"] = data[key] || [];
-                        this[key]["desc"] = data[key][0]?.group_info?.desc || '';
-                    }
+                    this.chuantou = res.data.data?.find((item) => item.name == "chuantou") || {};
+                    this.chuanci = res.data.data?.find((item) => item.name == "chuanci") || {};
+                    this.guanti = res.data.data?.find((item) => item.name == "guanti") || {};
                 })
                 .finally(() => {
                     this.loading = false;

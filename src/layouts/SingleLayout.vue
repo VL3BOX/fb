@@ -3,7 +3,7 @@
         <Header></Header>
         <Breadcrumb name="副本专栏" slug="fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="true">
             <template #op-prepend>
-                <AdminDirectMessage :user-id="user_id" :sourceId="post.ID" :sourceType="post.post_type"></AdminDirectMessage>
+                <AdminDirectMessage :user-id="user_id" :sourceId="String(post.ID)" :sourceType="post.post_type"></AdminDirectMessage>
             </template>
             <template #title>
                 <span>

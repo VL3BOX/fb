@@ -82,9 +82,9 @@
                 <span>百战查询</span>
                 <em>Bai Zhan</em>
             </a>
-            <a href="/dbm" target="_blank">
+            <a href="/dbm/pkg/list" target="_blank">
                 <img class="u-icon" :src="getAppIcon('dbm')" />
-                <span>数据构建</span>
+                <span>数据下载</span>
                 <em>DBM Data Builder</em>
             </a>
             <a href="/battle" target="_blank">
@@ -94,7 +94,7 @@
             </a>
             <a href="/jcl" target="_blank">
                 <img class="u-icon" :src="getAppIcon('jcl')" />
-                <span>战斗日志</span>
+                <span>日志分析</span>
                 <em>JX3 Combat Log</em>
             </a>
             <a href="/team" target="_blank">

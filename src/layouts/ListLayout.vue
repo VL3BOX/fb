@@ -10,7 +10,7 @@
             :feedbackEnable="true"
             :crumbEnable="true"
         >
-            <!-- <Info /> -->
+            <Info />
         </Breadcrumb>
         <LeftSidebar>
             <Nav class="m-nav" />
@@ -31,6 +31,7 @@
 <script>
 import Nav from "@/components/list/list_nav.vue";
 import tabs from "@/components/tabs.vue";
+import Info from "@/components/Info.vue";
 import Side from "@/components/baizhan/map_side.vue";
 export default {
     name: "App",
@@ -43,6 +44,7 @@ export default {
         Nav,
         tabs,
         Side,
+        Info
     },
     watch: {
         $route: {

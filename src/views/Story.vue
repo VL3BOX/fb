@@ -7,9 +7,11 @@
                     <el-descriptions :column="3" border>
                         <el-descriptions-item label="名称">{{ item.OtherName }}</el-descriptions-item>
                         <el-descriptions-item label="地图ID">{{ item.MapID }}</el-descriptions-item>
-                        <el-descriptions-item label="资料片">Level.{{ item.DivideLevel }}／{{ item.DivideName }}／{{
-                            item.VersionName
-                        }}</el-descriptions-item>
+                        <el-descriptions-item label="资料片"
+                            >Level.{{ item.DivideLevel }}／{{ item.DivideName }}／{{
+                                item.VersionName
+                            }}</el-descriptions-item
+                        >
                         <el-descriptions-item label="最低等级要求">{{ item.MinLevel }}</el-descriptions-item>
                         <el-descriptions-item label="入口" :span="2">{{ item.EnterWay }}</el-descriptions-item>
                         <el-descriptions-item label="简介">{{
@@ -26,14 +28,17 @@
                                 {{ boss.BOSS }}
                             </h5>
                             <p class="u-boss-detail" v-html="boss.Introduce"></p>
-                            <el-button class="u-boss-more" type="primary" plain @click="loadSkills(boss)" size="mini"
-                                icon="el-icon-key">{{
-                                    !skill_list[boss.NPCID]
-                                    ? "查看技能"
-                                    : skill_status[boss.NPCID]
-                                        ? "收起"
-                                        : "展开"
-                                }}</el-button>
+                            <el-button
+                                class="u-boss-more"
+                                type="primary"
+                                plain
+                                @click="loadSkills(boss)"
+                                size="mini"
+                                icon="el-icon-key"
+                                >{{
+                                    !skill_list[boss.NPCID] ? "查看技能" : skill_status[boss.NPCID] ? "收起" : "展开"
+                                }}</el-button
+                            >
                             <div class="u-boss-skills" v-show="skill_status[boss.NPCID]">
                                 <template v-if="skill_list[boss.NPCID]">
                                     <div class="u-skill" v-for="skill in skill_list[boss.NPCID]" :key="skill.idkey">
@@ -95,13 +100,12 @@ export default {
     methods: {
         loadData: function () {
             this.loading = true;
+            const isFbMapTab = this.data && this.data.findIndex((item) => ~~item.MapID === ~~this.map_id) === -1;
             getInfo(this.fb, this.client)
                 .then((res) => {
                     this.data = res?.data || [];
-                    if (!this.map_id) {
-                        this.map_id = String(this.data?.[0]?.["MapID"]);
-                    }
-                    return this.map_id;
+                    const length = this.data.length; // 副本地图的tab name为tabs的index
+                    this.map_id = !isFbMapTab ? String(this.data?.[0]?.["MapID"]) : length + "";
                 })
                 .finally(() => {
                     this.loading = false;

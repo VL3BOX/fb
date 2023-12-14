@@ -84,8 +84,8 @@ export default {
         },
         duration() {
             return {
-                start: this.update_moment.startOf("week").format("MM/DD"),
-                end: this.update_moment.endOf("week").format("MM/DD"),
+                start: this.update_moment.startOf("week").add(1, "day").format("MM/DD"),
+                end: this.update_moment.endOf("week").add(1, "day").format("MM/DD"),
             };
         },
     },

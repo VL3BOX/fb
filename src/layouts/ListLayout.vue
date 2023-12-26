@@ -20,7 +20,7 @@
                 <tabs />
                 <router-view />
             </div>
-            <RightSidebar class="m-fb-right-side">
+            <RightSidebar class="m-fb-right-side" :show-toggle="true">
                 <Side class="m-extend" />
             </RightSidebar>
             <Footer></Footer>
@@ -59,10 +59,10 @@ export default {
 </script>
 
 <style lang="less">
-.m-fb-right-side {
-    &.c-sidebar-right.is-close {
-        transform: translateX(0) !important;
-    }
-}
+// .m-fb-right-side {
+//     &.c-sidebar-right.is-close {
+//         transform: translateX(0) !important;
+//     }
+// }
 @import "~@/assets/css/list.less";
 </style>

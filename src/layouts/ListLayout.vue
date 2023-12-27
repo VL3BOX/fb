@@ -59,10 +59,13 @@ export default {
 </script>
 
 <style lang="less">
-// .m-fb-right-side {
+.m-fb-right-side {
 //     &.c-sidebar-right.is-close {
 //         transform: translateX(0) !important;
 //     }
-// }
+.c-sidebar-right-inner {
+    background: #fff;
+}
+}
 @import "~@/assets/css/list.less";
 </style>

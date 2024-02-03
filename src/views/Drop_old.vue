@@ -8,7 +8,7 @@
                 :key="i"
             >
                 <div class="u-bosslist">
-                    <!-- <div class="u-label">首领</div> -->
+                    <!-- <div class="u-label">{{ $t('首领') }}</div> -->
                     <div
                         class="u-boss"
                         :class="{ on: item.BossIndex == bossid }"

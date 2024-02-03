@@ -38,8 +38,8 @@
         </el-form>
         <template #footer>
             <span class="dialog-footer">
-                <el-button @click="close">取消</el-button>
-                <el-button type="primary" :loading="loading" @click="submitForm()">确定</el-button>
+                <el-button @click="close">{{ $t('取消') }}</el-button>
+                <el-button type="primary" :loading="loading" @click="submitForm()">{{ $t('确定') }}</el-button>
             </span>
         </template>
     </el-dialog>

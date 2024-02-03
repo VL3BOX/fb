@@ -1,7 +1,7 @@
 <template>
     <div class="m-simple-map">
         <div class="u-header">
-            <div class="u-title">本周出现位置</div>
+            <div class="u-title">{{ $t('本周出现位置') }}</div>
             <div class="u-time">{{ duration.start }} ~ {{ duration.end }}</div>
         </div>
         <div class="u-list">

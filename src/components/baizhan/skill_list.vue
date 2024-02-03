@@ -46,7 +46,7 @@
             </el-table-column>
             <el-table-column v-if="!isNoteBook()" min-width="150">
                 <template #default="{ row }">
-                    <div class="u-detail-btn" @click="toDetail(row.dwInSkillID)">详细数据</div>
+                    <div class="u-detail-btn" @click="toDetail(row.dwInSkillID)">{{ $t('详细数据') }}</div>
                 </template>
             </el-table-column>
         </el-table>

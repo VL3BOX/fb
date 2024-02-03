@@ -1,6 +1,6 @@
 <template>
     <div class="p-map" v-loading="loading" ref="container">
-        <el-button class="u-phone-download" icon="el-icon-download" @click="exportToImage">下载</el-button>
+        <el-button class="u-phone-download" icon="el-icon-download" @click="exportToImage">{{ $t('下载') }}</el-button>
         <div class="m-boss-list" :class="list.length % 2 ? 'is-odd' : 'is-even'" ref="map" @click="cancelClick">
             <!-- <el-button class="u-download" icon="el-icon-download" @click="exportToImage"></el-button> -->
             <div

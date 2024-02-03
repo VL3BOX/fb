@@ -2,7 +2,7 @@
     <div class="w-card m-skill-filter">
         <div class="w-card-title">
             <img src="@/assets/img/baizhan/filter.svg" alt="筛选" />
-            <span>筛选</span>
+            <span>{{ $t('筛选') }}</span>
         </div>
         <div class="m-skill-search first-section">
             <el-input v-model="name" placeholder="请输入技能名称" clearable>
@@ -35,7 +35,7 @@
                 </el-select>
             </div>
         </div>
-        <!-- <div class="m-section-title m-two-title">效果</div>
+        <!-- <div class="m-section-title m-two-title">{{ $t('效果') }}</div>
         <div class="m-filter-list">
             <div
                 class="u-filter"
@@ -48,7 +48,7 @@
                 {{ type.name }}
             </div>
         </div>
-        <div class="m-section-title m-two-title">颜色</div>
+        <div class="m-section-title m-two-title">{{ $t('颜色') }}</div>
         <div class="m-filter-list">
             <div
                 class="u-filter"
@@ -61,7 +61,7 @@
                 {{ color.name }}
             </div>
         </div>
-        <div class="m-section-title m-two-title">消耗</div>
+        <div class="m-section-title m-two-title">{{ $t('消耗') }}</div>
         <div class="m-filter-list">
             <div
                 class="u-filter"
@@ -74,7 +74,7 @@
                 {{ cost.name }}
             </div>
         </div> -->
-        <div class="m-section-title m-two-title">首领</div>
+        <div class="m-section-title m-two-title">{{ $t('首领') }}</div>
         <div class="m-filter-list">
             <div
                 class="u-filter"

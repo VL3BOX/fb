@@ -23,8 +23,8 @@
         </div>
         <div class="m-boss-raider" :class="!topic && 'no-boss'">
             <div class="u-header">
-                <div class="u-title">相关攻略</div>
-                <a :href="getLink()" target="_blank">查看全部</a>
+                <div class="u-title">{{ $t('相关攻略') }}</div>
+                <a :href="getLink()" target="_blank">{{ $t('查看全部') }}</a>
             </div>
             <BossRaider></BossRaider>
         </div>

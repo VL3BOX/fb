@@ -46,7 +46,7 @@
                 </div>
                 <div class="u-primary">
                     <div class="u-life">
-                        <b>血量</b>
+                        <b>{{ $t('血量') }}</b>
                         <em>MaxLife</em>
                         <i class="u-range">
                             <strong
@@ -58,7 +58,7 @@
                         </i>
                     </div>
                     <div class="u-mana">
-                        <b>内力</b>
+                        <b>{{ $t('内力') }}</b>
                         <em>MaxMana</em>
                         <i class="u-range">
                             <strong
@@ -70,32 +70,32 @@
                         </i>
                     </div>
                     <div class="u-speed" v-if="npc.RunSpeed || npc.WalkSpeed">
-                        <b>跑速</b>
+                        <b>{{ $t('跑速') }}</b>
                         <em>RunSpeed</em>
                         {{ npc.RunSpeed || npc.WalkSpeed }}
                     </div>
                     <div class="u-touch" v-if="npc.TouchRange">
-                        <b>范围</b>
+                        <b>{{ $t('范围') }}</b>
                         <em>TouchRange</em>
                         {{ npc.TouchRange }}
                     </div>
                     <div class="u-sense" v-if="npc.Sense">
-                        <b>识破</b>
+                        <b>{{ $t('识破') }}</b>
                         <em>Sense</em>
                         {{ npc.Sense }}
                     </div>
                     <div class="u-dodge" v-if="npc.Dodge">
-                        <b>闪避</b>
+                        <b>{{ $t('闪避') }}</b>
                         <em>Dodge</em>
                         {{ npc.Dodge }}
                     </div>
                     <div class="u-dodge" v-if="npc.Parry">
-                        <b>招架</b>
+                        <b>{{ $t('招架') }}</b>
                         <em>Parry</em>
                         {{ npc.ParryValue }}
                     </div>
                     <div class="u-shield">
-                        <b>防御</b>
+                        <b>{{ $t('防御') }}</b>
                         <em>Shield</em>
                         <!-- <span class="u-sitem">
                             <span
@@ -136,7 +136,7 @@
                         <!-- </template> -->
                     </div>
                     <div class="u-critical">
-                        <b>会心</b>
+                        <b>{{ $t('会心') }}</b>
                         <em>Critical</em>
                         <span class="u-sitem" v-if="client == 'std'">
                             外攻会心
@@ -178,7 +178,7 @@
                         <!-- </template> -->
                     </div>
                     <div class="u-attack" v-if="isOrigin">
-                        <b>命中</b>
+                        <b>{{ $t('命中') }}</b>
                         <em>Attack</em>
                         <!-- <span class="u-sitem">
                             <span class="u-value">{{~~npc.PhysicsAttackHit}}</span>
@@ -248,7 +248,7 @@
         </ul>
         <el-alert v-else class="m-archive-null" type="info" center show-icon> 该副本没有找到相关条目，全图搜索请前往<a href="/app/database" target="_blank">[剑三数据库]</a>应用 </el-alert>
         <template v-if="!onlyboss">
-            <el-button class="m-archive-more" :class="{ show: hasNextPage }" type="primary" :loading="loading" @click="appendPage(++page)">加载更多</el-button>
+            <el-button class="m-archive-more" :class="{ show: hasNextPage }" type="primary" :loading="loading" @click="appendPage(++page)">{{ $t('加载更多') }}</el-button>
             <el-pagination
                 class="m-archive-pages"
                 background

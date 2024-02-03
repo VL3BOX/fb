@@ -1,7 +1,7 @@
 <template>
     <app-layout slug="bhhj">
         <div class="m-bahuang">
-            <h1 class="m-bahuang-title">八荒衡鉴模拟器</h1>
+            <h1 class="m-bahuang-title">{{ $t('八荒衡鉴模拟器') }}</h1>
             <div class="u-my-scheme">
                 <el-button type="primary" @click="updateDrawer(true)" icon="el-icon-setting" size="small">
                     我的预设
@@ -30,7 +30,7 @@
                         @saveScheme="openSaveScheme($event)" @icoRemove="icoRightRemove($event)" />
                 </div>
                 <!--<div class="m-bahuang-right" v-if="isLogin">-->
-                <!--<el-button type="primary" @click="schemeDrawer = true" icon="el-icon-setting" size="small">我的预设</el-button>-->
+                <!--<el-button type="primary" @click="schemeDrawer = true" icon="el-icon-setting" size="small">{{ $t('我的预设') }}</el-button>-->
                 <!--</div>-->
             </div>
         </div>

@@ -44,14 +44,14 @@
         <div class="u-content u-desc">
             <!-- {{ item.post_excerpt || item.post_title || "这个作者很懒,什么都没有留下" }} -->
             <div class="u-metalist u-boss-list" v-if="item.post_meta && item.post_meta.fb_boss">
-                <strong>首领</strong>
+                <strong>{{ $t('首领') }}</strong>
                 <em>
                     <b v-for="(c, i) in format(item, 'fb_boss')" :key="i" @click="addTopic(c)">{{ c }}</b>
                 </em>
             </div>
 
             <div class="u-metalist u-mode-list c-jx3fb-mode" v-if="item.post_meta && item.post_meta.fb_level">
-                <strong>模式</strong>
+                <strong>{{ $t('模式') }}</strong>
                 <em>{{ format(item, "fb_level").join("、") }}</em>
             </div>
         </div>

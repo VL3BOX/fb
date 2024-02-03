@@ -71,40 +71,40 @@
         </div>
 
         <div class="m-nav-app">
-            <h5 class="u-title">在线应用</h5>
+            <h5 class="u-title">{{ $t('在线应用') }}</h5>
             <a href="/fb/bahuang" target="_blank" v-if="client == 'origin'">
                 <img class="u-icon" :src="getAppIcon('bhhj')" />
-                <span>八荒衡鉴</span>
+                <span>{{ $t('八荒衡鉴') }}</span>
                 <em>Ba Huang</em>
             </a>
             <a href="/fb/baizhan" target="_blank" v-if="client == 'std'">
                 <img class="u-icon" :src="getAppIcon('bhhj')" />
-                <span>百战查询</span>
+                <span>{{ $t('百战查询') }}</span>
                 <em>Bai Zhan</em>
             </a>
             <a href="/dbm/pkg/list" target="_blank">
                 <img class="u-icon" :src="getAppIcon('dbm')" />
-                <span>数据下载</span>
+                <span>{{ $t('数据下载') }}</span>
                 <em>DBM Data Builder</em>
             </a>
             <a href="/battle" target="_blank">
                 <img class="u-icon" :src="getAppIcon('battle')" />
-                <span>战斗统计</span>
+                <span>{{ $t('战斗统计') }}</span>
                 <em>Battle Statistics</em>
             </a>
             <a href="/jcl" target="_blank">
                 <img class="u-icon" :src="getAppIcon('jcl')" />
-                <span>日志分析</span>
+                <span>{{ $t('日志分析') }}</span>
                 <em>JX3 Combat Log</em>
             </a>
             <a href="/team" target="_blank">
                 <img class="u-icon" :src="getAppIcon('team')" />
-                <span>团队平台</span>
+                <span>{{ $t('团队平台') }}</span>
                 <em>Team Platform</em>
             </a>
             <a href="/jdt" target="_blank">
                 <img class="u-icon" :src="getAppIcon('jdt')" />
-                <span>秘境百强</span>
+                <span>{{ $t('秘境百强') }}</span>
                 <em>JX3 Dungeon Top100</em>
             </a>
         </div>

@@ -1,7 +1,7 @@
 <template>
     <div class="m-bahuang-rightBox">
         <div class="u-bahuang-r-title">
-            <span>心决</span>
+            <span>{{ $t('心决') }}</span>
             <div class="m-bahuang-r-citta">
                 <div class="u-bahuang-citta">
                     <el-select v-model="selectOptions.citta" placeholder="请选择门派" @change="cittaChange">
@@ -27,7 +27,7 @@
             </div>
         </div>
         <!--秘术-->
-        <div class="u-bahuang-r-title">秘术<br />
+        <div class="u-bahuang-r-title">{{ $t('秘术') }}<br />
             <span class="u-tip">(左键选择激活，右键可删除秘术)</span>
         </div>
         <!--    秘术区域-->
@@ -45,7 +45,7 @@
 
         </div>
         <!--    激活秘术信息展示区域-->
-        <div class="u-bahuang-r-title">已激活秘术</div>
+        <div class="u-bahuang-r-title">{{ $t('已激活秘术') }}</div>
         <div class="m-arcane-active">
 
             <div v-for="(item, i) in selectOptions.arcane" :key="'aa' + i" :class="item.select_r ? 'u-arcane-active' : ''">
@@ -74,7 +74,7 @@
         </div>
 
         <!--    绝技1个-->
-        <div class="u-bahuang-r-title">绝技</div>
+        <div class="u-bahuang-r-title">{{ $t('绝技') }}</div>
         <div class="m-bahuang-r-stunt">
             <span class="u-tips" v-show="selectOptions.stunt.length === 0">
                 尚未选择
@@ -84,9 +84,9 @@
         </div>
         <div class="m-btn">
             <el-button class="u-btn" type="primary" icon="el-icon-document-add" v-if="isLogin"
-                @click="saveScheme(1)">保存为预设</el-button>
+                @click="saveScheme(1)">{{ $t('保存为预设') }}</el-button>
             <el-button class="u-btn" type="primary" icon="el-icon-document-add" v-if="isLogin && isEdit"
-                @click="saveScheme(2)">另存为</el-button>
+                @click="saveScheme(2)">{{ $t('另存为') }}</el-button>
         </div>
 
 

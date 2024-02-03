@@ -39,7 +39,7 @@
             @click="appendPage(++page)"
             icon="el-icon-arrow-down"
             v-show="hasNextPage"
-            >加载更多</el-button
+            >{{ $t('加载更多') }}</el-button
         >
         <el-pagination
             class="m-archive-pages"

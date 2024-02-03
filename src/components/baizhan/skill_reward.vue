@@ -1,6 +1,6 @@
 <template>
     <div class="m-skill-reward">
-        <div class="u-header">技能掉落</div>
+        <div class="u-header">{{ $t('技能掉落') }}<('技能掉落') }}</div>
         <div class="u-skill-list">
             <a
                 class="u-skill-item"

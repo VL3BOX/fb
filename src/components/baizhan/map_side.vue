@@ -2,7 +2,7 @@
     <div class="m-list-side">
         <!-- 群号 -->
         <RightSideMsg>
-            <em>全服团长交流群</em> :
+            <em>{{ $t('全服团长交流群') }}</em> :
             <strong @click="onQQClick" class="u-link" title="点击复制">
                 <a>{{ qq }}</a>
             </strong>
@@ -11,7 +11,7 @@
             <div class="m-header">
                 <a href="javascript:;" @click="toMap">
                     <img src="@/assets/img/baizhan/baizhan_purple.svg" svg-inline />
-                    <span class="u-title">百战异闻录</span>
+                    <span class="u-title">{{ $t('百战异闻录') }}<'百战异闻录') }}</span>
                 </a>
             </div>
             <div class="u-time">最后更新时间: {{ update_time }}</div>

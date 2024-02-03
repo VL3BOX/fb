@@ -2,9 +2,9 @@
     <div class="w-card m-map-filter">
         <div class="w-card-title">
             <img src="@/assets/img/baizhan/filter.svg" alt="筛选" />
-            <span>筛选</span>
+            <span>{{ $t('筛选') }}</span>
         </div>
-        <div class="m-section-title m-two-title first-section">常用</div>
+        <div class="m-section-title m-two-title first-section">{{ $t('常用') }}</div>
         <div class="m-filter-list">
             <div
                 class="u-filter"
@@ -17,7 +17,7 @@
                 {{ normal.label }}
             </div>
         </div>
-        <div class="m-section-title">特殊效果</div>
+        <div class="m-section-title">{{ $t('特殊效果') }}</div>
         <div class="m-filter-list">
             <div
                 class="u-filter"
@@ -30,7 +30,7 @@
                 {{ effect.text }}
             </div>
         </div>
-        <div class="m-section-title m-two-title">首领</div>
+        <div class="m-section-title m-two-title">{{ $t('首领') }}</div>
         <div class="m-filter-list">
             <div
                 class="u-filter"

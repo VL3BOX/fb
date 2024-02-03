@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="u-effect-wrap">
-                <div class="u-header">层数效果</div>
+                <div class="u-header">{{ $t('层数效果') }}</div>
                 <div class="u-effect-desc" v-if="current.nEffectID">
                     <div class="u-title">
                         <img
@@ -24,7 +24,7 @@
                     </div>
                     <div class="u-desc" v-html="current.effectDesc"></div>
                 </div>
-                <div v-else class="u-no-effect">当前层没有特殊效果</div>
+                <div v-else class="u-no-effect">{{ $t('当前层没有特殊效果') }}</div>
             </div>
             <SkillReward :skills="current.skills"></SkillReward>
         </div>

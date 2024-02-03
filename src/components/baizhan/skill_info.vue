@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="u-skill-item">
-            <div class="u-item-title">掉落来源</div>
+            <div class="u-item-title">{{ $t('掉落来源') }}</div>
             <div class="u-item-content">
                 <div v-if="skill.szBossName" class="u-avatar">
                     <img :src="getAvatar(skill.szBossName) || `${__imgRoot}fbcdpanel02_51.png`" :alt="skill.szBossName" />
@@ -24,16 +24,16 @@
             </div>
         </div>
         <div class="u-skill-item">
-            <div class="u-item-title">技能信息</div>
+            <div class="u-item-title">{{ $t('技能信息') }}</div>
             <div class="u-list">
                 <div class="u-info u-cost">
-                    <span class="u-label">占用</span>
+                    <span class="u-label">{{ $t('占用') }}</span>
                     <div class="u-cost-list">
                         <img v-for="point in skill.nCost" :key="point" :src="`${__imgRoot}baizhan_6.png`" />
                     </div>
                 </div>
                 <div class="u-info u-pz" v-if="skill.nColor">
-                    <span class="u-label">破绽</span>
+                    <span class="u-label">{{ $t('破绽') }}</span>
                     <div class="u-color" :class="`u-color__${skill.nColor}`">{{ skill.nColor ? "" : "-" }}</div>
                 </div>
                 <div v-if="skill.isPassive || (skill.nColor === 0 && !skill.isPassive)" class="u-info u-jn">
@@ -51,13 +51,13 @@
         </div>
         <div class="u-skill-item">
             <div class="u-item-title u-skill-title">
-                <span>技能介绍</span>
+                <span>{{ $t('技能介绍') }}</span>
                 <img v-if="isShow" src="@/assets/img/baizhan/showup.svg" @click="isShow = false" />
                 <img v-else src="@/assets/img/baizhan/hide.svg" @click="isShow = true" />
             </div>
             <div class="u-skill-desc" v-html="skillDesc"></div>
         </div>
-        <div class="u-skill-btn" @click="getUrl">查看详细数据</div>
+        <div class="u-skill-btn" @click="getUrl">{{ $t('查看详细数据') }}</div>
     </div>
 </template>
 

@@ -3,7 +3,7 @@
         <el-tabs v-model="map_id" type="card" v-if="data && data.length">
             <el-tab-pane v-for="item in data" :label="item.Layer3Name" :key="item.MapID" :name="String(item.MapID)">
                 <div class="m-story-basic">
-                    <el-divider content-position="left">基本信息</el-divider>
+                    <el-divider content-position="left">{{ $t('基本信息') }}</el-divider>
                     <el-descriptions :column="3" border>
                         <el-descriptions-item label="名称">{{ item.OtherName }}</el-descriptions-item>
                         <el-descriptions-item label="地图ID">{{ item.MapID }}</el-descriptions-item>
@@ -20,7 +20,7 @@
                     </el-descriptions>
                 </div>
                 <div class="m-story-boss">
-                    <el-divider content-position="left">首领传说</el-divider>
+                    <el-divider content-position="left">{{ $t('首领传说') }}</el-divider>
                     <div class="u-list" v-if="boss_list && boss_list.length">
                         <div class="u-boss" v-for="(boss, i) in boss_list" :key="i">
                             <h5 class="u-name">

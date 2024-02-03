@@ -1,6 +1,6 @@
 <template>
     <el-drawer :visible.sync="visible" :append-to-body="true" class="m-bahuang-drawer">
-        <h3 class="u-bahuang-title" slot="title">我的预设方案</h3>
+        <h3 class="u-bahuang-title" slot="title">{{ $t('我的预设方案') }}</h3>
         <div class="m-bahuang-my">
             <div class="m-bahuang-list" v-loading="loading">
                 <ul v-if="list && list.length">
@@ -12,8 +12,8 @@
                         </span>
                         <div v-if="item.edit">
                             <el-input v-model="currentShemaName" size="mini" class="u-shema-name"></el-input>
-                            <el-button type="text" @click="put">保存</el-button>
-                            <el-button type="text" @click="item.edit = false">取消</el-button>
+                            <el-button type="text" @click="put">{{ $t('保存') }}</el-button>
+                            <el-button type="text" @click="item.edit = false">{{ $t('取消') }}</el-button>
                         </div>
                         <el-button-group>
                             <el-tooltip effect="dark" content="使用" placement="top">

@@ -2,7 +2,7 @@
     <singlebox :post="post" :stat="stat" v-loading="loading" @extendUpdate="updateExtend">
         <!-- 子类型 -->
         <div class="u-meta u-sub-block" slot="single-header">
-            <em class="u-label">副本</em>
+            <em class="u-label">{{ $t('副本') }}</em>
             <span class="u-value">
                 {{ post_subtype }}
             </span>

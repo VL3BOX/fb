@@ -51,7 +51,7 @@
                     <div v-if="skill._cooldown == 60" class="u-cooldown-60">三级 - 60s</div>
                     <div v-if="skill._cooldown == 30" class="u-cooldown-30">二级 - 30s</div>
                     <div v-if="skill._cooldown == 10" class="u-cooldown-10">一级 - 10s</div>
-                    <div v-if="skill._cooldown == 0" class="u-cooldown-0">被动技能</div>
+                    <div v-if="skill._cooldown == 0" class="u-cooldown-0">{{ $t('被动技能') }}</div>
                 </template>
             </el-table-column>
             <el-table-column prop="_damage" label="伤害" sortable></el-table-column>

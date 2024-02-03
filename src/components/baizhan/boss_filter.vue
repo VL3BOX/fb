@@ -2,7 +2,7 @@
     <div class="w-card m-map-filter">
         <div class="w-card-title">
             <img src="@/assets/img/baizhan/filter.svg" alt="筛选" />
-            <span>快速选择</span>
+            <span>{{ $t('快速选择') }}<('快速选择') }}</span>
         </div>
         <div class="m-skill-search first-section">
             <el-input v-model="search" placeholder="输入关键词搜索" clearable>

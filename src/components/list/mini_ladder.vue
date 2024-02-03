@@ -4,7 +4,7 @@
             <h3 class="m-ladder-title">
                 <span class="u-title"> <img class="u-icon" svg-inline :src="getAppIcon('jdt',true)" /> 秘境百强榜 </span>
                 <a class="u-more" target="_blank" :href="getLink('rank', event_id)"
-                    >查看更多<i class="el-icon-d-arrow-right"></i
+                    >{{ $t('查看更多') }}<i class="el-icon-d-arrow-right"></i
                 ></a>
             </h3>
             <el-select class="m-ladder-select" v-model="event_id" placeholder="请选择" size="small">

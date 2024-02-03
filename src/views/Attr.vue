@@ -1,7 +1,7 @@
 <template>
     <div class="m-fb-attr" v-loading="loading">
         <template v-if="client == 'std'">
-            <el-divider content-position="left">穿透</el-divider>
+            <el-divider content-position="left">{{ $t('穿透') }}</el-divider>
             <div class="u-desc" v-html="chuantou['desc']"></div>
             <ul class="u-content">
                 <li v-for="(item, i) in chuantou['skills']" :key="i">
@@ -12,7 +12,7 @@
                     </a>
                 </li>
             </ul>
-            <el-divider content-position="left">穿刺</el-divider>
+            <el-divider content-position="left">{{ $t('穿刺') }}</el-divider>
             <div class="u-desc" v-html="chuanci['desc']"></div>
             <ul class="u-content">
                 <li v-for="(item, i) in chuanci['skills']" :key="i">
@@ -24,7 +24,7 @@
                 </li>
             </ul>
         </template>
-        <el-divider content-position="left">贯体</el-divider>
+        <el-divider content-position="left">{{ $t('贯体') }}</el-divider>
         <div class="u-desc" v-html="guanti['desc']"></div>
         <ul class="u-content">
             <li v-for="(item, i) in guanti['skills']" :key="i">

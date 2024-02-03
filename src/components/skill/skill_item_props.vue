@@ -21,7 +21,7 @@
 
                         <!-- 目标数 -->
                         <template v-else-if="g.prop == 'nTargetCountLimit'">
-                            <template v-if="Number(g.value) < 0">无限制</template>
+                            <template v-if="Number(g.value) < 0">{{ $t('无限制') }}</template>
                             <template v-else>最多{{ Number(g.value) }}人</template>
                         </template>
 

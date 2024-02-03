@@ -8,7 +8,7 @@
         @mouseup="stopDrag"
         @mouseleave="stopDrag"
     >
-        <el-button class="u-phone-download" icon="el-icon-download" @click="exportToImage">下载</el-button>
+        <el-button class="u-phone-download" icon="el-icon-download" @click="exportToImage">{{ $t('下载') }}</el-button>
         <div
             class="m-boss-list"
             ref="map"

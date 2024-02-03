@@ -5,7 +5,7 @@
                 class="u-icon"
                 svg-inline
                 src="@/assets/img/rank.svg"
-            />全服排行
+            />{{ $t('全服排行') }}
         </h3>
         <el-tabs @tab-click="loadRank" v-model="active">
             <el-tab-pane
@@ -29,7 +29,7 @@
         <a
             class="u-more el-button el-button--default is-plain el-button--mini"
             href="/fb/#/rank"
-            >&raquo; 查看更多</a
+            >&raquo; {{ $t('查看更多') }}</a
         >
     </div>
 </template>

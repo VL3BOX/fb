@@ -1,12 +1,12 @@
 <template>
     <div class="m-team-act-mini">
         <h3 class="m-act-title">
-            <span class="u-title"> <img class="u-icon" svg-inline :src="getAppIcon('team')" /> 团队招募 </span>
+            <span class="u-title"> <img class="u-icon" svg-inline :src="getAppIcon('team')" /> {{ $t('团队招募') }} </span>
             <a class="u-more" href="/team" target="_blank">{{ $t('查看更多') }}<i class="el-icon-d-arrow-right"></i></a>
         </h3>
         <!-- <el-radio-group v-model="tab" size="small" class="m-tab" plain>
-            <el-radio-button label="团队"></el-radio-button>
-            <el-radio-button label="活动"></el-radio-button>
+            <el-radio-button :label="$t('团队')"></el-radio-button>
+            <el-radio-button :label="$t('活动')"></el-radio-button>
         </el-radio-group> -->
         <!-- <div class="m-act-info-null" v-show="tab == '活动'" v-if="acts.length == 0"><span>{{ $t('暂无团队活动') }}</span></div> -->
         <!-- <a

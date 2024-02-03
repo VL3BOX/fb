@@ -8,7 +8,7 @@
                         <span class="u-name" v-if="!item.edit">
                             <i class="u-icon el-icon-tickets"></i>
                             <span>{{ item.title }}</span>
-                            <i v-if="!isEditing" class="u-edit el-icon-edit" title="修改名称" @click="edit(item)"></i>
+                            <i v-if="!isEditing" class="u-edit el-icon-edit" :title="$t('修改名称')" @click="edit(item)"></i>
                         </span>
                         <div v-if="item.edit">
                             <el-input v-model="currentShemaName" size="mini" class="u-shema-name"></el-input>
@@ -16,10 +16,10 @@
                             <el-button type="text" @click="item.edit = false">{{ $t('取消') }}</el-button>
                         </div>
                         <el-button-group>
-                            <el-tooltip effect="dark" content="使用" placement="top">
+                            <el-tooltip effect="dark" :content="$t('使用')" placement="top">
                                 <el-button size="mini" icon="el-icon-position" @click="use(item)"></el-button>
                             </el-tooltip>
-                            <el-tooltip effect="dark" content="删除" placement="top">
+                            <el-tooltip effect="dark" :content="$t('删除')" placement="top">
                                 <el-button size="mini" icon="el-icon-delete" @click="del(item)"></el-button>
                             </el-tooltip>
                         </el-button-group>
@@ -29,7 +29,7 @@
                         layout="prev,pager,next,->,total" :total="total" :page-size="per"
                         :current-page.sync="page"></el-pagination>
                 </ul>
-                <el-alert v-else title="当前没有任何预设方案" type="info" show-icon></el-alert>
+                <el-alert v-else :title="$t('当前没有任何预设方案')" type="info" show-icon></el-alert>
             </div>
         </div>
     </el-drawer>

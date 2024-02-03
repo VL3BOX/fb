@@ -27,13 +27,13 @@
             <div class="u-drop-item-meta isprop" v-for="(prop,i) in data.ModifyType" :key="i">
                 {{prop.Attrib.GeneratedMagic}}
             </div>
-            <div class="u-drop-item-meta" v-if="data.Level">需要等级{{data.Level}}</div>
-            <div class="u-drop-item-meta isscore" v-if="data.Quality">品质等级{{data.Quality}}</div>
-            <div class="u-drop-item-meta">适用门派:{{data.BelongForce}}</div>
+            <div class="u-drop-item-meta" v-if="data.Level">{{ $t('需要等级') + data.Level }}</div>
+            <div class="u-drop-item-meta isscore" v-if="data.Quality">{{ $t('品质等级') + data.Quality }}</div>
+            <div class="u-drop-item-meta">{{ $t('适用门派:') + data.BelongForce}}</div>
         </div>
         <div class="u-drop-item-info" v-if="type == 'others'">
             <div class="u-drop-item-meta isprewrap" v-if="data.Descs">{{data.Descs | formatDesc}}</div>
-            <div class="u-drop-item-meta isprop" v-if="data.Type">类型:{{data.Type}}</div>
+            <div class="u-drop-item-meta isprop" v-if="data.Type">{{ $t('类型:') + data.Type}}</div>
             <div class="u-drop-item-meta isscore" v-if="data.UIID">UUID:{{data.UIID}}</div>
         </div>
     </div>

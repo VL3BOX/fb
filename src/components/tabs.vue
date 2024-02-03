@@ -1,6 +1,6 @@
 <template>
     <el-tabs class="m-fb-tabs" v-model="view" @tab-click="changeView">
-        <el-tab-pane label="副本攻略" name="index">
+        <el-tab-pane :label="$t('副本攻略')" name="index">
             <span slot="label">
                 <i class="el-icon-collection"></i>
                 <b>{{ $t('副本攻略') }}</b>
@@ -8,7 +8,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="副本掉落" name="drop">
+        <el-tab-pane :label="$t('副本掉落')" name="drop">
             <span slot="label">
                 <i class="el-icon-present"></i>
                 <b>{{ $t('副本掉落') }}</b>
@@ -16,14 +16,14 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="瑰石列表" name="gem">
+        <el-tab-pane :label="$t('瑰石列表')" name="gem">
             <span slot="label">
                 <i class="el-icon-cherry"></i>
                 <b>{{ $t('瑰石列表') }}</b>
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="副本成就" name="cj">
+        <el-tab-pane :label="$t('副本成就')" name="cj">
             <span slot="label">
                 <i class="el-icon-medal"></i>
                 <b>{{ $t('副本成就') }}</b>
@@ -31,14 +31,14 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="秘境传说" name="story">
+        <el-tab-pane :label="$t('秘境传说')" name="story">
             <span slot="label">
                 <i class="el-icon-film"></i>
                 <b>{{ $t('秘境传说') }}</b>
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="首领数据" name="npc">
+        <el-tab-pane :label="$t('首领数据')" name="npc">
             <span slot="label">
                 <i class="el-icon-aim"></i>
                 <b>{{ $t('首领数据') }}</b>
@@ -46,7 +46,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="特殊机制" name="attr">
+        <el-tab-pane :label="$t('特殊机制')" name="attr">
             <span slot="label">
                 <i class="el-icon-help"></i>
                 <b>{{ $t('高阶技巧') }}</b>
@@ -54,7 +54,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="技能数据" name="skill" v-if="isSuperAuthor && client == 'std'">
+        <el-tab-pane :label="$t('技能数据')" name="skill" v-if="isSuperAuthor && client == 'std'">
             <span slot="label">
                 <i class="el-icon-key"></i>
                 <b>{{ $t('技能数据') }}</b>
@@ -62,7 +62,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="源码分析" name="lua" v-if="isEditor">
+        <el-tab-pane :label="$t('源码分析')" name="lua" v-if="isEditor">
             <span slot="label">
                 <i class="el-icon-full-screen"></i>
                 <b>{{ $t('源码分析') }}</b>
@@ -70,21 +70,21 @@
             </span>
         </el-tab-pane>
 
-        <!-- <el-tab-pane label="地图大全" name="map">
+        <!-- <el-tab-pane :label="$t('地图大全')" name="map">
             <span slot="label">
                 <i class="el-icon-map-location"></i>
                 <b>{{ $t('地图大全') }}</b>
             </span>
         </el-tab-pane> -->
 
-        <!-- <el-tab-pane label="秘境百强" name="rank" v-if="client=='std'">
+        <!-- <el-tab-pane :label="$t('秘境百强')" name="rank" v-if="client=='std'">
             <a slot="label" href="/rank" target="_blank">
                 <i class="el-icon-trophy"></i>
                 <b>{{ $t('秘境百强') }}</b>
             </a>
         </el-tab-pane>
 
-        <el-tab-pane label="团队管理" name="team">
+        <el-tab-pane :label="$t('团队管理')" name="team">
             <a slot="label" href="/team" target="_blank">
                 <i class="el-icon-user"></i>
                 <b>{{ $t('团队管理') }}</b>

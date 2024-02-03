@@ -1,14 +1,14 @@
 <template>
     <div class="v-lua" v-loading="loading" v-if="isSuperAuthor">
         <div class="m-lua-search">
-            <el-input placeholder="请输入关键词" v-model.trim.lazy="search" class="input-with-select" @change="searchLua">
-                <span slot="prepend"><i class="el-icon-search"></i> 搜索</span>
+            <el-input :placeholder="$t('请输入关键词')" v-model.trim.lazy="search" class="input-with-select" @change="searchLua">
+                <span slot="prepend"><i class="el-icon-search"></i> {{ $t('搜索') }}</span>
                 <el-button slot="append" icon="el-icon-position" @change="searchLua"></el-button>
             </el-input>
         </div>
         <el-alert
             class="m-lua-warning"
-            title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！(本功能需要额外独立申请授权)"
+            :title="$('本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！(本功能需要额外独立申请授权)')"
             type="warning"
             effect="dark"
             show-icon
@@ -19,7 +19,7 @@
                 <i class="el-icon-collection-tag"></i>
                 <span class="u-title-list" @click="showList">{{ $t('文件列表') }}</span>
                 <span class="u-title-file"><i class="el-icon-arrow-right"></i> {{ file }}</span>
-                <div class="u-back" @click="showList" v-if="data"><i class="el-icon-caret-left"></i> 返 回</div>
+                <div class="u-back" @click="showList" v-if="data"><i class="el-icon-caret-left"></i> {{ $t('返 回') }}</div>
             </div>
             <div class="u-item" v-show="!data" v-for="item in map" :key="item">
                 <template v-if="!item.includes('/') && client == 'std'">
@@ -38,7 +38,7 @@
     </div>
     <div class="v-null" v-else>
         <el-alert type="warning" show-icon
-            ><span slot="title">{{ $t('没有查看权限，仅') }}<a href="/dashboard/#cooperation" target="_blank">【签约作者】</a>{{ $t('可见。') }}</span></el-alert
+            ><span slot="title">{{ $t('没有查看权限，仅') }}<a href="/dashboard/#cooperation" target="_blank">【{{ $t('签约作者') }}】</a>{{ $t('可见。') }}</span></el-alert
         >
     </div>
 </template>

@@ -12,7 +12,7 @@
                     <div class="u-boss-info">
                         <img class="u-boss-avatar" :src="current.avatar" />
                         <div class="u-name-info">
-                            <div class="u-label">{{ isImportant ? "精英首领" : "首领" }}</div>
+                            <div class="u-label">{{ isImportant ? $t('精英首领') : $t('首领') }}</div>
                             <div class="u-name">{{ topic }}</div>
                         </div>
                     </div>

@@ -2,7 +2,7 @@
     <div>
         <Header></Header>
         <Breadcrumb
-            name="副本专栏"
+            :name="$t('副本专栏')"
             slug="fb"
             root="/fb"
             :publishEnable="true"

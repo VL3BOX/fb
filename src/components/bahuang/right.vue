@@ -4,7 +4,7 @@
             <span>{{ $t('心决') }}</span>
             <div class="m-bahuang-r-citta">
                 <div class="u-bahuang-citta">
-                    <el-select v-model="selectOptions.citta" placeholder="请选择门派" @change="cittaChange">
+                    <el-select v-model="selectOptions.citta" :placeholder="$t('请选择门派')" @change="cittaChange">
                         <el-option v-for="item in selectOptions.cittaArr" :key="item.value" :label="item.name"
                             :value="item.value"></el-option>
                     </el-select>
@@ -15,7 +15,7 @@
 
         <!--    心决效果-->
         <span class="u-tips" v-show="!cittaEffect">
-            尚未选择
+            {{ $t('尚未选择') }}
         </span>
         <div class="m-citta" v-show="cittaEffect.length > 0">
             <div class="m-citta-box" v-for="(item, i) in cittaEffect" :key="'xj' + i">
@@ -28,13 +28,13 @@
         </div>
         <!--秘术-->
         <div class="u-bahuang-r-title">{{ $t('秘术') }}<br />
-            <span class="u-tip">(左键选择激活，右键可删除秘术)</span>
+            <span class="u-tip">({{ $t('左键选择激活，右键可删除秘术') }})</span>
         </div>
         <!--    秘术区域-->
         <div class="m-bahuang-r-arcane" :class="isLogin ? 'm-r-arcane-box' : ''">
             <!--       秘术展示-->
             <span class="u-tips" v-show="selectOptions.arcane.length === 0">
-                尚未选择
+                {{ $t('尚未选择') }}
             </span>
             <div class="u-skill" v-for="(item, i) in selectOptions.arcane" :key="'a' + i"
                 @contextmenu.prevent.capture='rightCancel(item, i, 1)'>
@@ -58,13 +58,13 @@
             </div>
         </div>
         <!--    秘技4个-->
-        <div class="u-bahuang-r-title">秘技
+        <div class="u-bahuang-r-title">{{ $t('秘技') }}
             <br />
-            <span class="u-tip">(右键可删除秘技)</span>
+            <span class="u-tip">({{ $t('右键可删除秘技') }})</span>
         </div>
         <div class="m-bahuang-r-cheats">
             <span class="u-tips" v-show="selectOptions.cheats.length === 0">
-                尚未选择
+                {{ $t('尚未选择') }}
             </span>
             <div class="u-bahuang-cheats" v-for="(item, i) in selectOptions.cheats" :key="'c' + i"
                 @contextmenu.prevent.capture='rightCancel(item, i, 2)'>
@@ -77,7 +77,7 @@
         <div class="u-bahuang-r-title">{{ $t('绝技') }}</div>
         <div class="m-bahuang-r-stunt">
             <span class="u-tips" v-show="selectOptions.stunt.length === 0">
-                尚未选择
+                {{ $t('尚未选择') }}
             </span>
             <skill v-for="(item, i) in selectOptions.stunt" :key="'s' + i" :info="item.info" :select="item.info.select"
                 :skillType="true" class="u-skill" />

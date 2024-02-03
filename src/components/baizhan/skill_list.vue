@@ -9,7 +9,7 @@
             @cell-mouse-enter="onMouse"
             @row-click="onClick"
         >
-            <el-table-column label="技能" min-width="150">
+            <el-table-column :label="$t('技能')" min-width="150">
                 <template #default="{ row: skill }">
                     <div class="u-skill-cell">
                         <!--  <div class="u-skill-img" :class="`u-skill-icon__${skill.nColor}`">
@@ -20,24 +20,24 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column v-if="!isIpad()" prop="szBossName" label="首领" sortable min-width="150">
+            <el-table-column v-if="!isIpad()" prop="szBossName" :label="$t('首领')" sortable min-width="150">
                 <template #default="{ row }">
                     {{ row.szBossName || "-" }}
                 </template>
             </el-table-column>
-            <el-table-column v-if="!isIpad()" prop="nCost" label="占用" sortable min-width="150">
+            <el-table-column v-if="!isIpad()" prop="nCost" :label="$t('占用')" sortable min-width="150">
                 <template #default="{ row: skill }">
                     <div class="u-points">
                         <img v-for="point in skill.nCost" :key="point" :src="`${__imgRoot}baizhan_6.png`" />
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column v-if="!isIpad()" prop="nColor" label="破绽" sortable min-width="150">
+            <el-table-column v-if="!isIpad()" prop="nColor" :label="$t('破绽')" sortable min-width="150">
                 <template #default="{ row }">
                     {{ getColor(row.nColor) }}
                 </template>
             </el-table-column>
-            <el-table-column prop="szType" label="效果" min-width="150">
+            <el-table-column prop="szType" :label="$t('效果')" min-width="150">
                 <template #default="{ row }">
                     <div class="u-types">
                         <div class="u-type" v-for="item in getType(row.szType)" :key="item" v-html="item"></div>

@@ -5,8 +5,8 @@
                 class="u-icon"
                 svg-inline
                 src="@/assets/img/puzzle.svg"
-            />团队招募
-            <a class="u-more" href="/team" target="_blank">查看更多 &raquo;</a>
+            />{{ $t('团队招募') }}
+            <a class="u-more" href="/team" target="_blank">{{ $t('查看更多') }} &raquo;</a>
         </h3>
         <ul>
             <li v-for="(item, i) in teams" :key="i">

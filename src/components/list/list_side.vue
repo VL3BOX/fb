@@ -3,7 +3,7 @@
         <!-- 群号 -->
         <RightSideMsg>
             <em>{{ $t('全服团长交流群') }}</em> :
-            <strong @click="onQQClick" class="u-link" title="点击复制">
+            <strong @click="onQQClick" class="u-link" :title="$t('点击复制')">
                 <a>{{ qq }}</a>
             </strong>
         </RightSideMsg>

@@ -14,14 +14,14 @@
                 <!-- 下拉框 -->
                 <el-select
                     v-model="search"
-                    placeholder="选择副本"
+                    :placeholder="$t('选择副本')"
                     clearable
                     filterable
                     @change="changeFb"
                     class="u-fb-select"
                     size="small"
                 >
-                    <el-option label="全部" value=""></el-option>
+                    <el-option :label="$t('全部')" value=""></el-option>
                     <hr class="u-divider" />
                     <el-option-group
                         v-for="(group, key) in map"
@@ -41,7 +41,7 @@
             <div class="m-nav-info__meta">
                 <el-select
                     v-model="mode"
-                    placeholder="全部模式"
+                    :placeholder="$t('全部模式')"
                     size="small"
                     clearable
                     popper-append-to-body
@@ -52,7 +52,7 @@
                 </el-select>
                 <el-select
                     v-model="boss"
-                    placeholder="全部首领"
+                    :placeholder="$t('全部首领')"
                     size="small"
                     clearable
                     popper-append-to-body

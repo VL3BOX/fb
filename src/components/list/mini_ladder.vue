@@ -2,12 +2,12 @@
     <div class="m-team-ladder-mini">
         <div class="m-ladder-header">
             <h3 class="m-ladder-title">
-                <span class="u-title"> <img class="u-icon" svg-inline :src="getAppIcon('jdt',true)" /> 秘境百强榜 </span>
+                <span class="u-title"> <img class="u-icon" svg-inline :src="getAppIcon('jdt',true)" /> {{ $t('秘境百强榜') }} </span>
                 <a class="u-more" target="_blank" :href="getLink('rank', event_id)"
                     >{{ $t('查看更多') }}<i class="el-icon-d-arrow-right"></i
                 ></a>
             </h3>
-            <el-select class="m-ladder-select" v-model="event_id" placeholder="请选择" size="small">
+            <el-select class="m-ladder-select" v-model="event_id" :placeholder="$t('请选择')" size="small">
                 <el-option v-for="event in events" :key="event.ID" :label="event.name" :value="event.ID"></el-option>
             </el-select>
         </div>
@@ -22,7 +22,7 @@
                     </a>
                 </li>
             </ul>
-            <div class="u-null" v-else><i class="el-icon-warning-outline"></i> 当前榜单暂无数据</div>
+            <div class="u-null" v-else><i class="el-icon-warning-outline"></i> {{ $t('当前榜单暂无数据') }}</div>
         </div>
     </div>
 </template>

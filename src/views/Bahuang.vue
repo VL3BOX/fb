@@ -4,16 +4,16 @@
             <h1 class="m-bahuang-title">{{ $t('八荒衡鉴模拟器') }}</h1>
             <div class="u-my-scheme">
                 <el-button type="primary" @click="updateDrawer(true)" icon="el-icon-setting" size="small">
-                    我的预设
+                    {{ $t('我的预设') }}
                 </el-button>
             </div>
             <!--盒子左中右分栏-->
             <div class="m-bahuang-box" v-loading="loading">
                 <div class="m-bahuang-left">
                     <el-tabs v-model="activeTabName" type="card">
-                        <el-tab-pane label="秘术" name="arcane" />
-                        <el-tab-pane label="秘技" name="cheats" />
-                        <el-tab-pane label="绝学" name="stunt" />
+                        <el-tab-pane :label="$t('秘术')" name="arcane" />
+                        <el-tab-pane :label="$t('秘技')" name="cheats" />
+                        <el-tab-pane :label="$t('绝学')" name="stunt" />
                     </el-tabs>
                     <div class="m-tab-box">
                         <div class="u-box">
@@ -40,16 +40,16 @@
         <el-dialog :title="title" :visible.sync="dialogFormVisible" :close-on-press-escape="false"
             :close-on-click-modal="false">
             <el-form :model="schemeForm">
-                <el-form-item label="方案名称">
+                <el-form-item :label="$t('方案名称')">
                     <el-input v-model="schemeForm.title" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="方案描述">
+                <el-form-item :label="$t('方案描述')">
                     <el-input v-model="schemeForm.desc" autocomplete="off" type="textarea"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer">
-                <el-button @click="reload">取 消</el-button>
-                <el-button type="primary" @click="saveScheme">保 存</el-button>
+                <el-button @click="reload">{{ $t('取 消') }}</el-button>
+                <el-button type="primary" @click="saveScheme">{{ $t('保 存') }}</el-button>
             </div>
         </el-dialog>
     </app-layout>

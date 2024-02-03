@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header></Header>
-        <Breadcrumb name="副本专栏" slug="fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="true">
+        <Breadcrumb :name="$t('副本专栏')" slug="fb" :publishEnable="true" :feedbackEnable="true" :adminEnable="true">
             <template #op-prepend>
                 <AdminDirectMessage :user-id="user_id" :sourceId="String(post.ID)" :sourceType="post.post_type"></AdminDirectMessage>
             </template>

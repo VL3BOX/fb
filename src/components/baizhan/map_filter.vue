@@ -1,7 +1,7 @@
 <template>
     <div class="w-card m-map-filter">
         <div class="w-card-title">
-            <img src="@/assets/img/baizhan/filter.svg" alt="筛选" />
+            <img src="@/assets/img/baizhan/filter.svg" :alt="$t('筛选')" />
             <span>{{ $t('筛选') }}</span>
         </div>
         <div class="m-section-title m-two-title first-section">{{ $t('常用') }}</div>

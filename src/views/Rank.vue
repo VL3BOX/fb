@@ -1,9 +1,9 @@
 <template>
     <div class="m-fb-rank" v-loading="loading">
         <h3 class="m-fb-rank-title">{{ $t('剑网3跨区服副本通关百强榜') }}</h3>
-        <p class="m-fb-rank-desc">联合推栏表彰活动·<a href="/tool/?pid=13715" target="_blank">{{ $t('活动规则与举报') }}</a></p>
+        <p class="m-fb-rank-desc">{{ $t('联合推栏表彰活动·') }}<a href="/tool/?pid=13715" target="_blank">{{ $t('活动规则与举报') }}</a></p>
         <div class="m-fb-rank-tip el-alert el-alert--warning is-light">
-            工作室成绩将不予显示，官方认定代打成绩将不予显示，超过1周未认领的团队成绩将不予显示，认领请加团长QQ群:<a href="https://jq.qq.com/?_wv=1027&k=NoEyYq75">785597424</a>
+            {{ $t('工作室成绩将不予显示，官方认定代打成绩将不予显示，超过1周未认领的团队成绩将不予显示，认领请加团长QQ群') }}:<a href="https://jq.qq.com/?_wv=1027&k=NoEyYq75">785597424</a>
         </div>
 
         <div class="m-fb-rank-wrapper" v-if="hasRank">
@@ -21,7 +21,7 @@
                                 <el-col :span="2" class="u-subblock u-order">{{ $t('排名') }}</el-col>
                                 <el-col :span="4" class="u-subblock u-team">{{ $t('队长') }}</el-col>
                                 <el-col :span="4" class="u-subblock u-server"
-                                    ><el-select v-model="server" filterable placeholder="服务器" size="small" @change="serverFilter">
+                                    ><el-select v-model="server" filterable :placeholder="$t('服务器')" size="small" @change="serverFilter">
                                         <el-option v-for="item in servers" :key="item" :label="item" :value="item"> </el-option> </el-select
                                 ></el-col>
                                 <el-col :span="4" class="u-subblock u-date">{{ $t('达成时间') }}</el-col>
@@ -35,12 +35,12 @@
                                 <el-col :span="4" class="u-subblock u-server">{{ item.Server }}</el-col>
                                 <el-col :span="4" class="u-subblock u-date"
                                     ><time
-                                        >达成时间 : <b class="u-important">{{ item.finishTime | format }}</b></time
+                                        >{{ $t('达成时间') }} : <b class="u-important">{{ item.finishTime | format }}</b></time
                                     ></el-col
                                 >
                                 <el-col :span="4" class="u-subblock u-cost"
                                     ><time
-                                        >用时 : <b class="u-important u-big">{{ item.fightTime | costFormat }} </b></time
+                                        >{{ $t('用时') }} : <b class="u-important u-big">{{ item.fightTime | costFormat }} </b></time
                                     ></el-col
                                 >
                                 <el-col :span="4" class="u-subblock u-detail"
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <el-alert v-else class="m-archive-null" title="当前副本没有活动" type="info" center show-icon> </el-alert>
+        <el-alert v-else class="m-archive-null" :title="$t('当前副本没有活动')" type="info" center show-icon> </el-alert>
     </div>
 </template>
 

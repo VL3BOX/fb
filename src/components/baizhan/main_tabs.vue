@@ -15,11 +15,11 @@
         <div class="u-map-info" v-if="activeTab === 'map'">
             <div class="u-map-title">
                 <img class="u-title-icon" src="@/assets/img/baizhan/tabs/map_active.svg" alt="" />
-                <span>{{ activeTab === "map" ? "地图" : "数据" }}信息</span>
+                <span>{{ activeTab === "map" ? $t('地图') : $t('数据') }} {{ $t('信息') }}</span>
             </div>
-            <div class="u-map-update">更新时间：{{ update_time }}</div>
+            <div class="u-map-update">{{ $t('更新时间：') + update_time }}</div>
             <div class="u-map-duration">
-                <span>持续时间：{{ duration.start }} ~ {{ duration.end }}</span>
+                <span>{{ $t('持续时间：') + duration.start }} ~ {{ duration.end }}</span>
                 <a
                     v-if="activeTab === 'map'"
                     class="u-download"
@@ -27,7 +27,7 @@
                     @click.prevent="toDownImg"
                 >
                     <img src="@/assets/img/baizhan/export.svg" svg-inline />
-                    <span>{{ downLoading ? "导出中..." : "导出图片" }}</span>
+                    <span>{{ downLoading ? $t('导出中...') : $t('导出图片') }}</span>
                 </a>
             </div>
         </div>

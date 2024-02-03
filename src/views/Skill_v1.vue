@@ -7,8 +7,8 @@
             </el-tabs>
         </div>
 
-        <el-input class="m-skill-search" placeholder="请输入技能名称" v-model.trim.lazy="search">
-            <span slot="prepend"><i class="el-icon-search"></i> 搜索</span>
+        <el-input class="m-skill-search" :placeholder="$t('请输入技能名称')" v-model.trim.lazy="search">
+            <span slot="prepend"><i class="el-icon-search"></i> {{ $t('搜索') }}</span>
             <el-button slot="append" icon="el-icon-position"></el-button>
         </el-input>
 
@@ -17,7 +17,7 @@
                 <skill-item :data="skill" :hasRight="hasRight" :name="key"></skill-item>
             </li>
         </ul>
-        <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon></el-alert>
+        <el-alert v-else class="m-archive-null" :title="$t('没有找到相关条目')" type="info" center show-icon></el-alert>
     </div>
 </template>
 

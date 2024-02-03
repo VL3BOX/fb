@@ -22,12 +22,12 @@
                         <!-- 目标数 -->
                         <template v-else-if="g.prop == 'nTargetCountLimit'">
                             <template v-if="Number(g.value) < 0">{{ $t('无限制') }}</template>
-                            <template v-else>最多{{ Number(g.value) }}人</template>
+                            <template v-else>{{ $t('最多') + Number(g.value) + $t('人')}}</template>
                         </template>
 
                         <!-- 读条时间 -->
-                        <template v-else-if="g.prop == 'nPrepareFrames'">{{ nPrepare }}秒</template>
-                        <template v-else-if="g.prop == 'nChannelFrame'">{{ nChannel }}秒</template>
+                        <template v-else-if="g.prop == 'nPrepareFrames'">{{ nPrepare + $t('秒') }}</template>
+                        <template v-else-if="g.prop == 'nChannelFrame'">{{ nChannel + $t('秒') }}</template>
 
                         <!-- 打断几率 -->
                         <template

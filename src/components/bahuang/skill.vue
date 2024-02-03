@@ -14,7 +14,7 @@
                 <span>{{ info.Name }}<small class="u-bahuang-id">(ID: {{ info.IdKey }})</small></span>
             </b>
             <b class="m-bahuang-type">
-                {{ skillType ? '主动技能' : '被动招式' }}
+                {{ skillType ? $t('主动技能') : $t('被动招式') }}
             </b>
             <span class=" m-bahuang-desc">
                 {{ info.Desc }}

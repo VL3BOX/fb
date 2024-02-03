@@ -1,7 +1,7 @@
 <template>
     <div class="m-fb-gem" v-loading="loading">
-        <el-input class="m-gem-search" placeholder="请输入关键词" v-model.trim.lazy="search" clearable @clear="onSearch" @keydown.native.enter="onSearch">
-            <span slot="prepend"><i class="el-icon-search"></i> 搜索</span>
+        <el-input class="m-gem-search" :placeholder="$t('请输入关键词')" v-model.trim.lazy="search" clearable @clear="onSearch" @keydown.native.enter="onSearch">
+            <span slot="prepend"><i class="el-icon-search"></i> {{ $t('搜索') }}</span>
             <el-button slot="append" icon="el-icon-position" @click="onSearch"></el-button>
         </el-input>
 
@@ -30,7 +30,7 @@
                 <span class="u-id">UUID:{{ item.UiID }}</span>
             </div>
         </div>
-        <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon> </el-alert>
+        <el-alert v-else class="m-archive-null" :title="$t('没有找到相关条目')" type="info" center show-icon> </el-alert>
         <el-button
             class="m-archive-more"
             :class="{ show: hasNextPage }"

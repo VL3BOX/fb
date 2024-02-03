@@ -30,7 +30,7 @@
                 <div class="u-droplist">
                     <div class="u-tabs">
                         <el-tabs tab-position="left" class="u-group" v-model="droptype">
-                            <el-tab-pane label="全部" name></el-tab-pane>
+                            <el-tab-pane :label="$t('全部')" name></el-tab-pane>
                             <el-tab-pane
                                 :label="groupname"
                                 v-for="(groupname, group) in dropmap"
@@ -70,7 +70,7 @@
                             </el-popover>
                         </div>
                     </div>
-                    <el-alert v-else title="没有相关条目" type="info" show-icon></el-alert>
+                    <el-alert v-else :title="$t('没有相关条目')" type="info" show-icon></el-alert>
                 </div>
             </el-tab-pane>
         </el-tabs>

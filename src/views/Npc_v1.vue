@@ -1,8 +1,8 @@
 <template>
     <div class="m-fb-npc" v-loading="loading">
-        <el-input class="m-npc-search" placeholder="请输入NPC名称或ID" v-model.trim.lazy="search" @change="loadData" :disabled="onlyboss">
-            <template slot="prepend"><i class="el-icon-search"></i> 搜索</template>
-            <el-switch class="u-switch u-onlyboss" slot="append" v-model="onlyboss" active-color="#13ce66" inactive-text="只看首领" @change="loadData"></el-switch>
+        <el-input class="m-npc-search" :placeholder="$t('请输入NPC名称或ID')" v-model.trim.lazy="search" @change="loadData" :disabled="onlyboss">
+            <template slot="prepend"><i class="el-icon-search"></i> {{ $t('搜索') }}</template>
+            <el-switch class="u-switch u-onlyboss" slot="append" v-model="onlyboss" active-color="#13ce66" :inactive-text="$t('只看首领')" @change="loadData"></el-switch>
         </el-input>
         <div class="m-filter-group" v-if="onlyboss">
             <el-radio-group v-model="mapid" size="medium">
@@ -38,7 +38,7 @@
                             {{ npc._Notation }}
                         </span>-->
                         <span class="u-intensity" v-if="npc.Intensity">
-                            强度
+                            {{ $t('强度') }}
                             <em>Intensity</em>
                             {{ npc.Intensity }}
                         </span>
@@ -109,27 +109,27 @@
                         </span>-->
                         <!-- <template v-if="isAdmin"> -->
                         <span class="u-sitem">
-                            外功防御
+                            {{ $t('外功防御') }}
                             <em>PhysicsShieldBase</em>
                             <span class="u-value">{{ ~~npc.PhysicsShieldBase }}</span>
                         </span>
                         <span class="u-sitem">
-                            混元防御
+                            {{ $t('混元防御') }}
                             <em>NeutralMagicDefence</em>
                             <span class="u-value">{{ ~~npc.NeutralMagicDefence }}</span>
                         </span>
                         <span class="u-sitem">
-                            阳性防御
+                            {{ $t('阳性防御') }}
                             <em>SolarMagicDefence</em>
                             <span class="u-value">{{ ~~npc.SolarMagicDefence }}</span>
                         </span>
                         <span class="u-sitem">
-                            阴性防御
+                            {{ $t('阴性防御') }}
                             <em>LunarMagicDefence</em>
                             <span class="u-value">{{ ~~npc.LunarMagicDefence }}</span>
                         </span>
                         <span class="u-sitem">
-                            毒性防御
+                            {{ $t('毒性防御') }}
                             <em>PoisonMagicDefence</em>
                             <span class="u-value">{{ ~~npc.PoisonMagicDefence }}</span>
                         </span>
@@ -139,11 +139,11 @@
                         <b>{{ $t('会心') }}</b>
                         <em>Critical</em>
                         <span class="u-sitem" v-if="client == 'std'">
-                            外攻会心
+                            {{ $t('外攻会心') }}
                             <span class="u-value">{{ showCritical(~~npc.PhysicsCriticalStrike, ~~npc.Level) }}</span>
                         </span>
                         <span class="u-sitem" v-if="client == 'std'">
-                            内攻会心
+                            {{ $t('内攻会心') }}
                             <span class="u-value">{{
                                 showCritical(~~npc.NeutralCriticalStrike || ~~npc.NeutralCriticalStrike || ~~npc.SolarCriticalStrike || ~~npc.LunarCriticalStrike, ~~npc.Level)
                             }}</span>
@@ -151,27 +151,27 @@
                         <!-- <span class="u-sitem">（即T御劲需求，具体以BOSS主要攻击类型为主）</span> -->
                         <!-- <template v-if="isAdmin"> -->
                         <span class="u-sitem">
-                            外功会心
+                            {{ $t('外功会心') }}
                             <em>PhysicsCriticalStrike</em>
                             <span class="u-value">{{ ~~npc.PhysicsCriticalStrike }}</span>
                         </span>
                         <span class="u-sitem">
-                            混元会心
+                            {{ $t('混元会心') }}
                             <em>NeutralCriticalStrike</em>
                             <span class="u-value">{{ ~~npc.NeutralCriticalStrike }}</span>
                         </span>
                         <span class="u-sitem">
-                            阳性会心
+                            {{ $t('阳性会心') }}
                             <em>SolarCriticalStrike</em>
                             <span class="u-value">{{ ~~npc.SolarCriticalStrike }}</span>
                         </span>
                         <span class="u-sitem">
-                            阴性会心
+                            {{ $t('阴性会心') }}
                             <em>LunarCriticalStrike</em>
                             <span class="u-value">{{ ~~npc.LunarCriticalStrike }}</span>
                         </span>
                         <span class="u-sitem">
-                            毒性会心
+                            {{ $t('毒性会心') }}
                             <em>PoisonCriticalStrike</em>
                             <span class="u-value">{{ ~~npc.PoisonCriticalStrike }}</span>
                         </span>
@@ -185,27 +185,27 @@
                         </span>-->
                         <!-- <template v-if="isAdmin"> -->
                         <span class="u-sitem">
-                            外功命中
+                            {{ $t('外功命中') }}
                             <em>PhysicsAttackHit</em>
                             <span class="u-value">{{ ~~npc.PhysicsAttackHit }}</span>
                         </span>
                         <span class="u-sitem">
-                            混元命中
+                            {{ $t('混元命中') }}
                             <em>NeutralMagicHit</em>
                             <span class="u-value">{{ ~~npc.NeutralMagicHit }}</span>
                         </span>
                         <span class="u-sitem">
-                            阳性命中
+                            {{ $t('阳性命中') }}
                             <em>SolarMagicHit</em>
                             <span class="u-value">{{ ~~npc.SolarMagicHit }}</span>
                         </span>
                         <span class="u-sitem">
-                            阴性命中
+                            {{ $t('阴性命中') }}
                             <em>LunarMagicHit</em>
                             <span class="u-value">{{ ~~npc.LunarMagicHit }}</span>
                         </span>
                         <span class="u-sitem">
-                            毒性命中
+                            {{ $t('毒性命中') }}
                             <em>PoisonMagicHit</em>
                             <span class="u-value">{{ ~~npc.PoisonMagicHit }}</span>
                         </span>
@@ -246,7 +246,7 @@
                 </div>-->
             </li>
         </ul>
-        <el-alert v-else class="m-archive-null" type="info" center show-icon> 该副本没有找到相关条目，全图搜索请前往<a href="/app/database" target="_blank">[剑三数据库]</a>应用 </el-alert>
+        <el-alert v-else class="m-archive-null" type="info" center show-icon> {{ $t('该副本没有找到相关条目，全图搜索请前往') }}<a href="/app/database" target="_blank">[{{ $t('剑三数据库') }}]</a>{{ $t('应用') }} </el-alert>
         <template v-if="!onlyboss">
             <el-button class="m-archive-more" :class="{ show: hasNextPage }" type="primary" :loading="loading" @click="appendPage(++page)">{{ $t('加载更多') }}</el-button>
             <el-pagination

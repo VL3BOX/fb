@@ -5,16 +5,16 @@
                 <div class="m-story-basic">
                     <el-divider content-position="left">{{ $t('基本信息') }}</el-divider>
                     <el-descriptions :column="3" border>
-                        <el-descriptions-item label="名称">{{ item.OtherName }}</el-descriptions-item>
-                        <el-descriptions-item label="地图ID">{{ item.MapID }}</el-descriptions-item>
-                        <el-descriptions-item label="资料片"
+                        <el-descriptions-item :label="$t('名称')">{{ item.OtherName }}</el-descriptions-item>
+                        <el-descriptions-item :label="$t('地图ID')">{{ item.MapID }}</el-descriptions-item>
+                        <el-descriptions-item :label="$t('资料片')"
                             >Level.{{ item.DivideLevel }}／{{ item.DivideName }}／{{
                                 item.VersionName
                             }}</el-descriptions-item
                         >
-                        <el-descriptions-item label="最低等级要求">{{ item.MinLevel }}</el-descriptions-item>
-                        <el-descriptions-item label="入口" :span="2">{{ item.EnterWay }}</el-descriptions-item>
-                        <el-descriptions-item label="简介">{{
+                        <el-descriptions-item :label="$t('最低等级要求')">{{ item.MinLevel }}</el-descriptions-item>
+                        <el-descriptions-item :label="$t('入口')" :span="2">{{ item.EnterWay }}</el-descriptions-item>
+                        <el-descriptions-item :label="$t('简介')">{{
                             formatIntroduction(item.Introduction)
                         }}</el-descriptions-item>
                     </el-descriptions>
@@ -36,7 +36,7 @@
                                 size="mini"
                                 icon="el-icon-key"
                                 >{{
-                                    !skill_list[boss.NPCID] ? "查看技能" : skill_status[boss.NPCID] ? "收起" : "展开"
+                                    !skill_list[boss.NPCID] ? $t('查看技能') : skill_status[boss.NPCID] ? $t('收起') : $t('展开')
                                 }}</el-button
                             >
                             <div class="u-boss-skills" v-show="skill_status[boss.NPCID]">
@@ -47,18 +47,18 @@
                                     </div>
                                 </template>
                                 <div class="u-skill-null" v-else>
-                                    <i class="el-icon-warning-outline"></i> 没有相关信息
+                                    <i class="el-icon-warning-outline"></i> {{ $t('没有相关信息') }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </el-tab-pane>
-            <el-tab-pane :label="'副本地图'">
+            <el-tab-pane :label="$t('副本地图')">
                 <fb-map></fb-map>
             </el-tab-pane>
         </el-tabs>
-        <el-alert title="未找到相关信息" type="info" show-icon v-else></el-alert>
+        <el-alert :title="$t('未找到相关信息')" type="info" show-icon v-else></el-alert>
     </div>
 </template>
 

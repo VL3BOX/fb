@@ -15,7 +15,7 @@
             v-else
             effect="dark"
             class="m-archive-null"
-            title="没有找到相关条目"
+            :title="$t('没有找到相关条目')"
             type="info"
             center
             show-icon
@@ -30,7 +30,7 @@
             :loading="loading"
             icon="el-icon-arrow-down"
         >
-            加载更多
+            {{ $t('加载更多') }}
         </el-button>
 
         <!-- 分页 -->

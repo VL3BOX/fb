@@ -27,8 +27,8 @@
                     </a>
 
                     <!-- 技能特性 -->
-                    <em v-if="skill.isPenetration">(穿透)</em>
-                    <em v-if="skill.isPuncture">(穿刺)</em>
+                    <em v-if="skill.isPenetration">({{ $t('穿透') }})</em>
+                    <em v-if="skill.isPuncture">({{ $t('穿刺') }})</em>
                 </template>
             </span>
 
@@ -36,7 +36,7 @@
             <template v-if="AdvancedMode">
                 <div class="u-damage" v-if="skill.tSkillData.length">
                     <span class="u-label">
-                        伤害值
+                        {{ $t('伤害值') }}
                         <!-- <em>nDamageBase</em> -->
                     </span>
                     <span class="u-data-group" v-for="(g, i) in skill.tSkillData" :key="i">

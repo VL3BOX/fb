@@ -5,7 +5,7 @@
                 <img class="u-avatar" :src="current.bossAvatar" :alt="current.bossName" />
                 <div class="u-name-info">
                     <div class="u-floor">
-                        <span>第{{ current.floor }}层</span>
+                        <span>{{ $t('第') + current.floor + $t('层')}}</span>
                     </div>
                     <div class="u-name" @click="toBoss(current.bossName)">{{ current.bossName }}</div>
                 </div>

@@ -107,7 +107,7 @@ export default {
                         (!color || item.nColor === color) &&
                         (!cost || item.nCost === cost) &&
                         (!bossName || item.szBossName === bossName || (bossName === "未知" && !item.szBossName)) &&
-                        (!type || item.szType.includes(type)) &&
+                        (!type || (item.szType && item.szType.includes(type))) &&
                         (!name || item?.szSkillName?.indexOf(name) > -1)
                     );
                 });
@@ -127,9 +127,11 @@ export default {
             return nColor ? this.skillColors.find((item) => item.id === nColor)?.name : "-";
         },
         getType(types) {
-            const arr = types.map((type) => {
-                return this.skillTypes.find((item) => item.id === type)?.name;
-            });
+            const arr = types
+                ? types.map((type) => {
+                      return this.skillTypes.find((item) => item.id === type)?.name;
+                  })
+                : [];
             const len = arr.length;
             if (len > 2) {
                 return [arr[0], `其他 <b>${arr.length - 1}</b> 个效果`];

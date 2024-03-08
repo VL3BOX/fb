@@ -82,18 +82,20 @@ export default {
                 // 手动强制替换 或没有存storage
                 await getBosses().then((res) => {
                     let list = res.data?.data || [];
-                    list = list.map((item) => {
-                        return {
-                            id: item.dwNpcID,
-                            avatar: item.ImagePath
-                                ? `${__imgPath}pve/baizhan/${item.ImagePath.match(/\\([^\\]*)\./)[1].toLowerCase()}_${
-                                      item.ImageFrame
-                                  }.png`
-                                : `${__imgPath}pve/baizhan/fbcdpanel02_51.png`,
-                            name: item.szName,
-                            skills: item.szSkill,
-                        };
-                    });
+                    list = list
+                        .filter((item) => item.dwNpcID)
+                        .map((item) => {
+                            return {
+                                id: item.dwNpcID,
+                                avatar: item.ImagePath
+                                    ? `${__imgPath}pve/baizhan/${item.ImagePath.match(
+                                          /\\([^\\]*)\./
+                                      )[1].toLowerCase()}_${item.ImageFrame}.png`
+                                    : `${__imgPath}pve/baizhan/fbcdpanel02_51.png`,
+                                name: item.szName,
+                                skills: item.szSkill,
+                            };
+                        });
                     let map = new Map();
                     let mapList = list.filter((v) => !map.has(v.name) && map.set(v.name, 1));
                     const names = mapList.map((item) => item.name).join(",");

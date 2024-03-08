@@ -11,7 +11,7 @@
                 },
                 caller,
             }"
-            ><img :src="getBanner(item)" :key="item.ID"
+            ><img :src="getBanner(item)" :key="item.ID" @error="($event.target.src = errorImg)"
         /></a>
 
         <!-- 标题 -->
@@ -89,6 +89,9 @@ export default {
     computed: {
         client() {
             return this.item?.client;
+        },
+        errorImg() {
+            return __imgPath + "image/fb_map_thumbnail/undefined.png";
         },
     },
     watch: {},

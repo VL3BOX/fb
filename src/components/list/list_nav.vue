@@ -102,7 +102,7 @@
                 <span>团队平台</span>
                 <em>Team Platform</em>
             </a>
-            <a href="/jdt" target="_blank">
+            <a href="/rank" target="_blank">
                 <img class="u-icon" :src="getAppIcon('jdt')" />
                 <span>秘境百强</span>
                 <em>JX3 Dungeon Top100</em>
